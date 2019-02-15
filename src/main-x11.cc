@@ -383,12 +383,8 @@ struct infoclr
 	Pixell fg;
 	Pixell bg;
 
-unsigned int code:
-	4;
-unsigned int stip:
-	1;
-unsigned int nuke:
-	1;
+	unsigned int code: 4;
+	unsigned int nuke: 1;
 };
 
 
@@ -430,77 +426,6 @@ unsigned int nuke:
 
 
 
-
-/**** Generic Macros ****/
-
-
-
-/* Set current metadpy (Metadpy) to 'M' */
-#define Metadpy_set(M) \
-Metadpy = M
-
-
-/* Initialize 'M' using Display 'D' */
-#define Metadpy_init_dpy(D) \
-Metadpy_init_2(D,cNULL)
-
-/* Initialize 'M' using a Display named 'N' */
-#define Metadpy_init_name(N) \
-Metadpy_init_2((Display*)(NULL),N)
-
-/* Initialize 'M' using the standard Display */
-#define Metadpy_init() \
-Metadpy_init_name("")
-
-
-/* Init an infowin by giving father as an (info_win*) (or NULL), and data */
-#define Infowin_init_dad(D,X,Y,W,H,B,FG,BG) \
-Infowin_init_data(((D) ? ((D)->win) : (Window)(None)), \
-X,Y,W,H,B,FG,BG)
-
-
-/* Init a top level infowin by pos,size,bord,Colors */
-#define Infowin_init_top(X,Y,W,H,B,FG,BG) \
-Infowin_init_data(None,X,Y,W,H,B,FG,BG)
-
-
-/* Request a new standard window by giving Dad infowin and X,Y,W,H */
-#define Infowin_init_std(D,X,Y,W,H,B) \
-Infowin_init_dad(D,X,Y,W,H,B,Metadpy->fg,Metadpy->bg)
-
-
-/* Set the current Infowin */
-#define Infowin_set(I) \
-(Infowin = (I))
-
-
-/* Set the current Infoclr */
-#define Infoclr_set(C) \
-(Infoclr = (C))
-
-
-#define Infoclr_init_ppo(F,B,O,M) \
-Infoclr_init_data(F,B,O,M)
-
-#define Infoclr_init_ppn(F,B,O,M) \
-Infoclr_init_ppo(F,B,Infoclr_Opcode(O),M)
-
-
-/* Set the current infofnt */
-#define Infofnt_set(I) \
-(Infofnt = (I))
-
-
-/* Errr: Expose Infowin */
-#define Infowin_expose() \
-(!(Infowin->redraw = 1))
-
-/* Errr: Unxpose Infowin */
-#define Infowin_unexpose() \
-(Infowin->redraw = 0)
-
-
-
 /**** Generic Globals ****/
 
 
@@ -514,9 +439,28 @@ static metadpy metadpy_default;
  * The "current" variables
  */
 static metadpy *Metadpy = &metadpy_default;
-static infowin *Infowin = (infowin*)(NULL);
-static infoclr *Infoclr = (infoclr*)(NULL);
-static infofnt *Infofnt = (infofnt*)(NULL);
+static infowin *Infowin = nullptr;
+static infoclr *Infoclr = nullptr;
+static infofnt *Infofnt = nullptr;
+
+
+/* Set the current Infowin */
+inline static void Infowin_set(infowin *i)
+{
+	Infowin = i;
+}
+
+/* Set the current Infoclr */
+inline static void Infoclr_set(infoclr *c)
+{
+	Infoclr = c;
+}
+
+/* Set the current infofnt */
+inline static void Infofnt_set(infofnt *f)
+{
+	Infofnt = f;
+}
 
 
 /**** Generic code ****/
@@ -538,44 +482,28 @@ int x_io_error_handler(Display *d)
 }
 
 /*
- * Init the current metadpy, with various initialization stuff.
+ * Create a new metadpy and initialize it.
  *
  * Inputs:
- *	dpy:  The Display* to use (if NULL, create it)
- *	name: The name of the Display (if NULL, the current)
+ *	name: The name of the Display
  *
  * Notes:
  *	If 'name' is NULL, but 'dpy' is set, extract name from dpy
  *	If 'dpy' is NULL, then Create the named Display
  *	If 'name' is NULL, and so is 'dpy', use current Display
  *
- * Return -1 if no Display given, and none can be opened.
+ * Return -1 on error.
  */
-static errr Metadpy_init_2(Display *dpy, const char *name)
+static errr Metadpy_new(const char *name)
 {
 	metadpy *m = Metadpy;
 
-	/*** Open the display if needed ***/
+	/*** Create the display ***/
 
-	/* If no Display given, attempt to Create one */
-	if (!dpy)
-	{
-		/* Attempt to open the display */
-		dpy = XOpenDisplay(name);
+	Display *dpy = XOpenDisplay(name);
+	if (!dpy) return ( -1);
 
-		/* Failure */
-		if (!dpy) return ( -1);
-
-		/* We will have to nuke it when done */
-		m->nuke = 1;
-	}
-
-	/* Since the Display was given, use it */
-	else
-	{
-		/* We will not have to nuke it when done */
-		m->nuke = 0;
-	}
+	m->nuke = 1;
 
 	XSetIOErrorHandler(x_io_error_handler);
 
@@ -816,66 +744,11 @@ static void Infowin_wipe()
 	XClearWindow(Metadpy->dpy, Infowin->win);
 }
 
-
 /*
- * A NULL terminated pair list of legal "operation names"
- *
- * Pairs of values, first is texttual name, second is the string
- * holding the decimal value that the operation corresponds to.
+ * Opcodes for Infoclr_init_data().
  */
-static const char *opcode_pairs[] =
-{
-	"cpy", "3",
-	"xor", "6",
-	"and", "1",
-	"ior", "7",
-	"nor", "8",
-	"inv", "10",
-	"clr", "0",
-	"set", "15",
-
-	"src", "3",
-	"dst", "5",
-
-	"+andReverse", "2",
-	"+andInverted", "4",
-	"+noop", "5",
-	"+equiv", "9",
-	"+orReverse", "11",
-	"+copyInverted", "12",
-	"+orInverted", "13",
-	"+nand", "14",
-	NULL
-};
-
-
-/*
- * Parse a word into an operation "code"
- *
- * Inputs:
- *	str: A string, hopefully representing an Operation
- *
- * Output:
- *	0-15: if 'str' is a valid Operation
- *	-1:   if 'str' could not be parsed
- */
-static int Infoclr_Opcode(const char *str)
-{
-	/* Scan through all legal operation names */
-	for (int i = 0; opcode_pairs[i*2]; ++i)
-	{
-		/* Is this the right oprname? */
-		if (equals(opcode_pairs[i*2], str))
-		{
-			/* Convert the second element in the pair into a Code */
-			return (atoi(opcode_pairs[i*2 + 1]));
-		}
-	}
-
-	/* The code was not found, return -1 */
-	return ( -1);
-}
-
+static constexpr int Infoclr_Opcode_CPY = 3;
+static constexpr int Infoclr_Opcode_XOR = 6;
 
 /*
  * Initialize an infoclr with some data
@@ -886,7 +759,7 @@ static int Infoclr_Opcode(const char *str)
  *	op:   The Opcode for the requested Operation (see above)
  *	stip: The stipple mode
  */
-static errr Infoclr_init_data(Pixell fg, Pixell bg, int op, int stip)
+static errr Infoclr_init_data(Pixell fg, Pixell bg, int op)
 {
 	infoclr *iclr = Infoclr;
 
@@ -918,11 +791,14 @@ static errr Infoclr_init_data(Pixell fg, Pixell bg, int op, int stip)
 	gcv.foreground = fg;
 
 	/* Hack -- Handle XOR (xor is code 6) by hacking bg and fg */
-	if (op == 6) gcv.background = 0;
-	if (op == 6) gcv.foreground = (bg ^ fg);
+	if (op == Infoclr_Opcode_XOR)
+	{
+		gcv.background = 0;
+		gcv.foreground = (bg ^ fg);
+	}
 
 	/* Assign the proper GC Fill Style */
-	gcv.fill_style = (stip ? FillStippled : FillSolid);
+	gcv.fill_style = FillSolid;
 
 	/* Turn off 'Give exposure events for pixmap copying' */
 	gcv.graphics_exposures = False;
@@ -950,7 +826,6 @@ static errr Infoclr_init_data(Pixell fg, Pixell bg, int op, int stip)
 	iclr->fg = fg;
 	iclr->bg = bg;
 	iclr->code = op;
-	iclr->stip = stip ? 1 : 0;
 
 	/* Success */
 	return (0);
@@ -1794,7 +1669,7 @@ static term *term_data_init(term_data *td, int i)
 		abort();
 	}
 	Infowin_set(td->win);
-	Infowin_init_top(x, y, wid, hgt, 0,
+	Infowin_init_data(None, x, y, wid, hgt, 0,
 	                 Metadpy->fg, Metadpy->bg);
 
 	/* Ask for certain events */
@@ -1928,7 +1803,7 @@ errr init_x11(int argc, char *argv[])
 
 
 	/* Init the Metadpy if possible */
-	if (Metadpy_init_name(dpy_name)) return ( -1);
+	if (Metadpy_new(dpy_name)) return ( -1);
 
 
 	/* Prepare cursor color */
@@ -1938,7 +1813,7 @@ errr init_x11(int argc, char *argv[])
 		abort();
 	}
 	Infoclr_set(cursor_clr);
-	Infoclr_init_ppn(Metadpy->fg, Metadpy->bg, "xor", 0);
+	Infoclr_init_data(Metadpy->fg, Metadpy->bg, Infoclr_Opcode_XOR);
 
 
 	/* Prepare normal colors */
@@ -1973,7 +1848,7 @@ errr init_x11(int argc, char *argv[])
 		}
 
 		/* Initialize the color */
-		Infoclr_init_ppn(pixel, Metadpy->bg, "cpy", 0);
+		Infoclr_init_data(pixel, Metadpy->bg, Infoclr_Opcode_CPY);
 	}
 
 
