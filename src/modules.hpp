@@ -12,4 +12,4 @@ void theme_intro();
 s16b *theme_race_status(int r_idx);
 void init_hooks_module();
 int find_module(const char *name);
-bool_ private_check_user_directory(const char *dirpath);
+bool private_check_user_directory(const char *dirpath);

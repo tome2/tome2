@@ -41,54 +41,32 @@
 #include "z-util.h"
 
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
 #include <cassert>
 #include <chrono>
-#include <fcntl.h>
-#include <sys/stat.h>
 #include <thread>
-#include <unistd.h>
 
 using boost::algorithm::equals;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
 
+namespace fs = boost::filesystem;
+
 /*
  * Check and create if needed the directory dirpath
  */
-bool_ private_check_user_directory(const char *dirpath)
+bool private_check_user_directory(const char *dirpath)
 {
-	/* Is this used anywhere else in *bands? */
-	struct stat stat_buf;
-
-	int ret;
-
-	/* See if it already exists */
-	ret = stat(dirpath, &stat_buf);
-
-	/* It does */
-	if (ret == 0)
+	if (fs::exists(dirpath))
 	{
-		/* Now we see if it's a directory */
-		if ((stat_buf.st_mode & S_IFMT) == S_IFDIR) return (TRUE);
-
-		/*
-		 * Something prevents us from create a directory with
-		 * the same pathname
-		 */
-		return (FALSE);
+		/* Must be directory, otherwise there'll be trouble. */
+		return fs::is_directory(dirpath);
 	}
-
-	/* No - this maybe the first time. Try to create a directory */
 	else
 	{
-		/* Create the ~/.ToME directory */
-		ret = mkdir(dirpath, 0700);
-
-		/* An error occured */
-		if (ret == -1) return (FALSE);
-
-		/* Success */
-		return (TRUE);
+		boost::system::error_code ec;
+		fs::create_directory(dirpath, ec);
+		return !ec;
 	}
 }
 
