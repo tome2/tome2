@@ -374,7 +374,7 @@ bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 	/* HACKS for ToME */
 	if (o_ptr->tval == TV_CLOAK && o_ptr->sval == SV_MIMIC_CLOAK)
 	{
-		s32b mimic = find_random_mimic_shape(127, TRUE);
+		s32b mimic = find_random_mimic_shape(127, true);
 		o_ptr->pval2 = mimic;
 	}
 	else if (flags & TR_SPELL_CONTAIN)

@@ -2530,7 +2530,7 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 			}
 			else if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
-				s32b mimic = find_random_mimic_shape(level, TRUE);
+				s32b mimic = find_random_mimic_shape(level, true);
 				o_ptr->pval2 = mimic;
 			}
 			break;
@@ -3245,7 +3245,7 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	case TV_POTION2:
 		if (o_ptr->sval == SV_POTION2_MIMIC)
 		{
-			s32b mimic = find_random_mimic_shape(level, FALSE);
+			s32b mimic = find_random_mimic_shape(level, false);
 			o_ptr->pval2 = mimic;
 		}
 		break;
