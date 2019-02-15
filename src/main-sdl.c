@@ -1730,12 +1730,9 @@ static errr term_data_init(term_data *td, int i)
 	};
 
 	/* Initialize the term */
-	term_init(t, cols, rows, 24);
+	term_init(t, td, cols, rows, 24);
 	term_init_soft_cursor(t);
 	term_init_ui_hooks(t, ui_hooks);
-
-	/* Save the data */
-	t->data = td;
 
 	/* Activate (important) */
 	Term_activate(t);

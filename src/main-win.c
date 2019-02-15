@@ -1654,12 +1654,9 @@ static void term_data_link(term_data *td)
 	};
 
 	/* Initialize the term */
-	term_init(t, td->cols, td->rows, td->keys);
+	term_init(t, td, td->cols, td->rows, td->keys);
 	term_init_soft_cursor(t);
 	term_init_ui_hooks(t, ui_hooks);
-
-	/* Remember where we came from */
-	t->data = (void *)(td);
 }
 
 

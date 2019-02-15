@@ -260,7 +260,7 @@ void Term_mapped();
 void Term_unmapped();
 
 errr term_nuke(term *t);
-errr term_init(term *t, int w, int h, int k);
+errr term_init(term *t, void *data, int w, int h, int k);
 void term_init_icky_corner(term *t);
 void term_init_soft_cursor(term *t);
 void term_init_ui_hooks(term *t, term_ui_hooks_t hooks);

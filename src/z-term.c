@@ -1903,7 +1903,7 @@ errr term_nuke(term *t)
  * By default, the cursor starts out "invisible"
  * By default, we "erase" using "black spaces"
  */
-errr term_init(term *t, int w, int h, int k)
+errr term_init(term *t, void *data, int w, int h, int k)
 {
 	int y;
 
@@ -1959,6 +1959,8 @@ errr term_init(term *t, int w, int h, int k)
 	/* Force "total erase" */
 	t->total_erase = TRUE;
 
+	/* Store data pointer */
+	t->data = data;
 
 	/* Success */
 	return (0);

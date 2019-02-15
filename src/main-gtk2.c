@@ -1238,7 +1238,7 @@ static errr term_data_init(term_data *td, int i)
 	};
 
 	/* Initialize the term */
-	term_init(t, td->cols, td->rows, 1024);
+	term_init(t, td, td->cols, td->rows, 1024);
 	term_init_soft_cursor(t);
 	term_init_ui_hooks(t, ui_hooks);
 
@@ -1248,9 +1248,6 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Instance names should start with a lowercase letter XXX */
 	for (p = (char *)td->name; *p; p++) *p = tolower(*p);
-
-	/* Save the data */
-	t->data = td;
 
 	/* Activate (important) */
 	Term_activate(t);

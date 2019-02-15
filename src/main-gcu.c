@@ -746,12 +746,9 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 	};
 
 	/* Initialize the term */
-	term_init(t, cols, rows, 256);
+	term_init(t, td, cols, rows, 256);
 	term_init_icky_corner(t);
 	term_init_ui_hooks(t, ui_hooks);
-
-	/* Save the data */
-	t->data = td;
 
 	/* Activate it */
 	Term_activate(t);
