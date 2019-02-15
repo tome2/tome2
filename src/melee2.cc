@@ -962,6 +962,8 @@ static bool_ monst_spell_monst(int m_idx)
 {
 	static const monster_spell_flag_set SF_INT_MASK = compute_smart_mask();
 
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int y = 0, x = 0;
 	char m_name[80], t_name[80];
 	char m_poss[80];

@@ -482,6 +482,8 @@ bool_ teleport_player_bypass = FALSE;
 
 void teleport_player(int dis)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int d, i, min, ox, oy, x = 0, y = 0;
 	int tries = 0;
 
@@ -773,6 +775,8 @@ void teleport_monster_to(int m_idx, int ny, int nx)
  */
 void teleport_player_to(int ny, int nx)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int y, x, oy, ox, dis = 0, ctr = 0;
 
 	if (p_ptr->resist_continuum)
@@ -857,6 +861,8 @@ void teleport_player_to(int ny, int nx)
  */
 void teleport_player_level()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	/* No effect in arena or quest */
 	if (p_ptr->inside_quest)
 	{
@@ -2368,6 +2374,8 @@ void corrupt_player()
  */
 static void apply_nexus(monster_type *m_ptr)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if (m_ptr == NULL) return;
 
 	if (!(dungeon_flags & DF_NO_TELEPORT))
@@ -4096,6 +4104,8 @@ bool_ hurt_monster(monster_type *m_ptr)
  */
 bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int tmp;
 
 	cave_type *c_ptr = &cave[y][x];
@@ -6755,6 +6765,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	auto const &d_info = game->edit_data.d_info;
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 

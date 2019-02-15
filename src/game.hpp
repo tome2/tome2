@@ -106,6 +106,11 @@ struct Game {
 	boost::multi_array<level_marker, 2> level_markers { };
 
 	/**
+	 * Dungeon flags.
+	 */
+	dungeon_flag_set dungeon_flags { };
+
+	/**
 	 * Generate a special level feeling?
 	 */
 	bool generate_special_feeling = false;

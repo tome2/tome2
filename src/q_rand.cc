@@ -408,6 +408,7 @@ static bool quest_random_death_hook(void *, void *in_, void *)
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	int r_idx = m_list[m_idx].r_idx;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
 	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
@@ -446,6 +447,7 @@ static bool quest_random_turn_hook(void *, void *, void *)
 
 static bool quest_random_feeling_hook(void *, void *, void *)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
 	auto const &r_info = game->edit_data.r_info;
 
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
@@ -472,6 +474,8 @@ static bool quest_random_feeling_hook(void *, void *, void *)
 
 static bool quest_random_gen_hero_hook(void *, void *, void *)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
 	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
 	    (!random_quests[dun_level].type) ||
@@ -505,6 +509,8 @@ static bool quest_random_gen_hero_hook(void *, void *, void *)
 static bool quest_random_gen_hook(void *, void *in_, void *)
 {
 	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	s32b bx0 = in->x;
 	s32b by0 = in->y;
 	s32b x, y;
@@ -639,6 +645,7 @@ static bool quest_random_dump_hook(void *, void *in_, void *)
 std::string quest_random_describe()
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	// Only emit description if we're actually on a
 	// random quest level.

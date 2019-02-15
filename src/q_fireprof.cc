@@ -5,6 +5,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_get_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "object1.hpp"
@@ -458,9 +459,10 @@ std::string quest_fireproof_describe()
 	return w.str();
 }
 
-static bool fireproof_gen_hook(void *, void *, void *)
+static bool fireproof_gen_hook(void *, void *in_, void *)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
+	auto in = static_cast<hook_quest_gen_in *>(in_);
 
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_FIREPROOF)
@@ -478,7 +480,7 @@ static bool fireproof_gen_hook(void *, void *, void *)
 		}
 
 		/* no teleport */
-		dungeon_flags = DF_NO_TELEPORT;
+		in->dungeon_flags_ref |= DF_NO_TELEPORT;
 
 		/* create quest item */
 		{

@@ -350,6 +350,8 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
  */
 void do_cmd_mindcraft()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int n = 0, b = 0;
 
 	int chance;

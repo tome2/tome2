@@ -232,6 +232,7 @@ bool mego_ok(monster_race const *r_ptr, int ego)
 static int pick_ego_monster(monster_race const *r_ptr)
 {
 	const auto &re_info = game->edit_data.re_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Assume no ego */
 	int ego = 0, lvl;
@@ -1993,6 +1994,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	auto &r_info = game->edit_data.r_info;
 	auto &alloc = game->alloc;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int i;
 	bool_ add_level = FALSE;

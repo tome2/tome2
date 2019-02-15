@@ -8,6 +8,7 @@
 #include "hook_init_quest_in.hpp"
 #include "hook_move_in.hpp"
 #include "hook_quest_finish_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
@@ -88,8 +89,10 @@ static bool quest_between_move_hook(void *, void *in_, void *)
 	return false;
 }
 
-static bool quest_between_gen_hook(void *, void *, void *)
+static bool quest_between_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
+
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
@@ -121,7 +124,7 @@ static bool quest_between_gen_hook(void *, void *, void *)
 	/* Otherwise instadeath */
 	energy_use = 0;
 
-	dungeon_flags |= DF_NO_GENO;
+	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	return true;
 }

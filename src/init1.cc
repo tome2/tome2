@@ -6016,6 +6016,7 @@ static errr process_dungeon_file_aux(char *buf, int *yval, int *xval, int xvalst
 	auto &wf_info = game->edit_data.wf_info;
 	auto &a_info = game->edit_data.a_info;
 	auto &k_info = game->edit_data.k_info;
+	auto &dungeon_flags = game->dungeon_flags;
 
 	int i;
 

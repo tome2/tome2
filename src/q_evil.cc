@@ -7,6 +7,7 @@
 #include "feature_type.hpp"
 #include "game.hpp"
 #include "hook_quest_finish_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
@@ -19,8 +20,9 @@
 
 #define cquest (quest[QUEST_EVIL])
 
-static bool quest_evil_gen_hook(void *, void *, void *)
+static bool quest_evil_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
 	auto const &f_info = game->edit_data.f_info;
 
 	int x, y, i;
@@ -57,7 +59,7 @@ static bool quest_evil_gen_hook(void *, void *, void *)
 
 	init_flags = INIT_CREATE_DUNGEON;
 	process_dungeon_file("evil.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
-	dungeon_flags |= DF_NO_GENO;
+	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Place some random balrogs */
 	for (i = 6; i > 0; )

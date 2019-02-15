@@ -138,6 +138,7 @@ static bool power_chance(power_activation const &x_ref)
 static void power_activate(int power)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	s16b plev = p_ptr->lev;
 	char ch = 0;

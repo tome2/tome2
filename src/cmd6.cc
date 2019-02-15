@@ -2625,6 +2625,7 @@ void do_cmd_read_scroll()
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &r_info = game->edit_data.r_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Check some conditions */
 	if (p_ptr->blind)
@@ -3668,6 +3669,7 @@ void zap_combine_rod_tip(object_type *q_ptr, int tip_item)
 void do_cmd_zap_rod()
 {
 	auto const &k_info = game->edit_data.k_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int item, chance, dir;
 
@@ -4509,6 +4511,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 {
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int plev = get_skill(SKILL_DEVICE);
 

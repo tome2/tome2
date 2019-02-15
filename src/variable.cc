@@ -549,11 +549,6 @@ s16b plots[MAX_PLOTS];
 random_quest random_quests[MAX_RANDOM_QUEST];
 
 /*
- * Dungeon flags
- */
-DECLARE_FLAG_ZERO_IMPL(dungeon_flag_set, dungeon_flags);
-
-/*
  * The spell list of schools
  */
 s16b schools_count = 0;

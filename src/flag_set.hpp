@@ -23,9 +23,6 @@ public:
 	constexpr flag_set()
 		: m_data { 0 }
 	{
-		// It is *extremely* important that there are absolutely
-		// NO dependencies on any global objects in here; lest we
-		// fall into SIOF territory; see DECLARE_FLAG_ZERO_IMPL
 	}
 
 	// This method is a workaround for a a segmentation fault
@@ -187,15 +184,3 @@ public:
  */
 #define DECLARE_FLAG(type, name, tier, index) \
   PP_GLOBAL_CONSTEXPR_CONST(type, name, DECLARE_FLAG_MAKE_INIT(type, tier, index))
-
-/**
- * Macro for declaring a zero'ed "flag" variable.
- */
-#define DECLARE_FLAG_ZERO_INTF(type, name) \
-  extern type name
-
-/**
- * Macro for declaring the implementation of a zero'ed "flag" variable.
- */
-#define DECLARE_FLAG_ZERO_IMPL(type, name) \
-  type name { };

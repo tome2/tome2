@@ -5,6 +5,7 @@
 #include "dungeon_flag.hpp"
 #include "game.hpp"
 #include "hook_quest_finish_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
@@ -22,8 +23,10 @@
 
 #define cquest (quest[QUEST_THIEVES])
 
-static bool quest_thieves_gen_hook(void *, void *, void *)
+static bool quest_thieves_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
+
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
@@ -59,7 +62,7 @@ static bool quest_thieves_gen_hook(void *, void *, void *)
 
 	init_flags = INIT_CREATE_DUNGEON;
 	process_dungeon_file("thieves.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
-	dungeon_flags |= DF_NO_GENO;
+	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Rip the inventory from the player */
 	cmsg_print(TERM_YELLOW, "You feel a vicious blow on your head.");

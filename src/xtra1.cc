@@ -541,6 +541,7 @@ static void prt_depth(int row, int col)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	char depths[32];
 	auto d_ptr = &d_info[dungeon_type];

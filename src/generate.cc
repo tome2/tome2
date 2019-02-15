@@ -17,6 +17,7 @@
 #include "feature_type.hpp"
 #include "game.hpp"
 #include "hook_build_room1_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "levels.hpp"
@@ -371,6 +372,7 @@ static void rand_dir(int *rdir, int *cdir)
  */
 static void place_up_stairs(int y, int x)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
 	cave_type *c_ptr = &cave[y][x];
 
 	/* Create up stairs */
@@ -393,6 +395,7 @@ static void place_up_stairs(int y, int x)
 static void place_down_stairs(int y, int x)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	cave_type *c_ptr = &cave[y][x];
 
@@ -676,6 +679,8 @@ void place_new_way(int *y, int *x)
  */
 bool_ new_player_spot(int branch)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int	y, x;
 	int max_attempts = 5000;
 
@@ -965,6 +970,7 @@ static void place_random_door(int y, int x)
 static void alloc_stairs(int feat, int num, int walls, int branch)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int y, x, i, j, cnt;
 
@@ -1672,6 +1678,8 @@ static bool_ get_is_floor(int x, int y)
  */
 static void check_room_boundary(int x1, int y1, int x2, int y2)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int count, x, y;
 	bool_ old_is_floor, new_is_floor;
 
@@ -5934,6 +5942,7 @@ static void build_type12(int by0, int bx0)
 static void build_tunnel(int row1, int col1, int row2, int col2, bool_ water)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int i, y, x;
 	int tmp_row, tmp_col;
@@ -6267,6 +6276,7 @@ static bool_ possible_doorway(int y, int x)
 static void try_doors(int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	bool_ dir_ok[4];
 	int i, k, n;
@@ -6500,6 +6510,7 @@ static void fill_level(bool_ use_floor, byte smooth);
 bool level_generate_dungeon()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int i, k, y, x, y1, x1, branch = get_branch();
 	auto d_ptr = &d_info[dungeon_type];
@@ -7426,6 +7437,7 @@ static bool cave_gen()
 	auto const &a_info = game->edit_data.a_info;
 	auto &k_info = game->edit_data.k_info;
 	auto &alloc = game->alloc;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	auto d_ptr = &d_info[dungeon_type];
 
@@ -8122,6 +8134,7 @@ void generate_cave()
 	auto const &d_info = game->edit_data.d_info;
 	auto &a_info = game->edit_data.a_info;
 	auto const &level_markers = game->level_markers;
+	auto &dungeon_flags = game->dungeon_flags;
 
 	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
@@ -8259,7 +8272,10 @@ void generate_cave()
 			/* Quest levels -KMW- */
 			if (p_ptr->inside_quest)
 			{
-				process_hooks_new(HOOK_GEN_QUEST, NULL, NULL);
+				struct hook_quest_gen_in in = {
+					game->dungeon_flags
+				};
+				process_hooks_new(HOOK_GEN_QUEST, &in, NULL);
 			}
 
 			/* Special levels */

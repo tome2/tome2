@@ -4117,6 +4117,8 @@ void disturb_on_other()
  */
 static int random_quest_number()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if ((dun_level >= 1) && (dun_level < MAX_RANDOM_QUEST) &&
 			(dungeon_flags & DF_PRINCIPAL) &&
 			(random_quests[dun_level].type) &&

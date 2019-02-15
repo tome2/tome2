@@ -1505,6 +1505,8 @@ static bool do_monsters(ls_flag_t flag, bool no_companions)
  */
 static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 {
+	auto &dungeon_flags = game->dungeon_flags;
+
 	/* Header info */
 	do_s16b(&dun_level, flag);
 	do_byte(&dungeon_type, flag);

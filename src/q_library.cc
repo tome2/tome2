@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "game.hpp"
 #include "hooks.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_type.hpp"
@@ -311,8 +312,10 @@ static void library_quest_fill_book()
 	screen_load();
 }
 
-static bool quest_library_gen_hook(void *, void *, void *)
+static bool quest_library_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
+
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_LIBRARY)
 	{
@@ -323,7 +326,7 @@ static bool quest_library_gen_hook(void *, void *, void *)
 		int y = 2;
 		int x = 2;
 		load_map("library.map", &y, &x);
-		dungeon_flags = DF_NO_GENO;
+		in->dungeon_flags_ref |= DF_NO_GENO;
 	}
 
 	/* Generate monsters */

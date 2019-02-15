@@ -166,6 +166,7 @@ static bool ask_leave()
 void do_cmd_go_up()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	bool_ go_up = FALSE, go_up_many = FALSE, prob_traveling = FALSE;
 
@@ -362,6 +363,7 @@ static bool_ between_effect()
 void do_cmd_go_down()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	cave_type *c_ptr;
 
@@ -3533,6 +3535,7 @@ void do_cmd_boomerang()
 static bool_ tport_vertically(bool_ how)
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* quest? */
 	if (p_ptr->inside_quest)

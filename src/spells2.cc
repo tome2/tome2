@@ -1416,6 +1416,8 @@ bool_ detect_all(int rad)
  */
 void stair_creation()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	/* XXX XXX XXX */
 	if (!cave_valid_bold(p_ptr->py, p_ptr->px))
 	{
@@ -2754,6 +2756,8 @@ static void genocide_aux(char typ)
 
 void genocide()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if (dungeon_flags & DF_NO_GENO)
 	{
 		return;
@@ -2782,6 +2786,8 @@ void genocide()
  */
 void mass_genocide()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int i;
 	auto const msec = options->delay_factor_ms();
 	int dam = 0;
@@ -2880,6 +2886,8 @@ void mass_genocide()
  */
 void destroy_area(int y1, int x1, int r)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	int y, x, k, t;
 
 	cave_type *c_ptr;
@@ -4624,6 +4632,7 @@ void heal_insanity(int val)
 bool_ passwall(int dir, bool_ safe)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int x = p_ptr->px;
 	int y = p_ptr->py;
@@ -4940,6 +4949,7 @@ bool_ reset_recall(bool_ no_trepas_max_depth)
 void create_between_gate(int dist, int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int ii, ij, plev = get_skill(SKILL_CONVEYANCE);
 

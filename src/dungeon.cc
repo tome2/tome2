@@ -1047,6 +1047,7 @@ static void process_world()
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 	auto &timers = game->timers;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int x, y;
 
@@ -3771,6 +3772,7 @@ static void process_command()
 static void process_player()
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	int i, j;
 
@@ -4221,6 +4223,7 @@ static void process_player()
 static void dungeon()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Reset various flags */
 	hack_mind = FALSE;

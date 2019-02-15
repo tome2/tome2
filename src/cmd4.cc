@@ -2726,6 +2726,7 @@ static const char *do_cmd_feeling_text[11] =
 void do_cmd_feeling()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Verify the feeling */
 	if (feeling < 0) feeling = 0;
