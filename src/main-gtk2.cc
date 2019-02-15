@@ -1083,7 +1083,6 @@ static void size_allocate_event_handler(
         gpointer user_data)
 {
 	term_data *td = (term_data *) user_data;
-	term *old = Term;
 
 	/* Paranoia */
 	g_return_if_fail(widget != NULL);
@@ -1117,19 +1116,11 @@ static void size_allocate_event_handler(
 		        allocation->height);
 
 		/* And in the term package */
-		Term_activate(td->term_ptr);
-
-		/* Resize if necessary */
-		Term_resize(td->cols, td->rows);
-
-		/* Redraw its content */
-		Term_redraw();
-
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		Term_with_active(td->term_ptr, [&td]() {
+			Term_resize(td->cols, td->rows);
+			Term_redraw();
+			Term_fresh();
+		});
 	}
 }
 
@@ -1143,15 +1134,6 @@ static gboolean expose_event_handler(
         gpointer user_data)
 {
 	term_data *td = (term_data *) user_data;
-
-	term *old = Term;
-
-#ifndef NO_REDRAW_SECTION
-
-	int x1, x2, y1, y2;
-
-#endif /* !NO_REDRAW_SECTION */
-
 
 	/* Paranoia */
 	if (td == NULL) return true;
@@ -1175,46 +1157,43 @@ static gboolean expose_event_handler(
 	/* No backing store - use the game's code to redraw the area */
 	else
 	{
-
 		/* Activate the relevant term */
-		Term_activate(td->term_ptr);
+		Term_with_active(td->term_ptr, [&event, &td]() {
 
 # ifdef NO_REDRAW_SECTION
 
-		/* K.I.S.S. version */
+			/* K.I.S.S. version */
 
-		/* Redraw */
-		Term_redraw();
+			/* Redraw */
+			Term_redraw();
 
 # else /* NO_REDRAW_SECTION */
 
-		/*
-		 * Complex version - The above is enough, but since we have
-		 * Term_redraw_section... This might help if we had a graphics
-		 * mode.
-		 */
+			/*
+			 * Complex version - The above is enough, but since we have
+			 * Term_redraw_section... This might help if we had a graphics
+			 * mode.
+			 */
 
-		/* Convert coordinate in pixels to character cells */
-		x1 = event->area.x / td->font_wid;
-		x2 = (event->area.x + event->area.width) / td->font_wid;
-		y1 = event->area.y / td->font_hgt;
-		y2 = (event->area.y + event->area.height) / td->font_hgt;
+			/* Convert coordinate in pixels to character cells */
+			int x1 = event->area.x / td->font_wid;
+			int x2 = (event->area.x + event->area.width) / td->font_wid;
+			int y1 = event->area.y / td->font_hgt;
+			int y2 = (event->area.y + event->area.height) / td->font_hgt;
 
-		/*
-		 * No paranoia - boundary checking is done in
-		 * Term_redraw_section
-		 */
+			/*
+			 * No paranoia - boundary checking is done in
+			 * Term_redraw_section
+			 */
 
-		/* Redraw the area */
-		Term_redraw_section(x1, y1, x2, y2);
+			/* Redraw the area */
+			Term_redraw_section(x1, y1, x2, y2);
 
 # endif  /* NO_REDRAW_SECTION */
 
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+			/* Refresh */
+			Term_fresh();
+		});
 	}
 
 	/* We've processed the event ourselves */

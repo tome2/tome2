@@ -1437,6 +1437,29 @@ public:
 
 };
 
+/**
+ * Policy handler for setting/resetting the active terminal.
+ */
+struct ActiveTerminalPolicy {
+public:
+	using handle_type = term *;
+
+	static handle_type get_null()
+	{
+		return nullptr;
+	}
+
+	static bool is_null(handle_type t)
+	{
+		return t == nullptr;
+	}
+
+	static void close(handle_type t)
+	{
+		Term_activate(t);
+	}
+};
+
 } // namespace (anonymous)
 
 
@@ -1452,6 +1475,12 @@ void Term_with_saved_cursor_visbility(std::function<void ()> callback)
 	callback();
 }
 
+void Term_with_active(term *t, std::function<void ()> callback)
+{
+	unique_handle<ActiveTerminalPolicy> resetter(Term);
+	Term_activate(t);
+	callback();
+}
 
 /*
  * Extract the current window size

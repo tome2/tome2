@@ -1582,20 +1582,18 @@ bool inkey_flag = false;
 */
 static char inkey_real(bool inkey_scan)
 {
-	char ch = 0;
-
 	/* Hack -- Use the "inkey_next" pointer */
 	if (inkey_next && *inkey_next)
 	{
 		/* Get next character, and advance */
-		ch = *inkey_next++;
+		char ch = *inkey_next++;
 
 		/* Cancel the various "global parameters" */
 		inkey_base = inkey_flag = inkey_scan = false;
 
 		/* Accept result */
 		macro_recorder_add(ch);
-		return (ch);
+		return ch;
 	}
 
 	/* Forget pointer */
@@ -1603,9 +1601,8 @@ static char inkey_real(bool inkey_scan)
 
 
 	/* Access cursor state */
+	char ch = '\0';
 	Term_with_saved_cursor_visbility([&ch, &inkey_scan]() {
-
-		bool done = false;
 
 		/* Show the cursor if waiting, except sometimes in "command" mode */
 		if (!inkey_scan && (!inkey_flag || options->hilite_player || character_icky))
@@ -1614,155 +1611,148 @@ static char inkey_real(bool inkey_scan)
 		}
 
 		/* Hack -- Activate main screen */
-		term *old = Term;
-		Term_activate(angband_term[0]);
-
-		/* Get a key */
-		while (!ch)
-		{
-			char kk;
-
-			/* Hack -- Handle "inkey_scan" */
-			if (!inkey_base && inkey_scan &&
-					(0 != Term_inkey(&kk, false, false)))
+		auto old = Term;
+		Term_with_active(angband_term[0], [&ch, &old, &inkey_scan]() {
+			/* Have with flushed the output? */
+			bool flushed = false;
+			/* Get a key */
+			while (!ch)
 			{
-				break;
-			}
+				char kk;
 
-
-			/* Hack -- Flush output once when no key ready */
-			if (!done && (0 != Term_inkey(&kk, false, false)))
-			{
-				/* Hack -- activate proper term */
-				Term_activate(old);
-
-				/* Flush output */
-				Term_fresh();
-
-				/* Hack -- activate main screen */
-				Term_activate(angband_term[0]);
-
-				/* Only once */
-				done = true;
-			}
-
-
-			/* Hack -- Handle "inkey_base" */
-			if (inkey_base)
-			{
-				int w = 0;
-
-				/* Wait forever */
-				if (!inkey_scan)
+				/* Hack -- Handle "inkey_scan" */
+				if (!inkey_base && inkey_scan &&
+						(0 != Term_inkey(&kk, false, false)))
 				{
-					/* Wait for (and remove) a pending key */
-					if (0 == Term_inkey(&ch, true, true))
-					{
-						/* Done */
-						break;
-					}
-
-					/* Oops */
 					break;
 				}
 
-				/* Wait */
-				while (true)
+
+				/* Hack -- Flush output once when no key ready */
+				if (!flushed && (0 != Term_inkey(&kk, false, false)))
 				{
-					/* Check for (and remove) a pending key */
-					if (0 == Term_inkey(&ch, false, true))
+					/* Hack -- activate proper term */
+					Term_with_active(old, []() {
+						Term_fresh();
+					});
+
+					/* Only once */
+					flushed = true;
+				}
+
+
+				/* Hack -- Handle "inkey_base" */
+				if (inkey_base)
+				{
+					int w = 0;
+
+					/* Wait forever */
+					if (!inkey_scan)
 					{
-						/* Done */
+						/* Wait for (and remove) a pending key */
+						if (0 == Term_inkey(&ch, true, true))
+						{
+							/* Done */
+							break;
+						}
+
+						/* Oops */
 						break;
 					}
 
-					/* No key ready */
-					else
+					/* Wait */
+					while (true)
 					{
-						/* Increase "wait" */
-						w += 10;
+						/* Check for (and remove) a pending key */
+						if (0 == Term_inkey(&ch, false, true))
+						{
+							/* Done */
+							break;
+						}
 
-						/* Excessive delay */
-						if (w >= 100) break;
+						/* No key ready */
+						else
+						{
+							/* Increase "wait" */
+							w += 10;
 
-						/* Delay */
-						sleep_for(milliseconds(w));
+							/* Excessive delay */
+							if (w >= 100) break;
+
+							/* Delay */
+							sleep_for(milliseconds(w));
+						}
 					}
+
+					/* Done */
+					break;
 				}
 
-				/* Done */
-				break;
-			}
+
+				/* Get a key (see above) */
+				ch = inkey_aux();
 
 
-			/* Get a key (see above) */
-			ch = inkey_aux();
+				/* Handle "control-right-bracket" */
+				if ((ch == 29) || ((!options->rogue_like_commands) && (ch == KTRL('D'))))
+				{
+					/* Strip this key */
+					ch = 0;
+
+					/* Do an html dump */
+					do_cmd_html_dump();
+
+					/* Continue */
+					continue;
+				}
 
 
-			/* Handle "control-right-bracket" */
-			if ((ch == 29) || ((!options->rogue_like_commands) && (ch == KTRL('D'))))
-			{
-				/* Strip this key */
-				ch = 0;
+				/* Treat back-quote as escape */
+				if (ch == '`') ch = ESCAPE;
 
-				/* Do an html dump */
-				do_cmd_html_dump();
-
-				/* Continue */
-				continue;
-			}
-
-
-			/* Treat back-quote as escape */
-			if (ch == '`') ch = ESCAPE;
-
-
-			/* End "macro trigger" */
-			if (parse_under && (ch <= 32))
-			{
-				/* Strip this key */
-				ch = 0;
 
 				/* End "macro trigger" */
-				parse_under = false;
+				if (parse_under && (ch <= 32))
+				{
+					/* Strip this key */
+					ch = 0;
+
+					/* End "macro trigger" */
+					parse_under = false;
+				}
+
+
+				/* Handle "control-caret" */
+				if (ch == 30)
+				{
+					/* Strip this key */
+					ch = 0;
+				}
+
+				/* Handle "control-underscore" */
+				else if (ch == 31)
+				{
+					/* Strip this key */
+					ch = 0;
+
+					/* Begin "macro trigger" */
+					parse_under = true;
+				}
+
+				/* Inside "macro trigger" */
+				else if (parse_under)
+				{
+					/* Strip this key */
+					ch = 0;
+				}
 			}
 
-
-			/* Handle "control-caret" */
-			if (ch == 30)
-			{
-				/* Strip this key */
-				ch = 0;
-			}
-
-			/* Handle "control-underscore" */
-			else if (ch == 31)
-			{
-				/* Strip this key */
-				ch = 0;
-
-				/* Begin "macro trigger" */
-				parse_under = true;
-			}
-
-			/* Inside "macro trigger" */
-			else if (parse_under)
-			{
-				/* Strip this key */
-				ch = 0;
-			}
-		}
-
-
-		/* Hack -- restore the term */
-		Term_activate(old);
+		});
 
 	});
 
-
 	/* Cancel the various "global parameters" */
 	inkey_base = inkey_flag = false;
-
 
 	/* Return the keypress */
 	macro_recorder_add(ch);

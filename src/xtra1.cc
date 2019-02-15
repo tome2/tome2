@@ -1090,25 +1090,17 @@ static void fixup_display(u32b mask, F callback)
 {
 	for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
-		term *old = Term;
-
 		/* No window */
 		if (!angband_term[j]) continue;
 
 		/* No relevant flags */
 		if (!(window_flag[j] & mask)) continue;
 
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Apply fixup callback */
-		callback();
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		/* Apply callback */
+		Term_with_active(angband_term[j], [&callback]() {
+			callback();
+			Term_fresh();
+		});
 	}
 }
 

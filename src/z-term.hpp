@@ -133,6 +133,7 @@ void Term_bell();
 
 void Term_with_saved_cursor_flags(std::function<void ()> callback);
 void Term_with_saved_cursor_visbility(std::function<void ()> callback);
+void Term_with_active(term *t, std::function<void ()> callback);
 
 void Term_get_size(int *w, int *h);
 void Term_locate(int *x, int *y);

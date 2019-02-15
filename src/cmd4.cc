@@ -65,11 +65,6 @@ using boost::algorithm::equals;
  */
 void do_cmd_redraw()
 {
-	int j;
-
-	term *old = Term;
-
-
 	/* Hack -- react to changes */
 	Term_xtra(TERM_XTRA_REACT, 0);
 
@@ -111,22 +106,16 @@ void do_cmd_redraw()
 
 
 	/* Redraw every window */
-	for (j = 0; j < 8; j++)
+	for (int j = 0; j < 8; j++)
 	{
 		/* Dead window */
 		if (!angband_term[j]) continue;
 
-		/* Activate */
-		Term_activate(angband_term[j]);
-
 		/* Redraw */
-		Term_redraw();
-
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		Term_with_active(angband_term[j], []() {
+			Term_redraw();
+			Term_fresh();
+		});
 	}
 }
 
@@ -810,38 +799,20 @@ void do_cmd_options_aux(int page, const char *info, bool read_only)
  */
 static void do_cmd_options_win()
 {
-	int i, j, d;
-
-	int y = 0;
-
 	int x = 0;
-
-	char ch;
-
-	bool go = true;
-
-	u32b old_flag[8];
-
-
-	/* Memorize old flags */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		/* Acquire current flags */
-		old_flag[j] = window_flag[j];
-	}
-
+	int y = 0;
 
 	/* Clear screen */
 	Term_clear();
 
 	/* Interact */
-	while (go)
+	while (bool go = true)
 	{
 		/* Prompt XXX XXX XXX */
 		prt("Window Flags (<dir>, t, y, n, ESC) ", 0, 0);
 
 		/* Display the windows */
-		for (j = 0; j < ANGBAND_TERM_MAX; j++)
+		for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 		{
 			byte a = TERM_WHITE;
 
@@ -855,7 +826,7 @@ static void do_cmd_options_win()
 		}
 
 		/* Display the options */
-		for (i = 0; i < 16; i++)
+		for (int i = 0; i < 16; i++)
 		{
 			byte a = TERM_WHITE;
 
@@ -871,7 +842,7 @@ static void do_cmd_options_win()
 			Term_putstr(0, i + 5, -1, a, str);
 
 			/* Display the windows */
-			for (j = 0; j < ANGBAND_TERM_MAX; j++)
+			for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 			{
 				byte a = TERM_WHITE;
 
@@ -892,7 +863,7 @@ static void do_cmd_options_win()
 		Term_gotoxy(35 + x * 5, y + 5);
 
 		/* Get key */
-		ch = inkey();
+		char ch = inkey();
 
 		/* Analyze */
 		switch (ch)
@@ -908,13 +879,13 @@ static void do_cmd_options_win()
 		case 't':
 			{
 				/* Clear windows */
-				for (j = 0; j < ANGBAND_TERM_MAX; j++)
+				for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 				{
 					window_flag[j] &= ~(1L << y);
 				}
 
 				/* Clear flags */
-				for (i = 0; i < 16; i++)
+				for (int i = 0; i < 16; i++)
 				{
 					window_flag[x] &= ~(1L << i);
 				}
@@ -945,7 +916,7 @@ static void do_cmd_options_win()
 
 		default:
 			{
-				d = get_keymap_dir(ch);
+				int d = get_keymap_dir(ch);
 
 				x = (x + ddx[d] + 8) % 8;
 				y = (y + ddy[d] + 16) % 16;
@@ -957,28 +928,17 @@ static void do_cmd_options_win()
 		}
 	}
 
-	/* Notice changes */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
+	/* Refresh all the terms */
+	for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
-		term *old = Term;
-
 		/* Dead window */
 		if (!angband_term[j]) continue;
 
-		/* Ignore non-changes */
-		if (window_flag[j] == old_flag[j]) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Erase */
-		Term_clear();
-
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		/* Redraw */
+		Term_with_active(angband_term[j], [] {
+			Term_clear();
+			Term_fresh();
+		});
 	}
 }
 
