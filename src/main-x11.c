@@ -1213,10 +1213,6 @@ struct term_data
  */
 static term_data data[MAX_TERM_DATA];
 
-/* Use short names for the most commonly used elements of various structures. */
-#define DPY (Metadpy->dpy)
-#define WIN (Infowin->win)
-
 /*
  * Process a keypress event
  *
