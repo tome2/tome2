@@ -202,6 +202,6 @@ extern term *angband_term[ANGBAND_TERM_MAX];
 extern char angband_term_name[ANGBAND_TERM_MAX][80];
 extern byte angband_color_table[256][4];
 extern bool_ character_generated;
-extern bool_ character_icky;
+extern bool character_icky;
 extern bool_ inkey_flag;
 extern bool_ msg_flag;

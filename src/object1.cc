@@ -3045,7 +3045,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			/* Restore the screen */
 			Term_load();
 		}
-		character_icky = FALSE;
+		character_icky = false;
 
 	}
 

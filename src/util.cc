@@ -1929,14 +1929,14 @@ void screen_save()
 	/* Save the screen (if legal) */
 	if (screen_depth++ == 0) Term_save();
 
-	/* Increase "icky" depth */
-	character_icky++;
+	/* Enter "icky" mode */
+	character_icky = true;
 }
 
 void screen_save_no_flush()
 {
 	/* Enter "icky" mode */
-	character_icky = TRUE;
+	character_icky = true;
 
 	/* Save the screen */
 	Term_save();
@@ -1955,8 +1955,8 @@ void screen_load()
 	/* Load the screen (if legal) */
 	if (--screen_depth == 0) Term_load();
 
-	/* Decrease "icky" depth */
-	character_icky--;
+	/* Leave "icky" mode */
+	character_icky = false;
 }
 
 void screen_load_no_flush()
@@ -1965,7 +1965,7 @@ void screen_load_no_flush()
 	Term_load();
 
 	/* Leave "icky" mode */
-	character_icky = FALSE;
+	character_icky = false;
 }
 
 

@@ -3219,7 +3219,7 @@ void do_cmd_store()
 
 
 	/* Hack -- Character is in "icky" mode */
-	character_icky = TRUE;
+	character_icky = true;
 
 
 	/* No command argument */
@@ -3294,7 +3294,7 @@ void do_cmd_store()
 		if (store_process_command()) recreate = TRUE;
 
 		/* Hack -- Character is still in "icky" mode */
-		character_icky = TRUE;
+		character_icky = true;
 
 		/* Notice stuff */
 		notice_stuff();
@@ -3388,7 +3388,7 @@ void do_cmd_store()
 	}
 
 	/* Hack -- Character is no longer in "icky" mode */
-	character_icky = FALSE;
+	character_icky = false;
 
 
 	/* Hack -- Cancel automatic command */
@@ -3660,7 +3660,7 @@ void do_cmd_home_trump()
 
 
 	/* Hack -- Character is in "icky" mode */
-	character_icky = TRUE;
+	character_icky = true;
 
 
 	/* No command argument */
@@ -3748,7 +3748,7 @@ void do_cmd_home_trump()
 		store_process_command();
 
 		/* Hack -- Character is still in "icky" mode */
-		character_icky = TRUE;
+		character_icky = true;
 
 		/* Notice stuff */
 		notice_stuff();
@@ -3830,7 +3830,7 @@ void do_cmd_home_trump()
 
 
 	/* Hack -- Character is no longer in "icky" mode */
-	character_icky = FALSE;
+	character_icky = false;
 
 
 	/* Hack -- Cancel automatic command */

@@ -29,7 +29,7 @@ bool_ character_generated; 	/* The character exists */
 bool character_dungeon; 		/* The character has a dungeon */
 bool character_loaded; 		/* The character was loaded from a savefile */
 
-bool_ character_icky; 		/* The game is in an icky full screen mode */
+bool character_icky = false;	/* The game is in an icky full screen mode */
 bool character_xtra; 		/* The game is in an icky startup mode */
 
 seed_t &seed_flavor()
