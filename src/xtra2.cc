@@ -3545,7 +3545,7 @@ void resize_window()
 	}
 
 	/* Hack -- Activate the Angband window for the redraw */
-	Term_activate(&term_screen[0]);
+	Term_activate(angband_term[0]);
 
 	/* Hack -- react to changes */
 	Term_xtra(TERM_XTRA_REACT, 0);

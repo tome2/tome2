@@ -989,7 +989,7 @@ int init_gcu(int argc, char **argv)
 	Term_activate(data[0].term_ptr);
 
 	/* Remember the active screen */
-	term_screen = data[0].term_ptr;
+	angband_term[0] = data[0].term_ptr;
 
 	/* Success */
 	return (0);

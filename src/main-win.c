@@ -1232,7 +1232,7 @@ static void term_data_redraw(term_data *td)
 	Term_redraw();
 
 	/* Restore the term */
-	Term_activate(term_screen);
+	Term_activate(angband_term[0]);
 }
 
 

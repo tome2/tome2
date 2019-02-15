@@ -1918,14 +1918,6 @@
 
 
 /*
- * Hack -- The main "screen"
- */
-#define term_screen     (angband_term[0])
-
-
-
-
-/*
  * Road flags
  */
 #define ROAD_NORTH	1

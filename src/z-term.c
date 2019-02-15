@@ -258,6 +258,109 @@ struct term_win
 
 };
 
+
+
+/*
+ * An actual "term" structure
+ *
+ *	- Extra "data" info (used by implementation)
+ *
+ *
+ *	- Flag "active_flag"
+ *	  This "term" is "active"
+ *
+ *	- Flag "mapped_flag"
+ *	  This "term" is "mapped"
+ *
+ *	- Flag "total_erase"
+ *	  This "term" should be fully erased
+ *
+ *	- Flag "icky_corner"
+ *	  This "term" has an "icky" corner grid
+ *
+ *	- Flag "soft_cursor"
+ *	  This "term" uses a "software" cursor
+ *
+ *
+ *
+ *
+ *	- Ignore this pointer
+ *
+ *	- Keypress Queue -- various data
+ *
+ *	- Keypress Queue -- pending keys
+ *
+ *
+ *	- Window Width (max 255)
+ *	- Window Height (max 255)
+ *
+ *	- Minimum modified row
+ *	- Maximum modified row
+ *
+ *	- Minimum modified column (per row)
+ *	- Maximum modified column (per row)
+ *
+ *
+ *	- Displayed screen image
+ *	- Requested screen image
+ *
+ *	- Temporary screen image
+ *	- Memorized screen image
+ *
+ *
+ *	- Hook for init-ing the term
+ *	- Hook for nuke-ing the term
+ *
+ *	- Hook for extra actions
+ *
+ *	- Hook for placing the cursor
+ *
+ *	- Hook for drawing a string of chars using an attr
+ *
+ *	- Hook for drawing a sequence of special attr/char pairs
+ */
+
+struct term
+{
+	void *data;
+
+	bool_ active_flag;
+	bool_ mapped_flag;
+	bool_ total_erase;
+	bool_ icky_corner;
+	bool_ soft_cursor;
+
+	char *key_queue;
+	u16b key_head;
+	u16b key_tail;
+	u16b key_size;
+
+	byte wid;
+	byte hgt;
+
+	byte y1;
+	byte y2;
+
+	byte *x1;
+	byte *x2;
+
+	term_win *old;
+	term_win *scr;
+
+	term_win *mem;
+
+	init_hook_t *init_hook;
+	nuke_hook_t *nuke_hook;
+	xtra_hook_t *xtra_hook;
+	curs_hook_t *curs_hook;
+	text_hook_t *text_hook;
+
+	resize_hook_t *resize_hook;
+
+};
+
+
+
 /*
  * The current "term"
  */
