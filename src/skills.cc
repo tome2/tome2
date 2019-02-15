@@ -38,6 +38,7 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <algorithm>

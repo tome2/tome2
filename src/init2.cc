@@ -6,6 +6,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cli_comm.hpp"
+#include "config.h"
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
@@ -53,6 +54,8 @@
 #include "vault_type.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
+#include "z-form.h"
+#include "z-util.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

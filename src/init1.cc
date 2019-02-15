@@ -44,7 +44,9 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-util.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/classification.hpp>

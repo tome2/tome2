@@ -12,6 +12,7 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.h"
 
 #include <cassert>
 

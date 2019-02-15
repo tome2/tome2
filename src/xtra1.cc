@@ -54,6 +54,7 @@
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <cassert>

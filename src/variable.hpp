@@ -1,9 +1,9 @@
 #pragma once
 
-#include "angband.h"
 #include "alloc_entry_fwd.hpp"
 #include "birther.hpp"
 #include "cave_type_fwd.hpp"
+#include "defines.h"
 #include "deity_type.hpp"
 #include "dungeon_flag_set.hpp"
 #include "effect_type.hpp"

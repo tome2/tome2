@@ -30,6 +30,7 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-form.h"
 
 #include <algorithm>
 #include <deque>

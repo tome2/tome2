@@ -20,6 +20,8 @@
 #include "../skill_type.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
+#include "../z-form.h"
+#include "../z-term.h"
 
 namespace squelch {
 

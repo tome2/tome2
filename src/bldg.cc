@@ -43,7 +43,9 @@
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-term.h"
 
 /* remember building location */
 static int building_loc = 0;

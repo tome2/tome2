@@ -68,12 +68,15 @@
 
 
 #include "angband.h"
-#include "dungeon.h"
+#include "config.h"
+#include "defines.h"
 #include "files.h"
-#include "init2.h"
+#include "h-basic.h"
 #include "util.h"
 #include "variable.h"
-
+#include "z-form.h"
+#include "z-term.h"
+#include "z-util.h"
 
 /*
  * Determine if string "t" is a suffix of string "s"

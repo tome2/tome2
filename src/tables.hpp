@@ -1,10 +1,10 @@
 #pragma once
 
-#include "angband.h"
 #include "activation.hpp"
 #include "between_exit.hpp"
 #include "body.hpp"
 #include "cli_comm_fwd.hpp"
+#include "defines.h"
 #include "flags_group.hpp"
 #include "gf_name_type.hpp"
 #include "inscription_info_type.hpp"

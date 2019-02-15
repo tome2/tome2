@@ -17,7 +17,9 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-term.h"
 
 #include <cassert>
 

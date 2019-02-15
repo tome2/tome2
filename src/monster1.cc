@@ -20,6 +20,8 @@
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
+#include "z-form.h"
+#include "z-term.h"
 
 /*
  * Pronoun arrays, by gender.

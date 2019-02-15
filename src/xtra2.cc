@@ -59,6 +59,7 @@
 #include "wilderness_type_info.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>

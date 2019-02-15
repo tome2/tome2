@@ -1,6 +1,7 @@
 #include "cave.hpp"
 
 #include "cave_type.hpp"
+#include "config.h"
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
@@ -24,7 +25,9 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-util.h"
 
 #include <cassert>
 #include <vector>

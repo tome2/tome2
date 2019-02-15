@@ -17,6 +17,7 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

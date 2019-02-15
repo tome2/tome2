@@ -27,6 +27,7 @@
 #include "main.h"
 #include "util.h"
 #include "variable.h"
+#include "z-util.h"
 
 #include <SDL.h>
 #include <SDL_image.h>

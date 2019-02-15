@@ -43,6 +43,7 @@
 #include "q_rand.hpp"
 #include "stats.hpp"
 #include "variable.hpp"
+#include "z-term.h"
 
 
 

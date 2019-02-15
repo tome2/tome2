@@ -9,6 +9,7 @@
 #include "main.h"
 
 #include "birth.hpp"
+#include "config.h"
 #include "dungeon.hpp"
 #include "files.hpp"
 #include "game.hpp"
@@ -19,6 +20,8 @@
 #include "util.hpp"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-form.h"
+#include "z-util.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 

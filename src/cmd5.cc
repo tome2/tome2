@@ -43,6 +43,7 @@
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <boost/noncopyable.hpp>

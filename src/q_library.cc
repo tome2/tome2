@@ -17,6 +17,7 @@
 #include "util.h"
 #include "variable.h"
 #include "variable.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <cassert>

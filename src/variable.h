@@ -1,6 +1,8 @@
 #pragma once
 
-#include "angband.h"
+#include "defines.h"
+#include "h-basic.h"
+#include "z-term.h"
 
 #ifdef __cplusplus
 extern "C" {

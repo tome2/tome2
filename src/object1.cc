@@ -52,6 +52,7 @@
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/join.hpp>

@@ -16,6 +16,7 @@
 #include "cave.hpp"
 #include "cave_type.hpp"
 #include "cmd1.hpp"
+#include "config.h"
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
@@ -47,7 +48,9 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-term.h"
 #include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>

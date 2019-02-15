@@ -54,7 +54,9 @@
 #include "wilderness_map.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.h"
 #include "z-rand.hpp"
+#include "z-util.h"
 
 #include <algorithm>
 #include <boost/algorithm/string/predicate.hpp>

@@ -5,7 +5,6 @@
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/tree_printer.hpp"
-#include "../angband.h"
 #include "../modules.hpp"
 #include "../object1.hpp"
 #include "../object2.hpp"
@@ -14,6 +13,7 @@
 #include "../tables.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
+#include "../z-term.h"
 
 namespace squelch {
 

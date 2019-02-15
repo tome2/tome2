@@ -24,6 +24,7 @@
 #include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
+#include "z-form.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>
