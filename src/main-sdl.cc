@@ -264,10 +264,10 @@ whenever a rect needs updated */
  *************************************************/
 
 /* function prototype */
-void dumpWindowSettings(void);
+void dumpWindowSettings();
 	
 /* SDL Quitting function... declare a few functions first.*/
-void killFontAndAlphabet(void);
+void killFontAndAlphabet();
 static void sdl_quit(const char *string)
 {
 	printf("sdl_quit called.\n");
@@ -298,7 +298,7 @@ SDL_Surface *createSurface(int width, int height);
 /* killFontAndAlphabet will effectively de-initialize the font system;
 it does this by closing the font and destroying any pre-rendered
 text in memory */
-void killFontAndAlphabet(void)
+void killFontAndAlphabet()
 {
 	int i;
 	/* need to close a font and free all of its corresponding pre-rendered
@@ -390,8 +390,8 @@ while (*n != '\0') { \
 }
 
 /* function prototype */
-void manipulationMode(void);
-void redrawAllTerminals(void);
+void manipulationMode();
+void redrawAllTerminals();
 /* This is the main event handling routine that will be called
 whenever an event is pulled off of the queue (in Term_xtra_sdl())*/
 void handleEvent(SDL_Event *event)
@@ -1057,7 +1057,7 @@ borders */
 	td->rect.h = (td->rows)*td->tile_height + td->cushion_y_top \
 		+ td->cushion_y_bot + 2*td->border_thick
 
-void recompose(void);
+void recompose();
 
 /* Resize the active terminal with new width and height.
 Note that his involves a complicated sequence of events...
@@ -1260,7 +1260,7 @@ int cycleTerminal(int current)
 
 /* This routine will simply re-blit all of the surfaces onto the main screen,
 respecting the current term_order */
-void recompose(void)
+void recompose()
 {
 	int i = arg_console_count;
 	/* do a complete screen wipe */
@@ -1283,7 +1283,7 @@ then cycle through all terminals, performing a Term_redraw()
 on each and every term that is being used (according to
 arg_term_count that is). The terminals will be redrawn
 last-to-first, so that the main is over top of everything */
-void redrawAllTerminals(void)
+void redrawAllTerminals()
 {
 	int i = arg_console_count;
 	DB("Total redraw");
@@ -1346,7 +1346,7 @@ being manipulated. The following keypresses are accepted:
 -Escape: quits manipulation mode, performing one final
   redraw to take into account all changes.
 */
-void manipulationMode(void)
+void manipulationMode()
 {
 	term_data *td;
 	SDL_Event event;
@@ -1696,7 +1696,7 @@ static term *term_data_init(term_data *td, int i)
 /* dumpWindowSettings is responsible for exporting all current
 values of the window positions, etc. to the screen, so that 
 the user can see what the final values were after tweaking */
-void dumpWindowSettings(void)
+void dumpWindowSettings()
 {
 	char name[80];
 	char value[8];

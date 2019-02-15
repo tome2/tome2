@@ -216,7 +216,7 @@ static const char *get_default_font(int term)
  * clever fashion. Ditto for the tile scaling code and the BMP loader
  * below.
  */
-static void init_colours(void)
+static void init_colours()
 {
 	int i;
 
@@ -435,7 +435,7 @@ static void CheckEvent(bool wait)
 /*
  * Process all pending events (without blocking)
  */
-static void DrainEvents(void)
+static void DrainEvents()
 {
 	while (gtk_events_pending())
 		gtk_main_iteration();
@@ -636,7 +636,7 @@ static void term_data_set_backing_store(term_data *td)
 /*
  * Save game only when it's safe to do so
  */
-static void save_game_gtk(void)
+static void save_game_gtk()
 {
 	/* We have nothing to save, yet */
 	if (!game_in_progress || !character_generated) return;
@@ -1390,7 +1390,7 @@ static GtkItemFactoryEntry main_menu_items[] =
  * XXX XXX Fill those NULL's in the menu definition with
  * angband_term_name[] strings
  */
-static void setup_menu_paths(void)
+static void setup_menu_paths()
 {
 	int i;
 	int nmenu_items = sizeof(main_menu_items) / sizeof(main_menu_items[0]);
@@ -1446,7 +1446,7 @@ static void setup_menu_paths(void)
 /*
  * XXX XXX Free strings allocated by setup_menu_paths()
  */
-static void free_menu_paths(void)
+static void free_menu_paths()
 {
 	int i;
 	int nmenu_items = sizeof(main_menu_items) / sizeof(main_menu_items[0]);

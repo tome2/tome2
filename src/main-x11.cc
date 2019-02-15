@@ -771,7 +771,7 @@ static errr Infowin_set_mask(long mask)
 /*
  * Request that Infowin be mapped
  */
-static errr Infowin_map(void)
+static errr Infowin_map()
 {
 	/* Execute the Mapping */
 	XMapWindow(Metadpy->dpy, Infowin->win);
@@ -784,7 +784,7 @@ static errr Infowin_map(void)
 /*
  * Request that Infowin be raised
  */
-static errr Infowin_raise(void)
+static errr Infowin_raise()
 {
 	/* Raise towards visibility */
 	XRaiseWindow(Metadpy->dpy, Infowin->win);

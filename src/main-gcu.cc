@@ -242,7 +242,7 @@ static int colortable[16];
 /*
  * Place the "keymap" into its "normal" state
  */
-static void keymap_norm(void)
+static void keymap_norm()
 {
 
 #ifdef USE_TPOSIX
@@ -275,7 +275,7 @@ static void keymap_norm(void)
 /*
  * Place the "keymap" into the "game" state
  */
-static void keymap_game(void)
+static void keymap_game()
 {
 
 #ifdef USE_TPOSIX
@@ -308,7 +308,7 @@ static void keymap_game(void)
 /*
  * Save the normal keymap
  */
-static void keymap_norm_prepare(void)
+static void keymap_norm_prepare()
 {
 
 #ifdef USE_TPOSIX
@@ -341,7 +341,7 @@ static void keymap_norm_prepare(void)
 /*
  * Save the keymaps (normal and game)
  */
-static void keymap_game_prepare(void)
+static void keymap_game_prepare()
 {
 
 #ifdef USE_TPOSIX

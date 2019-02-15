@@ -1374,7 +1374,7 @@ void Term_erase(int x, int y, int n)
  *
  * Note the use of the special "total_erase" code
  */
-void Term_clear(void)
+void Term_clear()
 {
 	int x, y;
 
