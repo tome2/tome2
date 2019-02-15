@@ -2008,7 +2008,7 @@ bool load_dungeon(std::string const &ext)
 	/* Open the file */
 	fff = my_fopen(name_file_dungeon_save(ext).c_str(), "rb");
 
-	if (fff == NULL)
+	if (fff == nullptr)
 	{
 		dun_level = old_dun;
 		dungeon_type = old_dungeon_type;
@@ -2224,7 +2224,7 @@ static bool do_quests(ls_flag_t flag)
 				do_s32b(&quest_data, flag);
 			}
 			// Initialize if necessary
-			if ((flag == ls_flag_t::LOAD) && (q->init != NULL))
+			if ((flag == ls_flag_t::LOAD) && (q->init != nullptr))
 			{
 				q->init();
 			}
@@ -2604,7 +2604,7 @@ bool load_player(program_args const &args)
 	{
 		/* Give a message */
 		msg_format("Savefile does not exist: %s", savefile.c_str());
-		msg_print(NULL);
+		msg_print(nullptr);
 
 		/* Allow this */
 		return true;
@@ -2707,7 +2707,7 @@ bool load_player(program_args const &args)
 	/* Message */
 	msg_format("Error (%s) reading savefile (version " FMTu32b ").",
 		   what, vernum);
-	msg_print(NULL);
+	msg_print(nullptr);
 
 	/* Oops */
 	return false;
@@ -2725,7 +2725,7 @@ static bool_ save_player_aux(char const *name)
 	int mode = 0644;
 
 	/* No file yet */
-	fff = NULL;
+	fff = nullptr;
 
 	/* Create the savefile */
 	fd = fd_make(name, mode);
