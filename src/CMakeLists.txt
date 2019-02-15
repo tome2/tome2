@@ -141,7 +141,6 @@ ADD_LIBRARY(game_main
 
 # Need a few additional source files for Windows.
 IF(WIN32)
-  SET(SRCS ${SRCS} main-win.c)
   # Resource files require a little workaround.
   IF(MINGW)
     # Workaround for resource compilation for mingw on CMake.
@@ -155,7 +154,7 @@ IF(WIN32)
     SET(SRCS ${SRCS} angband.rc)
   ENDIF(MINGW)
   # Executable for Win32
-  ADD_EXECUTABLE(tome-win WIN32 main-win.c)
+  ADD_EXECUTABLE(tome-win WIN32 main-win.cc)
   TARGET_LINK_LIBRARIES(tome-win game squelch ${LIBS} winmm wsock32)
   INSTALL(TARGETS tome-win RUNTIME DESTINATION bin)
 ENDIF(WIN32)
