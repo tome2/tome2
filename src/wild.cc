@@ -154,7 +154,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  *
  * Return the number of floor grids
  */
-static int generate_area(int y, int x, bool border, bool corner)
+static int generate_area(int y, int x, bool corner)
 {
 	auto const &wilderness = game->wilderness;
 	auto const &wf_info = game->edit_data.wf_info;
@@ -397,7 +397,7 @@ void wilderness_gen()
 	get_mon_num_prep();
 
 	/* North border */
-	generate_area(y - 1, x, true, false);
+	generate_area(y - 1, x, false);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -405,7 +405,7 @@ void wilderness_gen()
 	}
 
 	/* South border */
-	generate_area(y + 1, x, true, false);
+	generate_area(y + 1, x, false);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -413,7 +413,7 @@ void wilderness_gen()
 	}
 
 	/* West border */
-	generate_area(y, x - 1, true, false);
+	generate_area(y, x - 1, false);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -421,7 +421,7 @@ void wilderness_gen()
 	}
 
 	/* East border */
-	generate_area(y, x + 1, true, false);
+	generate_area(y, x + 1, false);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -429,24 +429,24 @@ void wilderness_gen()
 	}
 
 	/* North west corner */
-	generate_area(y - 1, x - 1, false, true);
+	generate_area(y - 1, x - 1, true);
 	border.north_west = cave[MAX_HGT - 2][MAX_WID - 2].feat;
 
 	/* North east corner */
-	generate_area(y - 1, x + 1, false, true);
+	generate_area(y - 1, x + 1, true);
 	border.north_east = cave[MAX_HGT - 2][1].feat;
 
 	/* South west corner */
-	generate_area(y + 1, x - 1, false, true);
+	generate_area(y + 1, x - 1, true);
 	border.south_west = cave[1][MAX_WID - 2].feat;
 
 	/* South east corner */
-	generate_area(y + 1, x + 1, false, true);
+	generate_area(y + 1, x + 1, true);
 	border.south_east = cave[1][1].feat;
 
 
 	/* Create terrain of the current area */
-	hack_floor = generate_area(y, x, false, false);
+	hack_floor = generate_area(y, x, false);
 
 
 	/* Special boundary walls -- North */

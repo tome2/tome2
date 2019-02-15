@@ -514,7 +514,7 @@ static void touch_zap_player(monster_type *m_ptr)
  * Carried monster can attack too.
  * Based on monst_attack_monst.
  */
-static void carried_monster_attack(s16b m_idx, bool *mdeath, int x, int y)
+static void carried_monster_attack(s16b m_idx, int x, int y)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1009,8 +1009,7 @@ static void carried_monster_attack(s16b m_idx, bool *mdeath, int x, int y)
  * Carried monster can attack too.
  * Based on monst_attack_monst.
  */
-static void incarnate_monster_attack(s16b m_idx, bool *mdeath,
-                                     int x, int y)
+static void incarnate_monster_attack(s16b m_idx, int x, int y)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1990,7 +1989,7 @@ void py_attack(int y, int x, int max_blow)
 	                (!r_info[p_ptr->body_monster].body_parts[BODY_WEAPON]) &&
 	                !(p_ptr->melee_style == SKILL_HAND))
 	{
-		incarnate_monster_attack(c_ptr->m_idx, &mdeath, y, x);
+		incarnate_monster_attack(c_ptr->m_idx, y, x);
 	}
 	/* Otherwise use your weapon(s) */
 	else
@@ -2419,7 +2418,7 @@ void py_attack(int y, int x, int max_blow)
 	/* Carried monster can attack too */
 	if ((!mdeath) && m_list[c_ptr->m_idx].hp)
 	{
-		carried_monster_attack(c_ptr->m_idx, &mdeath, y, x);
+		carried_monster_attack(c_ptr->m_idx, y, x);
 	}
 
 	/* Hack -- delay fear messages */

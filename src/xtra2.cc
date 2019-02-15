@@ -2199,7 +2199,7 @@ static bool monster_race_in_list_p(monster_type *m_ptr, const char *races[])
 /*
  * Handle the "death" of a monster (Gods)
  */
-static void monster_death_gods(int m_idx, monster_type *m_ptr)
+static void monster_death_gods(monster_type *m_ptr)
 {
 	if (p_ptr->pgod == GOD_AULE)
 	{
@@ -2423,7 +2423,7 @@ void monster_death(int m_idx)
 	}
 
 	/* Per-god processing */
-	monster_death_gods(m_idx, m_ptr);
+	monster_death_gods(m_ptr);
 
 	/* If companion dies, take note */
 	if (m_ptr->status == MSTATUS_COMPANION) p_ptr->companion_killed++;
@@ -4991,7 +4991,7 @@ void set_grace(s32b v)
 	handle_stuff();
 }
 
-static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
+static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge)
 {
 	auto &k_info = game->edit_data.k_info;
 	auto const &e_info = game->edit_data.e_info;
@@ -5178,7 +5178,7 @@ void make_wish()
 		return;
 	}
 
-	if (test_object_wish(name, o_ptr, &forge, "wish"))
+	if (test_object_wish(name, o_ptr, &forge))
 	{
 		msg_print("Your wish becomes truth!");
 

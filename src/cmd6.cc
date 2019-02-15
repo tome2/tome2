@@ -1703,7 +1703,7 @@ static object_filter_t const &item_tester_hook_quaffable()
 }
 
 
-static void quaff_potion(int tval, int sval, int pval, int pval2)
+static void quaff_potion(int tval, int sval, int pval2)
 {
 	/* "Traditional" potions */
 	if (tval == TV_POTION)
@@ -2322,7 +2322,7 @@ void do_cmd_quaff_potion()
 	else
 	{
 		/* Normal potion handling */
-		quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval, o_ptr->pval2);
+		quaff_potion(o_ptr->tval, o_ptr->sval, o_ptr->pval2);
 	}
 
 	/* Combine / Reorder the pack (later) */
@@ -2478,7 +2478,7 @@ void do_cmd_drink_fountain()
 			break;
 		}
 
-		quaff_potion(tval, sval, pval, 0);
+		quaff_potion(tval, sval, 0);
 
 		c_ptr->special2--;
 

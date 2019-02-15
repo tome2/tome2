@@ -664,7 +664,7 @@ static int coords_to_dir(int y, int x)
  *
  * Returns true if repeated commands may continue
  */
-static bool do_cmd_open_aux(int y, int x, int dir)
+static bool do_cmd_open_aux(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -857,7 +857,7 @@ void do_cmd_open()
 		else
 		{
 			/* Open the door */
-			more = do_cmd_open_aux(y, x, dir);
+			more = do_cmd_open_aux(y, x);
 		}
 	}
 
@@ -876,7 +876,7 @@ void do_cmd_open()
  *
  * Returns true if repeated commands may continue
  */
-static bool do_cmd_close_aux(int y, int x, int dir)
+static bool do_cmd_close_aux(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1005,7 +1005,7 @@ void do_cmd_close()
 		else
 		{
 			/* Close the door */
-			more = do_cmd_close_aux(y, x, dir);
+			more = do_cmd_close_aux(y, x);
 		}
 	}
 
@@ -1099,7 +1099,7 @@ static bool twall(int y, int x, byte feat)
  *
  * Returns true if repeated commands may continue
  */
-static bool do_cmd_tunnel_aux(int y, int x, int dir)
+static bool do_cmd_tunnel_aux(int y, int x)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &f_info = game->edit_data.f_info;
@@ -1434,7 +1434,7 @@ void do_cmd_tunnel()
 		else
 		{
 			/* Tunnel through walls */
-			more = do_cmd_tunnel_aux(y, x, dir);
+			more = do_cmd_tunnel_aux(y, x);
 		}
 	}
 
@@ -1706,14 +1706,14 @@ void do_cmd_alter()
 		                (c_ptr->feat <= FEAT_DOOR_TAIL))
 		{
 			/* Tunnel */
-			more = do_cmd_open_aux(y, x, dir);
+			more = do_cmd_open_aux(y, x);
 		}
 
 		/* Tunnel through walls */
 		else if (f_info[c_ptr->feat].flags & FF_TUNNELABLE)
 		{
 			/* Tunnel */
-			more = do_cmd_tunnel_aux(y, x, dir);
+			more = do_cmd_tunnel_aux(y, x);
 		}
 
 		/* Oops */

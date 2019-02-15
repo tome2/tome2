@@ -268,7 +268,7 @@ static void load_prev_data(bool save)
  *
  * The "p_ptr->maximize" code is important        -BEN-
  */
-static int adjust_stat(int value, int amount, int auto_roll)
+static int adjust_stat(int value, int amount)
 {
 	int i;
 
@@ -2292,7 +2292,7 @@ static bool player_birth_aux_auto()
 			j = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i];
 
 			/* Obtain the "maximal" stat */
-			m = adjust_stat(17, j, true);
+			m = adjust_stat(17, j);
 
 
 			/* Save the maximum */

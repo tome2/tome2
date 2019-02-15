@@ -5250,7 +5250,7 @@ static bool player_invis(monster_type * m_ptr)
  *
  * A "direction" of "5" means "pick a random direction".
  */
-static void process_monster(int m_idx, bool is_frien)
+static void process_monster(int m_idx)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -6512,7 +6512,7 @@ void process_monsters()
 		if (is_friend(m_ptr) > 0) is_frien = true;
 
 		/* Process the monster */
-		process_monster(i, is_frien);
+		process_monster(i);
 
 		/* Hack -- notice death or departure */
 		if (!alive || death) break;
