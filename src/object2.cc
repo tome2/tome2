@@ -524,12 +524,13 @@ s16b o_pop()
 errr get_obj_num_prep()
 {
 	auto &alloc = game->alloc;
+	auto const &k_info = game->edit_data.k_info;
 
 	/* Scan the allocation table */
 	for (auto &&entry: alloc.kind_table)
 	{
 		/* Accept objects which pass the restriction, if any */
-		if (!get_obj_num_hook || (*get_obj_num_hook)(entry.index))
+		if (!get_object_hook || (*get_object_hook)(k_info.at(entry.index).get()))
 		{
 			/* Accept this object */
 			entry.prob2 = entry.prob1;
@@ -4125,7 +4126,7 @@ bool init_match_theme(obj_theme const &theme)
 /*
  * Maga-Hack -- match certain types of object only.
  */
-static bool kind_is_theme(obj_theme const *theme, std::shared_ptr<object_kind const> k_ptr)
+static bool kind_is_theme(obj_theme const *theme, object_kind const *k_ptr)
 {
 	assert(theme != nullptr);
 
@@ -4139,7 +4140,7 @@ static bool kind_is_theme(obj_theme const *theme, std::shared_ptr<object_kind co
 	 */
 	if (theme->treasure + theme->combat + theme->magic + theme->tools == 0)
 	{
-		return TRUE;
+		return true;
 	}
 
 
@@ -4295,7 +4296,10 @@ static bool kind_is_theme(obj_theme const *theme, std::shared_ptr<object_kind co
 	}
 
 	/* Roll to see if it can be made */
-	if (rand_int(100) < prob) return (TRUE);
+	if (rand_int(100) < prob)
+	{
+		return true;
+	}
 
 	/* Not a match */
 	return (FALSE);
@@ -4304,15 +4308,11 @@ static bool kind_is_theme(obj_theme const *theme, std::shared_ptr<object_kind co
 /*
  * Determine if an object must not be generated.
  */
-bool_ kind_is_legal(int k_idx)
+bool kind_is_legal(object_kind const *k_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	auto k_ptr = k_info.at(k_idx);
-
 	if (!kind_is_theme(match_theme, k_ptr))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (k_ptr->flags & TR_SPECIAL_GENE)
@@ -4323,41 +4323,40 @@ bool_ kind_is_legal(int k_idx)
 	/* No 2 times the same normal artifact */
 	if ((k_ptr->flags & TR_NORM_ART) && (k_ptr->artifact))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (k_ptr->tval == TV_CORPSE)
 	{
-		if (k_ptr->sval != SV_CORPSE_SKULL && k_ptr->sval != SV_CORPSE_SKELETON &&
-		                k_ptr->sval != SV_CORPSE_HEAD && k_ptr->sval != SV_CORPSE_CORPSE)
-		{
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
+		return (k_ptr->sval != SV_CORPSE_SKULL && k_ptr->sval != SV_CORPSE_SKELETON &&
+			k_ptr->sval != SV_CORPSE_HEAD && k_ptr->sval != SV_CORPSE_CORPSE);
 	}
 
-	if (k_ptr->tval == TV_HYPNOS) return FALSE;
+	if (k_ptr->tval == TV_HYPNOS)
+	{
+		return false;
+	}
 
 	/* Used only for the Nazgul rings */
-	if ((k_ptr->tval == TV_RING) && (k_ptr->sval == SV_RING_SPECIAL)) return FALSE;
+	if ((k_ptr->tval == TV_RING) && (k_ptr->sval == SV_RING_SPECIAL))
+	{
+		return false;
+	}
 
 	/* Assume legal */
-	return TRUE;
+	return true;
 }
 
 
 /*
  * Hack -- determine if a template is "good"
  */
-static bool_ kind_is_good(int k_idx)
+static bool kind_is_good(object_kind const *k_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-	auto const &k_ptr = k_info.at(k_idx);
-
-	if (!kind_is_legal(k_idx)) return FALSE;
+	if (!kind_is_legal(k_ptr))
+	{
+		return false;
+	}
 
 	/* Analyze the item type */
 	switch (k_ptr->tval)
@@ -4373,8 +4372,7 @@ static bool_ kind_is_good(int k_idx)
 	case TV_HELM:
 	case TV_CROWN:
 		{
-			if (k_ptr->to_a < 0) return (FALSE);
-			return (TRUE);
+			return k_ptr->to_a >= 0;
 		}
 
 		/* Weapons -- Good unless damaged */
@@ -4387,74 +4385,68 @@ static bool_ kind_is_good(int k_idx)
 	case TV_MSTAFF:
 	case TV_BOOMERANG:
 		{
-			if (k_ptr->to_h < 0) return (FALSE);
-			if (k_ptr->to_d < 0) return (FALSE);
-			return (TRUE);
+			if (k_ptr->to_h < 0) return false;
+			if (k_ptr->to_d < 0) return false;
+			return true;
 		}
 
 		/* Ammo -- Arrows/Bolts are good */
 	case TV_BOLT:
 	case TV_ARROW:
 		{
-			return (TRUE);
+			return true;
 		}
 
 		/* Rods - Silver and better are good */
 	case TV_ROD_MAIN:
 		{
-			if (k_ptr->sval >= SV_ROD_SILVER) return (TRUE);
-			return FALSE;
+			return (k_ptr->sval >= SV_ROD_SILVER);
 		}
 
 		/* Expensive rod tips are good */
 	case TV_ROD:
 		{
-			if (k_ptr->cost >= 4500) return TRUE;
-			return FALSE;
+			return (k_ptr->cost >= 4500);
 		}
 
 		/* The Tomes are good */
 	case TV_BOOK:
 		{
-			if (k_ptr->sval <= SV_BOOK_MAX_GOOD) return (TRUE);
-			return FALSE;
+			return (k_ptr->sval <= SV_BOOK_MAX_GOOD);
 		}
 
 		/* Rings -- Rings of Speed are good */
 	case TV_RING:
 		{
-			if (k_ptr->sval == SV_RING_SPEED) return (TRUE);
-			return (FALSE);
+			return (k_ptr->sval == SV_RING_SPEED);
 		}
 
 		/* Amulets -- Some are good */
 	case TV_AMULET:
 		{
-			if (k_ptr->sval == SV_AMULET_THE_MAGI) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_DEVOTION) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_WEAPONMASTERY) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_TRICKERY) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_RESISTANCE) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_REFLECTION) return (TRUE);
-			if (k_ptr->sval == SV_AMULET_TELEPATHY) return (TRUE);
-			return (FALSE);
+			if (k_ptr->sval == SV_AMULET_THE_MAGI) return true;
+			if (k_ptr->sval == SV_AMULET_DEVOTION) return true;
+			if (k_ptr->sval == SV_AMULET_WEAPONMASTERY) return true;
+			if (k_ptr->sval == SV_AMULET_TRICKERY) return true;
+			if (k_ptr->sval == SV_AMULET_RESISTANCE) return true;
+			if (k_ptr->sval == SV_AMULET_REFLECTION) return true;
+			if (k_ptr->sval == SV_AMULET_TELEPATHY) return true;
+			return false;
 		}
 	}
 
 	/* Assume not good */
-	return (FALSE);
+	return false;
 }
 
 /*
 * Determine if template is suitable for building a randart -- dsb
 */
-bool_ kind_is_artifactable(int k_idx)
+bool kind_is_artifactable(object_kind const *k_ptr)
 {
 	auto const &ra_info = game->edit_data.ra_info;
-	auto const &k_info = game->edit_data.k_info;
 
-	auto k_ptr = k_info.at(k_idx);
-	if (kind_is_good(k_idx))
+	if (kind_is_good(k_ptr))
 	{
 		// Consider the item artifactable if there is at least one
 		// randart power which could be added to the item.
@@ -4465,13 +4457,13 @@ bool_ kind_is_artifactable(int k_idx)
 				if (filter.tval != k_ptr->tval) continue;
 				if (filter.min_sval > k_ptr->sval) continue;
 				if (filter.max_sval < k_ptr->sval) continue;
-				return TRUE;
+				return true;
 			}
 		}
 	}
 
 	/* No match. Too bad. */
-	return FALSE;
+	return false;
 }
 
 
@@ -4516,7 +4508,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		if (good)
 		{
 			/* Activate restriction */
-			get_obj_num_hook = kind_is_good;
+			get_object_hook = kind_is_good;
 
 			/* Prepare allocation table */
 			get_obj_num_prep();
@@ -4526,7 +4518,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		else if (!alloc.kind_table_valid)
 		{
 			/* Activate normal restriction */
-			get_obj_num_hook = kind_is_legal;
+			get_object_hook = kind_is_legal;
 
 			/* Prepare allocation table */
 			get_obj_num_prep();
@@ -4542,7 +4534,7 @@ bool_ make_object(object_type *j_ptr, bool_ good, bool_ great, obj_theme const &
 		if (good)
 		{
 			/* Restore normal restriction */
-			get_obj_num_hook = kind_is_legal;
+			get_object_hook = kind_is_legal;
 
 			/* Prepare allocation table */
 			get_obj_num_prep();

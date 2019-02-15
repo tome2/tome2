@@ -2,6 +2,7 @@
 
 #include "ego_flag_set.hpp"
 #include "h-basic.hpp"
+#include "object_kind_fwd.hpp"
 #include "object_type_fwd.hpp"
 #include "obj_theme_fwd.hpp"
 
@@ -16,8 +17,8 @@ object_type *get_object(int item);
 s32b calc_total_weight();
 void add_random_ego_flag(object_type *o_ptr, ego_flag_set const &fego, bool_ *limit_blows);
 bool init_match_theme(obj_theme const &theme);
-bool_ kind_is_artifactable(int k_idx);
-bool_ kind_is_legal(int k_idx);
+bool kind_is_artifactable(object_kind const *);
+bool kind_is_legal(object_kind const *);
 void inven_item_charges(int item);
 void inven_item_describe(int item);
 void inven_item_increase(int item, int num);

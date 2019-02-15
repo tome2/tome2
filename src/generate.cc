@@ -7634,7 +7634,7 @@ static bool cave_gen()
 					s16b k_idx;
 
 					/* Apply restriction */
-					get_obj_num_hook = kind_is_artifactable;
+					get_object_hook = kind_is_artifactable;
 
 					/* Object level a la find object fates */
 					obj_lev = max_dlv[dungeon_type] + randint(10);
@@ -7646,7 +7646,7 @@ static bool cave_gen()
 					k_idx = get_obj_num(obj_lev);
 
 					/* Reset restriction */
-					get_obj_num_hook = kind_is_legal;
+					get_object_hook = kind_is_legal;
 
 					/* Invalidate the allocation table */
 					alloc.kind_table_valid = false;

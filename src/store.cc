@@ -1153,24 +1153,34 @@ static int store_tval = 0, store_level = 0;
 /*
  * Hack -- determine if a template is "good"
  */
-static bool_ kind_is_storeok(int k_idx)
+static bool kind_is_storeok(object_kind const *k_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	auto k_ptr = k_info.at(k_idx);
-
 	if (k_ptr->flags & TR_NORM_ART)
-		return ( FALSE );
+	{
+		return false;
+	}
 
 	if (k_ptr->flags & TR_INSTA_ART)
-		return ( FALSE );
+	{
+		return false;
+	}
 
-	if (!kind_is_legal(k_idx)) return FALSE;
+	if (!kind_is_legal(k_ptr))
+	{
+		return false;
+	}
 
-	if (k_ptr->tval != store_tval) return (FALSE);
-	if (k_ptr->level < (store_level / 2)) return (FALSE);
+	if (k_ptr->tval != store_tval)
+	{
+		return false;
+	}
 
-	return (TRUE);
+	if (k_ptr->level < (store_level / 2))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 namespace { // anonymous
@@ -1214,7 +1224,7 @@ public:
 		init_match_theme(obj_theme::no_theme());
 
 		/* Activate restriction */
-		get_obj_num_hook = kind_is_storeok;
+		get_object_hook = kind_is_storeok;
 		store_tval = f.tval;
 
 		/* Do we forbid too shallow items ? */
@@ -1318,7 +1328,7 @@ static void store_create()
 			 * Even in Black Markets, illegal objects can be
 			 * problematic -- Oxymoron?
 			 */
-			get_obj_num_hook = kind_is_legal;
+			get_object_hook = kind_is_legal;
 
 			/* Rebuild the allocation table */
 			get_obj_num_prep();

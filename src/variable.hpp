@@ -11,6 +11,7 @@
 #include "monster_race_fwd.hpp"
 #include "monster_type_fwd.hpp"
 #include "object_type_fwd.hpp"
+#include "object_kind_fwd.hpp"
 #include "options.hpp"
 #include "player_class_fwd.hpp"
 #include "player_defs.hpp"
@@ -146,7 +147,7 @@ extern char *ANGBAND_DIR;
 extern char *ANGBAND_DIR_MODULES;
 extern bool (*get_monster_hook)(monster_race const *);
 extern bool (*get_monster_aux_hook)(monster_race const *);
-extern bool_ (*get_obj_num_hook)(int k_idx);
+extern bool (*get_object_hook)(object_kind const *k_ptr);
 extern u16b max_o_idx;
 extern u16b max_m_idx;
 extern int init_flags;

@@ -4348,7 +4348,7 @@ void gain_fate(byte fate)
 						init_match_theme(theme);
 
 						/* Apply restriction */
-						get_obj_num_hook = kind_is_legal;
+						get_object_hook = kind_is_legal;
 
 						/* Rebuild allocation table */
 						get_obj_num_prep();

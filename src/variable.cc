@@ -464,7 +464,7 @@ bool (*get_monster_aux_hook)(monster_race const *);
 /*
  * Hack -- function hook to restrict "get_obj_num_prep()" function
  */
-bool_ (*get_obj_num_hook)(int k_idx);
+bool (*get_object_hook)(object_kind const *k_ptr) = nullptr;
 
 /*
  * Devices

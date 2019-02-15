@@ -1949,18 +1949,16 @@ static int possible_randart[] =
 };
 
 
-static bool kind_is_randart(int k_idx)
+static bool kind_is_randart(object_kind const *k_ptr)
 {
-	auto const &k_info = game->edit_data.k_info;
-
-	if (!kind_is_legal(k_idx))
+	if (!kind_is_legal(k_ptr))
 	{
 		return false;
 	}
 
 	for (int max = 0; possible_randart[max] != -1; max++)
 	{
-		if (k_info.at(k_idx)->tval == possible_randart[max])
+		if (k_ptr->tval == possible_randart[max])
 		{
 			return true;
 		}
@@ -1995,6 +1993,7 @@ static s16b hack_m_idx_ii = 0;
 s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 {
 	auto &r_info = game->edit_data.r_info;
+	auto &k_info = game->edit_data.k_info;
 	auto &alloc = game->alloc;
 	auto const &dungeon_flags = game->dungeon_flags;
 
@@ -2305,7 +2304,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 			init_match_theme(obj_theme::no_theme());
 
 			/* Apply restriction */
-			get_obj_num_hook = kind_is_legal;
+			get_object_hook = kind_is_legal;
 
 			/* Rebuild allocation table */
 			get_obj_num_prep();
@@ -2317,7 +2316,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 				i = get_obj_num(dun_level);
 				if (!i) continue;
 
-				if (!kind_is_randart(i)) continue;
+				if (!kind_is_randart(k_info.at(i).get())) continue;
 				break;
 			}
 
