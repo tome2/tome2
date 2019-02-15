@@ -559,7 +559,6 @@ school_type schools[SCHOOLS_MAX];
  */
 int project_time = 0;
 s32b project_time_effect = 0;
-effect_type effects[MAX_EFFECTS];
 
 /*
  * Table of "cli" macros.

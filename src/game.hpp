@@ -4,6 +4,7 @@
 
 #include "alloc.hpp"
 #include "birther.hpp"
+#include "effect_type.hpp"
 #include "game_edit_data.hpp"
 #include "grid.hpp"
 #include "h-basic.h"
@@ -109,6 +110,11 @@ struct Game {
 	 * Dungeon flags.
 	 */
 	dungeon_flag_set dungeon_flags { };
+
+	/**
+	 * Lasting effects.
+	 */
+	std::vector<effect_type> lasting_effects { };
 
 	/**
 	 * Generate a special level feeling?

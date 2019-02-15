@@ -7898,8 +7898,6 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 	/* Number of grids in the "blast area" (including the "beam" path) */
 	int grids = 0;
 
-	int effect = 0;
-
 	/* Coordinates of the affected grids */
 	byte gx[1024], gy[1024];
 
@@ -8220,10 +8218,13 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 		/* Start with "dist" of zero */
 		dist = 0;
 
+		/* Which effect? */
+		boost::optional<s16b> maybe_effect = boost::none;
+
 		/* Effect ? */
 		if (flg & PROJECT_STAY)
 		{
-			effect = new_effect(typ, dam, project_time, p_ptr->py, p_ptr->px, rad, project_time_effect);
+			maybe_effect = new_effect(typ, dam, project_time, p_ptr->py, p_ptr->px, rad, project_time_effect);
 			project_time = 0;
 			project_time_effect = 0;
 		}
@@ -8244,7 +8245,7 @@ bool_ project(int who, int rad, int y, int x, int dam, int typ, int flg)
 			/* Effect ? */
 			if (flg & PROJECT_STAY)
 			{
-				cave[y][x].effect = effect;
+				cave[y][x].maybe_effect = maybe_effect;
 				lite_spot(y, x);
 			}
 		}

@@ -520,18 +520,12 @@ static void init_basic()
  */
 static errr init_misc()
 {
-	int xstart = 0;
-	int ystart = 0;
-	int i;
-
-	/*** Prepare the various "bizarre" arrays ***/
-
 	/* Initialise the values */
-	process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, TRUE, FALSE);
-
-	/* Init the spell effects */
-	for (i = 0; i < MAX_EFFECTS; i++)
-		effects[i].time = 0;
+	{
+		int xstart = 0;
+		int ystart = 0;
+		process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, TRUE, FALSE);
+	}
 
 	/* Initialize timers */
 	TIMER_INERTIA_CONTROL =

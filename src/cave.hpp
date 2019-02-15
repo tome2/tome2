@@ -4,6 +4,8 @@
 #include "cave_type_fwd.hpp"
 #include "object_type_fwd.hpp"
 
+#include <boost/optional.hpp>
+
 int distance(int y1, int x1, int y2, int x2);
 bool_ los(int y1, int x1, int y2, int x2);
 bool_ cave_valid_bold(int y, int x);
@@ -40,7 +42,7 @@ void disturb();
 void disturb_on_state();
 void disturb_on_other();
 int is_quest(int level);
-int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);
+boost::optional<s16b> new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags);
 bool cave_floor_bold(int y, int x);
 bool cave_floor_grid(cave_type const *c);
 bool cave_plain_floor_bold(int y, int x);

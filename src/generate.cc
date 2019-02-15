@@ -8123,6 +8123,29 @@ static void generate_grid_mana()
 
 
 /*
+ * Clear dungeon
+ */
+static void clear_dungeon()
+{
+	/* Clear any lasting effects */
+	game->lasting_effects.clear();
+
+	/* Start with a blank cave */
+	for (int y = 0; y < MAX_HGT; y++)
+	{
+		for (int x = 0; x < MAX_WID; x++)
+		{
+			/* Wipe */
+			cave[y][x].wipe();
+
+			/* No features */
+			cave_set_feat(y, x, FEAT_PERM_INNER);
+		}
+	}
+}
+
+
+/*
  * Generates a random dungeon level			-RAK-
  *
  * Hack -- regenerate any "overflow" levels
@@ -8138,7 +8161,7 @@ void generate_cave()
 
 	auto d_ptr = &d_info[dungeon_type];
 	int tester_1, tester_2;
-	int y, x, num, i;
+	int num, i;
 	bool loaded = false;
 	s16b town_level = 0;
 
@@ -8177,25 +8200,9 @@ void generate_cave()
 	/* Try to load a saved level */
 	if (auto ext = get_dungeon_save_extension())
 	{
-		/* No effects */
-		for (i = 0; i < MAX_EFFECTS; i++)
-		{
-			effects[i].time = 0;
-		}
-
-		/* Start with a blank cave */
-		for (y = 0; y < MAX_HGT; y++)
-		{
-			for (x = 0; x < MAX_WID; x++)
-			{
-				/* Wipe */
-				cave[y][x].wipe();
-
-				/* No features */
-				cave_set_feat(y, x, FEAT_PERM_INNER);
-			}
-		}
-
+		/* Clear */
+		clear_dungeon();
+		/* Load */
 		loaded = load_dungeon(*ext);
 	}
 
@@ -8215,24 +8222,8 @@ void generate_cave()
 
 			const char *why = NULL;
 
-			/* No effects */
-			for (i = 0; i < MAX_EFFECTS; i++)
-			{
-				effects[i].time = 0;
-			}
-
-			/* Start with a blank cave */
-			for (y = 0; y < MAX_HGT; y++)
-			{
-				for (x = 0; x < MAX_WID; x++)
-				{
-					/* Wipe */
-					cave[y][x].wipe();
-
-					/* No features */
-					cave_set_feat(y, x, FEAT_PERM_INNER);
-				}
-			}
+			/* Clear */
+			clear_dungeon();
 
 
 			/* XXX XXX XXX XXX */

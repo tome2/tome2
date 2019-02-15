@@ -836,6 +836,7 @@ static void map_info_layer1(
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &lasting_effects = game->lasting_effects;
 
 	char c;
 	byte a;
@@ -880,9 +881,9 @@ static void map_info_layer1(
 		if (apply_effects)
 		{
 			/* Special terrain effect */
-			if (c_ptr->effect)
+			if (auto effect_idx = c_ptr->maybe_effect)
 			{
-				a = spell_color(effects[c_ptr->effect].type);
+				a = spell_color(lasting_effects[*effect_idx].type);
 			}
 
 			/* Multi-hued attr */
@@ -4152,33 +4153,30 @@ int is_quest(int level)
 }
 
 
-/*
- * handle spell effects
+/**
+ * Create a new lasting effect.
  */
-int effect_pop()
+boost::optional<s16b> new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
 {
-	int i;
+	auto &lasting_effects = game->lasting_effects;
 
-	for (i = 1; i < MAX_EFFECTS; i++)
-		if (!effects[i].time)
-			return i;
-	return -1;
-}
+	// Limit to 128 effects at most.
+	if (lasting_effects.size() >= 128)
+	{
+		return boost::none;
+	}
 
-int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
-{
-	int i;
+	effect_type effect;
+	effect.type = type;
+	effect.dam = dam;
+	effect.time = time;
+	effect.flags = flags;
+	effect.cx = cx;
+	effect.cy = cy;
+	effect.rad = rad;
 
-	if ((i = effect_pop()) == -1) return -1;
-
-	effects[i].type = type;
-	effects[i].dam = dam;
-	effects[i].time = time;
-	effects[i].flags = flags;
-	effects[i].cx = cx;
-	effects[i].cy = cy;
-	effects[i].rad = rad;
-	return i;
+	lasting_effects.push_back(effect);
+	return lasting_effects.size() - 1;
 }
 
 /**

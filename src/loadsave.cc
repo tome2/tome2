@@ -457,6 +457,40 @@ static void do_seed(seed_t *seed, ls_flag_t flag)
 	}
 }
 
+template <typename T, typename F>
+static void do_boost_optional(boost::optional<T> &maybe_v, ls_flag_t flag, F f)
+{
+	if (flag == ls_flag_t::SAVE)
+	{
+		// Size
+		u32b n = maybe_v
+			? 1
+			: 0;
+		do_u32b(&n, flag);
+
+		// Value
+		if (maybe_v)
+		{
+			auto v = *maybe_v;
+			f(&v, flag);
+		}
+	}
+
+	if (flag == ls_flag_t::LOAD)
+	{
+		// Size
+		u32b n;
+		do_u32b(&n, flag);
+
+		// Value
+		while (n-- > 0)
+		{
+			maybe_v.emplace(); // Default-construct in place
+			f(&maybe_v.get(), flag);
+		}
+	}
+}
+
 } // namespace (anonymous)
 
 
@@ -1275,7 +1309,7 @@ static void do_cave_type(cave_type *c_ptr, ls_flag_t flag)
 	do_s16b(&c_ptr->special2, flag);
 	do_s16b(&c_ptr->inscription, flag);
 	do_byte(&c_ptr->mana, flag);
-	do_s16b(&c_ptr->effect, flag);
+	do_boost_optional(c_ptr->maybe_effect, flag, do_s16b);
 }
 
 static void do_grid(ls_flag_t flag)
@@ -1506,6 +1540,7 @@ static bool do_monsters(ls_flag_t flag, bool no_companions)
 static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 {
 	auto &dungeon_flags = game->dungeon_flags;
+	auto &effects = game->lasting_effects;
 
 	/* Header info */
 	do_s16b(&dun_level, flag);
@@ -1525,7 +1560,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 	do_s16b(&last_teleportation_y, flag);
 
 	/* Spell effects */
-	do_array("spell effects", flag, effects, MAX_EFFECTS,
+	do_vector(flag, effects,
 		[](auto effect, auto flag) -> void {
 			do_s16b(&effect->type, flag);
 			do_s16b(&effect->dam, flag);

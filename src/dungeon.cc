@@ -842,15 +842,15 @@ static bool is_light_safe(object_type const *o_ptr)
  */
 static void process_lasting_effects()
 {
+	auto &lasting_effects = game->lasting_effects;
+
 	for (int j = 0; j < cur_hgt - 1; j++)
 	{
 		for (int i = 0; i < cur_wid - 1; i++)
 		{
-			int e = cave[j][i].effect;
-
-			if (e)
+			if (auto ei = cave[j][i].maybe_effect)
 			{
-				effect_type *e_ptr = &effects[e];
+				effect_type *e_ptr = &lasting_effects[*ei];
 
 				if (e_ptr->time)
 				{
@@ -860,17 +860,19 @@ static void process_lasting_effects()
 				}
 				else
 				{
-					cave[j][i].effect = 0;
+					cave[j][i].maybe_effect = boost::none;
 				}
 
 				if ((e_ptr->flags & EFF_WAVE) && !(e_ptr->flags & EFF_LAST))
 				{
 					if (distance(e_ptr->cy, e_ptr->cx, j, i) < e_ptr->rad - 1)
-						cave[j][i].effect = 0;
+					{
+						cave[j][i].maybe_effect = boost::none;
+					}
 				}
 				else if ((e_ptr->flags & EFF_STORM) && !(e_ptr->flags & EFF_LAST))
 				{
-					cave[j][i].effect = 0;
+					cave[j][i].maybe_effect = boost::none;
 				}
 
 				lite_spot(j, i);
@@ -878,152 +880,220 @@ static void process_lasting_effects()
 		}
 	}
 
-	/* Reduce & handle effects */
-	for (int i = 0; i < MAX_EFFECTS; i++)
+	// Filter out any expired effects
+	lasting_effects.erase(
+		std::remove_if(
+			std::begin(lasting_effects),
+			std::end(lasting_effects),
+			[](auto effect) { return effect.time == 0; }),
+		std::end(lasting_effects));
+
+	// Reduce & handle effects
+	for (std::size_t i = 0; i < lasting_effects.size(); i++)
 	{
-		/* Skip empty slots */
-		if (effects[i].time == 0) continue;
+		effect_type &e = lasting_effects[i];
 
-		/* Reduce duration */
-		effects[i].time--;
+		// Reduce duration
+		e.time--;
 
-		/* Creates a "wave" effect*/
-		if (effects[i].flags & EFF_WAVE)
+		// Set up the effect in the dungeon.
+		if (e.flags & EFF_WAVE)
 		{
-			effect_type *e_ptr = &effects[i];
-			int x, y, z;
+			// Expand the wave front
+			e.rad++;
 
-			e_ptr->rad++;
-
-			/* What a frelling ugly line of ifs ... */
-			if (effects[i].flags & EFF_DIR8)
-				for (y = e_ptr->cy - e_ptr->rad, z = 0; y <= e_ptr->cy; y++, z++)
-				{
-					for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR2)
-				for (y = e_ptr->cy, z = e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++, z--)
-				{
-					for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR6)
-				for (x = e_ptr->cx, z = e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++, z--)
-				{
-					for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR4)
-				for (x = e_ptr->cx - e_ptr->rad, z = 0; x <= e_ptr->cx; x++, z++)
-				{
-					for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR9)
-				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
-				{
-					for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR1)
-				for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
-				{
-					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR7)
-				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
-				{
-					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else if (effects[i].flags & EFF_DIR3)
-				for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
-				{
-					for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-			else
-				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
-				{
-					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						/* This is *slow* -- pelpel */
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-							cave[y][x].effect = i;
-					}
-				}
-		}
-		/* Creates a "storm" effect*/
-		else if (effects[i].flags & EFF_STORM)
-		{
-			effect_type *e_ptr = &effects[i];
-			int x, y;
-
-			e_ptr->cy = p_ptr->py;
-			e_ptr->cx = p_ptr->px;
-			for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
+			// Check direction
+			if (e.flags & EFF_DIR8)
 			{
-				for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
+				for (int y = e.cy - e.rad, z = 0; y <= e.cy; y++, z++)
 				{
-					if (!in_bounds(y, x)) continue;
-
-					if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							(distance(e_ptr->cy, e_ptr->cx, y, x) <= e_ptr->rad))
+					for (int x = e.cx - (e.rad - z); x <= e.cx + (e.rad - z); x++)
 					{
-						cave[y][x].effect = i;
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR2)
+			{
+				for (int y = e.cy, z = e.rad; y <= e.cy + e.rad; y++, z--)
+				{
+					for (int x = e.cx - (e.rad - z); x <= e.cx + (e.rad - z); x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR6)
+			{
+				for (int x = e.cx, z = e.rad; x <= e.cx + e.rad; x++, z--)
+				{
+					for (int y = e.cy - (e.rad - z); y <= e.cy + (e.rad - z); y++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR4)
+			{
+				for (int x = e.cx - e.rad, z = 0; x <= e.cx; x++, z++)
+				{
+					for (int y = e.cy - (e.rad - z); y <= e.cy + (e.rad - z); y++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR9)
+			{
+				for (int y = e.cy - e.rad; y <= e.cy; y++)
+				{
+					for (int x = e.cx; x <= e.cx + e.rad; x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR1)
+			{
+				for (int y = e.cy; y <= e.cy + e.rad; y++)
+				{
+					for (int x = e.cx - e.rad; x <= e.cx; x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR7)
+			{
+				for (int y = e.cy - e.rad; y <= e.cy; y++)
+				{
+					for (int x = e.cx - e.rad; x <= e.cx; x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else if (e.flags & EFF_DIR3)
+			{
+				for (int y = e.cy; y <= e.cy + e.rad; y++)
+				{
+					for (int x = e.cx; x <= e.cx + e.rad; x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+			else
+			{
+				for (int y = e.cy - e.rad; y <= e.cy + e.rad; y++)
+				{
+					for (int x = e.cx - e.rad; x <= e.cx + e.rad; x++)
+					{
+						if (!in_bounds(y, x))
+						{
+							continue;
+						}
+
+						if (los(e.cy, e.cx, y, x) &&
+								(distance(e.cy, e.cx, y, x) == e.rad))
+						{
+							cave[y][x].maybe_effect = i;
+						}
+					}
+				}
+			}
+		}
+		else if (e.flags & EFF_STORM)
+		{
+			// Center on player
+			e.cy = p_ptr->py;
+			e.cx = p_ptr->px;
+			// Set up the effect
+			for (int y = e.cy - e.rad; y <= e.cy + e.rad; y++)
+			{
+				for (int x = e.cx - e.rad; x <= e.cx + e.rad; x++)
+				{
+					if (!in_bounds(y, x))
+					{
+						continue;
+					}
+
+					if (los(e.cy, e.cx, y, x) &&
+							(distance(e.cy, e.cx, y, x) <= e.rad))
+					{
+						cave[y][x].maybe_effect = i;
 						lite_spot(y, x);
 					}
 				}
