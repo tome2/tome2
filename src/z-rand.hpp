@@ -3,6 +3,7 @@
 #include "h-basic.h"
 #include "seed_fwd.hpp"
 
+#include <cassert>
 #include <string>
 
 /**** Available constants ****/
@@ -91,6 +92,7 @@ s32b rand_spread(s32b a, s32b d);
  **/
 template <class C> typename C::const_iterator uniform_element(C const &c)
 {
+	assert(!c.empty());
 	return std::next(std::cbegin(c), rand_int(c.size()));
 }
 
@@ -101,6 +103,7 @@ template <class C> typename C::const_iterator uniform_element(C const &c)
  **/
 template <class C> typename C::iterator uniform_element(C &c)
 {
+	assert(!c.empty());
 	return std::next(std::begin(c), rand_int(c.size()));
 }
 
