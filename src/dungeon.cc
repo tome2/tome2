@@ -4631,7 +4631,7 @@ static void load_all_pref_files()
 /*
  * Actually play a game
  */
-void play_game()
+void play_game(program_args const &args)
 {
 	auto const &d_info = game->edit_data.d_info;
 
@@ -4673,7 +4673,7 @@ void play_game()
 	no_begin_screen = false;
 
 	/* Attempt to load */
-	if (!load_player())
+	if (!load_player(args))
 	{
 		/* Oops */
 		quit("broken savefile");
@@ -4741,7 +4741,10 @@ void play_game()
 	calc_powers_silent = TRUE;
 
 	/* Hack -- Enter wizard mode */
-	if (arg_wizard && enter_wizard_mode()) wizard = TRUE;
+	if (args.wizard && enter_wizard_mode())
+	{
+		wizard = TRUE;
+	}
 
 	/* Flavor the objects */
 	flavor_init();
@@ -4765,8 +4768,11 @@ void play_game()
 	load_all_pref_files();
 
 	/* Set or clear "rogue_like_commands" if requested */
-	if (arg_force_original) options->rogue_like_commands = false;
-	if (arg_force_roguelike) options->rogue_like_commands = true;
+	if (auto it = args.force_key_set)
+	{
+		assert((*it == 'r') || (*it == 'o'));
+		options->rogue_like_commands = (*it == 'r');
+	}
 
 	/* Initialize vault info */
 	if (init_v_info()) quit("Cannot initialize vaults");

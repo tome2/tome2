@@ -244,15 +244,6 @@ usage:
 		argv[1] = NULL;
 	}
 
-	/* Process command line arguments */
-	arg_wizard = program_args.wizard;
-
-	if (auto it = program_args.force_key_set)
-	{
-		arg_force_roguelike = (*it == 'r');
-		arg_force_original = (*it == 'o');
-	}
-
 	/* If player name specified... */
 	if (!program_args.player_name.empty())
 	{
@@ -289,7 +280,7 @@ usage:
 		pause_line(23);
 
 		/* Play the game */
-		play_game();
+		play_game(program_args);
 
 		/* Quit */
 		quit(NULL);

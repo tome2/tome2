@@ -8,6 +8,7 @@
 #include "ego_item_type.hpp"
 #include "files.hpp"
 #include "game.hpp"
+#include "hooks.hpp"
 #include "init1.hpp"
 #include "init2.hpp"
 #include "levels.hpp"
@@ -25,7 +26,6 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "hooks.hpp"
 #include "skill_type.hpp"
 #include "store_type.hpp"
 #include "tables.hpp"
@@ -2543,7 +2543,7 @@ static errr rd_savefile()
  * Note that we always try to load the "current" savefile, even if
  * there is no such file, so we must check for "empty" savefile names.
  */
-bool_ load_player()
+bool load_player(program_args const &args)
 {
 	errr err = 0;
 
@@ -2561,7 +2561,7 @@ bool_ load_player()
 	/* Allow empty savefile name */
 	if (savefile.empty())
 	{
-		return (TRUE);
+		return true;
 	}
 
 
@@ -2575,7 +2575,7 @@ bool_ load_player()
 		msg_print(NULL);
 
 		/* Allow this */
-		return (TRUE);
+		return true;
 	}
 
 	/* Okay */
@@ -2641,20 +2641,20 @@ bool_ load_player()
 			death = FALSE;
 
 			/* Cheat death (unless the character retired) */
-			if (arg_wizard && !total_winner)
+			if (args.wizard && !total_winner)
 			{
 				/* A character was loaded */
 				character_loaded = true;
 
 				/* Done */
-				return (TRUE);
+				return true;
 			}
 
 			/* Forget turns */
 			turn = old_turn = 0;
 
 			/* Done */
-			return (TRUE);
+			return true;
 		}
 
 		/* A character was loaded */
@@ -2668,7 +2668,7 @@ bool_ load_player()
 		}
 
 		/* Success */
-		return (TRUE);
+		return true;
 	}
 
 
@@ -2678,7 +2678,7 @@ bool_ load_player()
 	msg_print(NULL);
 
 	/* Oops */
-	return (FALSE);
+	return false;
 }
 
 

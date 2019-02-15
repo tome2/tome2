@@ -23,13 +23,6 @@ char *macro_trigger_name[MAX_MACRO_TRIG];
 char *macro_trigger_keycode[2][MAX_MACRO_TRIG];
 
 /*
- * Run-time aruments
- */
-bool_ arg_wizard; 			/* Command arg -- Request wizard mode */
-bool_ arg_force_original; 	/* Command arg -- Request original keyset */
-bool_ arg_force_roguelike; 	/* Command arg -- Request roguelike keyset */
-
-/*
  * Various things
  */
 

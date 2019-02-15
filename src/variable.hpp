@@ -186,7 +186,4 @@ extern s32b DUNGEON_ASTRAL_WILD_X;
 extern s32b DUNGEON_ASTRAL_WILD_Y;
 extern deity_type deity_info[MAX_GODS];
 const char *get_version_string();
-extern bool_ arg_wizard;
-extern bool_ arg_force_original;
-extern bool_ arg_force_roguelike;
 extern struct options *options;
