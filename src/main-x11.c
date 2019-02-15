@@ -1518,10 +1518,8 @@ static errr CheckEvent(bool_ wait)
 /*
  * Handle "activation" of a term
  */
-static void Term_xtra_x11_level(int v)
+static void Term_xtra_x11_level(term_data *td, int v)
 {
-	term_data *td = (term_data*)(Term->data);
-
 	/* Handle "activate" */
 	if (v)
 	{
@@ -1577,8 +1575,10 @@ static void Term_xtra_x11_react()
 /*
  * Handle a "special request"
  */
-static void Term_xtra_x11(int n, int v)
+static void Term_xtra_x11(void *data, int n, int v)
 {
+	term_data *td = (term_data*) data;
+
 	/* Handle a subset of the legal requests */
 	switch (n)
 	{
@@ -1609,7 +1609,7 @@ static void Term_xtra_x11(int n, int v)
 
 		/* Handle change in the "level" */
 	case TERM_XTRA_LEVEL:
-		Term_xtra_x11_level(v);
+		Term_xtra_x11_level(td, v);
 		return;
 
 		/* Clear the screen */
@@ -1635,7 +1635,7 @@ static void Term_xtra_x11(int n, int v)
  *
  * Consider a rectangular outline like "main-mac.c".  XXX XXX
  */
-static void Term_curs_x11(int x, int y)
+static void Term_curs_x11(void *data, int x, int y)
 {
 	/* Draw the cursor */
 	Infoclr_set(xor);
@@ -1648,7 +1648,7 @@ static void Term_curs_x11(int x, int y)
 /*
  * Draw some textual characters.
  */
-static void Term_text_x11(int x, int y, int n, byte a, const char *s)
+static void Term_text_x11(void *data, int x, int y, int n, byte a, const char *s)
 {
 	/* Draw the text */
 	Infoclr_set(clr[a]);

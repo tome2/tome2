@@ -634,9 +634,9 @@ static void Term_xtra_gcu_react()
 /*
  * Handle a "special request"
  */
-static void Term_xtra_gcu(int n, int v)
+static void Term_xtra_gcu(void *data, int n, int v)
 {
-	term_data *td = (term_data *)(Term->data);
+	term_data *td = (term_data *) data;
 
 	/* Analyze the request */
 	switch (n)
@@ -683,9 +683,9 @@ static void Term_xtra_gcu(int n, int v)
 /*
  * Actually MOVE the hardware cursor
  */
-static void Term_curs_gcu(int x, int y)
+static void Term_curs_gcu(void *data, int x, int y)
 {
-	term_data *td = (term_data *)(Term->data);
+	term_data *td = (term_data *) data;
 
 	/* Literally move the cursor */
 	wmove(td->win, y, x);
@@ -695,11 +695,9 @@ static void Term_curs_gcu(int x, int y)
 /*
  * Place some text on the screen using an attribute
  */
-static void Term_text_gcu(int x, int y, int n, byte a, const char *s)
+static void Term_text_gcu(void *data, int x, int y, int n, byte a, const char *s)
 {
-	term_data *td = (term_data *)(Term->data);
-
-	int i;
+	term_data *td = (term_data *) data;
 
 #ifdef A_COLOR
 	/* Set the color */
@@ -710,7 +708,7 @@ static void Term_text_gcu(int x, int y, int n, byte a, const char *s)
 	wmove(td->win, y, x);
 
 	/* Draw each character */
-	for (i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 	{
 
 		/* Draw a normal character */

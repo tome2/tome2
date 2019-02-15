@@ -284,11 +284,8 @@ static void Term_nuke_gtk(void *data)
 /*
  * Erase the whole term.
  */
-static void Term_clear_gtk()
+static void Term_clear_gtk(term_data *td)
 {
-	term_data *td = (term_data*)(Term->data);
-
-
 	/* Don't draw to hidden windows */
 	if (!td->shown)
 	{
@@ -316,11 +313,8 @@ static void Term_clear_gtk()
 /*
  * Erase some characters.
  */
-static errr Term_wipe_gtk(int x, int y, int n)
+static errr Term_wipe_gtk(term_data *td, int x, int y, int n)
 {
-	term_data *td = (term_data*)(Term->data);
-
-
 	/* Don't draw to hidden windows */
 	if (!td->shown) return (0);
 
@@ -348,10 +342,9 @@ static errr Term_wipe_gtk(int x, int y, int n)
 /*
  * Draw some textual characters.
  */
-static void Term_text_gtk(int x, int y, int n, byte a, const char *s)
+static void Term_text_gtk(void *data, int x, int y, int n, byte a, const char *s)
 {
-	term_data *td = (term_data*)(Term->data);
-
+	term_data *td = (term_data *) data;
 
 	/* Don't draw to hidden windows */
 	if (!td->shown)
@@ -366,7 +359,7 @@ static void Term_text_gtk(int x, int y, int n, byte a, const char *s)
 	term_data_set_fg(td, a);
 
 	/* Clear the line */
-	Term_wipe_gtk(x, y, n);
+	Term_wipe_gtk(td, x, y, n);
 
 	/* Draw the text to the window */
 	gdk_draw_text(
@@ -386,9 +379,9 @@ static void Term_text_gtk(int x, int y, int n, byte a, const char *s)
 /*
  * Draw software cursor at (x, y)
  */
-static void Term_curs_gtk(int x, int y)
+static void Term_curs_gtk(void *data, int x, int y)
 {
-	term_data *td = (term_data*)(Term->data);
+	term_data *td = (term_data *) data;
 	int cells = 1;
 
 
@@ -445,8 +438,10 @@ static void DrainEvents(void)
 /*
  * Handle a "special request"
  */
-static void Term_xtra_gtk(int n, int v)
+static void Term_xtra_gtk(void *term_data_ctx, int n, int v)
 {
+	term_data *td = (term_data *) term_data_ctx;
+
 	/* Handle a subset of the legal requests */
 	switch (n)
 	{
@@ -491,7 +486,7 @@ static void Term_xtra_gtk(int n, int v)
 
 		/* Clear the screen */
 	case TERM_XTRA_CLEAR:
-		Term_clear_gtk();
+		Term_clear_gtk(td);
 		return;
 
 		/* Rename main window */

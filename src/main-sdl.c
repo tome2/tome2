@@ -503,12 +503,13 @@ void handleEvent(SDL_Event *event)
 }
 
 /* declare the screen clearing function used below */
-void eraseTerminal();
+void eraseTerminal(term_data *td);
 void drawTermStuff(term_data *td, SDL_Rect *rect);
-static void Term_xtra_sdl(int n, int v)
+
+static void Term_xtra_sdl(void *data, int n, int v)
 {
 	static SDL_Event event;
-	term_data *td;
+	term_data *td = (term_data *) data;
 
 
 	/* Analyze */
@@ -546,7 +547,7 @@ static void Term_xtra_sdl(int n, int v)
 			/* Clear the terminal */
 			DB("TERM_XTRA_CLEAR");
 			suspendUpdate = TRUE;
-			eraseTerminal();
+			eraseTerminal(td);
 			return;
 		}
 
@@ -583,7 +584,6 @@ static void Term_xtra_sdl(int n, int v)
 			if (suspendUpdate)
 			{
 				DB("  update WAS suspended... updating now");
-				td = (term_data*)(Term->data);
 				suspendUpdate = FALSE;				
 				drawTermStuff(td,NULL);
 			}
@@ -943,9 +943,9 @@ void createCursor(byte r, byte g, byte b, byte a)
 
 /* Cursor Display routine - just blits the global cursor
 surface onto the correct location */
-static void Term_curs_sdl(int x, int y)
+static void Term_curs_sdl(void *data, int x, int y)
 {
-	term_data *td = (term_data*)(Term->data);
+	term_data *td = (term_data*) data;
 	static SDL_Rect base;
 
 	/* calculate the position to place the cursor */
@@ -964,10 +964,9 @@ static void Term_curs_sdl(int x, int y)
 }
 
 /* Perform a full clear of active terminal; redraw the borders.*/
-void eraseTerminal(void)
+void eraseTerminal(term_data *td)
 {
 	static SDL_Rect base;
-	term_data *td = (term_data*)(Term->data);
 
 	/* temporarily remove clipping rectangle */
 	SDL_SetClipRect(td->surf,NULL);
@@ -1028,9 +1027,9 @@ void eraseTerminal(void)
  * the resulting "blank" correctly.
  *
  */
-static void Term_text_sdl(int x, int y, int n, byte a, const char *cp)
+static void Term_text_sdl(void *data, int x, int y, int n, byte a, const char *cp)
 {
-	term_data *td = (term_data*)(Term->data);
+	term_data *td = (term_data*) data;
 	static SDL_Rect base;
 	SDL_Rect base_back;
 	int i = n;

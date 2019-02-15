@@ -1379,10 +1379,8 @@ static void Term_xtra_win_flush(void)
  *
  * Make this more efficient XXX XXX XXX
  */
-static void Term_xtra_win_clear(void)
+static void Term_xtra_win_clear(term_data *td, void)
 {
-	term_data *td = (term_data*)(Term->data);
-
 	HDC hdc;
 	RECT rc;
 
@@ -1454,8 +1452,10 @@ HWND get_main_hwnd()
 /*
  * Do a "special thing"
  */
-static void Term_xtra_win(int n, int v)
+static void Term_xtra_win(void *data, int n, int v)
 {
+	term_data *td = (term_data*) data;
+
 	/* Handle a subset of the legal requests */
 	switch (n)
 	{
@@ -1490,7 +1490,7 @@ static void Term_xtra_win(int n, int v)
 		/* Clear the screen */
 	case TERM_XTRA_CLEAR:
 		{
-			Term_xtra_win_clear();
+			Term_xtra_win_clear(td);
 			return;
 		}
 
@@ -1524,9 +1524,9 @@ static void Term_xtra_win(int n, int v)
  *
  * Draw a "cursor" at (x,y), using a "yellow box".
  */
-static void Term_curs_win(int x, int y)
+static void Term_curs_win(void *data, int x, int y)
 {
-	term_data *td = (term_data*)(Term->data);
+	term_data *td = (term_data*) data;
 
 	RECT rc;
 	HDC hdc;
@@ -1555,9 +1555,9 @@ static void Term_curs_win(int x, int y)
  * what color it should be using to draw with, but perhaps simply changing
  * it every time is not too inefficient.  XXX XXX XXX
  */
-static void Term_text_win(int x, int y, int n, byte a, const char *s)
+static void Term_text_win(void *data, int x, int y, int n, byte a, const char *s)
 {
-	term_data *td = (term_data*)(Term->data);
+	term_data *td = (term_data*) data;
 	RECT rc;
 	HDC hdc;
 

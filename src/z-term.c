@@ -375,7 +375,7 @@ void Term_xtra(int n, int v)
 {
 	if (Term->xtra_hook)
 	{
-		(*Term->xtra_hook)(n, v);
+		(*Term->xtra_hook)(Term->data, n, v);
 	}
 }
 
@@ -467,6 +467,25 @@ static const byte ATTR_BLANK = TERM_WHITE;
 static const char CHAR_BLANK = ' ';
 
 /*
+ * Call the text hook
+ */
+static void do_text_hook(int x, int y, int n, byte a, const char *s)
+{
+	assert(Term->text_hook);
+	(*Term->text_hook)(Term->data, x, y, n, a, s);
+}
+
+/*
+ * Call the curs hook
+ */
+static void do_curs_hook(int x, int y)
+{
+	assert(Term->curs_hook);
+	(*Term->curs_hook)(Term->data, x, y);
+}
+
+
+/*
  * Flush a row of the current window (see "Term_fresh")
  *
  * Display text using "Term_text()" and "Term_wipe()"
@@ -513,7 +532,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			/* Flush */
 			if (fn)
 			{
-				(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
+				do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -534,7 +553,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw the pending chars */
-				(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
+				do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -551,7 +570,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	/* Flush */
 	if (fn)
 	{
-		(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
+		do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
 	}
 }
 
@@ -667,12 +686,6 @@ errr Term_fresh(void)
 		return (1);
 	}
 
-
-	/* Paranoia -- use "fake" hooks to prevent core dumps */
-	assert(Term->curs_hook != NULL);
-	assert(Term->text_hook != NULL);
-
-
 	/* Handle "total erase" */
 	if (Term->total_erase)
 	{
@@ -732,7 +745,7 @@ errr Term_fresh(void)
 			char oc = old_cc[tx];
 
 			/* Hack -- restore the actual character */
-			(*Term->text_hook)(tx, ty, 1, oa, &oc);
+			do_text_hook(tx, ty, 1, oa, &oc);
 		}
 	}
 
@@ -798,7 +811,7 @@ errr Term_fresh(void)
 		if (!scr->cu && scr->cv)
 		{
 			/* Call the cursor display routine */
-			(*Term->curs_hook)(scr->cx, scr->cy);
+			do_curs_hook(scr->cx, scr->cy);
 		}
 	}
 
@@ -809,7 +822,7 @@ errr Term_fresh(void)
 		if (scr->cu)
 		{
 			/* Paranoia -- Put the cursor NEAR where it belongs */
-			(*Term->curs_hook)(w - 1, scr->cy);
+			do_curs_hook(w - 1, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -819,7 +832,7 @@ errr Term_fresh(void)
 		else if (!scr->cv)
 		{
 			/* Paranoia -- Put the cursor where it belongs */
-			(*Term->curs_hook)(scr->cx, scr->cy);
+			do_curs_hook(scr->cx, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -829,7 +842,7 @@ errr Term_fresh(void)
 		else
 		{
 			/* Put the cursor where it belongs */
-			(*Term->curs_hook)(scr->cx, scr->cy);
+			do_curs_hook(scr->cx, scr->cy);
 
 			/* Make the cursor visible */
 			Term_xtra(TERM_XTRA_SHAPE, 1);
