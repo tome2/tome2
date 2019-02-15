@@ -1609,7 +1609,7 @@ errr Term_key_push(int k)
  *
  * Remove the keypress if "take" is true.
  */
-errr Term_inkey(char *ch, bool_ wait, bool_ take)
+errr Term_inkey(char *ch, bool wait, bool take)
 {
 	auto &key_queue = Term->m_key_queue;
 

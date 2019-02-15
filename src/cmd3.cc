@@ -98,7 +98,7 @@ void do_cmd_inven()
 	else
 	{
 		/* Mega-Hack -- Don't disable keymaps for this key */
-		request_command_inven_mode = TRUE;
+		request_command_inven_mode = true;
 	}
 }
 
@@ -154,7 +154,7 @@ void do_cmd_equip()
 	else
 	{
 		/* Mega-Hack -- Don't disable keymaps for this key */
-		request_command_inven_mode = TRUE;
+		request_command_inven_mode = true;
 	}
 }
 

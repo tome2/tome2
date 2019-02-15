@@ -2708,7 +2708,7 @@ void do_cmd_read_scroll()
 					break;
 				}
 
-				do_cmd_leave_body(FALSE);
+				do_cmd_leave_body(false);
 
 				used_up = TRUE;
 

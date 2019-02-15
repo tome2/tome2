@@ -242,7 +242,7 @@ void get_random_name(char * return_name)
 }
 
 
-bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
+bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 {
 	auto const &ra_gen = game->edit_data.ra_gen;
 	auto const &ra_info = game->edit_data.ra_info;
@@ -250,13 +250,16 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	char new_name[80];
 	int powers = 0;
 	s32b total_flags, total_power = 0;
-	bool_ a_cursed = FALSE;
+	bool a_cursed = FALSE;
 	s16b pval = 0;
 	bool_ limit_blows = FALSE;
 
 	strcpy(new_name, "");
 
-	if ((!a_scroll) && (randint(A_CURSED) == 1)) a_cursed = TRUE;
+	if ((!a_scroll) && (randint(A_CURSED) == 1))
+	{
+		a_cursed = true;
+	}
 
 	for (auto const &g: ra_gen)
 	{
@@ -383,10 +386,8 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 }
 
 
-bool_ artifact_scroll()
+bool artifact_scroll()
 {
-	bool_ okay = FALSE;
-
 	/* Get an item */
 	int item;
 	if (!get_item(&item,
@@ -395,7 +396,7 @@ bool_ artifact_scroll()
 		      (USE_EQUIP | USE_INVEN | USE_FLOOR),
 		      item_tester_hook_artifactable()))
 	{
-		return (FALSE);
+		return false;
 	}
 
 	/* Get the item */
@@ -410,22 +411,20 @@ bool_ artifact_scroll()
 	           ((item >= 0) ? "Your" : "The"), o_name,
 	           ((o_ptr->number > 1) ? "" : "s"));
 
+	bool okay = false;
+
 	if (artifact_p(o_ptr))
 	{
 		msg_format("The %s %s already %s!",
 		           o_name, ((o_ptr->number > 1) ? "are" : "is"),
 		           ((o_ptr->number > 1) ? "artifacts" : "an artifact"));
-		okay = FALSE;
 	}
-
 	else if (o_ptr->name2)
 	{
 		msg_format("The %s %s already %s!",
 		           o_name, ((o_ptr->number > 1) ? "are" : "is"),
 		           ((o_ptr->number > 1) ? "ego items" : "an ego item"));
-		okay = FALSE;
 	}
-
 	else
 	{
 		if (o_ptr->number > 1)
@@ -434,7 +433,8 @@ bool_ artifact_scroll()
 			msg_format("%d of your %s %s destroyed!", (o_ptr->number) - 1, o_name, (o_ptr->number > 2 ? "were" : "was"));
 			o_ptr->number = 1;
 		}
-		okay = create_artifact(o_ptr, TRUE, TRUE);
+
+		okay = create_artifact(o_ptr, true, true);
 	}
 
 	/* Failure */
@@ -447,10 +447,12 @@ bool_ artifact_scroll()
 		msg_print("The enchantment failed.");
 	}
 	else
+	{
 		o_ptr->found = OBJ_FOUND_SELFMADE;
+	}
 
 	/* Something happened */
-	return (TRUE);
+	return true;
 }
 
 

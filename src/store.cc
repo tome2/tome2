@@ -2841,9 +2841,9 @@ static store_action_type const *find_store_action(s16b command_cmd)
  * must disable some commands which are allowed in the dungeon
  * but not in the stores, to prevent chaos.
  */
-static bool_ store_process_command()
+static bool store_process_command()
 {
-	bool_ recreate = FALSE;
+	bool recreate = false;
 
 	/* Handle repeating the last command */
 	repeat_check();

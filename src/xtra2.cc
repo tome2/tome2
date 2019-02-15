@@ -2688,7 +2688,7 @@ void monster_death(int m_idx)
 			apply_magic(q_ptr, -1, TRUE, TRUE, FALSE);
 
 			/* Create a random artifact */
-			create_artifact(q_ptr, TRUE, FALSE);
+			create_artifact(q_ptr, true, false);
 
 			/* Save the inscription */
 			q_ptr->artifact_name = fmt::format("of {}", r_ptr->name);

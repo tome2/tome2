@@ -7,9 +7,9 @@
 #include <boost/optional.hpp>
 
 int distance(int y1, int x1, int y2, int x2);
-bool_ los(int y1, int x1, int y2, int x2);
-bool_ cave_valid_bold(int y, int x);
-bool_ no_lite();
+bool los(int y1, int x1, int y2, int x2);
+bool cave_valid_bold(int y, int x);
+bool no_lite();
 void map_info_default(int y, int x, byte *ap, char *cp);
 void move_cursor_relative(int row, int col);
 void print_rel(char c, byte a, int y, int x);
@@ -33,7 +33,7 @@ void place_floor(int y, int x);
 void place_floor_convert_glass(int y, int x);
 void place_filler(int y, int x);
 void mmove2(int *y, int *x, int y1, int x1, int y2, int x2);
-bool_ projectable(int y1, int x1, int y2, int x2);
+bool projectable(int y1, int x1, int y2, int x2);
 void scatter(int *yp, int *xp, int y, int x, int d);
 void health_track(int m_idx);
 void monster_race_track(int r_idx, int ego);

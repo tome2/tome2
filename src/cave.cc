@@ -68,7 +68,7 @@ int distance(int y1, int x1, int y2, int x2)
  * Returns TRUE if a grid is considered to be a wall for the purpose
  * of magic mapping / clairvoyance
  */
-static bool_ is_wall(cave_type *c_ptr)
+static bool is_wall(cave_type *c_ptr)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -78,22 +78,37 @@ static bool_ is_wall(cave_type *c_ptr)
 		: c_ptr->feat;
 
 	/* Paranoia */
-	if (feat >= f_info.size()) return FALSE;
+	if (feat >= f_info.size())
+	{
+		return false;
+	}
 
 	/* Vanilla floors and doors aren't considered to be walls */
-	if (feat < FEAT_SECRET) return FALSE;
+	if (feat < FEAT_SECRET)
+	{
+		return false;
+	}
 
 	/* Exception #1: a glass wall is a wall but doesn't prevent LOS */
-	if (feat == FEAT_GLASS_WALL) return FALSE;
+	if (feat == FEAT_GLASS_WALL)
+	{
+		return false;
+	}
 
 	/* Exception #2: an illusion wall is not a wall but obstructs view */
-	if (feat == FEAT_ILLUS_WALL) return TRUE;
+	if (feat == FEAT_ILLUS_WALL)
+	{
+		return true;
+	}
 
 	/* Exception #3: a small tree is a floor but obstructs view */
-	if (feat == FEAT_SMALL_TREES) return TRUE;
+	if (feat == FEAT_SMALL_TREES)
+	{
+		return true;
+	}
 
 	/* Normal cases: use the WALL flag in f_info.txt */
-	return (f_info[feat].flags & FF_WALL) ? TRUE : FALSE;
+	return !!(f_info[feat].flags & FF_WALL);
 }
 
 
@@ -132,7 +147,7 @@ static bool_ is_wall(cave_type *c_ptr)
  *
  * Use the "update_view()" function to determine player line-of-sight.
  */
-bool_ los(int y1, int x1, int y2, int x2)
+bool los(int y1, int x1, int y2, int x2)
 {
 	/* Delta */
 	int dx, dy;
@@ -166,7 +181,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 
 
 	/* Handle adjacent (or identical) grids */
-	if ((ax < 2) && (ay < 2)) return (TRUE);
+	if ((ax < 2) && (ay < 2))
+	{
+		return true;
+	}
 
 
 	/* Paranoia -- require "safe" origin */
@@ -181,7 +199,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (ty = y1 + 1; ty < y2; ty++)
 			{
-				if (!cave_sight_bold(ty, x1)) return (FALSE);
+				if (!cave_sight_bold(ty, x1))
+				{
+					return false;
+				}
 			}
 		}
 
@@ -190,12 +211,15 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (ty = y1 - 1; ty > y2; ty--)
 			{
-				if (!cave_sight_bold(ty, x1)) return (FALSE);
+				if (!cave_sight_bold(ty, x1))
+				{
+					return false;
+				}
 			}
 		}
 
 		/* Assume los */
-		return (TRUE);
+		return true;
 	}
 
 	/* Directly East/West */
@@ -206,7 +230,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (tx = x1 + 1; tx < x2; tx++)
 			{
-				if (!cave_sight_bold(y1, tx)) return (FALSE);
+				if (!cave_sight_bold(y1, tx))
+				{
+					return false;
+				}
 			}
 		}
 
@@ -215,12 +242,15 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (tx = x1 - 1; tx > x2; tx--)
 			{
-				if (!cave_sight_bold(y1, tx)) return (FALSE);
+				if (!cave_sight_bold(y1, tx))
+				{
+					return false;
+				}
 			}
 		}
 
 		/* Assume los */
-		return (TRUE);
+		return true;
 	}
 
 
@@ -229,21 +259,25 @@ bool_ los(int y1, int x1, int y2, int x2)
 	sy = (dy < 0) ? -1 : 1;
 
 
-	/* Vertical "knights" */
+	/* Knight's moves */
 	if (ax == 1)
 	{
 		if (ay == 2)
 		{
-			if (cave_sight_bold(y1 + sy, x1)) return (TRUE);
+			if (cave_sight_bold(y1 + sy, x1))
+			{
+				return true;
+			}
 		}
 	}
-
-	/* Horizontal "knights" */
 	else if (ay == 1)
 	{
 		if (ax == 2)
 		{
-			if (cave_sight_bold(y1, x1 + sx)) return (TRUE);
+			if (cave_sight_bold(y1, x1 + sx))
+			{
+				return true;
+			}
 		}
 	}
 
@@ -279,7 +313,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		/* the LOS exactly meets the corner of a tile. */
 		while (x2 - tx)
 		{
-			if (!cave_sight_bold(ty, tx)) return (FALSE);
+			if (!cave_sight_bold(ty, tx))
+			{
+				return false;
+			}
 
 			qy += m;
 
@@ -290,7 +327,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 			else if (qy > f2)
 			{
 				ty += sy;
-				if (!cave_sight_bold(ty, tx)) return (FALSE);
+				if (!cave_sight_bold(ty, tx))
+				{
+					return false;
+				}
 				qy -= f1;
 				tx += sx;
 			}
@@ -326,7 +366,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		/* the LOS exactly meets the corner of a tile. */
 		while (y2 - ty)
 		{
-			if (!cave_sight_bold(ty, tx)) return (FALSE);
+			if (!cave_sight_bold(ty, tx))
+			{
+				return false;
+			}
 
 			qx += m;
 
@@ -337,7 +380,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 			else if (qx > f2)
 			{
 				tx += sx;
-				if (!cave_sight_bold(ty, tx)) return (FALSE);
+				if (!cave_sight_bold(ty, tx))
+				{
+					return false;
+				}
 				qx -= f1;
 				ty += sy;
 			}
@@ -351,7 +397,7 @@ bool_ los(int y1, int x1, int y2, int x2)
 	}
 
 	/* Assume los */
-	return (TRUE);
+	return true;
 }
 
 
@@ -359,7 +405,7 @@ bool_ los(int y1, int x1, int y2, int x2)
 /*
  * Returns true if the player's grid is dark
  */
-bool_ no_lite()
+bool no_lite()
 {
 	return (!player_can_see_bold(p_ptr->py, p_ptr->px));
 }
@@ -371,12 +417,15 @@ bool_ no_lite()
  *
  * Used by destruction spells, and for placing stairs, etc.
  */
-bool_ cave_valid_bold(int y, int x)
+bool cave_valid_bold(int y, int x)
 {
 	cave_type const *c_ptr = &cave[y][x];
 
 	/* Forbid perma-grids */
-	if (cave_perma_grid(c_ptr)) return (FALSE);
+	if (cave_perma_grid(c_ptr))
+	{
+		return false;
+	}
 
 	/* Check objects */
 	for (auto const o_idx: c_ptr->o_idxs)
@@ -387,12 +436,12 @@ bool_ cave_valid_bold(int y, int x)
 		/* Forbid artifact grids */
 		if (artifact_p(o_ptr))
 		{
-			return (FALSE);
+			return false;
 		}
 	}
 
 	/* Accept */
-	return (TRUE);
+	return true;
 }
 
 
@@ -3915,15 +3964,14 @@ void mmove2(int *y, int *x, int y1, int x1, int y2, int x2)
  *
  * This is slightly (but significantly) different from "los(y1,x1,y2,x2)".
  */
-bool_ projectable(int y1, int x1, int y2, int x2)
+bool projectable(int y1, int x1, int y2, int x2)
 {
-	int dist, y, x;
-
 	/* Start at the initial location */
-	y = y1, x = x1;
+	int y = y1;
+	int x = x1;
 
 	/* See "project()" */
-	for (dist = 0; dist <= MAX_RANGE; dist++)
+	for (int dist = 0; dist <= MAX_RANGE; dist++)
 	{
 		/* Check for arrival at "final target" */
 		/*
@@ -3932,18 +3980,23 @@ bool_ projectable(int y1, int x1, int y2, int x2)
 		 * lets monsters shoot a the player if s/he is
 		 * visible but in a wall
 		 */
-		if ((x == x2) && (y == y2)) return (TRUE);
+		if ((x == x2) && (y == y2))
+		{
+			return true;
+		}
 
 		/* Never pass through walls */
-		if (dist && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x))) break;
+		if (dist && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x)))
+		{
+			break;
+		}
 
 		/* Calculate the new location */
 		mmove2(&y, &x, y1, x1, y2, x2);
 	}
 
-
 	/* Assume obstruction */
-	return (FALSE);
+	return false;
 }
 
 

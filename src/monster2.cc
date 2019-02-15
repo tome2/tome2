@@ -2327,7 +2327,7 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool_ slp, int status)
 			if (tries)
 			{
 				object_prep(q_ptr, i);
-				create_artifact(q_ptr, FALSE, TRUE);
+				create_artifact(q_ptr, false, true);
 				q_ptr->found = OBJ_FOUND_MONSTER;
 				q_ptr->found_aux1 = m_ptr->r_idx;
 				q_ptr->found_aux2 = m_ptr->ego;

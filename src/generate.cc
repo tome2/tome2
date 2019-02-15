@@ -4083,8 +4083,8 @@ static void fill_hack(int y0, int x0, int y, int x, int xsize, int ysize,
 }
 
 
-bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
-                      int cutoff, bool_ light, bool_ room)
+bool generate_fracave(int y0, int x0, int xsize, int ysize,
+		      int cutoff, bool light, bool room)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -4117,7 +4117,7 @@ bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
 				cave[y0 + y - yhsize][x0 + x - xhsize].info &= ~(CAVE_ICKY | CAVE_ROOM);
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 
@@ -4311,7 +4311,7 @@ bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
 	 * holes in the dungeon), doesn't seem worth it.
 	 */
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -4321,10 +4321,8 @@ bool_ generate_fracave(int y0, int x0, int xsize, int ysize,
 static void build_cavern()
 {
 	int grd, roug, cutoff, xsize, ysize, x0, y0;
-	bool_ done, light, room;
 
-	light = done = room = FALSE;
-	if (dun_level <= randint(25)) light = TRUE;
+	bool const light = (dun_level <= randint(25));
 
 	/* Make a cave the size of the dungeon */
 	xsize = cur_wid - 1;
@@ -4336,6 +4334,7 @@ static void build_cavern()
 	xsize = x0 * 2;
 	ysize = y0 * 2;
 
+	bool done = false;
 	while (!done)
 	{
 		/* Testing values for these parameters: feel free to adjust */
@@ -4351,7 +4350,7 @@ static void build_cavern()
 		generate_hmap(y0, x0, xsize, ysize, grd, roug, cutoff);
 
 		/* Convert to normal format+ clean up*/
-		done = generate_fracave(y0, x0, xsize, ysize, cutoff, light, room);
+		done = generate_fracave(y0, x0, xsize, ysize, cutoff, light, false);
 	}
 }
 
@@ -4362,8 +4361,6 @@ static void build_type10(int by0, int bx0)
 {
 	int grd, roug, cutoff, xsize, ysize, y0, x0;
 
-	bool_ done, light, room;
-
 	/* Get size: note 'Evenness'*/
 	xsize = randint(22) * 2 + 6;
 	ysize = randint(15) * 2 + 6;
@@ -4371,11 +4368,9 @@ static void build_type10(int by0, int bx0)
 	/* Try to allocate space for room.  If fails, exit */
 	if (!room_alloc(xsize + 1, ysize + 1, FALSE, by0, bx0, &x0, &y0)) return;
 
-	light = done = FALSE;
-	room = TRUE;
+	bool const light = (dun_level <= randint(25));
 
-	if (dun_level <= randint(25)) light = TRUE;
-
+	bool done = false;
 	while (!done)
 	{
 		/*
@@ -4397,7 +4392,7 @@ static void build_type10(int by0, int bx0)
 		generate_hmap(y0, x0, xsize, ysize, grd, roug, cutoff);
 
 		/* Convert to normal format + clean up*/
-		done = generate_fracave(y0, x0, xsize, ysize, cutoff, light, room);
+		done = generate_fracave(y0, x0, xsize, ysize, cutoff, light, true);
 	}
 }
 
@@ -4929,7 +4924,6 @@ static void build_room_vault(int x0, int y0, int xsize, int ysize)
 static void build_cave_vault(int x0, int y0, int xsiz, int ysiz)
 {
 	int grd, roug, cutoff, xhsize, yhsize, xsize, ysize, x, y;
-	bool_ done, light, room;
 
 	/* Round to make sizes even */
 	xhsize = xsiz / 2;
@@ -4942,9 +4936,7 @@ static void build_cave_vault(int x0, int y0, int xsiz, int ysiz)
 		msg_print("Cave Vault");
 	}
 
-	light = done = FALSE;
-	room = TRUE;
-
+	bool done = FALSE;
 	while (!done)
 	{
 		/* Testing values for these parameters feel free to adjust */
@@ -4961,7 +4953,7 @@ static void build_cave_vault(int x0, int y0, int xsiz, int ysiz)
 		generate_hmap(y0, x0, xsize, ysize, grd, roug, cutoff);
 
 		/* Convert to normal format + clean up */
-		done = generate_fracave(y0, x0, xsize, ysize, cutoff, light, room);
+		done = generate_fracave(y0, x0, xsize, ysize, cutoff, false, true);
 	}
 
 	/* Set icky flag because is a vault */
@@ -7669,7 +7661,7 @@ static bool cave_gen()
 					object_prep(q_ptr, k_idx);
 
 					/* SoAC it */
-					create_artifact(q_ptr, FALSE, TRUE);
+					create_artifact(q_ptr, false, true);
 
 					/* Drop the artifact from heaven */
 					drop_near(q_ptr, -1, oy, ox);

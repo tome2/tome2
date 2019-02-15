@@ -25,11 +25,10 @@ GENERATE_MONSTER_LOOKUP_FN(get_uvatha, "Uvatha the Horseman")
 
 static bool quest_nazgul_gen_hook(void *, void *in_, void *)
 {
-	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
+	auto in = static_cast<struct hook_wild_gen_in const *>(in_);
 	int m_idx, x = 1, y = 1, tries = 10000;
-	bool_ small = in->small;
 
-	if ((cquest.status != QUEST_STATUS_TAKEN) || (small) || (p_ptr->town_num != 1))
+	if ((cquest.status != QUEST_STATUS_TAKEN) || in->small || (p_ptr->town_num != 1))
 	{
 		return false;
 	}

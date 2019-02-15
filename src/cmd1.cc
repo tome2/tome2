@@ -61,28 +61,31 @@ using boost::algorithm::equals;
  * Determine if the player "hits" a monster (normal combat).
  * Note -- Always miss 5%, always hit 5%, otherwise random.
  */
-bool_ test_hit_fire(int chance, int ac, int vis)
+bool test_hit_fire(int chance, int ac, int vis)
 {
-	int k;
-
-
 	/* Percentile dice */
-	k = rand_int(100);
+	int const k = rand_int(100);
 
 	/* Hack -- Instant miss or hit */
 	if (k < 10) return (k < 5);
 
 	/* Never hit */
-	if (chance <= 0) return (FALSE);
+	if (chance <= 0)
+	{
+		return false;
+	}
 
 	/* Invisible monsters are harder to hit */
 	if (!vis) chance = (chance + 1) / 2;
 
 	/* Power competes against armor */
-	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4)) return (FALSE);
+	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4))
+	{
+		return false;
+	}
 
 	/* Assume hit */
-	return (TRUE);
+	return true;
 }
 
 
@@ -92,28 +95,31 @@ bool_ test_hit_fire(int chance, int ac, int vis)
  *
  * Note -- Always miss 5%, always hit 5%, otherwise random.
  */
-bool_ test_hit_norm(int chance, int ac, int vis)
+bool test_hit_norm(int chance, int ac, int vis)
 {
-	int k;
-
-
 	/* Percentile dice */
-	k = rand_int(100);
+	int const k = rand_int(100);
 
 	/* Hack -- Instant miss or hit */
 	if (k < 10) return (k < 5);
 
 	/* Wimpy attack never hits */
-	if (chance <= 0) return (FALSE);
+	if (chance <= 0)
+	{
+		return false;
+	}
 
 	/* Penalize invisible targets */
 	if (!vis) chance = (chance + 1) / 2;
 
 	/* Power must defeat armor */
-	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4)) return (FALSE);
+	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4))
+	{
+		return false;
+	}
 
 	/* Assume hit */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2434,27 +2440,16 @@ void py_attack(int y, int x, int max_blow)
 
 
 
-bool_ player_can_enter(byte feature)
+bool player_can_enter(byte feature)
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 
-	bool_ pass_wall;
-
-	bool_ only_wall = FALSE;
-
-
 	/* Player can not walk through "walls" unless in Shadow Form */
-	if (p_ptr->wraith_form || (race_flags_p(PR_SEMI_WRAITH)))
-		pass_wall = TRUE;
-	else
-		pass_wall = FALSE;
+	auto const pass_wall = (p_ptr->wraith_form || (race_flags_p(PR_SEMI_WRAITH)));
 
 	/* Wall mimicry force the player to stay in walls */
-	if (p_ptr->mimic_extra & CLASS_WALL)
-	{
-		only_wall = TRUE;
-	}
+	auto const only_wall = (p_ptr->mimic_extra & CLASS_WALL);
 
 	/* Don't let the player kill himself with one keystroke */
 	if (p_ptr->wild_mode)
@@ -2464,7 +2459,9 @@ bool_ player_can_enter(byte feature)
 			int wt = weight_limit() / 2;
 
 			if ((calc_total_weight() >= wt) && !(p_ptr->ffall))
-				return (FALSE);
+			{
+				return false;
+			}
 		}
 		else if (feature == FEAT_SHAL_LAVA ||
 		                feature == FEAT_DEEP_LAVA)
@@ -2473,7 +2470,9 @@ bool_ player_can_enter(byte feature)
 			                p_ptr->immune_fire ||
 			                p_ptr->oppose_fire ||
 			                p_ptr->ffall))
-				return (FALSE);
+			{
+				return false;
+			}
 		}
 	}
 
@@ -2484,30 +2483,46 @@ bool_ player_can_enter(byte feature)
 		    p_ptr->has_ability(AB_TREE_WALK) ||
 		    (p_ptr->mimic_form == resolve_mimic_name("Ent")) ||
 		    ((p_ptr->grace >= 9000) && praying_to(GOD_YAVANNA)))
-			return (TRUE);
+		{
+			return true;
+		}
 	}
 
 	if ((p_ptr->climb) && (f_info[feature].flags & FF_CAN_CLIMB))
-		return (TRUE);
+	{
+		return true;
+	}
 	if ((p_ptr->fly) &&
 	                ((f_info[feature].flags & FF_CAN_FLY) ||
 	                 (f_info[feature].flags & FF_CAN_LEVITATE)))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if (only_wall && (f_info[feature].flags & FF_FLOOR))
-		return (FALSE);
+	{
+		return false;
+	}
 	else if ((p_ptr->ffall) &&
 	                (f_info[feature].flags & FF_CAN_LEVITATE))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if ((pass_wall || only_wall) &&
 	                (f_info[feature].flags & FF_CAN_PASS))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if (f_info[feature].flags & FF_NO_WALK)
-		return (FALSE);
+	{
+		return false;
+	}
 	else if ((f_info[feature].flags & FF_WEB) &&
 			((!(r_info[p_ptr->body_monster].flags & RF_SPIDER)) && (p_ptr->mimic_form != resolve_mimic_name("Spider"))))
-		return (FALSE);
+	{
+		return false;
+	}
 
-	return (TRUE);
+	return true;
 }
 
 /*
@@ -4304,14 +4319,14 @@ void do_cmd_integrate_body()
 /*
  * Leave a body
  */
-bool_ do_cmd_leave_body(bool_ drop_body)
+void do_cmd_leave_body(bool drop_body)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	if (p_ptr->disembodied)
 	{
 		msg_print("You are already disembodied.");
-		return FALSE;
+		return;
 	}
 
 	for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -4321,7 +4336,7 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 			cursed_p(&p_ptr->inventory[i]))
 		{
 			msg_print("A cursed object is preventing you from leaving your body.");
-			return FALSE;
+			return;
 		}
 	}
 
@@ -4361,19 +4376,19 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 	/* Turn into a lost soul(just for the picture) */
 	p_ptr->body_monster = test_monster_name("Lost soul");
 	do_cmd_redraw();
-
-	return (TRUE);
 }
 
 
-bool_ execute_inscription(byte i, byte y, byte x)
+bool execute_inscription(byte i, byte y, byte x)
 {
 	cave_type *c_ptr = &cave[y][x];
 
 
 	/* Not enough mana in the current grid */
-	if (c_ptr->mana < inscription_info[i].mana) return (TRUE);
-
+	if (c_ptr->mana < inscription_info[i].mana)
+	{
+		return true;
+	}
 
 	/* Reduce the grid mana -- note: it can't be restored */
 	c_ptr->mana -= inscription_info[i].mana;
@@ -4409,9 +4424,7 @@ bool_ execute_inscription(byte i, byte y, byte x)
 
 	case INSCRIP_PROTECTION:
 		{
-			return (FALSE);
-
-			break;
+			return false;
 		}
 
 	case INSCRIP_DWARF_SUMMON:
@@ -4513,7 +4526,7 @@ bool_ execute_inscription(byte i, byte y, byte x)
 		}
 	}
 
-	return (TRUE);
+	return true;
 }
 
 

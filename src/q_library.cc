@@ -419,7 +419,7 @@ static bool quest_library_monster_death_hook(void *, void *, void *)
 	return false;
 }
 
-void quest_library_building(bool_ *paid, bool_ *recreate)
+void quest_library_building(bool *paid, bool *recreate)
 {
 	int status = cquest.status;
 
@@ -433,8 +433,8 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 		msg_print("I need get some stock from my main library, but it is infested with monsters!");
 		msg_print("Please use the side entrance and vanquish the intruders for me.");
 
-		*paid = FALSE;
-		*recreate = TRUE;
+		*paid = false;
+		*recreate = true;
 	}
 
 	/* if quest completed */

@@ -29,7 +29,6 @@ GENERATE_MONSTER_LOOKUP_FN(get_eol, "Eol, the Dark Elf")
 static bool quest_eol_gen_hook(void *, void *, void *)
 {
 	int x, y;
-	bool_ done = FALSE;
 	int xsize = 50, ysize = 30, y0, x0;
 	int m_idx = 0;
 
@@ -60,6 +59,7 @@ static bool quest_eol_gen_hook(void *, void *, void *)
 	}
 	dun_level = quest[p_ptr->inside_quest].level;
 
+	bool done = false;
 	while (!done)
 	{
 		int grd, roug, cutoff;
@@ -77,7 +77,7 @@ static bool quest_eol_gen_hook(void *, void *, void *)
 		generate_hmap(y0, x0, xsize, ysize, grd, roug, cutoff);
 
 		/* Convert to normal format+ clean up*/
-		done = generate_fracave(y0, x0, xsize, ysize, cutoff, FALSE, TRUE);
+		done = generate_fracave(y0, x0, xsize, ysize, cutoff, false, true);
 	}
 
 	/* Place a few traps */

@@ -30,11 +30,10 @@ GENERATE_MONSTER_LOOKUP_FN(get_merton_proudfoot, "Merton Proudfoot, the lost hob
 
 static bool quest_hobbit_town_gen_hook(void *, void *in_, void *)
 {
-	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
+	auto in = static_cast<struct hook_wild_gen_in const *>(in_);
 	int x = 1, y = 1, tries = 10000;
-	bool_ small = in->small;
 
-	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1))
+	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || in->small || (p_ptr->town_num != 1))
 	{
 		return false;
 	}

@@ -570,7 +570,7 @@ void wilderness_gen()
 		}
 	}
 
-	struct hook_wild_gen_in in = { FALSE };
+	struct hook_wild_gen_in in = { false };
 	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 
@@ -645,7 +645,7 @@ void wilderness_gen_small()
 		}
 	}
 
-	struct hook_wild_gen_in in = { TRUE };
+	struct hook_wild_gen_in in = { true };
 	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 

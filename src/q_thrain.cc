@@ -125,7 +125,7 @@ static bool quest_thrain_death_hook(void *, void *in_, void *)
 			object_prep(q_ptr, lookup_kind(TV_HELM, SV_DRAGON_HELM));
 			q_ptr->number = 1;
 			q_ptr->found = OBJ_FOUND_REWARD;
-			create_artifact(q_ptr, FALSE, TRUE);
+			create_artifact(q_ptr, false, true);
 			q_ptr->artifact_name = "of Thrain";
 
 			/* Drop it in the dungeon */

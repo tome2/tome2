@@ -1777,7 +1777,7 @@ void do_cmd_possessor()
 		}
 		else
 		{
-			do_cmd_leave_body(TRUE);
+			do_cmd_leave_body(true);
 		}
 	}
 	else

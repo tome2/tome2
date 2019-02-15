@@ -35,12 +35,11 @@ GENERATE_MONSTER_LOOKUP_FN(get_farmer_maggot, "Farmer Maggot")
 
 static bool quest_shroom_town_gen_hook(void *, void *in_, void *)
 {
-	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
+	auto in = static_cast<struct hook_wild_gen_in const *>(in_);
 	int m_idx, x = 1, y = 1, tries = 10000;
-	bool_ small = in->small;
 
 	/* Generate the shrooms field */
-	if ((!small) && (p_ptr->wilderness_y == 21) && (p_ptr->wilderness_x == 33))
+	if ((!in->small) && (p_ptr->wilderness_y == 21) && (p_ptr->wilderness_x == 33))
 	{
 		/* Create the field */
 		for (x = (cur_wid / 2) - 7; x <= (cur_wid / 2) + 7; x++)
@@ -89,7 +88,7 @@ static bool quest_shroom_town_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Generate maggot in town, in daylight */
-	if ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1))
+	if ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18) || (cquest.status > QUEST_STATUS_COMPLETED) || in->small || (p_ptr->town_num != 1))
 	{
 		return false;
 	}

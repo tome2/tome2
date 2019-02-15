@@ -1288,7 +1288,7 @@ static char inkey_aux()
 
 
 	/* Wait for a keypress */
-	Term_inkey(&ch, TRUE, TRUE);
+	Term_inkey(&ch, true, true);
 
 
 	/* End "macro action" */
@@ -1326,7 +1326,7 @@ static char inkey_aux()
 		if (k < 0) break;
 
 		/* Check for (and remove) a pending key */
-		if (0 == Term_inkey(&ch, FALSE, TRUE))
+		if (0 == Term_inkey(&ch, false, true))
 		{
 			/* Append the key */
 			buf[p++] = ch;
@@ -1365,7 +1365,7 @@ static char inkey_aux()
 		}
 
 		/* Wait for (and remove) a pending key */
-		Term_inkey(&ch, TRUE, TRUE);
+		Term_inkey(&ch, true, true);
 
 		/* Return the key */
 		return (ch);
@@ -1529,14 +1529,14 @@ static char inkey_real(bool_ inkey_scan)
 	{
 		/* Hack -- Handle "inkey_scan" */
 		if (!inkey_base && inkey_scan &&
-		                (0 != Term_inkey(&kk, FALSE, FALSE)))
+				(0 != Term_inkey(&kk, false, false)))
 		{
 			break;
 		}
 
 
 		/* Hack -- Flush output once when no key ready */
-		if (!done && (0 != Term_inkey(&kk, FALSE, FALSE)))
+		if (!done && (0 != Term_inkey(&kk, false, false)))
 		{
 			/* Hack -- activate proper term */
 			Term_activate(old);
@@ -1561,7 +1561,7 @@ static char inkey_real(bool_ inkey_scan)
 			if (!inkey_scan)
 			{
 				/* Wait for (and remove) a pending key */
-				if (0 == Term_inkey(&ch, TRUE, TRUE))
+				if (0 == Term_inkey(&ch, true, true))
 				{
 					/* Done */
 					break;
@@ -1575,7 +1575,7 @@ static char inkey_real(bool_ inkey_scan)
 			while (TRUE)
 			{
 				/* Check for (and remove) a pending key */
-				if (0 == Term_inkey(&ch, FALSE, TRUE))
+				if (0 == Term_inkey(&ch, false, true))
 				{
 					/* Done */
 					break;
@@ -2750,7 +2750,7 @@ char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
 * Mega-Hack -- flag set by do_cmd_{inven,equip}() to allow keymaps in
 * auto-command mode.
 */
-bool_ request_command_inven_mode = FALSE;
+bool request_command_inven_mode = false;
 
 
 /*
@@ -2819,7 +2819,7 @@ void request_command(int shopping)
 			}
 
 			/* Mega-Hack -- turn off this flag immediately */
-			request_command_inven_mode = FALSE;
+			request_command_inven_mode = false;
 		}
 
 		/* Get a keypress in "command" mode */
@@ -3061,7 +3061,7 @@ void request_command(int shopping)
 /*
  * Check a char for "vowel-hood"
  */
-bool_ is_a_vowel(int ch)
+bool is_a_vowel(int ch)
 {
 	switch (ch)
 	{
@@ -3075,10 +3075,10 @@ bool_ is_a_vowel(int ch)
 	case 'I':
 	case 'O':
 	case 'U':
-		return (TRUE);
+		return true;
 	}
 
-	return (FALSE);
+	return false;
 }
 
 
@@ -3159,16 +3159,16 @@ void repeat_push(int what)
 }
 
 
-bool_ repeat_pull(int *what)
+bool repeat_pull(int *what)
 {
 	/* All out of keys */
-	if (repeat__idx == repeat__cnt) return (FALSE);
+	if (repeat__idx == repeat__cnt) return false;
 
 	/* Grab the next key, advance */
 	*what = repeat__key[repeat__idx++];
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 void repeat_check()

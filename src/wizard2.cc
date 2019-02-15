@@ -784,7 +784,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 		else if (ch == 'r' || ch == 'r')
 		{
 			object_prep(q_ptr, k_idx);
-			create_artifact(q_ptr, FALSE, TRUE);
+			create_artifact(q_ptr, false, true);
 		}
 	}
 

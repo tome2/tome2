@@ -2360,7 +2360,7 @@ static void a_m_aux_1(object_type *o_ptr, int level, int power)
 	if (power > 1)
 	{
 		/* Make ego item */
-		if (rand_int(RANDART_WEAPON) == 1) create_artifact(o_ptr, FALSE, TRUE);
+		if (rand_int(RANDART_WEAPON) == 1) create_artifact(o_ptr, false, true);
 		else make_ego_item(o_ptr, TRUE);
 	}
 	else if (power < -1)
@@ -2476,7 +2476,7 @@ static void a_m_aux_2(object_type *o_ptr, int level, int power)
 	if (power > 1)
 	{
 		/* Make ego item */
-		if (rand_int(RANDART_ARMOR) == 1) create_artifact(o_ptr, FALSE, TRUE);
+		if (rand_int(RANDART_ARMOR) == 1) create_artifact(o_ptr, false, true);
 		else make_ego_item(o_ptr, TRUE);
 	}
 	else if (power < -1)
@@ -2602,7 +2602,7 @@ static void a_m_aux_3(object_type *o_ptr, int level, int power)
 	if (power > 1)
 	{
 		/* Make ego item */
-		if (rand_int(RANDART_JEWEL) == 1) create_artifact(o_ptr, FALSE, TRUE);
+		if (rand_int(RANDART_JEWEL) == 1) create_artifact(o_ptr, false, true);
 		else make_ego_item(o_ptr, TRUE);
 	}
 	else if (power < -1)
@@ -3034,8 +3034,14 @@ static void a_m_aux_4(object_type *o_ptr, int level, int power)
 	if (power > 1)
 	{
 		/* Make ego item */
-		if ((rand_int(RANDART_JEWEL) == 1) && (o_ptr->tval == TV_LITE)) create_artifact(o_ptr, FALSE, TRUE);
-		else make_ego_item(o_ptr, TRUE);
+		if ((rand_int(RANDART_JEWEL) == 1) && (o_ptr->tval == TV_LITE))
+		{
+			create_artifact(o_ptr, false, true);
+		}
+		else
+		{
+			make_ego_item(o_ptr, TRUE);
+		}
 	}
 	else if (power < -1)
 	{

@@ -225,7 +225,7 @@ static bool_ fireproof()
 }
 
 
-void quest_fireproof_building(bool_ *paid, bool_ *recreate)
+void quest_fireproof_building(bool *paid, bool *recreate)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
 	int num_books, num_staff, num_scroll;
@@ -246,8 +246,8 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 		msg_print("fetch it myself. Please bring it back to me. You can find it north of here.");
 		msg_print("Be careful with it, it's fragile and might be destroyed easily.");
 
-		*paid = FALSE;
-		*recreate = TRUE;
+		*paid = false;
+		*recreate = true;
 	}
 
 	/* if quest completed (item was retrieved) */
