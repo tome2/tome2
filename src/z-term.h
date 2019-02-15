@@ -112,8 +112,8 @@ struct term
 
 	term_win *mem;
 
-	void (*init_hook)(term *t);
-	void (*nuke_hook)(term *t);
+	void (*init_hook)(void *data);
+	void (*nuke_hook)(void *data);
 
 	errr (*xtra_hook)(int n, int v);
 

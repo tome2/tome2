@@ -1826,7 +1826,10 @@ errr Term_activate(term *t)
 	if (t && !t->active_flag)
 	{
 		/* Call the "init" hook */
-		if (t->init_hook) (*t->init_hook)(t);
+		if (t->init_hook)
+		{
+			(*t->init_hook)(t->data);
+		}
 
 		/* Remember */
 		t->active_flag = TRUE;
@@ -1876,7 +1879,10 @@ errr term_nuke(term *t)
 	if (t->active_flag)
 	{
 		/* Call the "nuke" hook */
-		if (t->nuke_hook) (*t->nuke_hook)(t);
+		if (t->nuke_hook)
+		{
+			(*t->nuke_hook)(t->data);
+		}
 
 		/* Remember */
 		t->active_flag = FALSE;

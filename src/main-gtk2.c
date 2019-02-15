@@ -256,10 +256,9 @@ static void term_data_set_fg(term_data *td, byte attr)
 /*
  * Free data used by a term
  */
-static void Term_nuke_gtk(term *t)
+static void Term_nuke_gtk(void *data)
 {
-	term_data *td = t->data;
-
+	term_data *td = (term_data *) data;
 
 	/* Free name */
 	if (td->name) free(td->name);

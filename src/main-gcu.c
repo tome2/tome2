@@ -492,9 +492,9 @@ static errr Term_xtra_gcu_alive(int v)
 /*
  * Init the "curses" system
  */
-static void Term_init_gcu(term *t)
+static void Term_init_gcu(void *data)
 {
-	term_data *td = (term_data *)(t->data);
+	term_data *td = (term_data *) data;
 
 	/* Count init's, handle first */
 	if (active++ != 0) return;
@@ -516,10 +516,10 @@ static void Term_init_gcu(term *t)
 /*
  * Nuke the "curses" system
  */
-static void Term_nuke_gcu(term *t)
+static void Term_nuke_gcu(void *data)
 {
 	int x, y;
-	term_data *td = (term_data *)(t->data);
+	term_data *td = (term_data *) data;
 
 	/* Delete this window */
 	delwin(td->win);
