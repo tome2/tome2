@@ -3545,7 +3545,7 @@ void resize_window()
 	Term_activate(angband_term[0]);
 
 	/* Hack -- react to changes */
-	Term_xtra(TERM_XTRA_REACT, 0);
+	Term_xtra_react();
 
 	/* Window stuff */
 	p_ptr->window |= (PW_INVEN | PW_EQUIP | PW_PLAYER);

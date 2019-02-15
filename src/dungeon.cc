@@ -4723,7 +4723,7 @@ void play_game(program_args const &args)
 	init_hooks_module();
 
 	/* React to changes */
-	Term_xtra(TERM_XTRA_REACT, 0);
+	Term_xtra_react();
 
 	/* Mega hack, prevent lots of bugs */
 	if ((p_ptr->px == 0) || (p_ptr->py == 0))

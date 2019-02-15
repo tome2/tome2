@@ -66,7 +66,7 @@ using boost::algorithm::equals;
 void do_cmd_redraw()
 {
 	/* Hack -- react to changes */
-	Term_xtra(TERM_XTRA_REACT, 0);
+	Term_xtra_react();
 
 
 	/* Combine and Reorder the pack (later) */
@@ -2438,7 +2438,7 @@ void do_cmd_colors()
 			process_pref_file(tmp);
 
 			/* Mega-Hack -- react to changes */
-			Term_xtra(TERM_XTRA_REACT, 0);
+			Term_xtra_react();
 
 			/* Mega-Hack -- redraw */
 			Term_redraw();
@@ -2570,7 +2570,7 @@ void do_cmd_colors()
 				if (i == 'B') angband_color_table[a][3] = (angband_color_table[a][3] - 1);
 
 				/* Hack -- react to changes */
-				Term_xtra(TERM_XTRA_REACT, 0);
+				Term_xtra_react();
 
 				/* Hack -- redraw */
 				Term_redraw();

@@ -156,6 +156,8 @@ void Term_resize(int w, int h);
 
 void Term_activate(term *t);
 
+void Term_xtra_react();
+
 void Term_mapped();
 void Term_unmapped();
 

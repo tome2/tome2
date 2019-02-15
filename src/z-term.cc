@@ -1881,6 +1881,11 @@ void Term_activate(term *t)
 }
 
 
+void Term_xtra_react()
+{
+	Term_xtra(TERM_XTRA_REACT, 0);
+}
+
 /**
  * Set the current terminal "mapped" flag.
  */
