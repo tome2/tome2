@@ -10,9 +10,6 @@ extern "C" {
 extern void (*plog_aux)(const char *);
 extern void (*quit_aux)(const char *);
 
-/* Capitalize the first letter of string. Ignores whitespace at the start of string. */
-void capitalize(char *s);
-
 /* Print an error message */
 void plog(const char *str);
 

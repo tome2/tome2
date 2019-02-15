@@ -48,6 +48,7 @@
 #include "variable.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

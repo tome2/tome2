@@ -1,4 +1,4 @@
-#include "z-util.h"
+#include "z-util.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cassert>

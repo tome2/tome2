@@ -5,6 +5,7 @@
 #include "z-form.h"
 
 #include "z-util.h"
+#include "z-util.hpp"
 
 #include <stdlib.h>
 
