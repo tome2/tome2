@@ -1289,7 +1289,7 @@ void do_cmd_eat_food()
 				if (p_ptr->black_breath)
 				{
 					msg_print("The hold of the Black Breath on you is broken!");
-					p_ptr->black_breath = FALSE;
+					p_ptr->black_breath = false;
 				}
 
 				break;
@@ -2013,7 +2013,7 @@ static void quaff_potion(int tval, int sval, int pval, int pval2)
 				{
 					msg_print("The hold of the Black Breath on you is broken!");
 				}
-				p_ptr->black_breath = FALSE;
+				p_ptr->black_breath = false;
 				break;
 			}
 
@@ -3071,7 +3071,7 @@ void do_cmd_read_scroll()
 				if (!p_ptr->oppose_fire && !p_ptr->resist_fire &&
 				                !p_ptr->immune_fire)
 				{
-					take_hit(50 + randint(50) + (p_ptr->sensible_fire) ? 20 : 0,
+					take_hit(50 + randint(50) + (p_ptr->sensible_fire ? 20 : 0),
 					         "a Scroll of Fire");
 				}
 
@@ -4108,7 +4108,7 @@ int ring_of_power()
 		autosave_checkpoint();
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 		timeout = 250 + rand_int(250);
 	}
 
@@ -4320,7 +4320,7 @@ static void activate_radagast()
 	{
 		msg_print("The hold of the Black Breath on you is broken!");
 	}
-	p_ptr->black_breath = FALSE;
+	p_ptr->black_breath = false;
 
 	p_ptr->update |= PU_BONUS;
 	p_ptr->window |= PW_PLAYER;
@@ -4734,7 +4734,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			set_cut(0);
 			if (p_ptr->black_breath)
 			{
-				p_ptr->black_breath = FALSE;
+				p_ptr->black_breath = false;
 				msg_print("The hold of the Black Breath on you is broken!");
 			}
 
@@ -4894,7 +4894,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 						autosave_checkpoint();
 
 						/* Leaving */
-						p_ptr->leaving = TRUE;
+						p_ptr->leaving = true;
 					}
 
 					break;
@@ -4977,7 +4977,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			{
 				msg_print("The hold of the Black Breath on you is broken!");
 			}
-			p_ptr->black_breath = FALSE;
+			p_ptr->black_breath = false;
 			hp_player(100);
 
 			o_ptr->timeout = 200;

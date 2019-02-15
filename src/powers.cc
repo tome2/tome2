@@ -501,7 +501,7 @@ static void power_activate(int power)
 
 		autosave_checkpoint();
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 		break;
 
 	case PWR_VAMPIRISM:
@@ -1051,13 +1051,13 @@ static void power_activate(int power)
 	case POWER_COR_SPACE_TIME:
 		if (p_ptr->corrupt_anti_teleport_stopped)
 		{
-			p_ptr->corrupt_anti_teleport_stopped = FALSE;
+			p_ptr->corrupt_anti_teleport_stopped = false;
 			msg_print("You stop controlling your corruption.");
 			p_ptr->update |= PU_BONUS;
 		}
 		else
 		{
-			p_ptr->corrupt_anti_teleport_stopped = TRUE;
+			p_ptr->corrupt_anti_teleport_stopped = true;
 			msg_print("You start controlling your corruption, teleportation works once more.");
 			p_ptr->update |= PU_BONUS;
 		}

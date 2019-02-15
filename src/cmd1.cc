@@ -1861,7 +1861,7 @@ static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<
 				msg_print("Your foe calls upon your soul!");
 				msg_print
 				("You feel the Black Breath slowly draining you of life...");
-				p_ptr->black_breath = TRUE;
+				p_ptr->black_breath = true;
 			}
 		}
 	}
@@ -2790,7 +2790,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				ambush_flag = FALSE;
 			}
 
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			return;
 		}
@@ -3077,7 +3077,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		reveal_wilderness_around_player(p_ptr->py, p_ptr->px, 0, WILDERNESS_SEE_RADIUS);
 
 		/* Walking the wild isnt meaningfull */
-		p_ptr->did_nothing = TRUE;
+		p_ptr->did_nothing = true;
 	}
 }
 
@@ -4311,8 +4311,8 @@ void do_cmd_integrate_body()
 	floor_item_optimize(0 - item);
 
 	msg_print("Your spirit is incarnated in your new body.");
-	p_ptr->wraith_form = FALSE;
-	p_ptr->disembodied = FALSE;
+	p_ptr->wraith_form = false;
+	p_ptr->disembodied = false;
 	do_cmd_redraw();
 }
 
@@ -4371,7 +4371,7 @@ void do_cmd_leave_body(bool drop_body)
 	}
 
 	msg_print("Your spirit leaves your body.");
-	p_ptr->disembodied = TRUE;
+	p_ptr->disembodied = true;
 
 	/* Turn into a lost soul(just for the picture) */
 	p_ptr->body_monster = test_monster_name("Lost soul");

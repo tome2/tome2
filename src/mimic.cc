@@ -82,7 +82,7 @@ static void mouse_power()
 
 static s32b eagle_calc()
 {
-	p_ptr->ffall = TRUE;
+	p_ptr->ffall = true;
 	p_ptr->pspeed = p_ptr->pspeed + 2 + (p_ptr->mimic_level / 6);
 
 	p_ptr->stat_add[A_STR] += -3;

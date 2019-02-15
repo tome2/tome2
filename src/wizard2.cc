@@ -102,7 +102,7 @@ static void teleport_player_town(int town)
 				p_ptr->inside_quest = 0;
 
 				/* Leaving */
-				p_ptr->leaving = TRUE;
+				p_ptr->leaving = true;
 
 				// Done
 				return;
@@ -1300,7 +1300,7 @@ void do_cmd_wiz_cure_all()
 	set_stun(0);
 	set_cut(0);
 	set_slow(0);
-	p_ptr->black_breath = FALSE;
+	p_ptr->black_breath = false;
 
 	/* No longer hungry */
 	set_food(PY_FOOD_MAX - 1);
@@ -1357,7 +1357,7 @@ static void do_cmd_wiz_jump()
 	p_ptr->inside_quest = 0;
 
 	/* Leaving */
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 }
 
 
@@ -1488,7 +1488,7 @@ static void do_cmd_wiz_body(s16b bidx)
 	auto const &r_info = game->edit_data.r_info;
 
 	p_ptr->body_monster = bidx;
-	p_ptr->disembodied = FALSE;
+	p_ptr->disembodied = false;
 	p_ptr->chp = maxroll( (&r_info[bidx])->hdice, (&r_info[bidx])->hside);
 	do_cmd_redraw();
 }
@@ -1569,7 +1569,7 @@ void do_cmd_debug()
 			msg_format("You go into %s", d_info[dungeon_type].text.c_str());
 
 			/* Leaving */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 		}
 		break;
 

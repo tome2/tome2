@@ -914,7 +914,7 @@ void teleport_player_level()
 		dun_level++;
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 	else if (is_quest(dun_level) || (dun_level >= MAX_DEPTH - 1))
 	{
@@ -925,7 +925,7 @@ void teleport_player_level()
 		dun_level--;
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 	else if (rand_int(100) < 50)
 	{
@@ -936,7 +936,7 @@ void teleport_player_level()
 		dun_level--;
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 	else
 	{
@@ -947,7 +947,7 @@ void teleport_player_level()
 		dun_level++;
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 }
 
@@ -1350,7 +1350,7 @@ void take_hit(int damage, const char *hit_from)
 			}
 
 			/* Leaving */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			/* No longer a winner */
 			total_winner = FALSE;
@@ -1531,7 +1531,7 @@ void take_sanity_hit(int damage, const char *hit_from)
 		}
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 
 		/* Note death */
 		death = TRUE;

@@ -272,28 +272,28 @@ static const char *desc_stat_neg[] =
  */
 void do_dec_stat(int stat, int mode)
 {
-	bool_ sust = FALSE;
+	bool sust = false;
 
 	/* Access the "sustain" */
 	switch (stat)
 	{
 	case A_STR:
-		if (p_ptr->sustain_str) sust = TRUE;
+		if (p_ptr->sustain_str) sust = true;
 		break;
 	case A_INT:
-		if (p_ptr->sustain_int) sust = TRUE;
+		if (p_ptr->sustain_int) sust = true;
 		break;
 	case A_WIS:
-		if (p_ptr->sustain_wis) sust = TRUE;
+		if (p_ptr->sustain_wis) sust = true;
 		break;
 	case A_DEX:
-		if (p_ptr->sustain_dex) sust = TRUE;
+		if (p_ptr->sustain_dex) sust = true;
 		break;
 	case A_CON:
-		if (p_ptr->sustain_con) sust = TRUE;
+		if (p_ptr->sustain_con) sust = true;
 		break;
 	case A_CHR:
-		if (p_ptr->sustain_chr) sust = TRUE;
+		if (p_ptr->sustain_chr) sust = true;
 		break;
 	}
 
@@ -4412,7 +4412,7 @@ void activate_dg_curse()
 			if (rand_int(2))
 			{
 				msg_print("You feel the coldness of the Black Breath attacking you!");
-				p_ptr->black_breath = TRUE;
+				p_ptr->black_breath = true;
 			}
 			if (randint(8) != 1) break;
 		case 13:
@@ -4576,7 +4576,7 @@ void change_wild_mode()
 	autosave_checkpoint();
 
 	/* Leaving */
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 }
 
 
@@ -4587,7 +4587,7 @@ void alter_reality()
 	autosave_checkpoint();
 
 	/* Leaving */
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 }
 
 void heal_insanity(int val)

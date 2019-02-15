@@ -532,7 +532,7 @@ void delete_monster_idx(int i)
 		dungeon_type = DUNGEON_WILDERNESS;
 		dun_level = 0;
 
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 
 	/* Update monster light */

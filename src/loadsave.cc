@@ -767,7 +767,7 @@ static bool_ do_extra(ls_flag_t flag)
 	/* Gods */
 	do_s32b(&p_ptr->grace, flag);
 	do_s32b(&p_ptr->grace_delay, flag);
-	do_bool(&p_ptr->praying, flag);
+	do_std_bool(&p_ptr->praying, flag);
 	do_s16b(&p_ptr->melkor_sacrifice, flag);
 	do_byte(&p_ptr->pgod, flag);
 
@@ -887,14 +887,14 @@ static bool_ do_extra(ls_flag_t flag)
 
 	do_array("corruptions", flag, p_ptr->corruptions, CORRUPTIONS_MAX,
 		[](auto corruption, auto flag) -> void {
-			do_bool(corruption, flag);
+			do_std_bool(corruption, flag);
 		}
 	);
 
-	do_bool(&p_ptr->corrupt_anti_teleport_stopped, flag);
+	do_std_bool(&p_ptr->corrupt_anti_teleport_stopped, flag);
 
 	do_byte(&p_ptr->confusing, flag);
-	do_bool(&p_ptr->black_breath, flag);
+	do_std_bool(&p_ptr->black_breath, flag);
 	do_bool(&fate_flag, flag);
 	do_bool(&ambush_flag, flag);
 	do_byte(&p_ptr->allow_one_death, flag);
@@ -909,10 +909,10 @@ static bool_ do_extra(ls_flag_t flag)
 	do_u32b(&p_ptr->necro_extra2, flag);
 
 	do_u16b(&p_ptr->body_monster, flag);
-	do_bool(&p_ptr->disembodied, flag);
+	do_std_bool(&p_ptr->disembodied, flag);
 
 	/* Are we in astral mode? */
-	do_bool(&p_ptr->astral, flag);
+	do_std_bool(&p_ptr->astral, flag);
 
 	// Powers
 	do_unordered_set(
@@ -965,7 +965,7 @@ static bool_ do_extra(ls_flag_t flag)
 	do_s16b(&p_ptr->companion_killed, flag);
 
 	/* The fate */
-	do_bool(&p_ptr->no_mortal, flag);
+	do_std_bool(&p_ptr->no_mortal, flag);
 
 	/* Random spells */
 	do_vector(flag, p_ptr->random_spells, do_random_spell);
@@ -2239,8 +2239,8 @@ static bool do_wilderness(ls_flag_t flag)
 	// Player position and "mode" wrt. wilderness
 	do_s32b(&p_ptr->wilderness_x, flag);
 	do_s32b(&p_ptr->wilderness_y, flag);
-	do_bool(&p_ptr->wild_mode, flag);
-	do_bool(&p_ptr->old_wild_mode, flag);
+	do_std_bool(&p_ptr->wild_mode, flag);
+	do_std_bool(&p_ptr->old_wild_mode, flag);
 
 	// Size of the wilderness
 	u16b wild_x_size = wilderness.width();

@@ -622,7 +622,7 @@ static bool inn_comm(int cmd)
 			else msg_print("You awake refreshed for the new day.");
 
 			/* Dungeon stuff */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 			p_ptr->oldpx = p_ptr->px;
 			p_ptr->oldpy = p_ptr->py;
 
@@ -1226,7 +1226,7 @@ bool bldg_process_command(const store_type *s_ptr, store_action_type const *ba_p
 			if (p_ptr->black_breath)
 			{
 				msg_print("The hold of the Black Breath on you is broken!");
-				p_ptr->black_breath = FALSE;
+				p_ptr->black_breath = false;
 			}
 
 			paid = true;
@@ -1419,7 +1419,7 @@ void enter_quest()
 
 		p_ptr->inside_quest = cave[p_ptr->py][p_ptr->px].special;
 		dun_level = 1;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 		p_ptr->oldpx = p_ptr->px;
 		p_ptr->oldpy = p_ptr->py;
 	}

@@ -1629,14 +1629,12 @@ object_flag_set player_flags()
 	{
 		f |= TR_RES_NETHER;
 
-		if ((p_ptr->grace > 10000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 10000))
 		{
 			f |= TR_NO_TELE;
 		}
 
-		if ((p_ptr->grace > 20000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 20000))
 		{
 			f |= TR_IM_NETHER;
 		}
@@ -1646,14 +1644,12 @@ object_flag_set player_flags()
 	{
 		f |= TR_WATER_BREATH;
 
-		if ((p_ptr->grace > 1000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 1000))
 		{
 			f |= TR_RES_POIS;
 		}
 
-		if ((p_ptr->grace > 15000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 15000))
 		{
 			f |= TR_MAGIC_BREATH;
 		}
@@ -3837,7 +3833,7 @@ void do_cmd_suicide()
 	death = TRUE;
 
 	/* Leaving */
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 
 	/* Cause of death */
 	game->died_from = "Quitting";

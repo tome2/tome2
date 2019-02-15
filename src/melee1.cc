@@ -1189,7 +1189,7 @@ void black_breath_attack(int chance)
 	{
 		 msg_print("Your foe calls upon your soul!");
 		 msg_print("You feel the Black Breath slowly draining you of life...");
-		 p_ptr->black_breath = TRUE;
+		 p_ptr->black_breath = true;
 	}
 }
 

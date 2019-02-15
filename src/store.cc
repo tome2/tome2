@@ -3374,7 +3374,7 @@ void do_cmd_store()
 		p_ptr->oldpx = p_ptr->px;
 		p_ptr->oldpy = p_ptr->py;
 
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 
 	/* Hack -- Character is no longer in "icky" mode */

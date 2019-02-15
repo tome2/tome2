@@ -3508,7 +3508,7 @@ casting_result nature_grow_athelas()
         if (p_ptr->black_breath)
 	{
 		msg_print("The hold of the Black Breath on you is broken!");
-		p_ptr->black_breath = FALSE;
+		p_ptr->black_breath = false;
 	}
 
 	return CAST;

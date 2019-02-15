@@ -685,7 +685,7 @@ static void player_wipe()
 	p_ptr->no_mortal = FALSE;
 
 	/* Player don't have the black breath from the beginning !*/
-	p_ptr->black_breath = FALSE;
+	p_ptr->black_breath = false;
 
 	/* Default pet command settings */
 	p_ptr->pet_follow_distance = 6;
@@ -694,7 +694,7 @@ static void player_wipe()
 
 	/* Body changing initialisation */
 	p_ptr->body_monster = 0;
-	p_ptr->disembodied = FALSE;
+	p_ptr->disembodied = false;
 
 	/* Wipe xtra hp */
 	p_ptr->hp_mod = 0;
@@ -718,8 +718,8 @@ static void player_wipe()
 	}
 
 	/* Reset wild_mode to FALSE */
-	p_ptr->wild_mode = FALSE;
-	p_ptr->old_wild_mode = FALSE;
+	p_ptr->wild_mode = false;
+	p_ptr->old_wild_mode = false;
 
 	/* Initialize allow_one_death */
 	p_ptr->allow_one_death = 0;
@@ -1947,7 +1947,7 @@ static bool player_birth_aux_ask()
 	}
 
 	/* Is the player an "astral" being? */
-	p_ptr->astral = (race_flags_p(PR_ASTRAL)) ? TRUE : FALSE;
+	p_ptr->astral = race_flags_p(PR_ASTRAL);
 
 	/*
 	 * A note by pelpel. (remove this please)

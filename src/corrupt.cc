@@ -667,14 +667,14 @@ void init_corruptions()
 /*
  * Corruptions
  */
-bool_ player_has_corruption(int corruption_idx)
+bool player_has_corruption(int corruption_idx)
 {
 	if (corruption_idx < 0)
 	{
-		return FALSE;
+		return false;
 	}
 
-	return (p_ptr->corruptions[corruption_idx]);
+	return p_ptr->corruptions[corruption_idx];
 }
 
 static bool_ player_can_gain_corruption(int corruption_idx)
@@ -757,7 +757,7 @@ static bool_ player_allow_corruption(int corruption_idx)
 	return TRUE;
 }
 
-static void player_set_corruption(int c, bool_ set)
+static void player_set_corruption(int c, bool set)
 {
 	p_ptr->corruptions[c] = set;
 	p_ptr->redraw = p_ptr->redraw | PR_FRAME;
@@ -767,13 +767,12 @@ static void player_set_corruption(int c, bool_ set)
 
 void player_gain_corruption(int corruption_idx)
 {
-	corruption_type *c_ptr = NULL;
 	assert(corruption_idx >= 0);
 	assert(corruption_idx < CORRUPTIONS_MAX);
-	c_ptr = &corruptions[corruption_idx];
+	corruption_type *c_ptr = &corruptions[corruption_idx];
 
 	/* Set the player's corruption flag */
-	player_set_corruption(corruption_idx, TRUE);
+	player_set_corruption(corruption_idx, true);
 
 	/* Invoke callback if necessary */
 	if (c_ptr->gain_callback)
@@ -787,7 +786,7 @@ static void player_lose_corruption(int corruption_idx)
 	assert(corruption_idx >= 0);
 	assert(corruption_idx < CORRUPTIONS_MAX);
 
-	player_set_corruption(corruption_idx, FALSE);
+	player_set_corruption(corruption_idx, false);
 
 	/* Currently no corruptions need any special handling when lost */
 }
@@ -800,7 +799,7 @@ static void player_lose_corruption(int corruption_idx)
  * 3) have none of its opposing corruptions
  * 4) pass the possible tests
  */
-static bool_ test_depend_corrupt(s16b corrupt_idx, bool_ can_gain)
+static bool_ test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 {
 	s16b i;
 	corruption_type *c_ptr = NULL;
@@ -826,7 +825,7 @@ static bool_ test_depend_corrupt(s16b corrupt_idx, bool_ can_gain)
 	/* Go through all dependencies */
 	for (i=0; c_ptr->depends[i] >= 0; i++)
 	{
-		if (!test_depend_corrupt(c_ptr->depends[i], FALSE))
+		if (!test_depend_corrupt(c_ptr->depends[i], false))
 		{
 			return FALSE;
 		}
@@ -835,7 +834,7 @@ static bool_ test_depend_corrupt(s16b corrupt_idx, bool_ can_gain)
 	/* Go through all opposers */
 	for (i=0; c_ptr->opposes[i] >= 0; i++)
 	{
-		if (test_depend_corrupt(c_ptr->opposes[i], FALSE))
+		if (test_depend_corrupt(c_ptr->opposes[i], false))
 		{
 			return FALSE;
 		}
@@ -854,7 +853,7 @@ void gain_random_corruption()
 	max = 0;
 	for (i=0; i < CORRUPTIONS_MAX; i++)
 	{
-		if (test_depend_corrupt(i, TRUE) &&
+		if (test_depend_corrupt(i, true) &&
 		    player_allow_corruption(i))
 		{
 			pos[max] = i;
@@ -893,7 +892,7 @@ void lose_corruption()
 	for (i = 0; i < CORRUPTIONS_MAX; i++)
 	{
 		bool_ is_removable = (corruptions[i].lose_text != NULL);
-		if (test_depend_corrupt(i, FALSE) && is_removable)
+		if (test_depend_corrupt(i, false) && is_removable)
 		{
 			pos[max] = i;
 			max = max + 1;
@@ -912,7 +911,7 @@ void lose_corruption()
 		/* Ok now lets see if it broke some dependencies */
 		for (i = 0; i < max - 1; i++)
 		{
-			if (p_ptr->corruptions[pos[i]] != test_depend_corrupt(pos[i], FALSE))
+			if (p_ptr->corruptions[pos[i]] != test_depend_corrupt(pos[i], false))
 			{
 				remove_corruption(pos[i]);
 			}

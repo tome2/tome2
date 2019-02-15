@@ -234,7 +234,7 @@ void do_cmd_go_up()
 		dun_level = 0;
 		p_ptr->oldpx = 0;
 		p_ptr->oldpy = 0;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 
 		return;
 	}
@@ -309,7 +309,7 @@ void do_cmd_go_up()
 		}
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 }
 
@@ -350,7 +350,7 @@ static bool_ between_effect()
 		p_ptr->oldpy = p_ptr->py = be_ptr->py;
 		dungeon_type = be_ptr->d_idx;
 		dun_level = be_ptr->level;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 
 		return (TRUE);
 	}
@@ -555,7 +555,7 @@ void do_cmd_go_down()
 		}
 
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 }
 
@@ -2026,7 +2026,7 @@ static void do_cmd_unwalk()
 				ambush_flag = FALSE;
 			}
 
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			return;
 		}
@@ -3563,7 +3563,7 @@ static bool_ tport_vertically(bool_ how)
 
 		msg_print("You sink through the floor.");
 		dun_level++;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 	else
 	{
@@ -3575,7 +3575,7 @@ static bool_ tport_vertically(bool_ how)
 
 		msg_print("You rise through the ceiling.");
 		dun_level--;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 	}
 
 	return (TRUE);

@@ -149,7 +149,7 @@ static void pattern_teleport()
 	dun_level = command_arg;
 
 	/* Leaving */
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 }
 
 
@@ -591,7 +591,7 @@ static void process_world_corruptions()
 			increase_mana(-amt);
 			if (p_ptr->csp == 0)
 			{
-				p_ptr->corrupt_anti_teleport_stopped = FALSE;
+				p_ptr->corrupt_anti_teleport_stopped = false;
 				msg_print("You stop controlling your corruption.");
 				p_ptr->update = p_ptr->update | PU_BONUS;
 			}
@@ -1663,7 +1663,7 @@ static void process_world()
 			inc_piety(GOD_YAVANNA, -dec);
 		}
 	}
-	p_ptr->did_nothing = FALSE;
+	p_ptr->did_nothing = false;
 
 	/* Increase regen by tim regen */
 	if (p_ptr->tim_regen) regen_amount += p_ptr->tim_regen_pow;
@@ -1778,7 +1778,7 @@ static void process_world()
 			total_winner = FALSE;
 
 			/* Leaving */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			/* Note death */
 			death = TRUE;
@@ -2823,7 +2823,7 @@ static void process_world()
 					is_recall = true;
 
 					p_ptr->inside_quest = 0;
-					p_ptr->leaving = TRUE;
+					p_ptr->leaving = true;
 				}
 				else
 				{
@@ -2841,8 +2841,8 @@ static void process_world()
 					/* Leaving */
 					is_recall = true;
 
-					p_ptr->leaving = TRUE;
-					p_ptr->wild_mode = FALSE;
+					p_ptr->leaving = true;
+					p_ptr->wild_mode = false;
 				}
 			}
 		}
@@ -3734,7 +3734,7 @@ static void process_command()
 			alive = FALSE;
 
 			/* Leaving */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			break;
 		}
@@ -4039,7 +4039,7 @@ static void process_player()
 				p_ptr->redraw |= (PR_FRAME);
 			}
 
-			p_ptr->did_nothing = TRUE;
+			p_ptr->did_nothing = true;
 
 			/* Take a turn */
 			energy_use = 100;
@@ -4081,7 +4081,7 @@ static void process_player()
 			/* Process the command */
 			process_command();
 
-			p_ptr->did_nothing = TRUE;
+			p_ptr->did_nothing = true;
 		}
 
 		/* Normal command */
@@ -4296,7 +4296,7 @@ static void dungeon()
 	hack_mind = FALSE;
 
 	/* Not leaving */
-	p_ptr->leaving = FALSE;
+	p_ptr->leaving = false;
 
 	/* Reset the "command" vars */
 	command_cmd = 0;
@@ -4897,7 +4897,7 @@ void play_game(program_args const &args)
 		/* We reached surface ? good, lets go down again !! */
 		if (p_ptr->astral && !dun_level)
 		{
-			p_ptr->astral = FALSE;
+			p_ptr->astral = false;
 			cmsg_print(TERM_L_GREEN,
 			           "Well done ! You reached the town ! "
 			           "You can now go down again.");
@@ -5058,7 +5058,7 @@ void play_game(program_args const &args)
 				set_cut(0);
 
 				/* accounting for a new ailment. -LM- */
-				p_ptr->black_breath = FALSE;
+				p_ptr->black_breath = false;
 
 				/* Hack -- don't go to undead form */
 				p_ptr->necro_extra &= ~CLASS_UNDEAD;
@@ -5089,7 +5089,7 @@ void play_game(program_args const &args)
 				p_ptr->inside_quest = 0;
 
 				/* Leaving */
-				p_ptr->leaving = TRUE;
+				p_ptr->leaving = true;
 			}
 		}
 
@@ -5100,7 +5100,7 @@ void play_game(program_args const &args)
 		}
 
 		/* Mega hack */
-		if (dun_level) p_ptr->wild_mode = FALSE;
+		if (dun_level) p_ptr->wild_mode = false;
 
 		/* Make a new level */
 		process_hooks_new(HOOK_NEW_LEVEL, NULL, NULL);

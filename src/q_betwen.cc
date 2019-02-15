@@ -79,9 +79,9 @@ static bool quest_between_move_hook(void *, void *in_, void *)
 	/* Mark as entered */
 	cquest.data[0] = TRUE;
 
-	p_ptr->wild_mode = FALSE;
+	p_ptr->wild_mode = false;
 	p_ptr->inside_quest = QUEST_BETWEEN;
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 
 	cmsg_print(TERM_YELLOW, "Looks like a full wing of thunderlords ambushes you!");
 	cmsg_print(TERM_YELLOW, "Trone steps forth and speaks: 'The secret of the Void Jumpgates");
