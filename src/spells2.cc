@@ -3259,11 +3259,6 @@ void earthquake(int cy, int cx, int r)
 							if (cave[y][x].feat == FEAT_GLYPH) continue;
 							if (cave[y][x].feat == FEAT_MINOR_GLYPH) continue;
 
-							/* ... nor on the Pattern */
-							if ((cave[y][x].feat <= FEAT_PATTERN_XTRA2) &&
-							                (cave[y][x].feat >= FEAT_PATTERN_START))
-								continue;
-
 							/* Important -- Skip "quake" grids */
 							if (map[16 + y - cy][16 + x - cx]) continue;
 

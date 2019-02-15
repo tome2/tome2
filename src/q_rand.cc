@@ -369,11 +369,6 @@ static void hero_death(s32b m_idx, s32b r_idx)
 			/* Nor on the between */
 			if (cave[y][x].feat == FEAT_BETWEEN) continue;
 
-			/* ... nor on the Pattern */
-			if ((cave[y][x].feat >= FEAT_PATTERN_START) &&
-			                (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
-				continue;
-
 			/* Okay */
 			break;
 		}

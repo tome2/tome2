@@ -307,10 +307,6 @@ void teleport_away(int m_idx, int dis)
 			if (cave[ny][nx].feat == FEAT_GLYPH) continue;
 			if (cave[ny][nx].feat == FEAT_MINOR_GLYPH) continue;
 
-			/* ...nor onto the Pattern */
-			if ((cave[ny][nx].feat >= FEAT_PATTERN_START) &&
-			                (cave[ny][nx].feat <= FEAT_PATTERN_XTRA2)) continue;
-
 			/* No teleporting into vaults and such */
 			if (!(p_ptr->inside_quest))
 				if (cave[ny][nx].info & (CAVE_ICKY)) continue;
@@ -424,10 +420,6 @@ static void teleport_to_player(int m_idx)
 			/* Hack -- no teleport onto glyph of warding */
 			if (cave[ny][nx].feat == FEAT_GLYPH) continue;
 			if (cave[ny][nx].feat == FEAT_MINOR_GLYPH) continue;
-
-			/* ...nor onto the Pattern */
-			if ((cave[ny][nx].feat >= FEAT_PATTERN_START) &&
-			                (cave[ny][nx].feat <= FEAT_PATTERN_XTRA2)) continue;
 
 			/* No teleporting into vaults and such */
 			/* if (cave[ny][nx].info & (CAVE_ICKY)) continue; */
@@ -8121,10 +8113,10 @@ bool project(int who, int rad, int y, int x, int dam, int typ, int flg)
 					/* Ball explosions are stopped by walls */
 					if (typ == GF_DISINTEGRATE)
 					{
-						if (cave_valid_bold(y, x) &&
-						                (cave[y][x].feat < FEAT_PATTERN_START
-						                 || cave[y][x].feat > FEAT_PATTERN_XTRA2))
+						if (cave_valid_bold(y, x))
+						{
 							cave_set_feat(y, x, FEAT_FLOOR);
+						}
 
 						/* Update some things -- similar to GF_KILL_WALL */
 						p_ptr->update |= (PU_VIEW | PU_FLOW | PU_MONSTERS | PU_MON_LITE);

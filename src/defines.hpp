@@ -507,17 +507,6 @@
 /* Explosive rune */
 #define FEAT_MINOR_GLYPH        0x40
 
-/* Pattern */
-#define FEAT_PATTERN_START      0x41
-#define FEAT_PATTERN_1          0x42
-#define FEAT_PATTERN_2          0x43
-#define FEAT_PATTERN_3          0x44
-#define FEAT_PATTERN_4          0x45
-#define FEAT_PATTERN_END        0x46
-#define FEAT_PATTERN_OLD        0x47
-#define FEAT_PATTERN_XTRA1      0x48
-#define FEAT_PATTERN_XTRA2      0x49
-
 /* Shops */
 #define FEAT_SHOP               0x4A
 

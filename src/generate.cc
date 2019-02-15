@@ -3482,45 +3482,18 @@ static void build_vault(int yval, int xval, int ymax, int xmax, std::string cons
 						break;
 					}
 
+				case 'a':
+				case 'b':
+				case 'c':
+				case 'd':
+				case 'P':
+				case 'B':
 				case 'p':
 					{
-						cave_set_feat(y, x, FEAT_PATTERN_START);
-						break;
-					}
-
-				case 'a':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_1);
-						break;
-					}
-
-				case 'b':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_2);
-						break;
-					}
-
-				case 'c':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_3);
-						break;
-					}
-
-				case 'd':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_4);
-						break;
-					}
-
-				case 'P':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_END);
-						break;
-					}
-
-				case 'B':
-					{
-						cave_set_feat(y, x, FEAT_PATTERN_XTRA1);
+						// Guard against vaults containing "the pattern".
+						// There should be no vaults that do, but let's just
+						// make sure.
+						abort();
 						break;
 					}
 

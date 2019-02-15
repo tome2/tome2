@@ -2050,13 +2050,6 @@ s16b place_monster_one(int y, int x, int r_idx, int ego, bool slp, int status)
 		return 0;
 	}
 
-	/* Nor on the Pattern */
-	if ((cave[y][x].feat >= FEAT_PATTERN_START)
-	                && (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
-	{
-		return 0;
-	}
-
 	/* Paranoia */
 	if (!r_idx)
 	{
@@ -3212,11 +3205,6 @@ bool summon_specific(int y1, int x1, int lev, int type)
 		/* Nor on the between */
 		if (cave[y][x].feat == FEAT_BETWEEN) return false;
 
-		/* ... nor on the Pattern */
-		if ((cave[y][x].feat >= FEAT_PATTERN_START) &&
-		                (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
-			continue;
-
 		/* Okay */
 		break;
 	}
@@ -3295,11 +3283,6 @@ bool summon_specific_friendly(int y1, int x1, int lev, int type, bool Group_ok)
 
 		/* Nor on the between */
 		if (cave[y][x].feat == FEAT_BETWEEN) return false;
-
-		/* ... nor on the Pattern */
-		if ((cave[y][x].feat >= FEAT_PATTERN_START) &&
-		                (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
-			continue;
 
 		/* Okay */
 		break;

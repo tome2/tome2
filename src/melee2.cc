@@ -579,10 +579,6 @@ static bool summon_possible(int y1, int x1)
 			/* Nor on the between */
 			if (cave[y][x].feat == FEAT_BETWEEN) return false;
 
-			/* ...nor on the Pattern */
-			if ((cave[y][x].feat >= FEAT_PATTERN_START)
-			                && (cave[y][x].feat <= FEAT_PATTERN_XTRA2)) continue;
-
 			/* Require empty floor grid in line of sight */
 			if (cave_empty_bold(y, x) && los(y1, x1, y, x)) return true;
 		}
@@ -5994,14 +5990,6 @@ static void process_monster(int m_idx)
 			/* Took a turn */
 			do_turn = true;
 		}
-
-		if ((cave[ny][nx].feat >= FEAT_PATTERN_START) &&
-		                (cave[ny][nx].feat <= FEAT_PATTERN_XTRA2) &&
-		                do_turn == false)
-		{
-			do_move = false;
-		}
-
 
 		/* A monster is in the way */
 		if (do_move && c_ptr->m_idx)

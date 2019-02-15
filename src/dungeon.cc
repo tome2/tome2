@@ -101,121 +101,6 @@ static bool granted_resurrection()
 }
 
 /*
- * Go to any level (ripped off from wiz_jump)
- */
-static void pattern_teleport()
-{
-	/* Ask for level */
-	if (get_check("Teleport level? "))
-	{
-		char ppp[80];
-
-		char tmp_val[160];
-
-		/* Prompt */
-		sprintf(ppp, "Teleport to level (0-%d): ", 99);
-
-		/* Default */
-		sprintf(tmp_val, "%d", dun_level);
-
-		/* Ask for a level */
-		if (!get_string(ppp, tmp_val, 10)) return;
-
-		/* Extract request */
-		command_arg = atoi(tmp_val);
-	}
-	else if (get_check("Normal teleport? "))
-	{
-		teleport_player(200);
-		return;
-	}
-	else
-	{
-		return;
-	}
-
-	/* Paranoia */
-	if (command_arg < 0) command_arg = 0;
-
-	/* Paranoia */
-	if (command_arg > 99) command_arg = 99;
-
-	/* Accept request */
-	msg_format("You teleport to dungeon level %d.", command_arg);
-
-	autosave_checkpoint();
-
-	/* Change level */
-	dun_level = command_arg;
-
-	/* Leaving */
-	p_ptr->leaving = true;
-}
-
-
-/*
- * Returns true if we are on the Straight Road...
- */
-static bool pattern_effect()
-{
-	if ((cave[p_ptr->py][p_ptr->px].feat < FEAT_PATTERN_START) ||
-			(cave[p_ptr->py][p_ptr->px].feat > FEAT_PATTERN_XTRA2))
-	{
-		return false;
-	}
-
-	if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_END)
-	{
-		set_poisoned(0);
-		set_image(0);
-		set_stun(0);
-		set_cut(0);
-		set_blind(0);
-		set_afraid(0);
-		do_res_stat(A_STR, true);
-		do_res_stat(A_INT, true);
-		do_res_stat(A_WIS, true);
-		do_res_stat(A_DEX, true);
-		do_res_stat(A_CON, true);
-		do_res_stat(A_CHR, true);
-		restore_level();
-		hp_player(1000);
-		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_PATTERN_OLD);
-		msg_print("This section of the Straight Road looks less powerful.");
-	}
-
-
-	/*
-	 * We could make the healing effect of the
-	 * Pattern center one-time only to avoid various kinds
-	 * of abuse, like luring the win monster into fighting you
-	 * in the middle of the pattern...
-	 */
-	else if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_OLD)
-	{
-		/* No effect */
-	}
-	else if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_XTRA1)
-	{
-		pattern_teleport();
-	}
-	else if (cave[p_ptr->py][p_ptr->px].feat == FEAT_PATTERN_XTRA2)
-	{
-		if (!(p_ptr->invuln))
-			take_hit(200, "walking the corrupted Straight Road");
-	}
-
-	else
-	{
-		if (!(p_ptr->invuln))
-			take_hit(damroll(1, 3), "walking the Straight Road");
-	}
-
-	return true;
-}
-
-
-/*
  * If player has inscribed the object with "!!", let him know when it's
  * recharged. -LM-
  */
@@ -1535,18 +1420,10 @@ static void process_world()
 		}
 	}
 
-	/* Are we walking the pattern? */
-	if (!p_ptr->wild_mode && pattern_effect())
+	/* Regeneration ability */
+	if (p_ptr->regenerate)
 	{
-		cave_no_regen = true;
-	}
-	else
-	{
-		/* Regeneration ability */
-		if (p_ptr->regenerate)
-		{
-			regen_amount = regen_amount * 2;
-		}
+		regen_amount = regen_amount * 2;
 	}
 
 
@@ -1687,16 +1564,7 @@ static void process_world()
 	/* Regenerate Hit Points if needed */
 	if ((p_ptr->chp < p_ptr->mhp) && !cave_no_regen)
 	{
-		if ((cave[p_ptr->py][p_ptr->px].feat < FEAT_PATTERN_END) &&
-		                (cave[p_ptr->py][p_ptr->px].feat >= FEAT_PATTERN_START))
-		{
-			/* Hmmm. this should never happen? */
-			regenhp(regen_amount / 5);
-		}
-		else
-		{
-			regenhp(regen_amount);
-		}
+		regenhp(regen_amount);
 	}
 
 

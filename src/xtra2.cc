@@ -4216,7 +4216,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 			/* Pick a prefix */
 			if (*s2 &&
 			                (((feat >= FEAT_MINOR_GLYPH) &&
-			                  (feat <= FEAT_PATTERN_XTRA2)) ||
+					  (feat < FEAT_SHOP)) ||
 			                 (feat == FEAT_DIRT) ||
 			                 (feat == FEAT_GRASS) ||
 			                 (feat == FEAT_FLOWER))) s2 = "on ";
