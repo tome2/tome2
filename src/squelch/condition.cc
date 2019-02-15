@@ -34,7 +34,6 @@ EnumStringMap<match_type> &match_mapping()
 		{ match_type::INSCRIBED, "inscribed" },
 		{ match_type::DISCOUNT, "discount" },
 		{ match_type::SYMBOL, "symbol" },
-		{ match_type::STATE, "state" },
 		{ match_type::STATUS, "status" },
 		{ match_type::TVAL, "tval" },
 		{ match_type::SVAL, "sval" },

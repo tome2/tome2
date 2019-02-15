@@ -20,10 +20,10 @@ namespace squelch {
  * Types of matches used for conditions.
  */
 enum class match_type {
-	AND      , OR      , NOT    , NAME     , CONTAIN   ,
-	INSCRIBED, DISCOUNT, SYMBOL , STATE    , STATUS    ,
-	TVAL     , SVAL    , RACE   , SUBRACE  , CLASS     ,
-	LEVEL    , SKILL   , ABILITY, INVENTORY, EQUIPMENT };
+	AND      , OR      , NOT      , NAME      , CONTAIN,
+	INSCRIBED, DISCOUNT, SYMBOL   , STATUS    , TVAL   ,
+	SVAL     , RACE    , SUBRACE  , CLASS     , LEVEL  ,
+	SKILL    , ABILITY , INVENTORY, EQUIPMENT };
 
 /**
  * Bidirectional map between enumeration values and strings.

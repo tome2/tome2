@@ -301,10 +301,6 @@ static void display_desc(match_type match_type_)
 		line("Check is true if object symbol is ok");
 		break;
 
-	case match_type::STATE:
-		line("Check is true if object is identified/unidentified");
-		break;
-
 	case match_type::STATUS:
 		line("Check is true if object status is ok");
 		break;
@@ -364,7 +360,6 @@ std::shared_ptr<Condition> new_condition_interactive()
 		match_type::INSCRIBED,
 		match_type::DISCOUNT,
 		match_type::SYMBOL,
-		match_type::STATE,
 		match_type::STATUS,
 		match_type::TVAL,
 		match_type::SVAL,
