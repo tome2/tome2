@@ -3259,13 +3259,26 @@ static void do_cmd_knowledge_uniques()
 	{
 		auto r_ptr = &r_info[k];
 
-		/* Only print Uniques */
-		if ((r_ptr->flags & RF_UNIQUE) &&
-		    !(r_ptr->flags & RF_PET) &&
-		    !(r_ptr->flags & RF_NEUTRAL))
+		// Ignore non-uniques
+		if (!(r_ptr->flags & RF_UNIQUE))
 		{
-			unique_r_idxs.push_back(k);
+			continue;
 		}
+
+		// Exclude PET/NEUTRAL monsters
+		if ((r_ptr->flags & RF_PET) || (r_ptr->flags & RF_NEUTRAL))
+		{
+			continue;
+		}
+
+		// Exclude JOKE monsters if we're playing without joke monsters
+		if (!options->joke_monsters && (r_ptr->flags & RF_JOKEANGBAND))
+		{
+			continue;
+		}
+
+		// Keep
+		unique_r_idxs.push_back(k);
 	}
 
 	// Sort races by level.
