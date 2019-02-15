@@ -1354,10 +1354,8 @@ static void react_keypress(XKeyEvent *xev)
 /*
  * Process events
  */
-static errr CheckEvent(bool_ wait)
+static errr CheckEvent(term_data *old_td, bool_ wait)
 {
-	term_data *old_td = (term_data*)(Term->data);
-
 	XEvent xev_body, *xev = &xev_body;
 
 	term_data *td = NULL;
@@ -1594,17 +1592,17 @@ static void Term_xtra_x11(void *data, int n, int v)
 
 		/* Process random events XXX */
 	case TERM_XTRA_BORED:
-		CheckEvent(0);
+		CheckEvent(td, 0);
 		return;
 
 		/* Process Events XXX */
 	case TERM_XTRA_EVENT:
-		CheckEvent(v);
+		CheckEvent(td, v);
 		return;
 
 		/* Flush the events XXX */
 	case TERM_XTRA_FLUSH:
-		while (!CheckEvent(FALSE));
+		while (!CheckEvent(td, FALSE));
 		return;
 
 		/* Handle change in the "level" */

@@ -1140,10 +1140,8 @@ void recompose(void);
 /* Resize the active terminal with new width and height.
 Note that his involves a complicated sequence of events...
 Details to follow below! */
-void resizeTerminal(int width, int height)
+void resizeTerminal(term_data *td, int width, int height)
 {
-	term_data *td = (term_data*)(Term->data);
-	
 	/* First of all, bound the input width and height to satisfy
 	these conditions:
 	- The main ToME window should be at least 80 cols, 24 rows
@@ -1224,10 +1222,8 @@ void resizeTerminal(int width, int height)
 
 /* Move the terminal around... a much simpler action that involves
 just changing the pos_x/pos_y values and redrawing!*/
-void moveTerminal(int x, int y)
+void moveTerminal(term_data *td, int x, int y)
 {
-	term_data *td = (term_data*)(Term->data);
-	
 	/* Now, the window is being shifted about... much simpler
 	situation to handle! But of course, the window must not
 	drift too far or else parts will be hanging off the screen
@@ -1537,12 +1533,12 @@ void manipulationMode(void)
 					moveMode! */
 					if (moveMode)
 					{
-						moveTerminal(td->rect.x + value*delta_x,\
+						moveTerminal(td, td->rect.x + value*delta_x,\
 							td->rect.y + value*delta_y);
 					}
 					else
 					{
-						resizeTerminal(td->cols + value*delta_x,\
+						resizeTerminal(td, td->cols + value*delta_x,\
 							td->rows + value*delta_y);
 					}
 					break;
@@ -1572,7 +1568,7 @@ void manipulationMode(void)
 			{
 				/* the left mouse button is down, move the window,
 				do a differential based on where the button was pressed */
-				moveTerminal(td->rect.x + (event.motion.x - mouse_x), \
+				moveTerminal(td, td->rect.x + (event.motion.x - mouse_x), \
 					td->rect.y + (event.motion.y - mouse_y));
 				/* save the most current mouse location */
 				SDL_GetMouseState(&mouse_x,&mouse_y);
@@ -1593,7 +1589,7 @@ void manipulationMode(void)
 				if ( delta_cols || delta_rows )
 				{
 					/* something changed, so update */
-					resizeTerminal(td->cols + delta_cols, \
+					resizeTerminal(td, td->cols + delta_cols, \
 						td->rows + delta_rows);
 					/* save the most current mouse location */
 					SDL_GetMouseState(&mouse_x,&mouse_y);
