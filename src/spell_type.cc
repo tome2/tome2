@@ -24,7 +24,7 @@ struct spell_type
 	std::vector<std::string> m_description;       /* List of strings */
 
 	casting_result (*effect_func)();  /* Spell effect function */
-	const char* (*info_func)();           /* Information function */
+	std::string (*info_func)();           /* Information function */
 	int (*lasting_func)();         /* Lasting effect function */
 	bool (*depend_func)();         /* Check dependencies */
 
@@ -98,7 +98,7 @@ void spell_type_set_inertia(spell_type *spell, s32b difficulty, s32b delay)
 
 void spell_type_init_music(spell_type *spell,
 			   s16b minimum_pval,
-			   const char* (*info_func)(),
+			   std::string (*info_func)(),
 			   casting_result (*effect_func)())
 {
 	assert(spell != NULL);
@@ -118,7 +118,7 @@ void spell_type_init_music(spell_type *spell,
 
 void spell_type_init_music_lasting(spell_type *spell,
 				   s16b minimum_pval,
-				   const char* (*info_func)(),
+				   std::string (*info_func)(),
 				   casting_result (*effect_func)(),
 				   int (*lasting_func)())
 {
@@ -134,7 +134,7 @@ void spell_type_init_music_lasting(spell_type *spell,
 void spell_type_init_mage(spell_type *spell,
 			  random_type random_type,
 			  s32b school_idx,
-			  const char* (*info_func)(),
+			  std::string (*info_func)(),
 			  casting_result (*effect_func)())
 {
 	assert(spell != NULL);
@@ -164,7 +164,7 @@ void spell_type_init_mage(spell_type *spell,
 
 void spell_type_init_priest(spell_type *spell,
 			    s32b school_idx,
-			    const char* (*info_func)(),
+			    std::string (*info_func)(),
 			    casting_result (*effect_func)())
 {
 	assert(spell != NULL);
@@ -180,7 +180,7 @@ void spell_type_init_priest(spell_type *spell,
 }
 
 void spell_type_init_device(spell_type *spell,
-			    const char* (*info_func)(),
+			    std::string (*info_func)(),
 			    casting_result (*effect_func)())
 {
 	assert(spell != NULL);
@@ -193,7 +193,7 @@ void spell_type_init_device(spell_type *spell,
 }
 
 void spell_type_init_demonology(spell_type *spell,
-				const char* (*info_func)(),
+				std::string (*info_func)(),
 				casting_result (*effect_func)())
 {
 	spell_type_init_mage(spell,
@@ -204,7 +204,7 @@ void spell_type_init_demonology(spell_type *spell,
 }
 
 void spell_type_init_geomancy(spell_type *spell,
-			      const char* (*info_func)(),
+			      std::string (*info_func)(),
 			      casting_result (*effect_func)(),
 			      bool (*depend_func)())
 {
@@ -390,10 +390,10 @@ bool spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay)
 	return true;
 }
 
-const char *spell_type_info(spell_type *spell)
+std::string spell_type_info(spell_type *spell)
 {
 	assert(spell != NULL);
-	
+
 	return spell->info_func();
 }
 

@@ -27,7 +27,7 @@ static spell_type *spell_new(s32b *index, const char *name)
 	return spell;
 }
 
-static const char *no_info()
+static std::string no_info()
 {
 	return "";
 }

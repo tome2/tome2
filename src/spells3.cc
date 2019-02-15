@@ -34,6 +34,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <fmt/format.h>
 #include <vector>
 
 s32b NOXIOUSCLOUD = -1; /* Identifier */
@@ -228,14 +229,12 @@ casting_result air_noxious_cloud()
 	return CAST;
 }
 
-const char *air_noxious_cloud_info()
+std::string air_noxious_cloud_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b " rad 3 dur " FMTs32b,
-		(7 + get_level_s(NOXIOUSCLOUD, 150)),
-		(5 + get_level_s(NOXIOUSCLOUD, 40)));
-	return buf;
+	return fmt::format(
+		"dam {} rad 3 dur {}",
+		7 + get_level_s(NOXIOUSCLOUD, 150),
+		5 + get_level_s(NOXIOUSCLOUD, 40));
 }
 
 casting_result air_wings_of_winds()
@@ -258,11 +257,9 @@ casting_result air_wings_of_winds()
 	return CAST;
 }
 
-const char *air_wings_of_winds_info()
+std::string air_wings_of_winds_info()
 {
-	static char buf[128];
-	sprintf(buf, "dur " FMTs32b "+d10", (5 + get_level_s(AIRWINGS, 25)));
-	return buf;
+	return fmt::format("dur {}+d10", 5 + get_level_s(AIRWINGS, 25));
 }
 
 casting_result air_invisibility()
@@ -275,13 +272,12 @@ casting_result air_invisibility()
 	return CAST;
 }
 
-const char *air_invisibility_info()
+std::string air_invisibility_info()
 {
-	static char buf[128];
-	sprintf(buf, "dur " FMTs32b "+d20 power " FMTs32b,
-		(15 + get_level_s(INVISIBILITY, 50)),
-		(20 + get_level_s(INVISIBILITY, 50)));
-	return buf;
+	return fmt::format(
+		"dur {}+d20 power {}",
+		15 + get_level_s(INVISIBILITY, 50),
+		20 + get_level_s(INVISIBILITY, 50));
 }
 
 casting_result air_poison_blood()
@@ -304,13 +300,11 @@ casting_result air_poison_blood()
 	return result;
 }
 
-const char *air_poison_blood_info()
+std::string air_poison_blood_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d30",
-		(25 + get_level_s(POISONBLOOD, 25)));
-	return buf;
+	return fmt::format(
+		"dur {}+d30",
+		25 + get_level_s(POISONBLOOD, 25));
 }
 
 casting_result air_thunderstorm()
@@ -323,15 +317,13 @@ casting_result air_thunderstorm()
 	return CAST;
 }
 
-const char *air_thunderstorm_info()
+std::string air_thunderstorm_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d10",
-		(5 + get_level_s(THUNDERSTORM, 10)),
-		(10 + get_level_s(THUNDERSTORM, 25)),
-		(10 + get_level_s(THUNDERSTORM, 25)));
-	return buf;
+	return fmt::format(
+		"dam {}d{} dur {}+d10",
+		5 + get_level_s(THUNDERSTORM, 10),
+		10 + get_level_s(THUNDERSTORM, 25),
+		10 + get_level_s(THUNDERSTORM, 25));
 }
 
 casting_result air_sterilize()
@@ -340,13 +332,11 @@ casting_result air_sterilize()
 	return CAST;
 }
 
-const char *air_sterilize_info()
+std::string air_sterilize_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d30",
-		(20 + get_level_s(STERILIZE, 70)));
-	return buf;
+	return fmt::format(
+		"dur {}+d30",
+		20 + get_level_s(STERILIZE, 70));
 }
 
 casting_result convey_blink()
@@ -367,13 +357,11 @@ casting_result convey_blink()
 	return CAST;
 }
 
-const char *convey_blink_info()
+std::string convey_blink_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"distance " FMTs32b,
-		(10 + get_level_s(BLINK, 8)));
-	return buf;
+	return fmt::format(
+		"distance {}",
+		10 + get_level_s(BLINK, 8));
 }
 
 casting_result convey_teleport()
@@ -383,13 +371,11 @@ casting_result convey_teleport()
 	return CAST;
 }
 
-const char *convey_teleport_info()
+std::string convey_teleport_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"distance " FMTs32b,
-		(100 + get_level_s(TELEPORT, 100)));
-	return buf;
+	return fmt::format(
+		"distance {}",
+		100 + get_level_s(TELEPORT, 100));
 }
 
 casting_result convey_teleport_away()
@@ -489,16 +475,14 @@ casting_result convey_recall()
 	}
 }
 
-const char *convey_recall_info()
+std::string convey_recall_info()
 {
-	static char buf[128];
 	int d = recall_get_d();
 	int f = recall_get_f();
 
-	sprintf(buf,
-		"dur %d+d%d weight " FMTs32b "lb",
-		f, d, (1 + get_level_s(RECALL, 15)));
-	return buf;
+	return fmt::format(
+		"dur {}+d{} weight {}lb",
+		f, d, 1 + get_level_s(RECALL, 15));
 }
 
 casting_result convey_probability_travel()
@@ -507,13 +491,11 @@ casting_result convey_probability_travel()
 	return CAST;
 }
 
-const char *convey_probability_travel_info()
+std::string convey_probability_travel_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d20",
+	return fmt::format(
+		"dur {}+d20",
 		get_level_s(PROBABILITY_TRAVEL, 60));
-	return buf;
 }
 
 casting_result demonology_demon_blade()
@@ -541,14 +523,12 @@ casting_result demonology_demon_blade()
 	return CAST;
 }
 
-const char *demonology_demon_blade_info()
+std::string demonology_demon_blade_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d20 dam " FMTs32b "/blow",
-		(get_level_s(DEMON_BLADE, 80)),
-		(4 + get_level_s(DEMON_BLADE, 40)));
-	return buf;
+	return fmt::format(
+		"dur {}+d20 dam {}/blow",
+		get_level_s(DEMON_BLADE, 80),
+		4 + get_level_s(DEMON_BLADE, 40));
 }
 
 casting_result demonology_demon_madness()
@@ -607,14 +587,12 @@ casting_result demonology_demon_madness()
 	return CAST;
 }
 
-const char *demonology_demon_madness_info()
+std::string demonology_demon_madness_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b " rad " FMTs32b,
-		(20 + get_level_s(DEMON_MADNESS, 200)),
-		(1 + get_level(DEMON_MADNESS, 4)));
-	return buf;
+	return fmt::format(
+		"dam {} rad {}",
+		20 + get_level_s(DEMON_MADNESS, 200),
+		1 + get_level(DEMON_MADNESS, 4));
 }
 
 casting_result demonology_demon_field()
@@ -635,14 +613,12 @@ casting_result demonology_demon_field()
 	return CAST;
 }
 
-const char *demonology_demon_field_info()
+std::string demonology_demon_field_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b " dur " FMTs32b,
-		(20 + get_level_s(DEMON_FIELD, 70)),
-		(30 + get_level_s(DEMON_FIELD, 100)));
-	return buf;
+	return fmt::format(
+		"dam {} dur {}",
+		20 + get_level_s(DEMON_FIELD, 70),
+		30 + get_level_s(DEMON_FIELD, 100));
 }
 
 casting_result demonology_doom_shield()
@@ -656,15 +632,13 @@ casting_result demonology_doom_shield()
 	return CAST;
 }
 
-const char *demonology_doom_shield_info()
+std::string demonology_doom_shield_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d10 dam " FMTs32b "d" FMTs32b,
-		(20 + get_level_s(DOOM_SHIELD, 100)),
-		(1 + get_level_s(DOOM_SHIELD, 14)),
-		(10 + get_level_s(DOOM_SHIELD, 15)));
-	return buf;
+	return fmt::format(
+		"dur {}+d10 dam {}d{}",
+		20 + get_level_s(DOOM_SHIELD, 100),
+		1 + get_level_s(DOOM_SHIELD, 14),
+		10 + get_level_s(DOOM_SHIELD, 15));
 }
 
 casting_result demonology_unholy_word()
@@ -724,13 +698,11 @@ casting_result demonology_unholy_word()
 	}
 }
 
-const char *demonology_unholy_word_info()
+std::string demonology_unholy_word_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"heal mhp%% of " FMTs32b "%%",
-		(30 + get_level(UNHOLY_WORD, 50)));
-	return buf;
+	return fmt::format(
+		"heal mhp% of {}%",
+		30 + get_level(UNHOLY_WORD, 50));
 }
 
 casting_result demonology_demon_cloak()
@@ -739,13 +711,11 @@ casting_result demonology_demon_cloak()
 	return CAST;
 }
 
-const char *demonology_demon_cloak_info()
+std::string demonology_demon_cloak_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d5",
-		(5 + get_level(DEMON_CLOAK, 15)));
-	return buf;
+	return fmt::format(
+		"dur {}+d5",
+		5 + get_level(DEMON_CLOAK, 15));
 }
 
 casting_result demonology_summon_demon()
@@ -776,13 +746,11 @@ casting_result demonology_summon_demon()
 	return CAST;
 }
 
-const char *demonology_summon_demon_info()
+std::string demonology_summon_demon_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level " FMTs32b,
-		(5 + get_level_s(DEMON_SUMMON, 100)));
-	return buf;
+	return fmt::format(
+		"level {}",
+		5 + get_level_s(DEMON_SUMMON, 100));
 }
 
 casting_result demonology_discharge_minion()
@@ -828,14 +796,12 @@ casting_result demonology_discharge_minion()
 	}
 }
 
-const char *demonology_discharge_minion_info()
+std::string demonology_discharge_minion_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b "%% max " FMTs32b,
-		(20 + get_level(DISCHARGE_MINION, 60)),
-		(100 + get_level(DISCHARGE_MINION, 500)));
-	return buf;
+	return fmt::format(
+		"dam {}% max {}",
+		20 + get_level(DISCHARGE_MINION, 60),
+		100 + get_level(DISCHARGE_MINION, 500));
 }
 
 casting_result demonology_control_demon()
@@ -850,13 +816,11 @@ casting_result demonology_control_demon()
 	return CAST;
 }
 
-const char *demonology_control_demon_info()
+std::string demonology_control_demon_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power " FMTs32b,
-		(50 + get_level_s(CONTROL_DEMON, 250)));
-	return buf;
+	return fmt::format(
+		"power {}",
+		50 + get_level_s(CONTROL_DEMON, 250));
 }
 
 casting_result divination_vision()
@@ -879,25 +843,21 @@ casting_result divination_sense_hidden()
 	return CAST;
 }
 
-const char *divination_sense_hidden_info()
+std::string divination_sense_hidden_info()
 {
-	static char buf[128];
-
 	if (get_level_s(SENSEHIDDEN, 50) >= 15)
 	{
-		sprintf(buf,
-			"rad " FMTs32b " dur " FMTs32b "+d20",
-			(15 + get_level_s(SENSEHIDDEN, 40)),
-			(10 + get_level_s(SENSEHIDDEN, 40)));
+		return fmt::format(
+			"rad {} dur {}+d20",
+			15 + get_level_s(SENSEHIDDEN, 40),
+			10 + get_level_s(SENSEHIDDEN, 40));
 	}
 	else
 	{
-		sprintf(buf,
-			"rad " FMTs32b,
-			(15 + get_level_s(SENSEHIDDEN, 40)));
+		return fmt::format(
+			"rad {}",
+			15 + get_level_s(SENSEHIDDEN, 40));
 	}
-
-	return buf;
 }
 
 casting_result divination_reveal_ways()
@@ -907,13 +867,11 @@ casting_result divination_reveal_ways()
 	return CAST;
 }
 
-const char *divination_reveal_ways_info()
+std::string divination_reveal_ways_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad " FMTs32b,
-		(10 + get_level_s(REVEALWAYS, 40)));
-	return buf;
+	return fmt::format(
+		"rad {}",
+		10 + get_level_s(REVEALWAYS, 40));
 }
 
 casting_result divination_sense_monsters()
@@ -926,25 +884,21 @@ casting_result divination_sense_monsters()
 	return CAST;
 }
 
-const char *divination_sense_monsters_info()
+std::string divination_sense_monsters_info()
 {
-	static char buf[128];
-
 	if (get_level_s(SENSEMONSTERS, 50) >= 30)
 	{
-		sprintf(buf,
-			"rad " FMTs32b " dur " FMTs32b "+d10",
-			(10 + get_level_s(SENSEMONSTERS, 40)),
-			(10 + get_level_s(SENSEMONSTERS, 20)));
+		return fmt::format(
+			"rad {} dur {}+d10",
+			10 + get_level_s(SENSEMONSTERS, 40),
+			10 + get_level_s(SENSEMONSTERS, 20));
 	}
 	else
 	{
-		sprintf(buf,
-			"rad " FMTs32b,
-			(10 + get_level_s(SENSEMONSTERS, 40)));
+		return fmt::format(
+			"rad {}",
+			10 + get_level_s(SENSEMONSTERS, 40));
 	}
-
-	return buf;
 }
 
 casting_result earth_stone_skin()
@@ -964,28 +918,24 @@ casting_result earth_stone_skin()
 	return CAST;
 }
 
-const char *earth_stone_skin_info()
+std::string earth_stone_skin_info()
 {
-	static char buf[128];
-
 	if (get_level_s(STONESKIN, 50) >= 25)
 	{
-		sprintf(buf,
-			"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d10 AC " FMTs32b,
-			(2 + get_level_s(STONESKIN, 5)),
-			(3 + get_level_s(STONESKIN, 5)),
-			(10 + get_level_s(STONESKIN, 100)),
-			(10 + get_level_s(STONESKIN, 50)));
+		return fmt::format(
+			"dam {}d{} dur {}+d10 AC {}",
+			2 + get_level_s(STONESKIN, 5),
+			3 + get_level_s(STONESKIN, 5),
+			10 + get_level_s(STONESKIN, 100),
+			10 + get_level_s(STONESKIN, 50));
 	}
 	else
 	{
-		sprintf(buf,
-			"dur " FMTs32b "+d10 AC " FMTs32b,
-			(10 + get_level_s(STONESKIN, 100)),
-			(10 + get_level_s(STONESKIN, 50)));
+		return fmt::format(
+			"dur {}+d10 AC {}",
+			10 + get_level_s(STONESKIN, 100),
+			10 + get_level_s(STONESKIN, 50));
 	}
-
-	return buf;
 }
 
 casting_result earth_dig()
@@ -1041,21 +991,18 @@ casting_result earth_strike()
 	return CAST;
 }
 
-const char *earth_strike_info()
+std::string earth_strike_info()
 {
-	static char buf[128];
 	int dmg = 50 + get_level_s(STRIKE, 50);
 
 	if (get_level_s(STRIKE, 50) >= 12)
 	{
-		sprintf(buf, "dam %d rad 1", dmg);
+		return fmt::format("dam {} rad 1", dmg);
 	}
 	else
 	{
-		sprintf(buf, "dam %d", dmg);
+		return fmt::format("dam {}", dmg);
 	}
-
-	return buf;
 }
 
 casting_result earth_shake()
@@ -1079,11 +1026,9 @@ casting_result earth_shake()
 	return CAST;
 }
 
-const char *earth_shake_info()
+std::string earth_shake_info()
 {
-	static char buf[128];
-	sprintf(buf, "rad " FMTs32b, (4 + get_level_s(SHAKE, 10)));
-	return buf;
+	return fmt::format("rad {}", 4 + get_level_s(SHAKE, 10));
 }
 
 casting_result eru_see_the_music()
@@ -1107,13 +1052,11 @@ casting_result eru_see_the_music()
 	return CAST;
 }
 
-const char *eru_see_the_music_info()
+std::string eru_see_the_music_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d20",
-		(10 + get_level_s(ERU_SEE, 100)));
-	return buf;
+	return fmt::format(
+		"dur {}+d20",
+		10 + get_level_s(ERU_SEE, 100));
 }
 
 casting_result eru_listen_to_the_music()
@@ -1141,13 +1084,11 @@ casting_result eru_lay_of_protection()
 	return CAST;
 }
 
-const char *eru_lay_of_protection_info()
+std::string eru_lay_of_protection_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad " FMTs32b,
-		(1 + get_level(ERU_PROT, 2)));
-	return buf;
+	return fmt::format(
+		"rad {}",
+		1 + get_level(ERU_PROT, 2));
 }
 
 casting_result fire_globe_of_light()
@@ -1174,22 +1115,19 @@ casting_result fire_globe_of_light()
 	return CAST;
 }
 
-const char *fire_globe_of_light_info()
+std::string fire_globe_of_light_info()
 {
-	static char buf[128];
-
 	if (get_level_s(GLOBELIGHT, 50) >= 15)
 	{
-		sprintf(buf, "dam " FMTs32b " rad " FMTs32b,
+		return fmt::format(
+			"dam {} rad {}",
 			(10 + get_level_s(GLOBELIGHT, 100)),
 			(5 + get_level_s(GLOBELIGHT, 6)));
 	}
 	else
 	{
-		buf[0] = '\0';
+		return "";
 	}
-
-	return buf;
 }
 
 casting_result fire_fireflash()
@@ -1215,14 +1153,12 @@ casting_result fire_fireflash()
 	return CAST;
 }
 
-const char *fire_fireflash_info()
+std::string fire_fireflash_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b " rad " FMTs32b,
-		(20 + get_level_s(FIREFLASH, 500)),
-		(2 + get_level_s(FIREFLASH, 5)));
-	return buf;
+	return fmt::format(
+		"dam {} rad {}",
+		20 + get_level_s(FIREFLASH, 500),
+		2 + get_level_s(FIREFLASH, 5));
 }
 
 casting_result fire_fiery_shield()
@@ -1242,15 +1178,13 @@ casting_result fire_fiery_shield()
 	return CAST;
 }
 
-const char *fire_fiery_shield_info()
+std::string fire_fiery_shield_info()
 {
-	static char buf[128];
-  	sprintf(buf,
-		"dam " FMTs32b "d" FMTs32b " dur " FMTs32b "+d20",
-		(5 + get_level_s(FIERYAURA, 15)),
-		(5 + get_level_s(FIERYAURA, 7)),
-		(10 + get_level_s(FIERYAURA, 70)));
-	return buf;
+	return fmt::format(
+		"dam {}d{} dur {}+d20",
+		5 + get_level_s(FIERYAURA, 15),
+		5 + get_level_s(FIERYAURA, 7),
+		10 + get_level_s(FIERYAURA, 70));
 }
 
 casting_result fire_firewall()
@@ -1273,14 +1207,12 @@ casting_result fire_firewall()
 	return CAST;
 }
 
-const char *fire_firewall_info()
+std::string fire_firewall_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b " dur " FMTs32b,
-		(40 + get_level_s(FIREWALL, 150)),
-		(10 + get_level_s(FIREWALL, 14)));
-	return buf;
+	return fmt::format(
+		"dam {} dur {}",
+		40 + get_level_s(FIREWALL, 150),
+		10 + get_level_s(FIREWALL, 14));
 }
 
 object_filter_t const &item_tester_hook_fire_golem()
@@ -1337,13 +1269,11 @@ casting_result fire_golem()
 	return CAST;
 }
 
-const char *fire_golem_info()
+std::string fire_golem_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"golem level " FMTs32b,
-		(7 + get_level_s(FIREGOLEM, 70)));
-	return buf;
+	return fmt::format(
+		"golem level {}",
+		7 + get_level_s(FIREGOLEM, 70));
 }
 
 casting_result geomancy_call_the_elements()
@@ -1366,13 +1296,11 @@ casting_result geomancy_call_the_elements()
 	return CAST;
 }
 
-const char *geomancy_call_the_elements_info()
+std::string geomancy_call_the_elements_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad " FMTs32b,
-		(1 + get_level(CALL_THE_ELEMENTS, 5)));
-	return buf;
+	return fmt::format(
+		"rad {}",
+		1 + get_level(CALL_THE_ELEMENTS, 5));
 }
 
 casting_result geomancy_channel_elements()
@@ -1532,14 +1460,12 @@ casting_result geomancy_vaporize()
 	}
 }
 
-const char *geomancy_vaporize_info()
+std::string geomancy_vaporize_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad " FMTs32b " dur " FMTs32b,
-		(1 + get_level_s(VAPORIZE, 4)),
-		(10 + get_level_s(VAPORIZE, 20)));
-	return buf;
+	return fmt::format(
+		"rad {} dur {}",
+		1 + get_level_s(VAPORIZE, 4),
+		10 + get_level_s(VAPORIZE, 20));
 }
 
 bool geomancy_vaporize_depends()
@@ -1562,13 +1488,11 @@ casting_result geomancy_geolysis()
 	return CAST;
 }
 
-const char *geomancy_geolysis_info()
+std::string geomancy_geolysis_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"length " FMTs32b,
-		(5 + get_level_s(GEOLYSIS, 12)));
-	return buf;
+	return fmt::format(
+		"length {}",
+		5 + get_level_s(GEOLYSIS, 12));
 }
 
 bool geomancy_geolysis_depends()
@@ -1592,13 +1516,11 @@ casting_result geomancy_dripping_tread()
 	return CAST;
 }
 
-const char *geomancy_dripping_tread_info()
+std::string geomancy_dripping_tread_info()
 {
-	static char buf[128];
-	sprintf(buf, 
-		"dur " FMTs32b "+d15 movs",
-		(10 + get_level_s(DRIPPING_TREAD, 50)));
-	return buf;
+	return fmt::format(
+		"dur {}+d15 movs",
+		10 + get_level_s(DRIPPING_TREAD, 50));
 }
 
 bool geomancy_dripping_tread_depends()
@@ -1752,13 +1674,11 @@ casting_result geomancy_elemental_minion()
 	}
 }
 
-const char *geomancy_elemental_minion_info()
+std::string geomancy_elemental_minion_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"min level " FMTs32b,
-		(10 + get_level_s(ELEMENTAL_MINION, 120)));
-	return buf;
+	return fmt::format(
+		"min level {}",
+		10 + get_level_s(ELEMENTAL_MINION, 120));
 }
 
 static void get_manathrust_dam(s16b *num, s16b *sides)
@@ -1783,18 +1703,13 @@ casting_result mana_manathrust()
 	return CAST;
 }
 
-const char *mana_manathrust_info()
+std::string mana_manathrust_info()
 {
 	s16b num = 0;
 	s16b sides = 0;
-	static char buf[128];
 
 	get_manathrust_dam(&num, &sides);
-	sprintf(buf,
-		"dam " FMTs16b "d" FMTs16b,
-		num,
-		sides);
-	return buf;
+	return fmt::format("dam {}d{}", num, sides);
 }
 
 casting_result mana_remove_curses()
@@ -1842,13 +1757,11 @@ casting_result mana_elemental_shield()
 	return res;
 }
 
-const char *mana_elemental_shield_info()
+std::string mana_elemental_shield_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d10",
-		(15 + get_level_s(RESISTS, 50)));
-	return buf;
+	return fmt::format(
+		"dur {}+d10",
+		15 + get_level_s(RESISTS, 50));
 }
 
 casting_result mana_disruption_shield()
@@ -1870,13 +1783,11 @@ casting_result mana_disruption_shield()
 	return NO_CAST;
 }
 
-const char *mana_disruption_shield_info()
+std::string mana_disruption_shield_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d5",
-		(3 + get_level_s(MANASHIELD, 10)));
-	return buf;
+	return fmt::format(
+		"dur {}+d5",
+		3 + get_level_s(MANASHIELD, 10));
 }
 
 casting_result manwe_wind_shield()
@@ -1904,28 +1815,24 @@ casting_result manwe_wind_shield()
 	return CAST;
 }
 
-const char *manwe_wind_shield_info()
+std::string manwe_wind_shield_info()
 {
-	static char buf[128];
-
-	sprintf(buf,
-		"dur " FMTs32b "+d20",
-		(get_level_s(MANWE_SHIELD, 50) + 10));
+	auto buf = fmt::format(
+		"dur {}+d20",
+		get_level_s(MANWE_SHIELD, 50) + 10);
 
 	if (get_level_s(MANWE_SHIELD, 50) >= 10)
 	{
-		char tmp[128];
-		sprintf(tmp, " AC " FMTs32b, get_level_s(MANWE_SHIELD, 30));
-		strcat(buf, tmp);
+		buf += fmt::format(
+			" AC {}", get_level_s(MANWE_SHIELD, 30));
 	}
 
 	if (get_level_s(MANWE_SHIELD, 50) >= 20)
 	{
-		char tmp[128];
-		sprintf(tmp, " dam " FMTs32b "d" FMTs32b,
-			(1 + get_level_s(MANWE_SHIELD, 2)),
-			(1 + get_level_s(MANWE_SHIELD, 6)));
-		strcat(buf, tmp);
+		buf += fmt::format(
+			" dam {}d{}",
+			1 + get_level_s(MANWE_SHIELD, 2),
+			1 + get_level_s(MANWE_SHIELD, 6));
 	}
 
 	return buf;
@@ -1943,13 +1850,11 @@ casting_result manwe_avatar()
 	return CAST;
 }
 
-const char *manwe_avatar_info()
+std::string manwe_avatar_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d10",
+	return fmt::format(
+		"dur {}+d10",
 		get_level_s(MANWE_AVATAR, 20));
-	return buf;
 }
 
 casting_result manwe_blessing()
@@ -1976,13 +1881,11 @@ casting_result manwe_blessing()
 	return CAST;
 }
 
-const char *manwe_blessing_info()
+std::string manwe_blessing_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d40",
+	return fmt::format(
+		"dur {}+d40",
 		get_level_s(MANWE_BLESS, 70) + 30);
-	return buf;
 }
 
 casting_result manwe_call()
@@ -2007,13 +1910,11 @@ casting_result manwe_call()
 	}
 }
 
-const char *manwe_call_info()
+std::string manwe_call_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level " FMTs32b,
+	return fmt::format(
+		"level {}",
 		get_level_s(MANWE_CALL, 70) + 20);
-	return buf;
 }
 
 void do_melkor_curse(int m_idx)
@@ -2136,13 +2037,11 @@ casting_result melkor_corpse_explosion()
 	return CAST;
 }
 
-const char *melkor_corpse_explosion_info()
+std::string melkor_corpse_explosion_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b "%%",
+	return fmt::format(
+		"dam {}%",
 		20 + get_level_s(MELKOR_CORPSE_EXPLOSION, 70));
-	return buf;
 }
 
 casting_result melkor_mind_steal()
@@ -2186,13 +2085,11 @@ casting_result melkor_mind_steal()
 	}
 }
 
-const char *melkor_mind_steal_info()
+std::string melkor_mind_steal_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"chance 1d(mlvl)<" FMTs32b,
+	return fmt::format(
+		"chance 1d(mlvl)<{}",
 		get_level_s(MELKOR_MIND_STEAL, 50));
-	return buf;
 }
 
 casting_result meta_recharge()
@@ -2201,13 +2098,11 @@ casting_result meta_recharge()
 	return CAST;
 }
 
-const char *meta_recharge_info()
+std::string meta_recharge_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power " FMTs32b,
+	return fmt::format(
+		"power {}",
 		60 + get_level_s(RECHARGE, 140));
-	return buf;
 }
 
 static int get_spellbinder_max()
@@ -2314,14 +2209,12 @@ casting_result meta_spellbinder()
 	}
 }
 
-const char *meta_spellbinder_info()
+std::string meta_spellbinder_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"number %d max level " FMTs32b,
+	return fmt::format(
+		"number {} max level {}",
 		get_spellbinder_max(),
-		(7 + get_level_s(SPELLBINDER, 35)));
-	return buf;
+		7 + get_level_s(SPELLBINDER, 35));
 }
 
 casting_result meta_disperse_magic()
@@ -2428,13 +2321,11 @@ casting_result meta_inertia_control()
 	return CAST;
 }
 
-const char *meta_inertia_control_info()
+std::string meta_inertia_control_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level " FMTs32b,
+	return fmt::format(
+		"level {}",
 		get_level_s(INERTIA_CONTROL, 10));
-	return buf;
 }
 
 void meta_inertia_control_timer_callback()
@@ -2503,13 +2394,11 @@ casting_result mind_charm()
 	return CAST;
 }
 
-const char *mind_charm_info()
+std::string mind_charm_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		mind_charm_power());
-	return buf;
 }
 
 static int mind_confuse_power()
@@ -2547,13 +2436,11 @@ casting_result mind_confuse()
 	return CAST;
 }
 
-const char *mind_confuse_info()
+std::string mind_confuse_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		mind_confuse_power());
-	return buf;
 }
 
 static int mind_armor_of_fear_base_duration()
@@ -2582,15 +2469,13 @@ casting_result mind_armor_of_fear()
 	return CAST;
 }
 
-const char *mind_armor_of_fear_info()
+std::string mind_armor_of_fear_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d+d10 power %dd%d",
+	return fmt::format(
+		"dur {}+d10 power {}d{}",
 		mind_armor_of_fear_base_duration(),
 		mind_armor_of_fear_power_sides(),
 		mind_armor_of_fear_power_dice());
-	return buf;
 }
 
 static int mind_stun_power()
@@ -2618,13 +2503,11 @@ casting_result mind_stun()
 	return CAST;
 }
 
-const char *mind_stun_info()
+std::string mind_stun_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		mind_stun_power());
-	return buf;
 }
 
 casting_result tempo_magelock()
@@ -2696,20 +2579,18 @@ casting_result tempo_slow_monster()
 	return CAST;
 }
 
-const char *tempo_slow_monster_info()
+std::string tempo_slow_monster_info()
 {
-	static char buf[128];
 	s32b pwr = tempo_slow_monster_power();
 
 	if (get_level_s(SLOWMONSTER, 50) >= 20)
 	{
-		sprintf(buf, "power " FMTs32b " rad 1", pwr);
+		return fmt::format("power {} rad 1", pwr);
 	}
 	else
 	{
-		sprintf(buf, "power " FMTs32b, pwr);
+		return fmt::format("power {}", pwr);
 	}
-	return buf;
 }
 
 static s32b tempo_essence_of_speed_base_duration()
@@ -2734,14 +2615,12 @@ casting_result tempo_essence_of_speed()
 	return NO_CAST;
 }
 
-const char *tempo_essence_of_speed_info()
+std::string tempo_essence_of_speed_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d10 speed " FMTs32b,
+	return fmt::format(
+		"dur {}+d10 speed {}",
 		tempo_essence_of_speed_base_duration(),
 		tempo_essence_of_speed_bonus());
-	return buf;
 }
 
 static s32b tempo_banishment_power()
@@ -2763,13 +2642,11 @@ casting_result tempo_banishment()
 	return CAST;
 }
 
-const char *tempo_banishment_info()
+std::string tempo_banishment_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power " FMTs32b,
+	return fmt::format(
+		"power {}",
 		tempo_banishment_power());
-	return buf;
 }
 
 casting_result tulkas_divine_aim()
@@ -2785,13 +2662,11 @@ casting_result tulkas_divine_aim()
 	return CAST;
 }
 
-const char *tulkas_divine_aim_info()
+std::string tulkas_divine_aim_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur " FMTs32b "+d10",
+	return fmt::format(
+		"dur {}+d10",
 		get_level_s(TULKAS_AIM, 50));
-	return buf;
 }
 
 casting_result tulkas_wave_of_power()
@@ -2807,13 +2682,11 @@ casting_result tulkas_wave_of_power()
 	return CAST;
 }
 
-const char *tulkas_wave_of_power_info()
+std::string tulkas_wave_of_power_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"blows " FMTs32b,
+	return fmt::format(
+		"blows {}",
 		get_level_s(TULKAS_WAVE, p_ptr->num_blow));
-	return buf;
 }
 
 casting_result tulkas_whirlwind()
@@ -2960,13 +2833,11 @@ casting_result udun_wraithform()
 	return CAST;
 }
 
-const char *udun_wraithform_info()
+std::string udun_wraithform_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d+d30",
+	return fmt::format(
+		"dur {}+d30",
 		udun_wraithform_base_duration());
-	return buf;
 }
 
 static int udun_flame_of_udun_base_duration()
@@ -2983,13 +2854,11 @@ casting_result udun_flame_of_udun()
 	return CAST;
 }
 
-const char *udun_flame_of_udun_info()
+std::string udun_flame_of_udun_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d+d15",
+	return fmt::format(
+		"dur {}+d15",
 		udun_flame_of_udun_base_duration());
-	return buf;
 }
 
 static int tidal_wave_damage()
@@ -3013,14 +2882,12 @@ casting_result water_tidal_wave()
 	return CAST;
 }
 
-const char *water_tidal_wave_info()
+std::string water_tidal_wave_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d dur %d",
+	return fmt::format(
+		"dam {} dur {}",
 		tidal_wave_damage(),
 		tidal_wave_duration());
-	return buf;
 }
 
 static int water_ice_storm_damage()
@@ -3057,15 +2924,13 @@ casting_result water_ice_storm()
 	return CAST;
 }
 
-const char *water_ice_storm_info()
+std::string water_ice_storm_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d rad %d dur %d",
+	return fmt::format(
+		"dam {} rad {} dur {}",
 		water_ice_storm_damage(),
 		water_ice_storm_radius(),
 		water_ice_storm_duration());
-	return buf;
 }
 
 static int water_ent_potion_base_duration()
@@ -3090,15 +2955,13 @@ casting_result water_ent_potion()
 	return CAST;
 }
 
-const char *water_ent_potion_info()
+std::string water_ent_potion_info()
 {
 	if (get_level_s(ENTPOTION, 50) >= 12)
 	{
-		static char buf[128];
-		sprintf(buf,
-			"dur %d+d25",
+		return fmt::format(
+			"dur {}+d25",
 			water_ent_potion_base_duration());
-		return buf;
 	}
 	else
 	{
@@ -3131,15 +2994,13 @@ casting_result water_vapor()
 	return CAST;
 }
 
-const char *water_vapor_info()
+std::string water_vapor_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d rad %d dur %d",
+	return fmt::format(
+		"dam {} rad {} dur {}",
 		water_vapor_damage(),
 		water_vapor_radius(),
 		water_vapor_duration());
-	return buf;
 }
 
 static void get_geyser_damage(int *dice, int *sides)
@@ -3169,18 +3030,15 @@ casting_result water_geyser()
 	return CAST;
 }
 
-const char *water_geyser_info()
+std::string water_geyser_info()
 {
-	static char buf[128];
 	int dice, sides;
-
 	get_geyser_damage(&dice, &sides);
 
-	sprintf(buf,
-		"dam %dd%d",
+	return fmt::format(
+		"dam {}d{}",
 		dice,
 		sides);
-	return buf;
 }
 
 static int charm_animal_power()
@@ -3210,14 +3068,12 @@ casting_result yavanna_charm_animal()
 	return CAST;
 }
 
-const char *yavanna_charm_animal_info()
+std::string yavanna_charm_animal_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d rad %d",
+	return fmt::format(
+		"power {} rad {}",
 		charm_animal_power(),
 		charm_animal_radius());
-	return buf;
 }
 
 static int yavanna_grow_grass_radius()
@@ -3231,13 +3087,11 @@ casting_result yavanna_grow_grass()
 	return CAST;
 }
 
-const char *yavanna_grow_grass_info()
+std::string yavanna_grow_grass_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad %d",
+	return fmt::format(
+		"rad {}",
 		yavanna_grow_grass_radius());
-	return buf;
 }
 
 static int tree_roots_duration()
@@ -3264,15 +3118,13 @@ casting_result yavanna_tree_roots()
 	return CAST;
 }
 
-const char *yavanna_tree_roots_info()
+std::string yavanna_tree_roots_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d AC %d dam %d",
+	return fmt::format(
+		"dur {} AC {} dam {}",
 		tree_roots_duration(),
 		tree_roots_ac(),
 		tree_roots_damage());
-	return buf;
 }
 
 static int water_bite_base_duration()
@@ -3303,14 +3155,12 @@ casting_result yavanna_water_bite()
 	return CAST;
 }
 
-const char *yavanna_water_bite_info()
+std::string yavanna_water_bite_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d+d30 dam %d/blow",
+	return fmt::format(
+		"dur {}+d30 dam {}/blow",
 		water_bite_base_duration(),
 		water_bite_damage());
-	return buf;
 }
 
 static int uproot_mlevel()
@@ -3362,13 +3212,11 @@ casting_result yavanna_uproot()
 	}
 }
 
-const char *yavanna_uproot_info()
+std::string yavanna_uproot_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"lev %d",
+	return fmt::format(
+		"lev {}",
 		uproot_mlevel());
-	return buf;
 }
 
 static int nature_grow_trees_radius()
@@ -3382,13 +3230,11 @@ casting_result nature_grow_trees()
 	return CAST;
 }
 
-const char *nature_grow_trees_info()
+std::string nature_grow_trees_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad %d",
+	return fmt::format(
+		"rad {}",
 		nature_grow_trees_radius());
-	return buf;
 }
 
 static int nature_healing_percentage()
@@ -3407,14 +3253,12 @@ casting_result nature_healing()
 	return CAST;
 }
 
-const char *nature_healing_info()
+std::string nature_healing_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"heal %d%% = %dhp",
+	return fmt::format(
+		"heal {}% = {}hp",
 		nature_healing_percentage(),
 		nature_healing_hp());
-	return buf;
 }
 
 casting_result nature_recovery()
@@ -3467,14 +3311,12 @@ casting_result nature_regeneration()
 	return NO_CAST;
 }
 
-const char *nature_regeneration_info()
+std::string nature_regeneration_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d+d10 power %d",
+	return fmt::format(
+		"dur {}+d10 power {}",
 		regeneration_base_duration(),
 		regeneration_power());
-	return buf;
 }
 
 static int summon_animal_level()
@@ -3494,13 +3336,11 @@ casting_result nature_summon_animal()
 	return CAST;
 }
 
-const char *nature_summon_animal_info()
+std::string nature_summon_animal_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level %d",
+	return fmt::format(
+		"level {}",
 		summon_animal_level());
-	return buf;
 }
 
 casting_result nature_grow_athelas()
@@ -3532,13 +3372,11 @@ casting_result device_heal_monster()
 	return CAST;
 }
 
-const char *device_heal_monster_info()
+std::string device_heal_monster_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"heal %d",
+	return fmt::format(
+		"heal {}",
 		device_heal_monster_hp());
-	return buf;
 }
 
 casting_result device_haste_monster()
@@ -3554,7 +3392,7 @@ casting_result device_haste_monster()
 	return CAST;
 }
 
-const char *device_haste_monster_info()
+std::string device_haste_monster_info()
 {
 	return "speed +10";
 }
@@ -3586,13 +3424,11 @@ casting_result device_mana()
 	return CAST;
 }
 
-const char *device_mana_info()
+std::string device_mana_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"restore %d%%",
+	return fmt::format(
+		"restore {}%",
 		device_mana_pct());
-	return buf;
 }
 
 casting_result device_nothing()
@@ -3611,13 +3447,11 @@ casting_result device_holy_fire()
 	return CAST;
 }
 
-const char *device_holy_fire_info()
+std::string device_holy_fire_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d",
+	return fmt::format(
+		"dam {}",
 		holy_fire_damage());
-	return buf;
 }
 
 casting_result device_thunderlords()
@@ -3686,13 +3520,11 @@ casting_result music_holding_pattern_spell()
 	return CAST;
 }
 
-const char *music_holding_pattern_info()
+std::string music_holding_pattern_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		holding_pattern_power());
-	return buf;
 }
 
 static int illusion_pattern_power()
@@ -3712,13 +3544,11 @@ casting_result music_illusion_pattern_spell()
 	return CAST;
 }
 
-const char *music_illusion_pattern_info()
+std::string music_illusion_pattern_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		illusion_pattern_power());
-	return buf;
 }
 
 static int stun_pattern_power()
@@ -3738,13 +3568,11 @@ casting_result music_stun_pattern_spell()
 	return CAST;
 }
 
-const char *music_stun_pattern_info()
+std::string music_stun_pattern_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"power %d",
+	return fmt::format(
+		"power {}",
 		stun_pattern_power());
-	return buf;
 }
 
 int music_song_of_the_sun_lasting()
@@ -3776,13 +3604,11 @@ casting_result music_flow_of_life_spell()
 	return CAST;
 }
 
-const char *music_flow_of_life_info()
+std::string music_flow_of_life_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"heal %d/turn",
+	return fmt::format(
+		"heal {}/turn",
 		flow_of_life_hp());
-	return buf;
 }
 
 int music_heroic_ballad_lasting()
@@ -3825,21 +3651,21 @@ casting_result music_hobbit_melodies_spell()
 	return CAST;
 }
 
-const char *music_hobbit_melodies_info()
+std::string music_hobbit_melodies_info()
 {
-	static char buf[128];
 	if (get_level_s(MUSIC_TIME, 50) >= 15)
 	{
-		sprintf(buf, "AC " FMTs32b " speed " FMTs32b,
+		return fmt::format(
+			"AC {} speed {}",
 			10 + get_level_s(MUSIC_TIME, 50),
 			7 + get_level_s(MUSIC_TIME, 10));
 	}
 	else
 	{
-		sprintf(buf, "AC " FMTs32b,
+		return fmt::format(
+			"AC {}",
 			10 + get_level_s(MUSIC_TIME, 50));
 	}
-	return buf;
 }
 
 int music_clairaudience_lasting()
@@ -3854,15 +3680,13 @@ casting_result music_clairaudience_spell()
 	return CAST;
 }
 
-const char *music_clairaudience_info()
+std::string music_clairaudience_info()
 {
-	static char buf[128];
-
 	if (get_level_s(MUSIC_MIND, 50) >= 10)
 	{
-		sprintf(buf, "rad " FMTs32b,
+		return fmt::format(
+			"rad {}",
 			1 + get_level(MUSIC_MIND, 3));
-		return buf;
 	}
 	else
 	{
@@ -3879,15 +3703,13 @@ casting_result music_blow_spell()
 	return CAST;
 }
 
-const char *music_blow_info()
+std::string music_blow_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam " FMTs32b "d" FMTs32b " rad " FMTs32b,
+	return fmt::format(
+		"dam {}d{} rad {}",
 		2 + get_level(MUSIC_BLOW, 10),
 		4 + get_level(MUSIC_BLOW, 40),
 		1 + get_level(MUSIC_BLOW, 12));
-	return buf;
 }
 
 casting_result music_gush_of_wind_spell()
@@ -3899,14 +3721,12 @@ casting_result music_gush_of_wind_spell()
 	return CAST;
 }
 
-const char *music_gush_of_wind_info()
+std::string music_gush_of_wind_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dist " FMTs32b " rad " FMTs32b,
+	return fmt::format(
+		"dist {} rad {}",
 		10 + get_level(MUSIC_BLOW, 40),
 		1 + get_level(MUSIC_BLOW, 12));
-	return buf;
 }
 
 casting_result music_horns_of_ylmir_spell()
@@ -3915,13 +3735,11 @@ casting_result music_horns_of_ylmir_spell()
 	return CAST;
 }
 
-const char *music_horns_of_ylmir_info()
+std::string music_horns_of_ylmir_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"rad " FMTs32b,
+	return fmt::format(
+		"rad {}",
 		2 + get_level_s(MUSIC_YLMIR, 10));
-	return buf;
 }
 
 casting_result music_ambarkanta_spell()
@@ -3955,16 +3773,13 @@ casting_result aule_firebrand_spell()
 	return CAST;
 }
 
-const char *aule_firebrand_info()
+std::string aule_firebrand_info()
 {
 	s32b level = get_level_s(AULE_FIREBRAND, 50);
-	static char buf[128];
 
-	sprintf(buf,
-		"dur " FMTs32b "+d20 dam " FMTs32b "/blow",
+	return fmt::format("dur {}+d20 dam {}/blow",
 		level,
 		4 + level);
-	return buf;
 }
 
 static object_filter_t const &aule_enchant_weapon_item_tester()
@@ -4021,13 +3836,11 @@ casting_result aule_enchant_weapon_spell()
 	return CAST;
 }
 
-const char *aule_enchant_weapon_info()
+std::string aule_enchant_weapon_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"tries " FMTs32b,
+	return fmt::format(
+		"tries {}",
 		1 + get_level_s(AULE_ENCHANT_WEAPON, 50)/12);
-	return buf;
 }
 
 static object_filter_t const &aule_enchant_armor_item_tester()
@@ -4090,13 +3903,11 @@ casting_result aule_enchant_armour_spell()
 	return CAST;
 }
 
-const char *aule_enchant_armour_info()
+std::string aule_enchant_armour_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"tries " FMTs32b,
+	return fmt::format(
+		"tries {}",
 		1 + get_level_s(AULE_ENCHANT_ARMOUR, 50)/10);
-	return buf;
 }
 
 casting_result aule_child_spell()
@@ -4119,13 +3930,11 @@ casting_result aule_child_spell()
 	}
 }
 
-const char *aule_child_info()
+std::string aule_child_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level " FMTs32b,
+	return fmt::format(
+		"level {}",
 		20 + get_level_s(AULE_CHILD, 70));
-	return buf;
 }
 
 static int tears_of_luthien_hp()
@@ -4143,13 +3952,11 @@ casting_result mandos_tears_of_luthien_spell()
 	return CAST;
 }
 
-const char *mandos_tears_of_luthien_info()
+std::string mandos_tears_of_luthien_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"heals %d",
+	return fmt::format(
+		"heals {}",
 		tears_of_luthien_hp());
-	return buf;
 }
 
 casting_result mandos_spirit_of_the_feanturi_spell()
@@ -4174,14 +3981,12 @@ casting_result mandos_spirit_of_the_feanturi_spell()
 	return CAST;
 }
 
-const char *mandos_spirit_of_the_feanturi_info()
+std::string mandos_spirit_of_the_feanturi_info()
 {
-	static char buf[128];
 	s32b level = get_level_s(MANDOS_SPIRIT_FEANTURI, 50) ;
 	if (level >= 20)
 	{
-		sprintf(buf, "heals " FMTs32b "%%", level);
-		return buf;
+		return fmt::format("heals {}%", level);
 	}
 	else
 	{
@@ -4200,13 +4005,11 @@ casting_result mandos_tale_of_doom_spell()
 	return CAST;
 }
 
-const char *mandos_tale_of_doom_info()
+std::string mandos_tale_of_doom_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dur %d",
+	return fmt::format(
+		"dur {}",
 		tale_of_doom_duration());
-	return buf;
 }
 
 int call_to_the_halls_mlev()
@@ -4236,13 +4039,11 @@ casting_result mandos_call_to_the_halls_spell()
 	return NO_CAST;
 }
 
-const char *mandos_call_to_the_halls_info()
+std::string mandos_call_to_the_halls_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level %d",
+	return fmt::format(
+		"level {}",
 		call_to_the_halls_mlev());
-	return buf;
 }
 
 static void get_belegaer_damage(int *dice, int *sides)
@@ -4269,17 +4070,15 @@ casting_result ulmo_song_of_belegaer_spell()
 	return CAST;
 }
 
-const char *ulmo_song_of_belegaer_info()
+std::string ulmo_song_of_belegaer_info()
 {
-	static char buf[128];
 	int dice, sides;
-
 	get_belegaer_damage(&dice, &sides);
-	sprintf(buf,
-		"dam %dd%d",
+
+	return fmt::format(
+		"dam {}d{}",
 		dice,
 		sides);
-	return buf;
 }
 
 int draught_of_ulmonan_hp()
@@ -4314,13 +4113,11 @@ casting_result ulmo_draught_of_ulmonan_spell()
 	return CAST;
 }
 
-const char *ulmo_draught_of_ulmonan_info()
+std::string ulmo_draught_of_ulmonan_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"cure %d",
+	return fmt::format(
+		"cure {}",
 		draught_of_ulmonan_hp());
-	return buf;
 }
 
 static int call_of_the_ulumuri_mlev()
@@ -4354,13 +4151,11 @@ casting_result ulmo_call_of_the_ulumuri_spell()
 	}
 }
 
-const char *ulmo_call_of_the_ulumuri_info()
+std::string ulmo_call_of_the_ulumuri_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"level %d",
+	return fmt::format(
+		"level {}",
 		call_of_the_ulumuri_mlev());
-	return buf;
 }
 
 static int wrath_of_ulmo_damage()
@@ -4394,14 +4189,12 @@ casting_result ulmo_wrath_of_ulmo_spell()
 	return CAST;
 }
 
-const char *ulmo_wrath_of_ulmo_info()
+std::string ulmo_wrath_of_ulmo_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d dur %d",
+	return fmt::format(
+		"dam {} dur {}",
 		wrath_of_ulmo_damage(),
 		wrath_of_ulmo_duration());
-	return buf;
 }
 
 static int light_of_valinor_damage()
@@ -4437,16 +4230,14 @@ casting_result varda_light_of_valinor_spell()
 	return CAST;
 }
 
-const char *varda_light_of_valinor_info()
+std::string varda_light_of_valinor_info()
 {
-	static char buf[128];
 	if (get_level_s(VARDA_LIGHT_VALINOR, 50) >= 15)
 	{
-		sprintf(buf,
-			"dam %d rad %d",
+		return fmt::format(
+			"dam {} rad {}",
 			light_of_valinor_damage(),
 			light_of_valinor_radius());
-		return buf;
 	}
 	else
 	{
@@ -4509,13 +4300,10 @@ casting_result varda_star_kindler_spell()
 	return CAST;
 }
 
-const char *varda_star_kindler_info()
+std::string varda_star_kindler_info()
 {
-	static char buf[128];
-	sprintf(buf,
-		"dam %d bursts %d rad 10",
+	return fmt::format(
+		"dam {} bursts {} rad 10",
 		star_kindler_damage(),
 		star_kindler_bursts());
-	return buf;
 }
-

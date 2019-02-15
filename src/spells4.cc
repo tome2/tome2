@@ -418,7 +418,7 @@ int print_spell(const char *label_, byte color, int y, s32b s)
 	s32b level;
 	bool na;
 	spell_type *spell = spell_at(s);
-	const char *spell_info = spell_type_info(spell);
+	auto spell_info = spell_type_info(spell);
 	const char *label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
@@ -439,7 +439,7 @@ int print_spell(const char *label_, byte color, int y, s32b s)
 		level_str,
 		get_mana(s),
 		(int) spell_chance_book(s),
-		spell_info);
+		spell_info.c_str());
 	c_prt(color, buf, y, 0);
 
 	return y + 1;

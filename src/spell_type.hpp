@@ -24,30 +24,30 @@ enum random_type { RANDOM, NO_RANDOM };
 
 void spell_type_init_music(spell_type *spell,
 			   s16b minimum_pval,
-			   const char* (*info_func)(),
+			   std::string (*info_func)(),
 			   casting_result (*effect_func)());
 void spell_type_init_music_lasting(spell_type *spell,
 				   s16b minimum_pval,
-				   const char* (*info_func)(),
+				   std::string (*info_func)(),
 				   casting_result (*effect_func)(),
 				   int (*lasting_func)());
 void spell_type_init_mage(spell_type *spell,
 			  random_type random_type,
 			  s32b school_idx,
-			  const char* (*info_func)(),
+			  std::string (*info_func)(),
 			  casting_result (*effect_func)());
 void spell_type_init_priest(spell_type *spell,
 			    s32b school_idx,
-			    const char* (*info_func)(),
+			    std::string (*info_func)(),
 			    casting_result (*effect_func)());
 void spell_type_init_device(spell_type *spell,
-			    const char* (*info_func)(),
+			    std::string (*info_func)(),
 			    casting_result (*effect_func)());
 void spell_type_init_demonology(spell_type *spell,
-				const char* (*info_func)(),
+				std::string (*info_func)(),
 				casting_result (*effect_func)());
 void spell_type_init_geomancy(spell_type *spell,
-			      const char* (*info_func)(),
+			      std::string (*info_func)(),
 			      casting_result (*effect_func)(),
 			      bool (*depend_func)());
 
@@ -80,7 +80,7 @@ std::vector<s32b> const spell_type_get_schools(spell_type *spell);
 bool spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay);
 s32b spell_type_failure_rate(spell_type *spell);
 s16b spell_type_casting_stat(spell_type *spell);
-const char *spell_type_info(spell_type *spell);
+std::string spell_type_info(spell_type *spell);
 void spell_type_mana_range(spell_type *spell, struct range_type *range);
 bool spell_type_dependencies_satisfied(spell_type *spell);
 void spell_type_description_foreach(spell_type *spell, std::function<void (std::string const &text)>);
