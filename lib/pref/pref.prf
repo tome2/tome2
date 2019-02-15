@@ -246,6 +246,10 @@ C:1:)
 A:$
 C:1:S
 
+# Destroy floor item
+A:k--
+C:0:X
+
 
 ### Extended macros ###
 
