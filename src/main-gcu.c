@@ -749,18 +749,19 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 		quit("Failed to setup curses window.");
 	}
 
+	/* Hooks */
+	struct term_ui_hooks_t ui_hooks = {
+		Term_init_gcu,
+		Term_nuke_gcu,
+		Term_xtra_gcu,
+		Term_curs_gcu,
+		Term_text_gcu,
+	};
+
 	/* Initialize the term */
 	term_init(t, cols, rows, 256);
 	term_init_icky_corner(t);
-
-	/* Set some hooks */
-	t->init_hook = Term_init_gcu;
-	t->nuke_hook = Term_nuke_gcu;
-
-	/* Set some more hooks */
-	t->text_hook = Term_text_gcu;
-	t->curs_hook = Term_curs_gcu;
-	t->xtra_hook = Term_xtra_gcu;
+	term_init_ui_hooks(t, ui_hooks);
 
 	/* Save the data */
 	t->data = td;

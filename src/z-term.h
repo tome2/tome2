@@ -22,6 +22,32 @@ typedef struct term_win term_win;
 struct term_win; // Opaque
 
 /*
+ * UI hooks
+ */
+
+typedef void(init_hook_t)(void *data);
+typedef void(nuke_hook_t)(void *data);
+typedef errr(xtra_hook_t)(int n, int v);
+typedef errr(curs_hook_t)(int x, int y);
+typedef errr(text_hook_t)(int x, int y, int n, byte a, const char *s);
+
+typedef struct term_ui_hooks_t term_ui_hooks_t;
+
+struct term_ui_hooks_t {
+
+	init_hook_t *init_hook;
+
+	nuke_hook_t *nuke_hook;
+
+	xtra_hook_t *xtra_hook;
+
+	curs_hook_t *curs_hook;
+
+	text_hook_t *text_hook;
+
+};
+
+/*
  * An actual "term" structure
  *
  *	- Extra "data" info (used by implementation)
@@ -112,14 +138,11 @@ struct term
 
 	term_win *mem;
 
-	void (*init_hook)(void *data);
-	void (*nuke_hook)(void *data);
-
-	errr (*xtra_hook)(int n, int v);
-
-	errr (*curs_hook)(int x, int y);
-
-	errr (*text_hook)(int x, int y, int n, byte a, const char *s);
+	init_hook_t *init_hook;
+	nuke_hook_t *nuke_hook;
+	xtra_hook_t *xtra_hook;
+	curs_hook_t *curs_hook;
+	text_hook_t *text_hook;
 
 	void (*resize_hook)();
 
@@ -241,6 +264,7 @@ errr term_nuke(term *t);
 errr term_init(term *t, int w, int h, int k);
 void term_init_icky_corner(term *t);
 void term_init_soft_cursor(term *t);
+void term_init_ui_hooks(term *t, term_ui_hooks_t hooks);
 
 #ifdef __cplusplus
 } /* extern "C" */

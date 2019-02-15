@@ -1730,16 +1730,19 @@ static errr term_data_init(term_data *td, int i)
 	
 	/*********** term structure initializing */
 	
-	/* Initialize the term 
-	 gets: pointer to address, number of columns, number of rows, number
-	   of keypresses to queue up (guess 24?)*/
+	/* Hooks */
+	struct term_ui_hooks_t ui_hooks = {
+		NULL /* init */,
+		NULL /* nuke */,
+		Term_xtra_sdl,
+		Term_curs_sdl,
+		Term_text_sdl,
+	};
+
+	/* Initialize the term */
 	term_init(t, cols, rows, 24);
 	term_init_soft_cursor(t);
-
-	/* Hooks */
-	t->xtra_hook = Term_xtra_sdl;
-	t->curs_hook = Term_curs_sdl;
-	t->text_hook = Term_text_sdl;
+	term_init_ui_hooks(t, ui_hooks);
 
 	/* Save the data */
 	t->data = td;

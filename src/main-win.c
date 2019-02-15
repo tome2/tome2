@@ -1660,14 +1660,19 @@ static void term_data_link(term_data *td)
 {
 	term *t = &td->t;
 
+	/* Hooks */
+	struct term_ui_hooks_t ui_hooks = {
+		NULL /* init */,
+		NULL /* nuke */,
+		Term_xtra_win,
+		Term_curs_win,
+		Term_text_win,
+	};
+
 	/* Initialize the term */
 	term_init(t, td->cols, td->rows, td->keys);
 	term_init_soft_cursor(t);
-
-	/* Prepare the template hooks */
-	t->xtra_hook = Term_xtra_win;
-	t->curs_hook = Term_curs_win;
-	t->text_hook = Term_text_win;
+	term_init_ui_hooks(t, ui_hooks);
 
 	/* Remember where we came from */
 	t->data = (void *)(td);

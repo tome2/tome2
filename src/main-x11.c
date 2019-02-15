@@ -2439,15 +2439,19 @@ static errr term_data_init(term_data *td, int i)
 	/* Move the window to requested location */
 	if ((x >= 0) && (y >= 0)) Infowin_impell(x, y);
 
+	/* Hooks */
+	struct term_ui_hooks_t ui_hooks = {
+		NULL /* init */,
+		NULL /* nuke */,
+		Term_xtra_x11,
+		Term_curs_x11,
+		Term_text_x11,
+	};
 
 	/* Initialize the term */
 	term_init(t, cols, rows, num);
 	term_init_soft_cursor(t);
-
-	/* Hooks */
-	t->xtra_hook = Term_xtra_x11;
-	t->curs_hook = Term_curs_x11;
-	t->text_hook = Term_text_x11;
+	term_init_ui_hooks(t, ui_hooks);
 
 	/* Save the data */
 	t->data = td;

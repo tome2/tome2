@@ -1252,9 +1252,19 @@ static errr term_data_init(term_data *td, int i)
 	td->cols = 80;
 	td->rows = 24;
 
+	/* Hooks */
+	struct term_ui_hooks_t ui_hooks = {
+		NULL /* init */,
+		Term_nuke_gtk,
+		Term_xtra_gtk,
+		Term_curs_gtk,
+		Term_text_gtk,
+	};
+
 	/* Initialize the term */
 	term_init(t, td->cols, td->rows, 1024);
 	term_init_soft_cursor(t);
+	term_init_ui_hooks(t, ui_hooks);
 
 	/* Store the name of the term */
 	assert(angband_term_name[i] != NULL);
@@ -1262,12 +1272,6 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Instance names should start with a lowercase letter XXX */
 	for (p = (char *)td->name; *p; p++) *p = tolower(*p);
-
-	/* Hooks */
-	t->xtra_hook = Term_xtra_gtk;
-	t->text_hook = Term_text_gtk;
-	t->curs_hook = Term_curs_gtk;
-	t->nuke_hook = Term_nuke_gtk;
 
 	/* Save the data */
 	t->data = td;

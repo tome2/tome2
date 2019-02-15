@@ -2008,3 +2008,12 @@ void term_init_soft_cursor(term *t)
 {
 	t->soft_cursor = TRUE;
 }
+
+void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
+{
+	t->init_hook = hooks.init_hook;
+	t->nuke_hook = hooks.nuke_hook;
+	t->xtra_hook = hooks.xtra_hook;
+	t->curs_hook = hooks.curs_hook;
+	t->text_hook = hooks.text_hook;
+}
