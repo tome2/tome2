@@ -350,6 +350,8 @@ static errr push_result_to_errr(key_queue::push_result_t r)
 	case pr::OVERFLOW:
 		return 1;
 	}
+
+	return -1;
 }
 
 
