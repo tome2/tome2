@@ -1988,14 +1988,14 @@ static errr CheckEvent(bool_ wait)
 	case MapNotify:
 		{
 			Infowin->mapped = 1;
-			Term->mapped_flag = TRUE;
+			Term_mapped();
 			break;
 		}
 
 	case UnmapNotify:
 		{
 			Infowin->mapped = 0;
-			Term->mapped_flag = FALSE;
+			Term_unmapped();
 			break;
 		}
 

@@ -1846,6 +1846,23 @@ errr Term_activate(term *t)
 }
 
 
+/**
+ * Set the current terminal "mapped" flag.
+ */
+void Term_mapped()
+{
+	Term->mapped_flag = TRUE;
+}
+
+
+/**
+ * Unset the current terminal "mapped" flag.
+ */
+void Term_unmapped()
+{
+	Term->mapped_flag = FALSE;
+}
+
 
 /*
  * Nuke a term
