@@ -29,7 +29,6 @@ errr fd_write(int fd, const char *buf, unsigned long n);
 errr fd_close(int fd);
 void flush();
 void flush_on_failure();
-void move_cursor(int row, int col);
 void text_to_ascii(char *buf, const char *str);
 void ascii_to_text(char *buf, const char *str);
 char inkey_scan();

@@ -502,7 +502,7 @@ static void gamble_comm(int cmd)
 			strnfmt(tmp_str, 80, "Current Gold:     %9ld", p_ptr->au);
 			prt(tmp_str, 22, 2);
 			prt("Again(Y/N)?", 18, 37);
-			move_cursor(18, 49);
+			Term_gotoxy(49, 18);
 			again = inkey();
 			if (wager > p_ptr->au)
 			{

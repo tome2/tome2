@@ -530,7 +530,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 		}
 
 		/* Hilite current option */
-		move_cursor(k + 2, 50);
+		Term_gotoxy(50, k + 2);
 
 		/* Get a key */
 		int ch = inkey();
@@ -702,7 +702,7 @@ static void do_cmd_options_autosave(const char *info)
 
 
 		/* Hilite current option */
-		move_cursor(k + 2, 50);
+		Term_gotoxy(50, k + 2);
 
 		/* Get a key */
 		ch = inkey();

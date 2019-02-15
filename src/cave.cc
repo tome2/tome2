@@ -1887,7 +1887,7 @@ void do_cmd_view_map()
 	put_str("Hit any key to continue", hgt - 1, (wid - COL_MAP) / 2);
 
 	/* Hilite the player */
-	move_cursor(cy, cx);
+	Term_gotoxy(cx, cy);
 
 	/* Get any key */
 	inkey();

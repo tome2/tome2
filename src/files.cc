@@ -3763,7 +3763,7 @@ void get_name()
 	while (true)
 	{
 		/* Go to the "name" field */
-		move_cursor(2, 9);
+		Term_gotoxy(9, 2);
 
 		/* Save the player name */
 		auto tmp = game->player_name;

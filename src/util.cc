@@ -684,15 +684,6 @@ errr fd_close(int fd)
 */
 
 
-/*
-* Move the cursor
-*/
-void move_cursor(int row, int col)
-{
-	Term_gotoxy(col, row);
-}
-
-
 
 /*
 * Convert a decimal to a single digit octal number
