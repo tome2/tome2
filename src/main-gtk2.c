@@ -1068,17 +1068,12 @@ static void size_allocate_event_handler(
         gpointer user_data)
 {
 	term_data *td = user_data;
-	int old_rows, old_cols;
 	term *old = Term;
 
 	/* Paranoia */
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(allocation != NULL);
 	g_return_if_fail(td != NULL);
-
-	/* Remember old values */
-	old_cols = td->cols;
-	old_rows = td->rows;
 
 	/* Update numbers of rows and columns */
 	td->cols = (allocation->width + td->font_wid - 1) / td->font_wid;
@@ -1110,10 +1105,7 @@ static void size_allocate_event_handler(
 		Term_activate(td->term_ptr);
 
 		/* Resize if necessary */
-		if ((td->cols != old_cols) || (td->rows != old_rows))
-		{
-			Term_resize(td->cols, td->rows);
-		}
+		Term_resize(td->cols, td->rows);
 
 		/* Redraw its content */
 		Term_redraw();
