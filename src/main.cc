@@ -33,10 +33,8 @@ using boost::algorithm::ends_with;
  */
 static void quit_hook(const char *s)
 {
-	int j;
-
 	/* Scan windows */
-	for (j = 8 - 1; j >= 0; j--)
+	for (int j = ANGBAND_TERM_MAX - 1; j >= 0; j--)
 	{
 		/* Unused */
 		if (!angband_term[j]) continue;
