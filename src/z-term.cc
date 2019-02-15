@@ -358,6 +358,109 @@ public:
 };
 
 
+/*
+ * Overflow signal
+ */
+enum class push_result {
+	OK,
+	OVERFLOW,
+};
+
+
+static errr push_result_to_errr(push_result r)
+{
+	switch (r)
+	{
+	case push_result::OK:
+		return 0;
+	case push_result::OVERFLOW:
+		return 1;
+	}
+}
+
+
+/*
+ * Low-level key queue handling.
+ */
+struct key_queue {
+
+private:
+	u16b m_head = 0;
+	u16b m_tail = 0;
+	std::vector<char> m_queue;
+
+public:
+	explicit key_queue(int k)
+		: m_queue(k)
+	{
+	}
+
+	void clear()
+	{
+		m_head = 0;
+		m_tail = 0;
+	}
+
+	void push_back(char c)
+	{
+		/* Store the char, advance the queue */
+		m_queue[m_head++] = c;
+
+		/* Circular queue, handle wrap */
+		if (m_head == m_queue.size())
+		{
+			m_head = 0;
+		}
+	}
+
+	push_result push_front(char k)
+	{
+		/* Hack -- Overflow may induce circular queue */
+		if (m_tail == 0)
+		{
+			m_tail = m_queue.size();
+		}
+
+		/* Back up, Store the char */
+		m_queue[--m_tail] = k;
+
+		/* Success (unless overflow) */
+		if (m_head != m_tail)
+		{
+			return push_result::OK;
+		}
+		else
+		{
+			return push_result::OVERFLOW;
+		}
+	}
+
+	char back() const
+	{
+		assert(!empty());
+		return m_queue[m_tail];
+	}
+
+	char pop_back()
+	{
+		auto ch = back();
+
+		if (++m_tail == m_queue.size())
+		{
+			m_tail = 0;
+		}
+
+		return ch;
+	}
+
+	bool empty() const
+	{
+		return m_head == m_tail;
+	}
+
+};
+
+
 
 /*
  * An actual "term" structure
@@ -429,10 +532,7 @@ struct term
 	bool icky_corner = false;
 	bool soft_cursor = false;
 
-	u16b key_head = 0;
-	u16b key_tail = 0;
-	u16b key_size;
-	std::vector<char> key_queue;
+	key_queue m_key_queue;
 
 	byte wid;
 	byte hgt;
@@ -460,8 +560,7 @@ struct term
 	 */
 	term(int w, int h, int k, void *data_)
 		: data(data_)
-		, key_size(k)
-		, key_queue(key_size)
+		, m_key_queue(k)
 		, wid(w)
 		, hgt(h)
 		, x1(h)
@@ -1484,7 +1583,7 @@ void Term_flush()
 	Term_xtra(TERM_XTRA_FLUSH, 0);
 
 	/* Forget all keypresses */
-	Term->key_head = Term->key_tail = 0;
+	Term->m_key_queue.clear();
 }
 
 
@@ -1497,11 +1596,8 @@ void Term_keypress(int k)
 	/* Ignore non-keys */
 	if (!k) return;
 
-	/* Store the char, advance the queue */
-	Term->key_queue[Term->key_head++] = k;
-
-	/* Circular queue, handle wrap */
-	if (Term->key_head == Term->key_size) Term->key_head = 0;
+	/* Push */
+	Term->m_key_queue.push_back(k);
 }
 
 
@@ -1513,21 +1609,9 @@ errr Term_key_push(int k)
 	/* Hack -- Refuse to enqueue non-keys */
 	if (!k) return ( -1);
 
-	/* Hack -- Overflow may induce circular queue */
-	if (Term->key_tail == 0) Term->key_tail = Term->key_size;
-
-	/* Back up, Store the char */
-	Term->key_queue[--Term->key_tail] = k;
-
-	/* Success (unless overflow) */
-	if (Term->key_head != Term->key_tail) return (0);
-
-	/* Problem */
-	return (1);
+	/* Push */
+	return push_result_to_errr(Term->m_key_queue.push_front(k));
 }
-
-
-
 
 
 /*
@@ -1542,6 +1626,8 @@ errr Term_key_push(int k)
  */
 errr Term_inkey(char *ch, bool_ wait, bool_ take)
 {
+	auto &key_queue = Term->m_key_queue;
+
 	/* Assume no key */
 	(*ch) = '\0';
 
@@ -1552,7 +1638,7 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
 	if (wait)
 	{
 		/* Process pending events while necessary */
-		while (Term->key_head == Term->key_tail)
+		while (key_queue.empty())
 		{
 			/* Process events (wait for one) */
 			Term_xtra(TERM_XTRA_EVENT, TRUE);
@@ -1563,7 +1649,7 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
 	else
 	{
 		/* Process pending events if necessary */
-		if (Term->key_head == Term->key_tail)
+		if (key_queue.empty())
 		{
 			/* Process events (do not wait) */
 			Term_xtra(TERM_XTRA_EVENT, FALSE);
@@ -1571,13 +1657,20 @@ errr Term_inkey(char *ch, bool_ wait, bool_ take)
 	}
 
 	/* No keys are ready */
-	if (Term->key_head == Term->key_tail) return (1);
+	if (key_queue.empty())
+	{
+		return (1);
+	}
 
 	/* Extract the next keypress */
-	(*ch) = Term->key_queue[Term->key_tail];
-
-	/* If requested, advance the queue, wrap around if necessary */
-	if (take && (++Term->key_tail == Term->key_size)) Term->key_tail = 0;
+	if (take)
+	{
+		*ch = key_queue.pop_back();
+	}
+	else
+	{
+		*ch = key_queue.back();
+	}
 
 	/* Success */
 	return (0);
