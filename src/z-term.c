@@ -10,6 +10,7 @@
 
 #include "z-term.h"
 
+#include <assert.h>
 
 
 /*
@@ -368,47 +369,15 @@ static errr term_win_copy(term_win *s, term_win *f, int w, int h)
 
 
 /*
- * Execute the "Term->xtra_hook" hook, if available (see above).
- * And *hacky* get a return code
+ * Execute the "Term->xtra_hook" hook, if any.
  */
-errr Term_xtra(int n, int v)
+void Term_xtra(int n, int v)
 {
-	/* Verify the hook */
-	if (!Term->xtra_hook) return ( -1);
-
-	/* Call the hook */
-	return ((*Term->xtra_hook)(n, v));
+	if (Term->xtra_hook)
+	{
+		(*Term->xtra_hook)(n, v);
+	}
 }
-
-
-
-/*** Fake hooks ***/
-
-
-/*
- * Hack -- fake hook for "Term_curs()" (see above)
- */
-static errr Term_curs_hack(int x, int y)
-{
-	/* Compiler silliness */
-	if (x || y) return ( -2);
-
-	/* Oops */
-	return ( -1);
-}
-
-/*
- * Hack -- fake hook for "Term_text()" (see above)
- */
-static errr Term_text_hack(int x, int y, int n, byte a, const char *cp)
-{
-	/* Compiler silliness */
-	if (x || y || n || a || cp) return ( -2);
-
-	/* Oops */
-	return ( -1);
-}
-
 
 
 /*** Efficient routines ***/
@@ -544,7 +513,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			/* Flush */
 			if (fn)
 			{
-				(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
+				(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -565,7 +534,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw the pending chars */
-				(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
+				(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -582,7 +551,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	/* Flush */
 	if (fn)
 	{
-		(void)((*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]));
+		(*Term->text_hook)(fx, y, fn, fa, &scr_cc[fx]);
 	}
 }
 
@@ -700,8 +669,8 @@ errr Term_fresh(void)
 
 
 	/* Paranoia -- use "fake" hooks to prevent core dumps */
-	if (!Term->curs_hook) Term->curs_hook = Term_curs_hack;
-	if (!Term->text_hook) Term->text_hook = Term_text_hack;
+	assert(Term->curs_hook != NULL);
+	assert(Term->text_hook != NULL);
 
 
 	/* Handle "total erase" */
@@ -763,7 +732,7 @@ errr Term_fresh(void)
 			char oc = old_cc[tx];
 
 			/* Hack -- restore the actual character */
-			(void)((*Term->text_hook)(tx, ty, 1, oa, &oc));
+			(*Term->text_hook)(tx, ty, 1, oa, &oc);
 		}
 	}
 
@@ -829,7 +798,7 @@ errr Term_fresh(void)
 		if (!scr->cu && scr->cv)
 		{
 			/* Call the cursor display routine */
-			(void)((*Term->curs_hook)(scr->cx, scr->cy));
+			(*Term->curs_hook)(scr->cx, scr->cy);
 		}
 	}
 
@@ -840,7 +809,7 @@ errr Term_fresh(void)
 		if (scr->cu)
 		{
 			/* Paranoia -- Put the cursor NEAR where it belongs */
-			(void)((*Term->curs_hook)(w - 1, scr->cy));
+			(*Term->curs_hook)(w - 1, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -850,7 +819,7 @@ errr Term_fresh(void)
 		else if (!scr->cv)
 		{
 			/* Paranoia -- Put the cursor where it belongs */
-			(void)((*Term->curs_hook)(scr->cx, scr->cy));
+			(*Term->curs_hook)(scr->cx, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -860,7 +829,7 @@ errr Term_fresh(void)
 		else
 		{
 			/* Put the cursor where it belongs */
-			(void)((*Term->curs_hook)(scr->cx, scr->cy));
+			(*Term->curs_hook)(scr->cx, scr->cy);
 
 			/* Make the cursor visible */
 			Term_xtra(TERM_XTRA_SHAPE, 1);

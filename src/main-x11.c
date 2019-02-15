@@ -662,28 +662,23 @@ static errr Metadpy_init_2(Display *dpy, const char *name)
 /*
  * General Flush/ Sync/ Discard routine
  */
-static errr Metadpy_update(int flush, int sync, int discard)
+static void Metadpy_update(int flush, int sync, int discard)
 {
 	/* Flush if desired */
 	if (flush) XFlush(Metadpy->dpy);
 
 	/* Sync if desired, using 'discard' */
 	if (sync) XSync(Metadpy->dpy, discard);
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Make a simple beep
  */
-static errr Metadpy_do_beep(void)
+static void Metadpy_do_beep()
 {
 	/* Make a simple beep */
 	XBell(Metadpy->dpy, 100);
-
-	return (0);
 }
 
 
@@ -691,7 +686,7 @@ static errr Metadpy_do_beep(void)
 /*
  * Set the name (in the title bar) of Infowin
  */
-static errr Infowin_set_name(const char *name)
+static void Infowin_set_name(const char *name)
 {
 	Status st;
 	XTextProperty tp;
@@ -700,7 +695,6 @@ static errr Infowin_set_name(const char *name)
 	strcpy(buf, name);
 	st = XStringListToTextProperty(&bp, 1, &tp);
 	if (st) XSetWMName(Metadpy->dpy, Infowin->win, &tp);
-	return (0);
 }
 
 
@@ -864,13 +858,10 @@ static errr Infowin_impell(int x, int y)
 /*
  * Visually clear Infowin
  */
-static errr Infowin_wipe(void)
+static void Infowin_wipe()
 {
 	/* Execute the request */
 	XClearWindow(Metadpy->dpy, Infowin->win);
-
-	/* Success */
-	return (0);
 }
 
 
@@ -2056,7 +2047,7 @@ static errr CheckEvent(bool_ wait)
 /*
  * Handle "activation" of a term
  */
-static errr Term_xtra_x11_level(int v)
+static void Term_xtra_x11_level(int v)
 {
 	term_data *td = (term_data*)(Term->data);
 
@@ -2069,16 +2060,13 @@ static errr Term_xtra_x11_level(int v)
 		/* Activate the font */
 		Infofnt_set(td->fnt);
 	}
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * React to changes
  */
-static errr Term_xtra_x11_react(void)
+static void Term_xtra_x11_react()
 {
 	int i;
 
@@ -2112,57 +2100,63 @@ static errr Term_xtra_x11_react(void)
 			}
 		}
 	}
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Handle a "special request"
  */
-static errr Term_xtra_x11(int n, int v)
+static void Term_xtra_x11(int n, int v)
 {
 	/* Handle a subset of the legal requests */
 	switch (n)
 	{
 		/* Make a noise */
 	case TERM_XTRA_NOISE:
-		Metadpy_do_beep(); return (0);
+		Metadpy_do_beep();
+		return;
 
 		/* Flush the output XXX XXX */
-	case TERM_XTRA_FRESH: Metadpy_update(1, 0, 0); return (0);
+	case TERM_XTRA_FRESH:
+		Metadpy_update(1, 0, 0);
+		return;
 
 		/* Process random events XXX */
 	case TERM_XTRA_BORED:
-		{
-			return (CheckEvent(0));
-		}
+		CheckEvent(0);
+		return;
 
 		/* Process Events XXX */
 	case TERM_XTRA_EVENT:
-		{
-			return (CheckEvent(v));
-		}
+		CheckEvent(v);
+		return;
 
 		/* Flush the events XXX */
-	case TERM_XTRA_FLUSH: while (!CheckEvent(FALSE)); return (0);
+	case TERM_XTRA_FLUSH:
+		while (!CheckEvent(FALSE));
+		return;
 
 		/* Handle change in the "level" */
-	case TERM_XTRA_LEVEL: return (Term_xtra_x11_level(v));
+	case TERM_XTRA_LEVEL:
+		Term_xtra_x11_level(v);
+		return;
 
 		/* Clear the screen, and redraw any selection later. */
-	case TERM_XTRA_CLEAR: Infowin_wipe(); s_ptr->drawn = FALSE; return (0);
+	case TERM_XTRA_CLEAR:
+		Infowin_wipe();
+		s_ptr->drawn = FALSE;
+		return;
 
 		/* React to changes */
-	case TERM_XTRA_REACT: return (Term_xtra_x11_react());
+	case TERM_XTRA_REACT:
+		Term_xtra_x11_react();
+		return;
 
 		/* Rename main window */
-	case TERM_XTRA_RENAME_MAIN_WIN: Infowin_set_name(angband_term_name[0]); return (0);
+	case TERM_XTRA_RENAME_MAIN_WIN:
+		Infowin_set_name(angband_term_name[0]);
+		return;
 	}
-
-	/* Unknown */
-	return (1);
 }
 
 
@@ -2171,7 +2165,7 @@ static errr Term_xtra_x11(int n, int v)
  *
  * Consider a rectangular outline like "main-mac.c".  XXX XXX
  */
-static errr Term_curs_x11(int x, int y)
+static void Term_curs_x11(int x, int y)
 {
 	/* Draw the cursor */
 	Infoclr_set(xor);
@@ -2181,25 +2175,19 @@ static errr Term_curs_x11(int x, int y)
 
 	/* Redraw the selection if any, as it may have been obscured. (later) */
 	s_ptr->drawn = FALSE;
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Draw some textual characters.
  */
-static errr Term_text_x11(int x, int y, int n, byte a, const char *s)
+static void Term_text_x11(int x, int y, int n, byte a, const char *s)
 {
 	/* Draw the text */
 	Infoclr_set(clr[a]);
 
 	/* Draw the text */
 	Infofnt_text_std(x, y, s, n);
-
-	/* Success */
-	return (0);
 }
 
 

@@ -505,7 +505,7 @@ void handleEvent(SDL_Event *event)
 /* declare the screen clearing function used below */
 void eraseTerminal();
 void drawTermStuff(term_data *td, SDL_Rect *rect);
-static errr Term_xtra_sdl(int n, int v)
+static void Term_xtra_sdl(int n, int v)
 {
 	static SDL_Event event;
 	term_data *td;
@@ -528,7 +528,7 @@ static errr Term_xtra_sdl(int n, int v)
 					handleEvent(&event);
 				}
 			}
-			return(0);
+			return;
 		}
 
 	case TERM_XTRA_FLUSH:
@@ -538,7 +538,7 @@ static errr Term_xtra_sdl(int n, int v)
 			{
 				handleEvent(&event);
 			}
-			return (0);
+			return;
 		}
 
 	case TERM_XTRA_CLEAR:
@@ -547,7 +547,7 @@ static errr Term_xtra_sdl(int n, int v)
 			DB("TERM_XTRA_CLEAR");
 			suspendUpdate = TRUE;
 			eraseTerminal();
-			return (0);
+			return;
 		}
 
 	case TERM_XTRA_SHAPE:
@@ -562,7 +562,7 @@ static errr Term_xtra_sdl(int n, int v)
 			 * efficiency (and attractiveness) of the program.
 			 */
 
-			return (0);
+			return;
 		}
 
 	case TERM_XTRA_FRESH:
@@ -587,7 +587,7 @@ static errr Term_xtra_sdl(int n, int v)
 				suspendUpdate = FALSE;				
 				drawTermStuff(td,NULL);
 			}
-			return (0);
+			return;
 		}
 
 	case TERM_XTRA_NOISE:
@@ -599,8 +599,7 @@ static errr Term_xtra_sdl(int n, int v)
 			 *
 			 * This action is optional, but convenient.
 			 */
-
-			return (1);
+			return;
 		}
 
 	case TERM_XTRA_BORED:
@@ -610,7 +609,7 @@ static errr Term_xtra_sdl(int n, int v)
 				/* We found an event! */
 				handleEvent(&event);
 			}
-			return(0);
+			return;
 		}
 
 	case TERM_XTRA_REACT:
@@ -625,7 +624,7 @@ static errr Term_xtra_sdl(int n, int v)
 			 * handling "color changes" and the "arg_sound" and/or
 			 * "arg_graphics" options.
 			 */
-			return (1);
+			return;
 		}
 
 	case TERM_XTRA_ALIVE:
@@ -644,7 +643,7 @@ static errr Term_xtra_sdl(int n, int v)
 			 * on UNIX machines, to allow proper "suspending".
 			 */
 
-			return (1);
+			return;
 		}
 
 	case TERM_XTRA_LEVEL:
@@ -665,13 +664,10 @@ static errr Term_xtra_sdl(int n, int v)
 			 * one "term_data" structure is supported by this file.
 			 */
 
-			return (1);
+			return;
 		}
 
 	}
-
-	/* Unknown or Unhandled action */
-	return (1);
 }
 
 /*************************************************
@@ -947,7 +943,7 @@ void createCursor(byte r, byte g, byte b, byte a)
 
 /* Cursor Display routine - just blits the global cursor
 surface onto the correct location */
-static errr Term_curs_sdl(int x, int y)
+static void Term_curs_sdl(int x, int y)
 {
 	term_data *td = (term_data*)(Term->data);
 	static SDL_Rect base;
@@ -965,8 +961,6 @@ static errr Term_curs_sdl(int x, int y)
 
 	/* Now draw to the main screen */
 	drawTermStuff(td,&base);
-	/* Success */
-	return (0);
 }
 
 /* Perform a full clear of active terminal; redraw the borders.*/
@@ -1034,7 +1028,7 @@ void eraseTerminal(void)
  * the resulting "blank" correctly.
  *
  */
-static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
+static void Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 {
 	term_data *td = (term_data*)(Term->data);
 	static SDL_Rect base;
@@ -1095,9 +1089,6 @@ static errr Term_text_sdl(int x, int y, int n, byte a, const char *cp)
 
 	/* And update */
 	drawTermStuff(td,&base_back);
-
-	/* Success */
-	return (0);
 }
 
 /*************************************************

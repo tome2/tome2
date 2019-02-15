@@ -284,13 +284,16 @@ static void Term_nuke_gtk(void *data)
 /*
  * Erase the whole term.
  */
-static errr Term_clear_gtk(void)
+static void Term_clear_gtk()
 {
 	term_data *td = (term_data*)(Term->data);
 
 
 	/* Don't draw to hidden windows */
-	if (!td->shown) return (0);
+	if (!td->shown)
+	{
+		return;
+	}
 
 	/* Paranoia */
 	g_assert(td->drawing_area->window != 0);
@@ -307,9 +310,6 @@ static errr Term_clear_gtk(void)
 
 	/* Copy image from backing store if present */
 	TERM_DATA_REFRESH(td, 0, 0, td->cols, td->rows);
-
-	/* Success */
-	return (0);
 }
 
 
@@ -348,13 +348,16 @@ static errr Term_wipe_gtk(int x, int y, int n)
 /*
  * Draw some textual characters.
  */
-static errr Term_text_gtk(int x, int y, int n, byte a, const char *s)
+static void Term_text_gtk(int x, int y, int n, byte a, const char *s)
 {
 	term_data *td = (term_data*)(Term->data);
 
 
 	/* Don't draw to hidden windows */
-	if (!td->shown) return (0);
+	if (!td->shown)
+	{
+		return;
+	}
 
 	/* Paranoia */
 	g_assert(td->drawing_area->window != 0);
@@ -377,23 +380,23 @@ static errr Term_text_gtk(int x, int y, int n, byte a, const char *s)
 
 	/* Copy image from backing store if present */
 	TERM_DATA_REFRESH(td, x, y, n, 1);
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Draw software cursor at (x, y)
  */
-static errr Term_curs_gtk(int x, int y)
+static void Term_curs_gtk(int x, int y)
 {
 	term_data *td = (term_data*)(Term->data);
 	int cells = 1;
 
 
 	/* Don't draw to hidden windows */
-	if (!td->shown) return (0);
+	if (!td->shown)
+	{
+		return;
+	}
 
 	/* Paranoia */
 	g_assert(td->drawing_area->window != 0);
@@ -413,9 +416,6 @@ static errr Term_curs_gtk(int x, int y)
 
 	/* Copy image from backing store if present */
 	TERM_DATA_REFRESH(td, x, y, cells, 1);
-
-	/* Success */
-	return (0);
 }
 
 
@@ -445,7 +445,7 @@ static void DrainEvents(void)
 /*
  * Handle a "special request"
  */
-static errr Term_xtra_gtk(int n, int v)
+static void Term_xtra_gtk(int n, int v)
 {
 	/* Handle a subset of the legal requests */
 	switch (n)
@@ -453,78 +453,59 @@ static errr Term_xtra_gtk(int n, int v)
 		/* Make a noise */
 	case TERM_XTRA_NOISE:
 		{
-			/* Beep */
 			gdk_beep();
-
-			/* Success */
-			return (0);
+			return;
 		}
 
 		/* Flush the output */
 	case TERM_XTRA_FRESH:
 		{
-			/* Flush pending X requests - almost always no-op */
 			gdk_flush();
-
-			/* Success */
-			return (0);
+			return;
 		}
 
 		/* Process random events */
 	case TERM_XTRA_BORED:
 		{
-			/* Process a pending event if there's one */
 			CheckEvent(FALSE);
-
-			/* Success */
-			return (0);
+			return;
 		}
 
 		/* Process Events */
 	case TERM_XTRA_EVENT:
 		{
-			/* Process an event */
 			CheckEvent(v);
-
-			/* Success */
-			return (0);
+			return;
 		}
 
 		/* Flush the events */
 	case TERM_XTRA_FLUSH:
 		{
-			/* Process all pending events */
 			DrainEvents();
-
-			/* Success */
-			return (0);
+			return;
 		}
 
 		/* Handle change in the "level" */
 	case TERM_XTRA_LEVEL:
-		return (0);
+		return;
 
 		/* Clear the screen */
 	case TERM_XTRA_CLEAR:
-		return (Term_clear_gtk());
+		Term_clear_gtk();
+		return;
 
 		/* Rename main window */
-	case TERM_XTRA_RENAME_MAIN_WIN: gtk_window_set_title(GTK_WINDOW(data[0].window), angband_term_name[0]); return (0);
+	case TERM_XTRA_RENAME_MAIN_WIN:
+		gtk_window_set_title(GTK_WINDOW(data[0].window), angband_term_name[0]);
+		return;
 
 		/* React to changes */
 	case TERM_XTRA_REACT:
 		{
-			/* (re-)init colours */
 			init_colours();
-
-
-			/* Success */
-			return (0);
+			return;
 		}
 	}
-
-	/* Unknown */
-	return (1);
 }
 
 

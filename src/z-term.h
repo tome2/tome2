@@ -27,9 +27,9 @@ struct term_win; // Opaque
 
 typedef void(init_hook_t)(void *data);
 typedef void(nuke_hook_t)(void *data);
-typedef errr(xtra_hook_t)(int n, int v);
-typedef errr(curs_hook_t)(int x, int y);
-typedef errr(text_hook_t)(int x, int y, int n, byte a, const char *s);
+typedef void(xtra_hook_t)(int n, int v);
+typedef void(curs_hook_t)(int x, int y);
+typedef void(text_hook_t)(int x, int y, int n, byte a, const char *s);
 
 typedef struct term_ui_hooks_t term_ui_hooks_t;
 
@@ -214,7 +214,7 @@ extern term *Term;
 
 /**** Available Functions ****/
 
-errr Term_xtra(int n, int v);
+void Term_xtra(int n, int v);
 
 void Term_queue_char(int x, int y, byte a, char c);
 void Term_queue_chars(int x, int y, int n, byte a, const char *s);

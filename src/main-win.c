@@ -1245,7 +1245,7 @@ static void term_data_redraw(term_data *td)
 /*
  * React to global changes
  */
-static errr Term_xtra_win_react(void)
+static void Term_xtra_win_react(void)
 {
 	int i;
 
@@ -1324,17 +1324,13 @@ static errr Term_xtra_win_react(void)
 			Term_activate(old);
 		}
 	}
-
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Process at least one event
  */
-static errr Term_xtra_win_event(int v)
+static void Term_xtra_win_event(int v)
 {
 	MSG msg;
 
@@ -1359,16 +1355,13 @@ static errr Term_xtra_win_event(int v)
 			DispatchMessage(&msg);
 		}
 	}
-
-	/* Success */
-	return 0;
 }
 
 
 /*
  * Process all pending events
  */
-static errr Term_xtra_win_flush(void)
+static void Term_xtra_win_flush(void)
 {
 	MSG msg;
 
@@ -1378,9 +1371,6 @@ static errr Term_xtra_win_flush(void)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-
-	/* Success */
-	return (0);
 }
 
 
@@ -1389,7 +1379,7 @@ static errr Term_xtra_win_flush(void)
  *
  * Make this more efficient XXX XXX XXX
  */
-static errr Term_xtra_win_clear(void)
+static void Term_xtra_win_clear(void)
 {
 	term_data *td = (term_data*)(Term->data);
 
@@ -1408,26 +1398,22 @@ static errr Term_xtra_win_clear(void)
 	SelectObject(hdc, td->font_id);
 	ExtTextOut(hdc, 0, 0, ETO_OPAQUE, &rc, NULL, 0, NULL);
 	ReleaseDC(td->w, hdc);
-
-	/* Success */
-	return 0;
 }
 
 
 /*
  * Hack -- make a noise
  */
-static errr Term_xtra_win_noise(void)
+static void Term_xtra_win_noise(void)
 {
 	MessageBeep(MB_ICONASTERISK);
-	return (0);
 }
 
 
 /*
  * Delay for "x" milliseconds
  */
-static int Term_xtra_win_delay(int v)
+static void Term_xtra_win_delay(int v)
 {
 
 #ifdef WIN32
@@ -1455,9 +1441,6 @@ static int Term_xtra_win_delay(int v)
 	}
 
 #endif /* WIN32 */
-
-	/* Success */
-	return (0);
 }
 
 /*
@@ -1471,7 +1454,7 @@ HWND get_main_hwnd()
 /*
  * Do a "special thing"
  */
-static errr Term_xtra_win(int n, int v)
+static void Term_xtra_win(int n, int v)
 {
 	/* Handle a subset of the legal requests */
 	switch (n)
@@ -1479,52 +1462,59 @@ static errr Term_xtra_win(int n, int v)
 		/* Make a bell sound */
 	case TERM_XTRA_NOISE:
 		{
-			return (Term_xtra_win_noise());
+			Term_xtra_win_noise();
+			return;
 		}
 
 		/* Process random events */
 	case TERM_XTRA_BORED:
 		{
-			return (Term_xtra_win_event(0));
+			Term_xtra_win_event(0);
+			return;
 		}
 
 		/* Process an event */
 	case TERM_XTRA_EVENT:
 		{
-			return (Term_xtra_win_event(v));
+			Term_xtra_win_event(v);
+			return;
 		}
 
 		/* Flush all events */
 	case TERM_XTRA_FLUSH:
 		{
-			return (Term_xtra_win_flush());
+			Term_xtra_win_flush();
+			return;
 		}
 
 		/* Clear the screen */
 	case TERM_XTRA_CLEAR:
 		{
-			return (Term_xtra_win_clear());
+			Term_xtra_win_clear();
+			return;
 		}
 
 		/* React to global changes */
 	case TERM_XTRA_REACT:
 		{
-			return (Term_xtra_win_react());
+			Term_xtra_win_react();
+			return;
 		}
 
 		/* Delay for some milliseconds */
 	case TERM_XTRA_DELAY:
 		{
-			return (Term_xtra_win_delay(v));
+			Term_xtra_win_delay(v);
+			return;
 		}
 
 		/* Rename main window */
 	case TERM_XTRA_RENAME_MAIN_WIN:
-		SetWindowText(get_main_hwnd(), angband_term_name[0]); return (0);
+		{
+			SetWindowText(get_main_hwnd(), angband_term_name[0]);
+			return;
+		}
 	}
-
-	/* Oops */
-	return 1;
 }
 
 
@@ -1534,7 +1524,7 @@ static errr Term_xtra_win(int n, int v)
  *
  * Draw a "cursor" at (x,y), using a "yellow box".
  */
-static errr Term_curs_win(int x, int y)
+static void Term_curs_win(int x, int y)
 {
 	term_data *td = (term_data*)(Term->data);
 
@@ -1551,9 +1541,6 @@ static errr Term_curs_win(int x, int y)
 	hdc = GetDC(data[0].w);
 	FrameRect(hdc, &rc, hbrYellow);
 	ReleaseDC(data[0].w, hdc);
-
-	/* Success */
-	return 0;
 }
 
 
@@ -1568,7 +1555,7 @@ static errr Term_curs_win(int x, int y)
  * what color it should be using to draw with, but perhaps simply changing
  * it every time is not too inefficient.  XXX XXX XXX
  */
-static errr Term_text_win(int x, int y, int n, byte a, const char *s)
+static void Term_text_win(int x, int y, int n, byte a, const char *s)
 {
 	term_data *td = (term_data*)(Term->data);
 	RECT rc;
@@ -1643,9 +1630,6 @@ static errr Term_text_win(int x, int y, int n, byte a, const char *s)
 
 	/* Release DC */
 	ReleaseDC(td->w, hdc);
-
-	/* Success */
-	return 0;
 }
 
 

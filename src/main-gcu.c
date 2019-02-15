@@ -433,7 +433,7 @@ static void keymap_game_prepare(void)
 /*
  * Suspend/Resume
  */
-static errr Term_xtra_gcu_alive(int v)
+static void Term_xtra_gcu_alive(int v)
 {
 	int x, y;
 
@@ -483,9 +483,6 @@ static errr Term_xtra_gcu_alive(int v)
 		/* Go to angband keymap mode */
 		keymap_game();
 	}
-
-	/* Success */
-	return (0);
 }
 
 
@@ -607,7 +604,7 @@ static errr Term_xtra_gcu_event(int v)
 /*
  * React to changes
  */
-static errr Term_xtra_gcu_react(void)
+static void Term_xtra_gcu_react()
 {
 
 #ifdef A_COLOR
@@ -615,7 +612,10 @@ static errr Term_xtra_gcu_react(void)
 	int i;
 
 	/* Cannot handle color redefinition */
-	if (!can_fix_color) return (0);
+	if (!can_fix_color)
+	{
+		return;
+	}
 
 	/* Set the colors */
 	for (i = 0; i < 16; i++)
@@ -628,16 +628,13 @@ static errr Term_xtra_gcu_react(void)
 	}
 
 #endif
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Handle a "special request"
  */
-static errr Term_xtra_gcu(int n, int v)
+static void Term_xtra_gcu(int n, int v)
 {
 	term_data *td = (term_data *)(Term->data);
 
@@ -648,62 +645,57 @@ static errr Term_xtra_gcu(int n, int v)
 	case TERM_XTRA_CLEAR:
 		touchwin(td->win);
 		(void)wclear(td->win);
-		return (0);
+		return;
 
 		/* Make a noise */
 	case TERM_XTRA_NOISE:
 		(void)write(1, "\007", 1);
-		return (0);
+		return;
 
 		/* Flush the Curses buffer */
 	case TERM_XTRA_FRESH:
 		(void)wrefresh(td->win);
-		return (0);
-
+		return;
 
 		/* Suspend/Resume curses */
 	case TERM_XTRA_ALIVE:
-		return (Term_xtra_gcu_alive(v));
+		Term_xtra_gcu_alive(v);
+		return;
 
 		/* Process events */
 	case TERM_XTRA_EVENT:
-		return (Term_xtra_gcu_event(v));
+		Term_xtra_gcu_event(v);
+		return;
 
 		/* Flush events */
 	case TERM_XTRA_FLUSH:
 		while (!Term_xtra_gcu_event(FALSE));
-		return (0);
+		return;
 
 		/* React to events */
 	case TERM_XTRA_REACT:
 		Term_xtra_gcu_react();
-		return (0);
+		return;
 	}
-
-	/* Unknown */
-	return (1);
 }
 
 
 /*
  * Actually MOVE the hardware cursor
  */
-static errr Term_curs_gcu(int x, int y)
+static void Term_curs_gcu(int x, int y)
 {
 	term_data *td = (term_data *)(Term->data);
 
 	/* Literally move the cursor */
 	wmove(td->win, y, x);
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Place some text on the screen using an attribute
  */
-static errr Term_text_gcu(int x, int y, int n, byte a, const char *s)
+static void Term_text_gcu(int x, int y, int n, byte a, const char *s)
 {
 	term_data *td = (term_data *)(Term->data);
 
@@ -724,9 +716,6 @@ static errr Term_text_gcu(int x, int y, int n, byte a, const char *s)
 		/* Draw a normal character */
 		waddch(td->win, (byte)s[i]);
 	}
-
-	/* Success */
-	return (0);
 }
 
 
