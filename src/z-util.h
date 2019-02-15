@@ -6,18 +6,9 @@
 extern "C" {
 #endif
 
-/*
- * Extremely basic stuff, like "streq()".
- */
-
-
 /* Aux functions */
 extern void (*plog_aux)(const char *);
 extern void (*quit_aux)(const char *);
-
-
-/**** Available Functions ****/
-
 
 /* Test equality, prefix, suffix */
 bool_ streq(const char *s, const char *t);

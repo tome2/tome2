@@ -1,11 +1,6 @@
-/* File: z-util.c */
-
-/* Purpose: Low level utilities -BEN- */
-
 #include "z-util.h"
 
 #include <cassert>
-
 
 /*
  * Determine if string "t" is equal to string "t"
