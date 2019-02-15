@@ -3479,12 +3479,6 @@ void show_file(const char *name, const char *what, int line)
 
 static void cmovie_clean_line(int y, char *abuf, char *cbuf)
 {
-	const byte *ap = Term->scr->a[y];
-	const char *cp = Term->scr->c[y];
-
-	byte a;
-	char c;
-
 	int x;
 	int wid, hgt;
 	int screen_wid, screen_hgt;
@@ -3508,18 +3502,30 @@ static void cmovie_clean_line(int y, char *abuf, char *cbuf)
 				((y - ROW_MAP) < screen_hgt))
 		{
 			/* Retrieve default attr/char */
+			byte a;
+			char c;
 			map_info_default(y + panel_row_prt, x + panel_col_prt, &a, &c);
 
 			abuf[x] = conv_color[a & 0xf];
 
-			if (c == '\0') cbuf[x] = ' ';
-			else cbuf[x] = c;
+			if (c == '\0')
+			{
+				cbuf[x] = ' ';
+			}
+			else
+			{
+				cbuf[x] = c;
+			}
 		}
 
 		else
 		{
-			abuf[x] = conv_color[ap[x] & 0xf];
-			cbuf[x] = cp[x];
+			byte a;
+			char c;
+			Term_what(x, y, &a, &c);
+
+			abuf[x] = conv_color[a & 0xf];
+			cbuf[x] = c;
 		}
 	}
 

@@ -226,6 +226,38 @@
 
 
 /*
+ * A term_win is a "window" for a Term
+ *
+ *	- Cursor Useless/Visible codes
+ *	- Cursor Location (see "Useless")
+ *
+ *	- Array[h] -- Access to the attribute array
+ *	- Array[h] -- Access to the character array
+ *
+ *	- Array[h*w] -- Attribute array
+ *	- Array[h*w] -- Character array
+ *
+ * Note that the attr/char pair at (x,y) is a[y][x]/c[y][x]
+ * and that the row of attr/chars at (0,y) is a[y]/c[y]
+ */
+
+struct term_win
+{
+	bool_ saved_cu;
+	bool_ saved_cv;
+
+	bool_ cu, cv;
+	byte cx, cy;
+
+	byte **a;
+	char **c;
+
+	byte *va;
+	char *vc;
+
+};
+
+/*
  * The current "term"
  */
 term *Term = NULL;
@@ -1320,6 +1352,37 @@ errr Term_what(int x, int y, byte *a, char *c)
 
 	/* Success */
 	return (0);
+}
+
+/*
+ * Save cursor flags for the current terminal.
+ */
+void Term_save_cursor_flags()
+{
+	term_win *w = Term->scr;
+	w->saved_cu = w->cu;
+	w->saved_cv = w->cv;
+}
+
+/**
+ * Restore cursor flags for the current terminal. Must have been
+ * preceded by a call to Term_save_cursor_flags().
+ */
+void Term_restore_cursor_flags()
+{
+	term_win *w = Term->scr;
+	w->cu = w->saved_cu;
+	w->cv = w->saved_cv;
+}
+
+/**
+ * Set the cursor to "visible".
+ */
+void Term_set_cursor_visible()
+{
+	term_win *w = Term->scr;
+	w->cu = 0;
+	w->cv = 1;
 }
 
 

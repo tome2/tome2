@@ -4927,7 +4927,7 @@ bool_ get_rep_dir(int *dp)
 bool_ tgt_pt(int *x, int *y)
 {
 	char ch = 0;
-	int d, cu, cv;
+	int d;
 	int screen_wid, screen_hgt;
 	bool_ success = FALSE;
 
@@ -4937,10 +4937,11 @@ bool_ tgt_pt(int *x, int *y)
 	/* Get size */
 	get_screen_size(&screen_wid, &screen_hgt);
 
-	cu = Term->scr->cu;
-	cv = Term->scr->cv;
-	Term->scr->cu = 0;
-	Term->scr->cv = 1;
+	// Make the cursor visible
+	Term_save_cursor_flags();
+	Term_set_cursor_visible();
+
+	// Prompt
 	msg_print("Select a point and press space.");
 
 	while ((ch != 27) && (ch != ' '))
@@ -4975,9 +4976,10 @@ bool_ tgt_pt(int *x, int *y)
 		}
 	}
 
-	Term->scr->cu = cu;
-	Term->scr->cv = cv;
+	// Restore cursor state
+	Term_restore_cursor_flags();
 	Term_fresh();
+
 	return success;
 }
 

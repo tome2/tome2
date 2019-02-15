@@ -17,38 +17,9 @@ extern "C" {
 
 #include "h-basic.h"
 
-/*
- * A term_win is a "window" for a Term
- *
- *	- Cursor Useless/Visible codes
- *	- Cursor Location (see "Useless")
- *
- *	- Array[h] -- Access to the attribute array
- *	- Array[h] -- Access to the character array
- *
- *	- Array[h*w] -- Attribute array
- *	- Array[h*w] -- Character array
- *
- * Note that the attr/char pair at (x,y) is a[y][x]/c[y][x]
- * and that the row of attr/chars at (0,y) is a[y]/c[y]
- */
-
 typedef struct term_win term_win;
 
-struct term_win
-{
-	bool_ cu, cv;
-	byte cx, cy;
-
-	byte **a;
-	char **c;
-
-	byte *va;
-	char *vc;
-
-};
-
-
+struct term_win; // Opaque
 
 /*
  * An actual "term" structure
@@ -243,6 +214,10 @@ errr Term_get_cursor(int *v);
 errr Term_get_size(int *w, int *h);
 errr Term_locate(int *x, int *y);
 errr Term_what(int x, int y, byte *a, char *c);
+
+void Term_save_cursor_flags();
+void Term_restore_cursor_flags();
+void Term_set_cursor_visible();
 
 errr Term_flush();
 errr Term_keypress(int k);
