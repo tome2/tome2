@@ -1008,7 +1008,7 @@ static void init_angband_aux(const char *why)
  * Note that the "graf-xxx.prf" file must be loaded separately,
  * if needed, in the first (?) pass through "TERM_XTRA_REACT".
  */
-void init_angband()
+void init_angband(program_args const &args)
 {
 	int fd = -1;
 
@@ -1024,7 +1024,7 @@ void init_angband()
 	init_basic();
 
 	/* Select & init a module if needed */
-	select_module();
+	select_module(args);
 
 	/*** Choose which news.txt file to use ***/
 

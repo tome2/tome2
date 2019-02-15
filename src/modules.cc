@@ -230,9 +230,6 @@ bool module_savefile_loadable(std::string const &tag)
 	return tag == modules[game_module_idx].meta.save_file_tag;
 }
 
-/* Did the player force a module on command line */
-const char *force_module = NULL;
-
 /* Find module index by name. Returns -1 if matching module not found */
 int find_module(const char *name)
 {
@@ -249,23 +246,16 @@ int find_module(const char *name)
 	return -1;
 }
 
-/* Display possible modules and select one */
-bool_ select_module()
+bool select_module(program_args const &args)
 {
-	s32b k, sel, max;
-
 	/* How many modules? */
-	max = MAX_MODULES;
+	s32b max = MAX_MODULES;
 
 	/* No need to bother the player if there is only one module */
-	sel = -1;
-	if (force_module) {
-		/* Find module by name */
-		sel = find_module(force_module);
-	}
-	/* Only a single choice */
-	if (max == 1) {
-		sel = 0;
+	s32b sel = -1;
+	if (args.module)
+	{
+		sel = find_module(args.module);
 	}
 	/* No module selected */
 	if (sel != -1)
@@ -277,7 +267,7 @@ bool_ select_module()
 
 		activate_module(sel);
 
-		return FALSE;
+		return false;
 	}
 
 	sel = 0;
@@ -297,7 +287,7 @@ bool_ select_module()
 
 		dump_modules(sel, max);
 
-		k = inkey();
+		s32b k = inkey();
 
 		if (k == ESCAPE)
 		{
@@ -333,6 +323,7 @@ bool_ select_module()
 			else k = toupper(I2A(sel));
 		}
 
+		// Process
 		{
 			int x;
 
@@ -348,12 +339,11 @@ bool_ select_module()
 
 			activate_module(x);
 
-			return (FALSE);
+			return false;
 		}
 	}
 
-	/* Shouldnt happen */
-	return (FALSE);
+	abort();
 }
 
 static bool_ dleft(byte c, const char *str, int y, int o)

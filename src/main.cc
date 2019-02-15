@@ -251,12 +251,6 @@ usage:
 		no_begin_screen = true;
 	}
 
-	/* If module specified... */
-	if (program_args.module)
-	{
-		force_module = program_args.module;
-	}
-
 	/* Process the player name */
 	set_player_base(game->player_name);
 
@@ -274,7 +268,7 @@ usage:
 		ANGBAND_SYS = platform_sys;
 
 		/* Initialize */
-		init_angband();
+		init_angband(program_args);
 
 		/* Wait for response */
 		pause_line(23);
