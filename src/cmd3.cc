@@ -196,16 +196,9 @@ static bool item_tester_hook_wear(object_type const *o_ptr)
 }
 
 
-bool_ is_slot_ok(int slot)
+static bool is_slot_ok(int slot)
 {
-	if ((slot >= INVEN_WIELD) && (slot < INVEN_TOTAL))
-	{
-		return (TRUE);
-	}
-	else
-	{
-		return (FALSE);
-	}
+	return (slot >= INVEN_WIELD) && (slot < INVEN_TOTAL);
 }
 
 
