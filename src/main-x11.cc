@@ -94,6 +94,7 @@
 
 #include "config.hpp"
 #include "defines.hpp"
+#include "frontend.hpp"
 #include "loadsave.hpp"
 #include "main.hpp"
 #include "util.hpp"
@@ -553,28 +554,27 @@ static errr Metadpy_new(const char *name)
 
 
 /*
- * Make a simple beep
- */
-static void Metadpy_do_beep()
-{
-	/* Make a simple beep */
-	XBell(Metadpy->dpy, 100);
-}
-
-
-
-/*
  * Set the name (in the title bar) of Infowin
  */
-static void Infowin_set_name(const char *name)
+static void Infowin_set_name(std::string_view name_sv)
 {
-	Status st;
-	XTextProperty tp;
 	char buf[128];
+
+	// Trim to the size of the buffer - 1 so that
+	// strncpy is guaranteed to NUL-terminate.
+	auto name = name_sv.substr(0, sizeof(buf) - 1);
+
+	// Copy
+	strncpy(buf, name.begin(), name.size());
+
 	char *bp = buf;
-	strcpy(buf, name);
-	st = XStringListToTextProperty(&bp, 1, &tp);
-	if (st) XSetWMName(Metadpy->dpy, Infowin->win, &tp);
+
+	// Set
+	XTextProperty tp;
+	Status st = XStringListToTextProperty(&bp, 1, &tp);
+	if (st) {
+		XSetWMName(Metadpy->dpy, Infowin->win, &tp);
+	}
 }
 
 
@@ -1368,150 +1368,134 @@ static errr CheckEvent(term_data *old_td, bool wait)
 }
 
 
-/*
- * Handle "activation" of a term
+/**
+ * UserInterace for X11
  */
-static void Term_xtra_x11_level(term_data *td, int v)
-{
-	/* Handle "activate" */
-	if (v)
-	{
-		/* Activate the window */
-		Infowin_set(td->win);
+class X11Frontend final : public Frontend {
 
-		/* Activate the font */
-		Infofnt_set(td->fnt);
+private:
+	term_data *m_term_data;
+
+public:
+	explicit X11Frontend(term_data *term_data)
+		: m_term_data(term_data)
+	{
 	}
-}
 
-
-/*
- * React to changes
- */
-static void Term_xtra_x11_react()
-{
-	int i;
-
-	if (Metadpy->color)
+	void init() final
 	{
-		/* Check the colors */
-		for (i = 0; i < 256; i++)
+		// No action necessary
+	}
+
+	bool soft_cursor() const final
+	{
+		return true;
+	}
+
+	bool icky_corner() const final
+	{
+		return false;
+	}
+
+	void nuke() final
+	{
+		// No action necessary
+	}
+
+	void process_event(bool wait) final
+	{
+		CheckEvent(m_term_data, wait);
+	}
+
+	void flush_events() final
+	{
+		while (!CheckEvent(m_term_data, false))
 		{
-			if ((color_table[i][0] != angband_color_table[i][0]) ||
-			                (color_table[i][1] != angband_color_table[i][1]) ||
-			                (color_table[i][2] != angband_color_table[i][2]) ||
-			                (color_table[i][3] != angband_color_table[i][3]))
+			// Keep flushing
+		}
+	}
+
+	void clear() final
+	{
+		Infowin_wipe();
+	}
+
+	void flush_output() final
+	{
+		XFlush(Metadpy->dpy);
+	}
+
+	void noise() final
+	{
+		XBell(Metadpy->dpy, 100);
+	}
+
+	void process_queued_events() final
+	{
+		CheckEvent(m_term_data, false);
+	}
+
+	void react() final
+	{
+		if (Metadpy->color)
+		{
+			/* Check the colors */
+			for (int i = 0; i < 256; i++)
 			{
-				Pixell pixel;
+				if ((color_table[i][0] != angband_color_table[i][0]) ||
+						(color_table[i][1] != angband_color_table[i][1]) ||
+						(color_table[i][2] != angband_color_table[i][2]) ||
+						(color_table[i][3] != angband_color_table[i][3]))
+				{
+					Pixell pixel;
 
-				/* Save new values */
-				color_table[i][0] = angband_color_table[i][0];
-				color_table[i][1] = angband_color_table[i][1];
-				color_table[i][2] = angband_color_table[i][2];
-				color_table[i][3] = angband_color_table[i][3];
+					/* Save new values */
+					color_table[i][0] = angband_color_table[i][0];
+					color_table[i][1] = angband_color_table[i][1];
+					color_table[i][2] = angband_color_table[i][2];
+					color_table[i][3] = angband_color_table[i][3];
 
-				/* Create pixel */
-				pixel = create_pixel(Metadpy->dpy,
-				                     color_table[i][1],
-				                     color_table[i][2],
-				                     color_table[i][3]);
+					/* Create pixel */
+					pixel = create_pixel(Metadpy->dpy,
+							     color_table[i][1],
+							     color_table[i][2],
+							     color_table[i][3]);
 
-				/* Change the foreground */
-				Infoclr_set(clr[i]);
-				Infoclr_change_fg(pixel);
+					/* Change the foreground */
+					Infoclr_set(clr[i]);
+					Infoclr_change_fg(pixel);
+				}
 			}
 		}
 	}
-}
 
-
-/*
- * Handle a "special request"
- */
-static void Term_xtra_x11(void *data, int n, int v)
-{
-	term_data *td = (term_data*) data;
-
-	/* Handle a subset of the legal requests */
-	switch (n)
+	void activate_deactivate(bool resume) final
 	{
-		/* Make a noise */
-	case TERM_XTRA_NOISE:
-		Metadpy_do_beep();
-		return;
+		if (resume)
+		{
+			Infowin_set(m_term_data->win);
+			Infofnt_set(m_term_data->fnt);
+		}
 
-		/* Flush the output XXX XXX */
-	case TERM_XTRA_FRESH:
-		XFlush(Metadpy->dpy);
-		return;
-
-		/* Process random events XXX */
-	case TERM_XTRA_BORED:
-		CheckEvent(td, false);
-		return;
-
-		/* Process Events XXX */
-	case TERM_XTRA_EVENT:
-		CheckEvent(td, v);
-		return;
-
-		/* Flush the events XXX */
-	case TERM_XTRA_FLUSH:
-		while (!CheckEvent(td, false));
-		return;
-
-		/* Handle change in the "level" */
-	case TERM_XTRA_LEVEL:
-		Term_xtra_x11_level(td, v);
-		return;
-
-		/* Clear the screen */
-	case TERM_XTRA_CLEAR:
-		Infowin_wipe();
-		return;
-
-		/* React to changes */
-	case TERM_XTRA_REACT:
-		Term_xtra_x11_react();
-		return;
-
-		/* Rename main window */
-	case TERM_XTRA_RENAME_MAIN_WIN:
-		Infowin_set_name(angband_term_name[0]);
-		return;
 	}
-}
 
+	void rename_main_window(std::string_view sv) final
+	{
+		Infowin_set_name(sv);
+	}
 
-/*
- * Draw the cursor as an inverted rectangle.
- *
- * Consider a rectangular outline like "main-mac.c".  XXX XXX
- */
-static void Term_curs_x11(void *data, int x, int y)
-{
-	/* Draw the cursor */
-	Infoclr_set(cursor_clr);
+	void draw_cursor(int x, int y) final
+	{
+		Infoclr_set(cursor_clr);
+		Infofnt_text_non(x, y, " ", 1);
+	}
 
-	/* Hilite the cursor character */
-	Infofnt_text_non(x, y, " ", 1);
-}
-
-
-/*
- * Draw some textual characters.
- */
-static void Term_text_x11(void *data, int x, int y, int n, byte a, const char *s)
-{
-	/* Draw the text */
-	Infoclr_set(clr[a]);
-
-	/* Draw the text */
-	Infofnt_text_std(x, y, s, n);
-}
-
-
-
+	void draw_text(int x, int y, int n, byte a, const char *s) final
+	{
+		Infoclr_set(clr[a]);
+		Infofnt_text_std(x, y, s, n);
+	}
+};
 
 
 /*
@@ -1745,19 +1729,8 @@ static term *term_data_init(term_data *td, int i)
 	/* Move the window to requested location */
 	if ((x >= 0) && (y >= 0)) Infowin_impell(x, y);
 
-	/* Hooks */
-	struct term_ui_hooks_t ui_hooks = {
-		NULL /* init */,
-		NULL /* nuke */,
-		Term_xtra_x11,
-		Term_curs_x11,
-		Term_text_x11,
-	};
-
 	/* Initialize the term */
-	td->term_ptr = term_init(td, cols, rows, num);
-	term_init_soft_cursor(td->term_ptr);
-	term_init_ui_hooks(td->term_ptr, ui_hooks);
+	td->term_ptr = term_init(cols, rows, num, std::make_shared<X11Frontend>(td));
 
 	/* Activate (important) */
 	Term_activate(td->term_ptr);

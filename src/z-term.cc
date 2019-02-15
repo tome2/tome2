@@ -11,6 +11,7 @@
 #include "z-term.hpp"
 
 #include "key_queue.hpp"
+#include "frontend.hpp"
 #include "tome/unique_handle.hpp"
 
 #include <cassert>
@@ -415,13 +416,9 @@ static errr push_result_to_errr(key_queue::push_result_t r)
 
 struct term
 {
-	void *data;
-
 	bool active_flag = false;
 	bool mapped_flag = false;
 	bool total_erase = true;
-	bool icky_corner = false;
-	bool soft_cursor = false;
 
 	key_queue m_key_queue;
 
@@ -438,24 +435,24 @@ struct term
 	std::unique_ptr<term_win> scr;
 	std::unique_ptr<term_win> mem;
 
-	init_hook_t *init_hook = nullptr;
-	nuke_hook_t *nuke_hook = nullptr;
-	xtra_hook_t *xtra_hook = nullptr;
-	curs_hook_t *curs_hook = nullptr;
-	text_hook_t *text_hook = nullptr;
+	std::shared_ptr<Frontend> m_frontend;
+	std::function<void ()> m_resize_hook;
 
-	resize_hook_t *resize_hook = nullptr;
+	bool icky_corner;
+	bool soft_cursor;
 
 	/**
 	 * Ctor
 	 */
-	term(int w, int h, int k, void *data_)
-		: data(data_)
-		, m_key_queue(k)
+	term(int w, int h, int k, std::shared_ptr<Frontend> user_interface)
+		: m_key_queue(k)
 		, wid(w)
 		, hgt(h)
 		, x1(h)
 		, x2(h)
+		, m_frontend(std::move(user_interface))
+		, icky_corner(m_frontend->icky_corner())
+		, soft_cursor(m_frontend->soft_cursor())
 	{
 		/* Allocate "displayed" */
 		old = std::make_unique<term_win>(w, h);
@@ -485,10 +482,7 @@ struct term
 		if (active_flag)
 		{
 			/* Call the "nuke" hook */
-			if (nuke_hook)
-			{
-				(*nuke_hook)(data);
-			}
+			m_frontend->nuke();
 
 			/* Remember */
 			active_flag = false;
@@ -496,6 +490,21 @@ struct term
 			/* Assume not mapped */
 			mapped_flag = false;
 		}
+	}
+
+	void text(int x, int y, int n, byte a, const char *s)
+	{
+		m_frontend->draw_text(x, y, n, a, s);
+	}
+
+	void curs(int x, int y)
+	{
+		m_frontend->draw_cursor(x, y);
+	}
+
+	void fresh()
+	{
+		m_frontend->flush_output();
 	}
 
 };
@@ -506,23 +515,6 @@ struct term
  * The current "term"
  */
 term *Term = nullptr;
-
-/*** External hooks ***/
-
-
-/*
- * Execute the "Term->xtra_hook" hook, if any.
- */
-void Term_xtra(int n, int v)
-{
-	if (Term->xtra_hook)
-	{
-		(*Term->xtra_hook)(Term->data, n, v);
-	}
-}
-
-
-/*** Efficient routines ***/
 
 
 /*
@@ -609,25 +601,6 @@ static const byte ATTR_BLANK = TERM_WHITE;
 static const char CHAR_BLANK = ' ';
 
 /*
- * Call the text hook
- */
-static void do_text_hook(int x, int y, int n, byte a, const char *s)
-{
-	assert(Term->text_hook);
-	(*Term->text_hook)(Term->data, x, y, n, a, s);
-}
-
-/*
- * Call the curs hook
- */
-static void do_curs_hook(int x, int y)
-{
-	assert(Term->curs_hook);
-	(*Term->curs_hook)(Term->data, x, y);
-}
-
-
-/*
  * Flush a row of the current window (see "Term_fresh")
  *
  * Display text using "Term_text()" and "Term_wipe()"
@@ -674,7 +647,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			/* Flush */
 			if (fn)
 			{
-				do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
+				Term->text(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -695,7 +668,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 			if (fn)
 			{
 				/* Draw the pending chars */
-				do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
+				Term->text(fx, y, fn, fa, &scr_cc[fx]);
 
 				/* Forget */
 				fn = 0;
@@ -712,7 +685,7 @@ static void Term_fresh_row_text(int y, int x1, int x2)
 	/* Flush */
 	if (fn)
 	{
-		do_text_hook(fx, y, fn, fa, &scr_cc[fx]);
+		Term->text(fx, y, fn, fa, &scr_cc[fx]);
 	}
 }
 
@@ -838,7 +811,7 @@ void Term_fresh()
 		char nc = CHAR_BLANK;
 
 		/* Physically erase the entire window */
-		Term_xtra(TERM_XTRA_CLEAR, 0);
+		Term->m_frontend->clear();
 
 		/* Hack -- clear all "cursor" data */
 		old->cv = false;
@@ -893,7 +866,7 @@ void Term_fresh()
 			char oc = old_cc[tx];
 
 			/* Hack -- restore the actual character */
-			do_text_hook(tx, ty, 1, oa, &oc);
+			Term->text(tx, ty, 1, oa, &oc);
 		}
 	}
 
@@ -947,7 +920,7 @@ void Term_fresh()
 		if (!scr->cu && scr->cv)
 		{
 			/* Call the cursor display routine */
-			do_curs_hook(scr->cx, scr->cy);
+			Term->curs(scr->cx, scr->cy);
 		}
 	}
 
@@ -958,7 +931,7 @@ void Term_fresh()
 		if (scr->cu)
 		{
 			/* Paranoia -- Put the cursor NEAR where it belongs */
-			do_curs_hook(w - 1, scr->cy);
+			Term->curs(w - 1, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -968,7 +941,7 @@ void Term_fresh()
 		else if (!scr->cv)
 		{
 			/* Paranoia -- Put the cursor where it belongs */
-			do_curs_hook(scr->cx, scr->cy);
+			Term->curs(scr->cx, scr->cy);
 
 			/* Make the cursor invisible */
 			/* Term_xtra(TERM_XTRA_SHAPE, 0); */
@@ -978,7 +951,7 @@ void Term_fresh()
 		else
 		{
 			/* Put the cursor where it belongs */
-			do_curs_hook(scr->cx, scr->cy);
+			Term->curs(scr->cx, scr->cy);
 		}
 	}
 
@@ -991,7 +964,7 @@ void Term_fresh()
 
 
 	/* Actually flush the output */
-	Term_xtra(TERM_XTRA_FRESH, 0);
+	Term->fresh();
 }
 
 
@@ -1353,7 +1326,7 @@ void Term_redraw_section(int x1, int y1, int x2, int y2)
 
 void Term_bell()
 {
-	Term_xtra(TERM_XTRA_NOISE, 0);
+	Term->m_frontend->noise();
 }
 
 /*** Access routines ***/
@@ -1554,7 +1527,7 @@ void Term_show_cursor()
 void Term_flush()
 {
 	/* Hack -- Flush all events */
-	Term_xtra(TERM_XTRA_FLUSH, 0);
+	Term->m_frontend->flush_events();
 
 	/* Forget all keypresses */
 	Term->m_key_queue.clear();
@@ -1606,7 +1579,7 @@ errr Term_inkey(char *ch, bool wait, bool take)
 	(*ch) = '\0';
 
 	/* Process queued UI events */
-	Term_xtra(TERM_XTRA_BORED, 0);
+	Term->m_frontend->process_queued_events();
 
 	/* Wait */
 	if (wait)
@@ -1615,7 +1588,7 @@ errr Term_inkey(char *ch, bool wait, bool take)
 		while (key_queue.empty())
 		{
 			/* Process events (wait for one) */
-			Term_xtra(TERM_XTRA_EVENT, true);
+			Term->m_frontend->process_event(true);
 		}
 	}
 
@@ -1626,7 +1599,7 @@ errr Term_inkey(char *ch, bool wait, bool take)
 		if (key_queue.empty())
 		{
 			/* Process events (do not wait) */
-			Term_xtra(TERM_XTRA_EVENT, false);
+			Term->m_frontend->process_event(false);
 		}
 	}
 
@@ -1837,9 +1810,9 @@ void Term_resize(int w, int h)
 	Term->y2 = h - 1;
 
 	/* Execute the "resize_hook" hook, if available */
-	if (Term->resize_hook)
+	if (Term->m_resize_hook)
 	{
-		Term->resize_hook();
+		Term->m_resize_hook();
 	}
 }
 
@@ -1863,16 +1836,15 @@ void Term_activate(term *t)
 	}
 
 	/* Deactivate the old Term */
-	if (Term) Term_xtra(TERM_XTRA_LEVEL, 0);
+	if (Term)
+	{
+		Term->m_frontend->activate_deactivate(false);
+	}
 
 	/* Hack -- Call the special "init" hook */
 	if (t && !t->active_flag)
 	{
-		/* Call the "init" hook */
-		if (t->init_hook)
-		{
-			(*t->init_hook)(t->data);
-		}
+		t->m_frontend->init();
 
 		/* Remember */
 		t->active_flag = true;
@@ -1885,13 +1857,16 @@ void Term_activate(term *t)
 	Term = t;
 
 	/* Activate the new Term */
-	if (Term) Term_xtra(TERM_XTRA_LEVEL, 1);
+	if (Term)
+	{
+		Term->m_frontend->activate_deactivate(true);
+	}
 }
 
 
 void Term_xtra_react()
 {
-	Term_xtra(TERM_XTRA_REACT, 0);
+	Term->m_frontend->react();
 }
 
 /**
@@ -1912,12 +1887,9 @@ void Term_unmapped()
 }
 
 
-/*
- * Nuke a term
- */
-void term_nuke(term *t)
+void Term_rename_main_win(std::string_view name)
 {
-	delete t;
+	Term->m_frontend->rename_main_window(name);
 }
 
 
@@ -1927,31 +1899,23 @@ void term_nuke(term *t)
  * By default, the cursor starts out "invisible"
  * By default, we "erase" using "black spaces"
  */
-term *term_init(void *data, int w, int h, int k)
+term *term_init(int w, int h, int k, std::shared_ptr<Frontend> user_interface)
 {
-	return new term(w, h, k, data);
+	return new term(w, h, k, user_interface);
 }
 
-void term_init_icky_corner(term *t)
+/*
+ * Nuke a term
+ */
+void term_nuke(term *t)
 {
-	t->icky_corner = true;
+	delete t;
 }
 
-void term_init_soft_cursor(term *t)
+/**
+ * Set the function to call when terminal is resized.
+ */
+void term_set_resize_hook(term *t, std::function<void ()> f)
 {
-	t->soft_cursor = true;
-}
-
-void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
-{
-	t->init_hook = hooks.init_hook;
-	t->nuke_hook = hooks.nuke_hook;
-	t->xtra_hook = hooks.xtra_hook;
-	t->curs_hook = hooks.curs_hook;
-	t->text_hook = hooks.text_hook;
-}
-
-void term_set_resize_hook(term *t, resize_hook_t *hook)
-{
-	t->resize_hook = hook;
+	t->m_resize_hook = f;
 }

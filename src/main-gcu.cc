@@ -39,6 +39,7 @@
  */
 
 #include "main.hpp"
+#include "frontend.hpp"
 #include "variable.hpp"
 #include "z-util.hpp"
 
@@ -202,12 +203,6 @@ struct term_data
 
 /* Information about our windows */
 static term_data data[MAX_TERM_DATA];
-
-
-/*
- * Hack -- Number of initialized "term" structures
- */
-static int active = 0;
 
 
 /*
@@ -430,116 +425,6 @@ static void keymap_game_prepare()
 
 
 /*
- * Init the "curses" system
- */
-static void Term_init_gcu(void *data)
-{
-	term_data *td = (term_data *) data;
-
-	/* Count init's, handle first */
-	if (active++ != 0) return;
-
-	/* Erase the window */
-	(void)wclear(td->win);
-
-	/* Reset the cursor */
-	(void)wmove(td->win, 0, 0);
-
-	/* Flush changes */
-	(void)wrefresh(td->win);
-
-	/* Game keymap */
-	keymap_game();
-}
-
-
-/*
- * Nuke the "curses" system
- */
-static void Term_nuke_gcu(void *data)
-{
-	int x, y;
-	term_data *td = (term_data *) data;
-
-	/* Delete this window */
-	delwin(td->win);
-
-	/* Count nuke's, handle last */
-	if (--active != 0) return;
-
-	/* Reset colors to defaults */
-	start_color();
-
-	/* Get current cursor position */
-	getyx(curscr, y, x);
-
-	/* Move the cursor to bottom right corner */
-	mvcur(y, x, LINES - 1, 0);
-
-	/* Flush the curses buffer */
-	(void)refresh();
-
-	/* Exit curses */
-	endwin();
-
-	/* Flush the output */
-	(void)fflush(stdout);
-
-	/* Normal keymap */
-	keymap_norm();
-}
-
-
-/*
-* Process events (with optional wait)
-*/
-static errr Term_xtra_gcu_event(int v)
-{
-	int i, k;
-
-	char buf[2];
-
-	/* Wait */
-	if (v)
-	{
-		/* Wait for one byte */
-		i = read(0, buf, 1);
-
-		/* Hack -- Handle bizarre "errors" */
-		if ((i <= 0) && (errno != EINTR)) abort();
-	}
-
-	/* Do not wait */
-	else
-	{
-		/* Get the current flags for stdin */
-		k = fcntl(0, F_GETFL, 0);
-
-		/* Oops */
-		if (k < 0) return (1);
-
-		/* Tell stdin not to block */
-		if (fcntl(0, F_SETFL, k | O_NDELAY) < 0) return (1);
-
-		/* Read one byte, if possible */
-		i = read(0, buf, 1);
-
-		/* Replace the flags for stdin */
-		if (fcntl(0, F_SETFL, k)) return (1);
-	}
-
-	/* Ignore "invalid" keys */
-	if ((i != 1) || (!buf[0])) return (1);
-
-	/* Enqueue the keypress */
-	Term_keypress(buf[0]);
-
-	/* Success */
-	return (0);
-}
-
-
-/*
  * React to changes
  */
 static void Term_xtra_gcu_react()
@@ -567,82 +452,213 @@ static void Term_xtra_gcu_react()
 
 
 /*
- * Handle a "special request"
+ * User Interface for GCU.
  */
-static void Term_xtra_gcu(void *data, int n, int v)
-{
-	term_data *td = (term_data *) data;
+class CursesFrontend final : public Frontend {
 
-	/* Analyze the request */
-	switch (n)
+	/*
+	 * Hack -- Number of initialized "term" structures
+	 */
+	static int m_active;
+
+private:
+	term_data *m_term_data;
+
+	bool event_aux(bool wait)
 	{
-		/* Clear screen */
-	case TERM_XTRA_CLEAR:
-		touchwin(td->win);
-		(void)wclear(td->win);
-		return;
+		int i, k;
 
-		/* Make a noise */
-	case TERM_XTRA_NOISE:
-		(void)write(1, "\007", 1);
-		return;
+		char buf[2];
 
-		/* Flush the Curses buffer */
-	case TERM_XTRA_FRESH:
-		(void)wrefresh(td->win);
-		return;
+		/* Wait */
+		if (wait)
+		{
+			/* Wait for one byte */
+			i = read(0, buf, 1);
 
-		/* Process events */
-	case TERM_XTRA_EVENT:
-		Term_xtra_gcu_event(v);
-		return;
+			/* Hack -- Handle bizarre "errors" */
+			if ((i <= 0) && (errno != EINTR)) abort();
+		}
 
-		/* Flush events */
-	case TERM_XTRA_FLUSH:
-		while (!Term_xtra_gcu_event(false));
-		return;
+		/* Do not wait */
+		else
+		{
+			/* Get the current flags for stdin */
+			k = fcntl(0, F_GETFL, 0);
 
-		/* React to events */
-	case TERM_XTRA_REACT:
+			/* Oops */
+			if (k < 0)
+			{
+				return false;
+			}
+
+			/* Tell stdin not to block */
+			if (fcntl(0, F_SETFL, k | O_NDELAY) < 0)
+			{
+				return false;
+			}
+
+			/* Read one byte, if possible */
+			i = read(0, buf, 1);
+
+			/* Replace the flags for stdin */
+			if (fcntl(0, F_SETFL, k))
+			{
+				return false;
+			}
+		}
+
+		/* Ignore "invalid" keys */
+		if ((i != 1) || (!buf[0]))
+		{
+			return false;
+		}
+
+		/* Enqueue the keypress */
+		Term_keypress(buf[0]);
+
+		/* Success */
+		return true;
+	}
+
+public:
+	explicit CursesFrontend(term_data *term_data)
+		: m_term_data(term_data)
+	{
+	}
+
+	void init() final
+	{
+		/* Count init's, handle first */
+		if (m_active++ != 0) return;
+
+		/* Clear */
+		wclear(m_term_data->win);
+		wmove(m_term_data->win, 0, 0);
+		wrefresh(m_term_data->win);
+
+		/* Game keymap */
+		keymap_game();
+	};
+
+	bool icky_corner() const final
+	{
+		return true;
+	}
+
+	bool soft_cursor() const final
+	{
+		return false;
+	}
+
+	void nuke() final
+	{
+		/* Delete this window */
+		delwin(m_term_data->win);
+
+		/* Count nuke's, handle last */
+		if (--m_active != 0) return;
+
+		/* Reset colors to defaults */
+		start_color();
+
+		/* Get current cursor position */
+		int x, y;
+		getyx(curscr, y, x);
+
+		/* Move the cursor to bottom right corner */
+		mvcur(y, x, LINES - 1, 0);
+
+		/* Flush the curses buffer */
+		refresh();
+
+		/* Exit curses */
+		endwin();
+
+		/* Flush the output */
+		fflush(stdout);
+
+		/* Normal keymap */
+		keymap_norm();
+	}
+
+	void process_event(bool wait) final
+	{
+		event_aux(wait);
+	}
+
+	void flush_events() final
+	{
+		while (event_aux(false))
+		{
+			// Keep flushing
+		}
+	}
+
+	void clear() final
+	{
+		touchwin(m_term_data->win);
+		wclear(m_term_data->win);
+	}
+
+	void flush_output() final
+	{
+		wrefresh(m_term_data->win);
+	}
+
+	void noise() final
+	{
+		write(1, "\007", 1);
+	}
+
+	void process_queued_events() final
+	{
+		// No action necessary
+	}
+
+	void react() final
+	{
 		Term_xtra_gcu_react();
-		return;
 	}
-}
 
-
-/*
- * Actually MOVE the hardware cursor
- */
-static void Term_curs_gcu(void *data, int x, int y)
-{
-	term_data *td = (term_data *) data;
-
-	/* Literally move the cursor */
-	wmove(td->win, y, x);
-}
-
-
-/*
- * Place some text on the screen using an attribute
- */
-static void Term_text_gcu(void *data, int x, int y, int n, byte a, const char *s)
-{
-	term_data *td = (term_data *) data;
-
-	/* Set the color */
-	if (can_use_color) wattrset(td->win, colortable[a & 0x0F]);
-
-	/* Move the cursor */
-	wmove(td->win, y, x);
-
-	/* Draw each character */
-	for (int i = 0; i < n; i++)
+	void activate_deactivate(bool) final
 	{
-
-		/* Draw a normal character */
-		waddch(td->win, (byte)s[i]);
+		// No action necessary
 	}
-}
+
+	void rename_main_window(std::string_view) final
+	{
+		// Don't have window titles
+	}
+
+	void draw_cursor(int x, int y) final
+	{
+		wmove(m_term_data->win, y, x);
+	}
+
+	void draw_text(int x, int y, int n, byte a, const char *s) final
+	{
+		/* Set the color */
+		if (can_use_color)
+		{
+			wattrset(m_term_data->win, colortable[a & 0x0F]);
+		}
+
+		/* Move the cursor */
+		wmove(m_term_data->win, y, x);
+
+		/* Draw each character */
+		for (int i = 0; i < n; i++)
+		{
+
+			/* Draw a normal character */
+			waddch(m_term_data->win, (byte)s[i]);
+		}
+	}
+
+};
+
+int CursesFrontend::m_active = 0;
 
 
 /*
@@ -662,19 +678,8 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 		quit("Failed to setup curses window.");
 	}
 
-	/* Hooks */
-	struct term_ui_hooks_t ui_hooks = {
-		Term_init_gcu,
-		Term_nuke_gcu,
-		Term_xtra_gcu,
-		Term_curs_gcu,
-		Term_text_gcu,
-	};
-
 	/* Initialize the term */
-	td->term_ptr = term_init(td, cols, rows, 256);
-	term_init_icky_corner(td->term_ptr);
-	term_init_ui_hooks(td->term_ptr, ui_hooks);
+	td->term_ptr = term_init(cols, rows, 256, std::make_shared<CursesFrontend>(td));
 
 	/* Activate it */
 	Term_activate(td->term_ptr);
@@ -684,12 +689,8 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 }
 
 
-static void hook_quit(const char *str)
+static void hook_quit(const char *)
 {
-	/* Unused */
-	(void)str;
-
-	/* Exit curses */
 	endwin();
 }
 

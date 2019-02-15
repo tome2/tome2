@@ -187,7 +187,7 @@ static void activate_module(int module_idx)
 	if (equals(game_module, "ToME"))
 	{
 		strnfmt(angband_term_name[0], 79, "T-Engine: %s", game_module);
-		Term_xtra(TERM_XTRA_RENAME_MAIN_WIN, 0);
+		Term_rename_main_win(angband_term_name[0]);
 	}
 }
 

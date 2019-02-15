@@ -32,6 +32,7 @@
 
 #include "config.hpp"
 #include "files.hpp"
+#include "frontend.hpp"
 #include "main.hpp"
 #include "util.hpp"
 #include "variable.hpp"
@@ -261,34 +262,6 @@ static void term_data_set_fg(term_data *td, byte attr)
 
 
 /*
- * Free data used by a term
- */
-static void Term_nuke_gtk(void *data)
-{
-	term_data *td = (term_data *) data;
-
-	/* Free name */
-	if (td->name) free(td->name);
-
-	/* Forget it */
-	td->name = NULL;
-
-	/* Free font */
-	if (td->font) gdk_font_unref(td->font);
-
-	/* Forget it */
-	td->font = NULL;
-
-	/* Free backing store */
-	if (td->backing_store) gdk_pixmap_unref(td->backing_store);
-
-	/* Forget it too */
-	td->backing_store = NULL;
-
-}
-
-
-/*
  * Erase the whole term.
  */
 static void Term_clear_gtk(term_data *td)
@@ -347,81 +320,6 @@ static errr Term_wipe_gtk(term_data *td, int x, int y, int n)
 
 
 /*
- * Draw some textual characters.
- */
-static void Term_text_gtk(void *data, int x, int y, int n, byte a, const char *s)
-{
-	term_data *td = (term_data *) data;
-
-	/* Don't draw to hidden windows */
-	if (!td->shown)
-	{
-		return;
-	}
-
-	/* Paranoia */
-	g_assert(td->drawing_area->window != 0);
-
-	/* Set foreground colour */
-	term_data_set_fg(td, a);
-
-	/* Clear the line */
-	Term_wipe_gtk(td, x, y, n);
-
-	/* Draw the text to the window */
-	gdk_draw_text(
-	        TERM_DATA_DRAWABLE(td),
-	        td->font,
-	        td->gc,
-	        x * td->font_wid,
-	        td->font->ascent + y * td->font_hgt,
-	        s,
-	        n);
-
-	/* Copy image from backing store if present */
-	TERM_DATA_REFRESH(td, x, y, n, 1);
-}
-
-
-/*
- * Draw software cursor at (x, y)
- */
-static void Term_curs_gtk(void *data, int x, int y)
-{
-	term_data *td = (term_data *) data;
-	int cells = 1;
-
-
-	/* Don't draw to hidden windows */
-	if (!td->shown)
-	{
-		return;
-	}
-
-	/* Paranoia */
-	g_assert(td->drawing_area->window != 0);
-
-	/* Set foreground colour */
-	term_data_set_fg(td, TERM_YELLOW);
-
-	/* Draw the software cursor */
-	gdk_draw_rectangle(
-	        TERM_DATA_DRAWABLE(td),
-	        td->gc,
-	        false,
-	        x * td->font_wid,
-	        y * td->font_hgt,
-	        td->font_wid * cells - 1,
-	        td->font_hgt - 1);
-
-	/* Copy image from backing store if present */
-	TERM_DATA_REFRESH(td, x, y, cells, 1);
-}
-
-
-
-
-/*
  * Process an event, if there's none block when wait is set true,
  * return immediately otherwise.
  */
@@ -442,70 +340,165 @@ static void DrainEvents()
 }
 
 
-/*
- * Handle a "special request"
+
+/**
+ * GTK2 implementation of a UserInterface
  */
-static void Term_xtra_gtk(void *term_data_ctx, int n, int v)
-{
-	term_data *td = (term_data *) term_data_ctx;
+class Gtk2Frontend final : public Frontend {
 
-	/* Handle a subset of the legal requests */
-	switch (n)
+private:
+	term_data *m_term_data;
+
+public:
+	Gtk2Frontend(term_data *term_data)
+		: m_term_data(term_data)
 	{
-		/* Make a noise */
-	case TERM_XTRA_NOISE:
-		{
-			gdk_beep();
-			return;
-		}
-
-		/* Flush the output */
-	case TERM_XTRA_FRESH:
-		{
-			gdk_flush();
-			return;
-		}
-
-		/* Process random events */
-	case TERM_XTRA_BORED:
-		{
-			CheckEvent(false);
-			return;
-		}
-
-		/* Process Events */
-	case TERM_XTRA_EVENT:
-		{
-			CheckEvent(v);
-			return;
-		}
-
-		/* Flush the events */
-	case TERM_XTRA_FLUSH:
-		{
-			DrainEvents();
-			return;
-		}
-
-		/* Clear the screen */
-	case TERM_XTRA_CLEAR:
-		Term_clear_gtk(td);
-		return;
-
-		/* Rename main window */
-	case TERM_XTRA_RENAME_MAIN_WIN:
-		gtk_window_set_title(GTK_WINDOW(data[0].window), angband_term_name[0]);
-		return;
-
-		/* React to changes */
-	case TERM_XTRA_REACT:
-		{
-			init_colours();
-			return;
-		}
 	}
-}
 
+	void init() final
+	{
+	}
+
+	void nuke() final
+	{
+		/* Free name */
+		if (m_term_data->name)
+		{
+			free(m_term_data->name);
+		}
+		m_term_data->name = NULL;
+
+		/* Free font */
+		if (m_term_data->font)
+		{
+			gdk_font_unref(m_term_data->font);
+		}
+		m_term_data->font = NULL;
+
+		/* Free backing store */
+		if (m_term_data->backing_store)
+		{
+			gdk_pixmap_unref(m_term_data->backing_store);
+		}
+		m_term_data->backing_store = NULL;
+	}
+
+	void process_event(bool wait) final
+	{
+		CheckEvent(wait);
+	}
+
+	bool soft_cursor() const final
+	{
+		return true;
+	}
+
+	bool icky_corner() const final
+	{
+		return false;
+	}
+
+	void flush_events() final
+	{
+		DrainEvents();
+	}
+
+	void process_queued_events() final
+	{
+		CheckEvent(false);
+	}
+
+	void clear() final
+	{
+		Term_clear_gtk(m_term_data);
+	}
+
+	void flush_output() final
+	{
+		gdk_flush();
+	}
+
+	void noise() final
+	{
+		gdk_beep();
+	}
+
+	void react() final
+	{
+		init_colours();
+	}
+
+	void activate_deactivate(bool resume) final
+	{
+		// No action necessary
+	};
+
+	void rename_main_window(std::string_view name_sv) final
+	{
+		gtk_window_set_title(GTK_WINDOW(data[0].window), std::string(angband_term_name[0]).c_str());
+	}
+
+	void draw_cursor(int x, int y) final
+	{
+		int cells = 1;
+
+		/* Don't draw to hidden windows */
+		if (!m_term_data->shown)
+		{
+			return;
+		}
+
+		/* Paranoia */
+		g_assert(m_term_data->drawing_area->window != 0);
+
+		/* Set foreground colour */
+		term_data_set_fg(m_term_data, TERM_YELLOW);
+
+		/* Draw the software cursor */
+		gdk_draw_rectangle(
+			TERM_DATA_DRAWABLE(m_term_data),
+			m_term_data->gc,
+			false,
+			x * m_term_data->font_wid,
+			y * m_term_data->font_hgt,
+			m_term_data->font_wid * cells - 1,
+			m_term_data->font_hgt - 1);
+
+		/* Copy image from backing store if present */
+		TERM_DATA_REFRESH(m_term_data, x, y, cells, 1);
+	}
+
+	void draw_text(int x, int y, int n, byte a, const char *s) final
+	{
+		/* Don't draw to hidden windows */
+		if (!m_term_data->shown)
+		{
+			return;
+		}
+
+		/* Paranoia */
+		g_assert(m_term_data->drawing_area->window != 0);
+
+		/* Set foreground colour */
+		term_data_set_fg(m_term_data, a);
+
+		/* Clear the line */
+		Term_wipe_gtk(m_term_data, x, y, n);
+
+		/* Draw the text to the window */
+		gdk_draw_text(
+			TERM_DATA_DRAWABLE(m_term_data),
+			m_term_data->font,
+			m_term_data->gc,
+			x * m_term_data->font_wid,
+			m_term_data->font->ascent + y * m_term_data->font_hgt,
+			s,
+			n);
+
+		/* Copy image from backing store if present */
+		TERM_DATA_REFRESH(m_term_data, x, y, n, 1);
+	}
+};
 
 
 
@@ -1215,19 +1208,8 @@ static term *term_data_init(term_data *td, int i)
 	td->cols = 80;
 	td->rows = 24;
 
-	/* Hooks */
-	struct term_ui_hooks_t ui_hooks = {
-		NULL /* init */,
-		Term_nuke_gtk,
-		Term_xtra_gtk,
-		Term_curs_gtk,
-		Term_text_gtk,
-	};
-
 	/* Initialize the term */
-	td->term_ptr = term_init(td, td->cols, td->rows, 1024);
-	term_init_soft_cursor(td->term_ptr);
-	term_init_ui_hooks(td->term_ptr, ui_hooks);
+	td->term_ptr = term_init(td->cols, td->rows, 1024, std::make_shared<Gtk2Frontend>(td));
 
 	/* Store the name of the term */
 	assert(angband_term_name[i] != NULL);
