@@ -1662,7 +1662,7 @@ static void Term_text_x11(void *data, int x, int y, int n, byte a, const char *s
 /*
  * Initialize a term_data
  */
-static errr term_data_init(term_data *td, int i)
+static term *term_data_init(term_data *td, int i)
 {
 	const char *name = angband_term_name[i];
 
@@ -1908,7 +1908,7 @@ static errr term_data_init(term_data *td, int i)
 	Term_activate(td->term_ptr);
 
 	/* Success */
-	return (0);
+	return td->term_ptr;
 }
 
 
@@ -2003,10 +2003,10 @@ errr init_x11(int argc, char *argv[])
 		term_data *td = &data[i];
 
 		/* Initialize the term_data */
-		term_data_init(td, i);
+		term *t = term_data_init(td, i);
 
 		/* Save global entry */
-		angband_term[i] = Term;
+		angband_term[i] = t;
 	}
 
 	/* Raise the "Angband" window */

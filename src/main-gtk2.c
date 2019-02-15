@@ -1222,7 +1222,7 @@ static gboolean expose_event_handler(
 /*
  * Initialise a term_data struct
  */
-static errr term_data_init(term_data *td, int i)
+static term *term_data_init(term_data *td, int i)
 {
 	char *p;
 
@@ -1254,7 +1254,7 @@ static errr term_data_init(term_data *td, int i)
 	Term_activate(td->term_ptr);
 
 	/* Success */
-	return (0);
+	return td->term_ptr;
 }
 
 
@@ -1918,14 +1918,14 @@ int init_gtk2(int argc, char **argv)
 		term_data *td = &data[i];
 
 		/* Initialize the term_data */
-		term_data_init(td, i);
+		term *t = term_data_init(td, i);
 
 		/* Hack - Set the shown flag, meaning "to be shown" XXX XXX */
 		if (i < num_term) td->shown = TRUE;
 		else td->shown = FALSE;
 
 		/* Save global entry */
-		angband_term[i] = Term;
+		angband_term[i] = t;
 
 		/* Init the window */
 		init_gtk_window(td, i);

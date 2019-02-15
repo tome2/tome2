@@ -1610,7 +1610,7 @@ void manipulationMode(void)
  INITIALIZATION ROUTINES
  *************************************************/
 
-static errr term_data_init(term_data *td, int i)
+static term *term_data_init(term_data *td, int i)
 {
 	char env_var[80];
 	const char *val;
@@ -1768,7 +1768,7 @@ static errr term_data_init(term_data *td, int i)
 	printf("Init-int term: %d\n",i);
 
 	/* Success */
-	return (0);
+	return td->term_ptr;
 }
 
 /* dumpWindowSettings is responsible for exporting all current
@@ -2052,10 +2052,10 @@ int init_sdl(int argc, char **argv)
 		term_data *td = &data[i];
 
 		/* Initialize the term_data */
-		term_data_init(td, i);
+		term *t = term_data_init(td, i);
 
 		/* Save global entry */
-		angband_term[i] = Term;
+		angband_term[i] = t;
 		
 		/* Add into term_order */
 		term_order[i] = td;
