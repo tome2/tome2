@@ -1915,7 +1915,7 @@ void monster_carry(monster_type *m_ptr, int m_idx, object_type *q_ptr)
 		}
 		else if (q_ptr->k_ptr->flags & TR_NORM_ART)
 		{
-			q_ptr->k_ptr->artifact = 0;
+			q_ptr->k_ptr->artifact = false;
 		}
 		else if (q_ptr->tval == TV_RANDART)
 		{

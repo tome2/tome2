@@ -2598,7 +2598,7 @@ void summon_true(int r_idx, int item)
 
 	/* Summon the monster */
 	bypass_r_ptr_max_num = true;
-	if (!(i = place_monster_one (y, x, r_idx, 0, 0, status)))
+	if (!(i = place_monster_one (y, x, r_idx, 0, false, status)))
 	{
 		msg_print("The summoning fails.");
 	}
@@ -2674,7 +2674,7 @@ void do_cmd_summoner_summon()
 	/* Summon the monster */
 	bypass_r_ptr_max_num = true;
 	place_monster_one_no_drop = true;
-	m_idx = place_monster_one(y, x, o_ptr->pval, 0, 0, MSTATUS_PET);
+	m_idx = place_monster_one(y, x, o_ptr->pval, 0, false, MSTATUS_PET);
 	bypass_r_ptr_max_num = false;
 
 	/* Failure. */

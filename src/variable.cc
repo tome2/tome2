@@ -600,7 +600,7 @@ s32b DUNGEON_ASTRAL_WILD_Y = 19;
 const char *get_version_string()
 {
 	static char version_str[80];
-	static bool initialized = 0;
+	static bool initialized = false;
 	if (!initialized) {
 		sprintf(version_str, "%s %ld.%ld.%ld%s",
 		        game_module,

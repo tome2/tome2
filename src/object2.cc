@@ -1429,28 +1429,28 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	case TV_STAFF:
 		{
 			/* Require knowledge for both staffs. */
-			if ((!object_known_p(o_ptr)) || (!object_known_p(j_ptr))) return (0);
+			if ((!object_known_p(o_ptr)) || (!object_known_p(j_ptr))) return (false);
 
 			/* Require identical charges, since staffs are bulky. */
-			if (o_ptr->pval != j_ptr->pval) return (0);
+			if (o_ptr->pval != j_ptr->pval) return (false);
 
 			/* Do not combine recharged ones with non recharged ones. */
-			if ((o_flags & TR_RECHARGED) != (j_flags & TR_RECHARGED)) return (0);
+			if ((o_flags & TR_RECHARGED) != (j_flags & TR_RECHARGED)) return (false);
 
 			/* Do not combine different spells */
-			if (o_ptr->pval2 != j_ptr->pval2) return (0);
+			if (o_ptr->pval2 != j_ptr->pval2) return (false);
 
 			/* Do not combine different base levels */
-			if (o_ptr->pval3 != j_ptr->pval3) return (0);
+			if (o_ptr->pval3 != j_ptr->pval3) return (false);
 
 			/* Beware artifatcs should not combibne with "lesser" thing */
-			if (o_ptr->name1 != j_ptr->name1) return (0);
+			if (o_ptr->name1 != j_ptr->name1) return (false);
 
 			/* Do not combine different ego or normal ones */
-			if (o_ptr->name2 != j_ptr->name2) return (0);
+			if (o_ptr->name2 != j_ptr->name2) return (false);
 
 			/* Do not combine different ego or normal ones */
-			if (o_ptr->name2b != j_ptr->name2b) return (0);
+			if (o_ptr->name2b != j_ptr->name2b) return (false);
 
 			/* Assume okay */
 			break;
@@ -1460,25 +1460,25 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	case TV_WAND:
 		{
 			/* Require knowledge for both wands. */
-			if ((!object_known_p(o_ptr)) || !object_known_p(j_ptr)) return (0);
+			if ((!object_known_p(o_ptr)) || !object_known_p(j_ptr)) return (false);
 
 			/* Beware artifatcs should not combibne with "lesser" thing */
-			if (o_ptr->name1 != j_ptr->name1) return (0);
+			if (o_ptr->name1 != j_ptr->name1) return (false);
 
 			/* Do not combine recharged ones with non recharged ones. */
-			if ((o_flags & TR_RECHARGED) != (j_flags & TR_RECHARGED)) return (0);
+			if ((o_flags & TR_RECHARGED) != (j_flags & TR_RECHARGED)) return (false);
 
 			/* Do not combine different spells */
-			if (o_ptr->pval2 != j_ptr->pval2) return (0);
+			if (o_ptr->pval2 != j_ptr->pval2) return (false);
 
 			/* Do not combine different base levels */
-			if (o_ptr->pval3 != j_ptr->pval3) return (0);
+			if (o_ptr->pval3 != j_ptr->pval3) return (false);
 
 			/* Do not combine different ego or normal ones */
-			if (o_ptr->name2 != j_ptr->name2) return (0);
+			if (o_ptr->name2 != j_ptr->name2) return (false);
 
 			/* Do not combine different ego or normal ones */
-			if (o_ptr->name2b != j_ptr->name2b) return (0);
+			if (o_ptr->name2b != j_ptr->name2b) return (false);
 
 			/* Assume okay */
 			break;
@@ -1527,7 +1527,7 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	case TV_LITE:
 		{
 			/* Require full knowledge of both items */
-			if (!object_known_p(o_ptr) || !object_known_p(j_ptr)) return (0);
+			if (!object_known_p(o_ptr) || !object_known_p(j_ptr)) return (false);
 
 			/* Require identical "turns of light" */
 			if (o_ptr->timeout != j_ptr->timeout) return false;
@@ -1541,7 +1541,7 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	case TV_SHOT:
 		{
 			/* Require identical knowledge of both items */
-			if (object_known_p(o_ptr) != object_known_p(j_ptr)) return (0);
+			if (object_known_p(o_ptr) != object_known_p(j_ptr)) return (false);
 
 			/* Require identical "bonuses" */
 			if (o_ptr->to_h != j_ptr->to_h) return false;
@@ -1596,7 +1596,7 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	default:
 		{
 			/* Require knowledge */
-			if (!object_known_p(o_ptr) || !object_known_p(j_ptr)) return (0);
+			if (!object_known_p(o_ptr) || !object_known_p(j_ptr)) return (false);
 
 			/* Probably okay */
 			break;
@@ -1607,17 +1607,17 @@ bool object_similar(object_type const *o_ptr, object_type const *j_ptr)
 	/* Hack -- Identical art_flags! */
 	if (o_ptr->art_flags != j_ptr->art_flags)
 	{
-		return (0);
+		return (false);
 	}
 
 	/* Hack -- require semi-matching "inscriptions" */
 	if ((!o_ptr->inscription.empty()) && (!j_ptr->inscription.empty()) && (o_ptr->inscription != j_ptr->inscription))
 	{
-		return (0);
+		return (false);
 	}
 
 	/* Maximal "stacking" limit */
-	if (total >= MAX_STACK_SIZE) return (0);
+	if (total >= MAX_STACK_SIZE) return (false);
 
 
 	/* They match, so they must be similar */
@@ -4690,7 +4690,7 @@ void place_object(int y, int x, bool good, bool great, int where)
 		}
 		else if (q_ptr->k_ptr->flags & TR_NORM_ART)
 		{
-			q_ptr->k_ptr->artifact = 0;
+			q_ptr->k_ptr->artifact = false;
 		}
 		else if (q_ptr->tval == TV_RANDART)
 		{
@@ -5061,7 +5061,7 @@ s16b drop_near(object_type *j_ptr, int chance, int y, int x)
 		}
 		else if (j_ptr->k_ptr->flags & TR_NORM_ART)
 		{
-			j_ptr->k_ptr->artifact = 0;
+			j_ptr->k_ptr->artifact = false;
 		}
 		else if (j_ptr->tval == TV_RANDART)
 		{

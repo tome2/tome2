@@ -3410,7 +3410,7 @@ static bool grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, co
 	if (auto f = object_flag_set_from_string(what))
 	{
 		*flags |= f;
-		return 0;
+		return false;
 	}
 
 	/* Lookup as ego flag */
@@ -3419,7 +3419,7 @@ static bool grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, co
 		if (auto f = lookup_ego_flag(what))
 		{
 			*ego |= f;
-			return (0);
+			return (false);
 		}
 	}
 
@@ -3427,7 +3427,7 @@ static bool grab_one_ego_item_flag(object_flag_set *flags, ego_flag_set *ego, co
 	msg_format("Unknown ego-item flag '%s'.", what);
 
 	/* Error */
-	return (1);
+	return (true);
 }
 
 

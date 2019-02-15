@@ -1572,7 +1572,7 @@ static void Term_xtra_x11(void *data, int n, int v)
 
 		/* Process random events XXX */
 	case TERM_XTRA_BORED:
-		CheckEvent(td, 0);
+		CheckEvent(td, false);
 		return;
 
 		/* Process Events XXX */

@@ -7273,7 +7273,7 @@ static void fill_level(bool use_floor, byte smooth)
 		x_wrap = ((cur_wid - 1) / (step * 2)) * (step * 2);
 
 		/* Initialise vertical phase */
-		y_even = 0;
+		y_even = false;
 
 		for (y = 0; y < cur_hgt; y += step)
 		{
@@ -7281,7 +7281,7 @@ static void fill_level(bool use_floor, byte smooth)
 			y_even = !y_even;
 
 			/* Initialise horizontal phase */
-			x_even = 0;
+			x_even = false;
 
 			for (x = 0; x < cur_wid; x += step)
 			{

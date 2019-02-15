@@ -484,61 +484,61 @@ static void mass_produce(object_type *o_ptr)
 static bool store_object_similar(object_type const *o_ptr, object_type *j_ptr)
 {
 	/* Hack -- Identical items cannot be stacked */
-	if (o_ptr == j_ptr) return (0);
+	if (o_ptr == j_ptr) return (false);
 
 	/* Different objects cannot be stacked */
-	if (o_ptr->k_ptr != j_ptr->k_ptr) return (0);
+	if (o_ptr->k_ptr != j_ptr->k_ptr) return (false);
 
 	/* Different charges (etc) cannot be stacked, unless wands or rods. */
-	if ((o_ptr->pval != j_ptr->pval) && (o_ptr->tval != TV_WAND)) return (0);
+	if ((o_ptr->pval != j_ptr->pval) && (o_ptr->tval != TV_WAND)) return (false);
 
 	/* Require many identical values */
-	if (o_ptr->pval2 != j_ptr->pval2) return (0);
-	if (o_ptr->pval3 != j_ptr->pval3) return (0);
+	if (o_ptr->pval2 != j_ptr->pval2) return (false);
+	if (o_ptr->pval3 != j_ptr->pval3) return (false);
 
 	/* Require many identical values */
-	if (o_ptr->to_h != j_ptr->to_h) return (0);
-	if (o_ptr->to_d != j_ptr->to_d) return (0);
-	if (o_ptr->to_a != j_ptr->to_a) return (0);
+	if (o_ptr->to_h != j_ptr->to_h) return (false);
+	if (o_ptr->to_d != j_ptr->to_d) return (false);
+	if (o_ptr->to_a != j_ptr->to_a) return (false);
 
 	/* Require identical "artifact" names */
-	if (o_ptr->name1 != j_ptr->name1) return (0);
+	if (o_ptr->name1 != j_ptr->name1) return (false);
 
 	/* Require identical "ego-item" names */
-	if (o_ptr->name2 != j_ptr->name2) return (0);
+	if (o_ptr->name2 != j_ptr->name2) return (false);
 
 	/* Require identical "ego-item" names */
-	if (o_ptr->name2b != j_ptr->name2b) return (0);
+	if (o_ptr->name2b != j_ptr->name2b) return (false);
 
 	/* Random artifacts don't stack !*/
-	if (!o_ptr->artifact_name.empty()) return 0;
-	if (!j_ptr->artifact_name.empty()) return 0;
+	if (!o_ptr->artifact_name.empty()) return false;
+	if (!j_ptr->artifact_name.empty()) return false;
 
 	/* Hack -- Identical art_flags! */
 	if (o_ptr->art_flags != j_ptr->art_flags)
-		return (0);
+		return (false);
 
 	/* Hack -- Never stack "powerful" items */
-	if (o_ptr->xtra1 || j_ptr->xtra1) return (0);
+	if (o_ptr->xtra1 || j_ptr->xtra1) return (false);
 
 	if (o_ptr->tval == TV_LITE)
 	{
 		/* Require identical "turns of light" */
-		if (o_ptr->timeout != j_ptr->timeout) return (0);
+		if (o_ptr->timeout != j_ptr->timeout) return (false);
 	}
 	else
 	{
 		/* Hack -- Never stack recharging items */
-		if (o_ptr->timeout || j_ptr->timeout) return (0);
+		if (o_ptr->timeout || j_ptr->timeout) return (false);
 	}
 
 	/* Require many identical values */
-	if (o_ptr->ac	!= j_ptr->ac) return (0);
-	if (o_ptr->dd	!= j_ptr->dd) return (0);
-	if (o_ptr->ds	!= j_ptr->ds) return (0);
+	if (o_ptr->ac	!= j_ptr->ac) return (false);
+	if (o_ptr->dd	!= j_ptr->dd) return (false);
+	if (o_ptr->ds	!= j_ptr->ds) return (false);
 
 	/* Require matching discounts */
-	if (o_ptr->discount != j_ptr->discount) return (0);
+	if (o_ptr->discount != j_ptr->discount) return (false);
 
 	/* They match, so they must be similar */
 	return true;

@@ -637,7 +637,7 @@ static void player_wipe()
 	{
 		auto k_ptr = k_entry.second;
 		k_ptr->aware = false;
-		k_ptr->artifact = 0;
+		k_ptr->artifact = false;
 	}
 
 
@@ -675,7 +675,7 @@ static void player_wipe()
 
 	/* Assume no cheating */
 	noscore = 0;
-	wizard = 0;
+	wizard = false;
 
 	/* Clear the fate */
 	for (std::size_t i = 0; i < MAX_FATES; i++)
