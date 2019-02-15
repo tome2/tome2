@@ -1557,9 +1557,13 @@ static void copy_x11_start(int x, int y)
  */
 static void copy_x11_cont(int x, int y, unsigned int buttons)
 {
+	int w;
+	int h;
+	Term_get_size(&w, &h);
+
 	/* Use the nearest square within bounds if the mouse is outside. */
-	x = MIN(MAX(x, 0), Term->wid - 1);
-	y = MIN(MAX(y, 0), Term->hgt - 1);
+	x = MIN(MAX(x, 0), w - 1);
+	y = MIN(MAX(y, 0), h - 1);
 
 	/* The left mouse button isn't pressed. */
 	if (~buttons & Button1Mask) return;
@@ -1688,6 +1692,8 @@ static void paste_x11_send(XSelectionRequestEvent *rq)
 		char buf[1024];
 		co_ord max, min;
 		int x, y, l;
+		int wid;
+		int hgt;
 		byte a;
 		char c;
 
@@ -1704,12 +1710,15 @@ static void paste_x11_send(XSelectionRequestEvent *rq)
 		/* Delete the old value of the property. */
 		XDeleteProperty(DPY, rq->requestor, rq->property);
 
-		for (y = 0; y < Term->hgt; y++)
+		/* Get the terminal size */
+		Term_get_size(&wid, &hgt);
+
+		for (y = 0; y < hgt; y++)
 		{
 			if (y < min.y) continue;
 			if (y > max.y) break;
 
-			for (x = l = 0; x < Term->wid; x++)
+			for (x = l = 0; x < wid; x++)
 			{
 				if (x < min.x) continue;
 				if (x > max.x) break;

@@ -1207,9 +1207,14 @@ void resizeTerminal(int width, int height)
 		size we wanted (some windows have size limits it seems,
 		like the message window). So, update our structure with
 		the size that were actually obtained.*/
-		td->cols = Term->wid;
-		td->rows = Term->hgt;
-		
+		{
+			int w;
+			int h;
+			Term_get_size(&w, &h);
+			td->cols = w;
+			td->rows = h;
+		}
+
 		/* And recalculate the sizes */
 		UPDATE_SIZE(td);		
 		
