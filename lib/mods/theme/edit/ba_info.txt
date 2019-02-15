@@ -154,11 +154,6 @@ N:43:View fate
 C:500:500:500
 I:42:0:v
 
-#for The Mirror
-N:44:Research item
-C:1500:1500:1500
-I:1:0:a
-
 #for Star-Dome
 N:47:Recharge item
 C:1200:1000:150
