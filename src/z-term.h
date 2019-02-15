@@ -166,7 +166,7 @@ errr Term_activate(term *t);
 void Term_mapped();
 void Term_unmapped();
 
-errr term_nuke(term *t);
+void term_nuke(term *t);
 term *term_init(void *data, int w, int h, int k);
 void term_init_icky_corner(term *t);
 void term_init_soft_cursor(term *t);

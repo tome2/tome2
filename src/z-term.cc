@@ -11,6 +11,8 @@
 #include "z-term.h"
 
 #include <cassert>
+#include <memory>
+#include <vector>
 
 
 /*
@@ -242,19 +244,116 @@
  * and that the row of attr/chars at (0,y) is a[y]/c[y]
  */
 
-struct term_win
+struct term_win final
 {
-	bool_ saved_cu;
-	bool_ saved_cv;
+private:
+	std::vector<byte> va;
+	std::vector<char> vc;
 
-	bool_ cu, cv;
-	byte cx, cy;
+	bool saved_cu = true;
+	bool saved_cv = false;
 
-	byte **a;
-	char **c;
+public:
 
-	byte *va;
-	char *vc;
+	bool cu = true;
+	bool cv = false;
+	byte cx = 0;
+	byte cy = 0;
+
+	std::vector<byte *> a;
+	std::vector<char *> c;
+
+	/**
+	 * Ctor
+	 */
+	explicit term_win(int w, int h)
+		: va(h * w)
+		, vc(h * w)
+		, a(h)
+		, c(h)
+	{
+		// The idea here is that our va and vc vectors are just
+		// a single contiguous block of memory and that each "row"
+		// of a and c point into the correct location in that single
+		// block of memory.
+		for (int y = 0; y < h; y++)
+		{
+			a[y] = va.data() + w * y;
+			c[y] = vc.data() + w * y;
+		}
+	}
+
+	/*
+	 * Copy contents of a "term_win" up to the given dimensions.
+	 */
+	void copy_from(term_win const *f, int w, int h)
+	{
+		/* Copy contents */
+		for (int y = 0; y < h; y++)
+		{
+			byte *f_aa = f->a[y];
+			char *f_cc = f->c[y];
+
+			byte *s_aa = a[y];
+			char *s_cc = c[y];
+
+			for (int x = 0; x < w; x++)
+			{
+				*s_aa++ = *f_aa++;
+				*s_cc++ = *f_cc++;
+			}
+		}
+
+		/* Copy cursor */
+		cx = f->cx;
+		cy = f->cy;
+		cu = f->cu;
+		cv = f->cv;
+
+		/* Copy saved cursor flags */
+		saved_cu = f->saved_cu;
+		saved_cv = f->saved_cv;
+	}
+
+	/**
+	 * Copy contents of a "term_win" up to the given dimensions.
+	 */
+	void copy_from(std::unique_ptr<term_win> const &p, int w, int h)
+	{
+		copy_from(p.get(), w, h);
+	}
+
+	/**
+	 * Save cursor flags.
+	 */
+	void save_cursor_flags()
+	{
+		saved_cu = cu;
+		saved_cv = cv;
+	}
+
+	/**
+	 * Restore cursor flags.
+	 */
+	void restore_cursor_flags()
+	{
+		cu = saved_cu;
+		cv = saved_cv;
+	}
+
+	/**
+	 * Force cursor to be visible.
+	 */
+	void set_cursor_visible()
+	{
+		cu = false;
+		cv = true;
+	}
+
+	/**
+	 * Dtor
+	 */
+	~term_win() = default;
 
 };
 
@@ -324,16 +423,16 @@ struct term
 {
 	void *data;
 
-	bool_ active_flag;
-	bool_ mapped_flag;
-	bool_ total_erase;
-	bool_ icky_corner;
-	bool_ soft_cursor;
+	bool active_flag = false;
+	bool mapped_flag = false;
+	bool total_erase = true;
+	bool icky_corner = false;
+	bool soft_cursor = false;
 
-	char *key_queue;
-	u16b key_head;
-	u16b key_tail;
+	u16b key_head = 0;
+	u16b key_tail = 0;
 	u16b key_size;
+	std::vector<char> key_queue;
 
 	byte wid;
 	byte hgt;
@@ -341,21 +440,73 @@ struct term
 	byte y1;
 	byte y2;
 
-	byte *x1;
-	byte *x2;
+	std::vector<byte> x1;
+	std::vector<byte> x2;
 
-	term_win *old;
-	term_win *scr;
+	std::unique_ptr<term_win> old;
+	std::unique_ptr<term_win> scr;
+	std::unique_ptr<term_win> mem;
 
-	term_win *mem;
+	init_hook_t *init_hook = nullptr;
+	nuke_hook_t *nuke_hook = nullptr;
+	xtra_hook_t *xtra_hook = nullptr;
+	curs_hook_t *curs_hook = nullptr;
+	text_hook_t *text_hook = nullptr;
 
-	init_hook_t *init_hook;
-	nuke_hook_t *nuke_hook;
-	xtra_hook_t *xtra_hook;
-	curs_hook_t *curs_hook;
-	text_hook_t *text_hook;
+	resize_hook_t *resize_hook = nullptr;
 
-	resize_hook_t *resize_hook;
+	/**
+	 * Ctor
+	 */
+	term(int w, int h, int k, void *data_)
+		: data(data_)
+		, key_size(k)
+		, key_queue(key_size)
+		, wid(w)
+		, hgt(h)
+		, x1(h)
+		, x2(h)
+	{
+		/* Allocate "displayed" */
+		old = std::make_unique<term_win>(w, h);
+
+		/* Allocate "requested" */
+		scr = std::make_unique<term_win>(w, h);
+
+		/* Assume change */
+		for (int y = 0; y < h; y++)
+		{
+			/* Assume change */
+			x1[y] = 0;
+			x2[y] = w - 1;
+		}
+
+		/* Assume change */
+		y1 = 0;
+		y2 = h - 1;
+	}
+
+	/**
+	 * Dtor
+	 */
+	~term()
+	{
+		/* Hack -- Call the special "nuke" hook */
+		if (active_flag)
+		{
+			/* Call the "nuke" hook */
+			if (nuke_hook)
+			{
+				(*nuke_hook)(data);
+			}
+
+			/* Remember */
+			active_flag = false;
+
+			/* Assume not mapped */
+			mapped_flag = false;
+		}
+	}
 
 };
 
@@ -364,109 +515,7 @@ struct term
 /*
  * The current "term"
  */
-term *Term = NULL;
-
-/*** Local routines ***/
-
-
-/*
- * Calloc wrapper which aborts if NULL is returned by calloc
- */
-static void *safe_calloc(size_t nmemb, size_t size)
-{
-	void *p = calloc(nmemb, size);
-	if ((nmemb > 0) && (p == NULL))
-	{
-		abort();
-	}
-	return p;
-}
-
-/*
- * Nuke a term_win (see below)
- */
-static errr term_win_nuke(term_win *s, int w, int h)
-{
-	/* Free the window access arrays */
-	free(s->a);
-	s->a = NULL;
-
-	free(s->c);
-	s->c = NULL;
-
-	/* Free the window content arrays */
-	free(s->va);
-	s->va = NULL;
-
-	free(s->vc);
-	s->vc = NULL;
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Initialize a "term_win" (using the given window size)
- */
-static errr term_win_init(term_win *s, int w, int h)
-{
-	int y;
-
-	/* Make the window access arrays */
-	s->a = (byte **) safe_calloc(h, sizeof(byte*));
-	s->c = (char **) safe_calloc(h, sizeof(char*));
-
-	/* Make the window content arrays */
-	s->va = (byte *) safe_calloc(h * w, sizeof(byte));
-	s->vc = (char *) safe_calloc(h * w, sizeof(char));
-
-	/* Prepare the window access arrays */
-	for (y = 0; y < h; y++)
-	{
-		s->a[y] = s->va + w * y;
-		s->c[y] = s->vc + w * y;
-	}
-
-	/* Success */
-	return (0);
-}
-
-
-/*
- * Copy a "term_win" from another
- */
-static errr term_win_copy(term_win *s, term_win *f, int w, int h)
-{
-	int x, y;
-
-	/* Copy contents */
-	for (y = 0; y < h; y++)
-	{
-		byte *f_aa = f->a[y];
-		char *f_cc = f->c[y];
-
-		byte *s_aa = s->a[y];
-		char *s_cc = s->c[y];
-
-		for (x = 0; x < w; x++)
-		{
-			*s_aa++ = *f_aa++;
-			*s_cc++ = *f_cc++;
-		}
-	}
-
-	/* Copy cursor */
-	s->cx = f->cx;
-	s->cy = f->cy;
-	s->cu = f->cu;
-	s->cv = f->cv;
-
-	/* Success */
-	return (0);
-}
-
-
+term *Term = nullptr;
 
 /*** External hooks ***/
 
@@ -493,7 +542,7 @@ void Term_xtra(int n, int v)
  */
 void Term_queue_char(int x, int y, byte a, char c)
 {
-	term_win *scrn = Term->scr;
+	auto const &scrn = Term->scr;
 
 	byte *scr_aa = &scrn->a[y][x];
 	char *scr_cc = &scrn->c[y][x];
@@ -769,8 +818,8 @@ errr Term_fresh(void)
 	int y1 = Term->y1;
 	int y2 = Term->y2;
 
-	term_win *old = Term->old;
-	term_win *scr = Term->scr;
+	auto const &old = Term->old;
+	auto const &scr = Term->scr;
 
 
 	/* Do nothing unless "mapped" */
@@ -799,7 +848,10 @@ errr Term_fresh(void)
 		Term_xtra(TERM_XTRA_CLEAR, 0);
 
 		/* Hack -- clear all "cursor" data */
-		old->cv = old->cu = old->cx = old->cy = 0;
+		old->cv = false;
+		old->cu = false;
+		old->cx = 0;
+		old->cy = 0;
 
 		/* Wipe each row */
 		for (y = 0; y < h; y++)
@@ -828,7 +880,7 @@ errr Term_fresh(void)
 		}
 
 		/* Forget "total erase" */
-		Term->total_erase = FALSE;
+		Term->total_erase = false;
 	}
 
 
@@ -1008,7 +1060,7 @@ errr Term_gotoxy(int x, int y)
 	Term->scr->cy = y;
 
 	/* The cursor is not useless */
-	Term->scr->cu = 0;
+	Term->scr->cu = false;
 
 	/* Success */
 	return (0);
@@ -1076,7 +1128,7 @@ errr Term_addch(byte a, char c)
 	if (Term->scr->cx < w) return (0);
 
 	/* Note "Useless" cursor */
-	Term->scr->cu = 1;
+	Term->scr->cu = true;
 
 	/* Note "Useless" cursor */
 	return (1);
@@ -1129,7 +1181,10 @@ errr Term_addstr(int n, byte a, const char *s)
 	Term->scr->cx += n;
 
 	/* Hack -- Notice "Useless" cursor */
-	if (res) Term->scr->cu = 1;
+	if (res)
+	{
+		Term->scr->cu = true;
+	}
 
 	/* Success (usually) */
 	return (res);
@@ -1261,7 +1316,7 @@ errr Term_clear(void)
 	char nc = CHAR_BLANK;
 
 	/* Cursor usable */
-	Term->scr->cu = 0;
+	Term->scr->cu = false;
 
 	/* Cursor to the top left */
 	Term->scr->cx = Term->scr->cy = 0;
@@ -1289,7 +1344,7 @@ errr Term_clear(void)
 	Term->y2 = h - 1;
 
 	/* Force "total erase" */
-	Term->total_erase = TRUE;
+	Term->total_erase = true;
 
 	/* Success */
 	return (0);
@@ -1305,7 +1360,7 @@ errr Term_clear(void)
 errr Term_redraw(void)
 {
 	/* Force "total erase" */
-	Term->total_erase = TRUE;
+	Term->total_erase = true;
 
 	/* Hack -- Refresh */
 	Term_fresh();
@@ -1435,9 +1490,7 @@ errr Term_what(int x, int y, byte *a, char *c)
  */
 void Term_save_cursor_flags()
 {
-	term_win *w = Term->scr;
-	w->saved_cu = w->cu;
-	w->saved_cv = w->cv;
+	Term->scr->save_cursor_flags();
 }
 
 /**
@@ -1446,9 +1499,7 @@ void Term_save_cursor_flags()
  */
 void Term_restore_cursor_flags()
 {
-	term_win *w = Term->scr;
-	w->cu = w->saved_cu;
-	w->cv = w->saved_cv;
+	Term->scr->restore_cursor_flags();
 }
 
 /**
@@ -1456,9 +1507,7 @@ void Term_restore_cursor_flags()
  */
 void Term_set_cursor_visible()
 {
-	term_win *w = Term->scr;
-	w->cu = 0;
-	w->cv = 1;
+	Term->scr->set_cursor_visible();
 }
 
 
@@ -1600,15 +1649,11 @@ errr Term_save()
 	/* Create */
 	if (!Term->mem)
 	{
-		/* Allocate window */
-		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-		/* Initialize window */
-		term_win_init(Term->mem, w, h);
+		Term->mem = std::make_unique<term_win>(w, h);
 	}
 
 	/* Grab */
-	term_win_copy(Term->mem, Term->scr, w, h);
+	Term->mem->copy_from(Term->scr, w, h);
 
 	/* Success */
 	return (0);
@@ -1621,16 +1666,10 @@ term_win* Term_save_to()
 {
 	int w = Term->wid;
 	int h = Term->hgt;
-	term_win *save;
 
-	/* Allocate window */
-	save = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-	/* Initialize window */
-	term_win_init(save, w, h);
-
-	/* Grab */
-	term_win_copy(save, Term->scr, w, h);
+	/* Copy */
+	auto save = new term_win(w, h);
+	save->copy_from(Term->scr, w, h);
 
 	/* Success */
 	return (save);
@@ -1643,26 +1682,20 @@ term_win* Term_save_to()
  */
 errr Term_load()
 {
-	int y;
-
 	int w = Term->wid;
 	int h = Term->hgt;
 
-	/* Create */
+	/* Create empty contents if nothing was actually saved previously */
 	if (!Term->mem)
 	{
-		/* Allocate window */
-		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-		/* Initialize window */
-		term_win_init(Term->mem, w, h);
+		Term->mem = std::make_unique<term_win>(w, h);
 	}
 
 	/* Load */
-	term_win_copy(Term->scr, Term->mem, w, h);
+	Term->scr->copy_from(Term->mem, w, h);
 
 	/* Assume change */
-	for (y = 0; y < h; y++)
+	for (int y = 0; y < h; y++)
 	{
 		/* Assume change */
 		Term->x1[y] = 0;
@@ -1694,7 +1727,7 @@ errr Term_load_from(term_win *save)
 	}
 
 	/* Load */
-	term_win_copy(Term->scr, save, w, h);
+	Term->scr->copy_from(save, w, h);
 
 	/* Assume change */
 	for (y = 0; y < h; y++)
@@ -1709,7 +1742,7 @@ errr Term_load_from(term_win *save)
 	Term->y2 = h - 1;
 
 	/* Free is requested */
-	free(save);
+	delete save;
 
 	/* Success */
 	return (0);
@@ -1724,13 +1757,6 @@ errr Term_resize(int w, int h)
 
 	int wid, hgt;
 
-	byte *hold_x1;
-	byte *hold_x2;
-
-	term_win *hold_old;
-	term_win *hold_scr;
-	term_win *hold_mem;
-
 	/* Ignore illegal changes */
 	if ((w < 1) || (h < 1)) return ( -1);
 
@@ -1742,95 +1768,47 @@ errr Term_resize(int w, int h)
 	wid = MIN(Term->wid, w);
 	hgt = MIN(Term->hgt, h);
 
-	/* Save scanners */
-	hold_x1 = Term->x1;
-	hold_x2 = Term->x2;
-
-	/* Save old window */
-	hold_old = Term->old;
-
-	/* Save old window */
-	hold_scr = Term->scr;
-
-	/* Save old window */
-	hold_mem = Term->mem;
-
-	/* Create new scanners */
-	Term->x1 = (byte *) safe_calloc(h, sizeof(byte));
-	Term->x2 = (byte *) safe_calloc(h, sizeof(byte));
-
 	/* Create new window */
-	Term->old = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-	/* Initialize new window */
-	term_win_init(Term->old, w, h);
-
-	/* Save the contents */
-	term_win_copy(Term->old, hold_old, wid, hgt);
-
-	/* Create new window */
-	Term->scr = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-	/* Initialize new window */
-	term_win_init(Term->scr, w, h);
-
-	/* Save the contents */
-	term_win_copy(Term->scr, hold_scr, wid, hgt);
-
-	/* If needed */
-	if (hold_mem)
 	{
-		/* Create new window */
-		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
+		auto hold_old = std::move(Term->old);
+		Term->old = std::make_unique<term_win>(w, h);
+		Term->old->copy_from(hold_old, wid, hgt);
 
-		/* Initialize new window */
-		term_win_init(Term->mem, w, h);
-
-		/* Save the contents */
-		term_win_copy(Term->mem, hold_mem, wid, hgt);
+		/* Illegal cursor? */
+		if (Term->old->cx >= w) Term->old->cu = true;
+		if (Term->old->cy >= h) Term->old->cu = true;
 	}
 
-	/* Free some arrays */
-	free(hold_x1);
-	hold_x1 = NULL;
-	free(hold_x2);
-	hold_x2 = NULL;
-
-	/* Nuke */
-	term_win_nuke(hold_old, Term->wid, Term->hgt);
-
-	/* Kill */
-	free(hold_old);
-	hold_old = NULL;
-
-	/* Illegal cursor */
-	if (Term->old->cx >= w) Term->old->cu = 1;
-	if (Term->old->cy >= h) Term->old->cu = 1;
-
-	/* Nuke */
-	term_win_nuke(hold_scr, Term->wid, Term->hgt);
-
-	/* Kill */
-	free(hold_scr);
-	hold_scr = NULL;
-
-	/* Illegal cursor */
-	if (Term->scr->cx >= w) Term->scr->cu = 1;
-	if (Term->scr->cy >= h) Term->scr->cu = 1;
-
-	/* If needed */
-	if (hold_mem)
+	/* Create new window */
 	{
-		/* Nuke */
-		term_win_nuke(hold_mem, Term->wid, Term->hgt);
+		auto hold_scr = std::move(Term->scr);
+		Term->scr = std::make_unique<term_win>(w, h);
+		Term->scr->copy_from(hold_scr, wid, hgt);
 
-		/* Kill */
-		free(hold_mem);
-		hold_mem = NULL;
+		/* Illegal cursor? */
+		if (Term->scr->cx >= w) Term->scr->cu = true;
+		if (Term->scr->cy >= h) Term->scr->cu = true;
+	}
 
-		/* Illegal cursor */
-		if (Term->mem->cx >= w) Term->mem->cu = 1;
-		if (Term->mem->cy >= h) Term->mem->cu = 1;
+	/* Create new window */
+	if (Term->mem)
+	{
+		auto hold_mem = std::move(Term->mem);
+		Term->mem = std::make_unique<term_win>(w, h);
+		Term->mem->copy_from(hold_mem, wid, hgt);
+
+		/* Illegal cursor? */
+		if (Term->mem->cx >= w) Term->mem->cu = true;
+		if (Term->mem->cy >= h) Term->mem->cu = true;
+	}
+
+	/* Resize scanners */
+	Term->x1.resize(h);
+	Term->x2.resize(h);
+	for (i = 0; i < h; i++)
+	{
+		Term->x1[i] = 0;
+		Term->x2[i] = w - 1;
 	}
 
 	/* Save new size */
@@ -1838,15 +1816,7 @@ errr Term_resize(int w, int h)
 	Term->hgt = h;
 
 	/* Force "total erase" */
-	Term->total_erase = TRUE;
-
-	/* Assume change */
-	for (i = 0; i < h; i++)
-	{
-		/* Assume change */
-		Term->x1[i] = 0;
-		Term->x2[i] = w - 1;
-	}
+	Term->total_erase = true;
 
 	/* Assume change */
 	Term->y1 = 0;
@@ -1891,10 +1861,10 @@ errr Term_activate(term *t)
 		}
 
 		/* Remember */
-		t->active_flag = TRUE;
+		t->active_flag = true;
 
 		/* Assume mapped */
-		t->mapped_flag = TRUE;
+		t->mapped_flag = true;
 	}
 
 	/* Remember the Term */
@@ -1913,7 +1883,7 @@ errr Term_activate(term *t)
  */
 void Term_mapped()
 {
-	Term->mapped_flag = TRUE;
+	Term->mapped_flag = true;
 }
 
 
@@ -1922,72 +1892,16 @@ void Term_mapped()
  */
 void Term_unmapped()
 {
-	Term->mapped_flag = FALSE;
+	Term->mapped_flag = false;
 }
 
 
 /*
  * Nuke a term
  */
-errr term_nuke(term *t)
+void term_nuke(term *t)
 {
-	int w = t->wid;
-	int h = t->hgt;
-
-	/* Hack -- Call the special "nuke" hook */
-	if (t->active_flag)
-	{
-		/* Call the "nuke" hook */
-		if (t->nuke_hook)
-		{
-			(*t->nuke_hook)(t->data);
-		}
-
-		/* Remember */
-		t->active_flag = FALSE;
-
-		/* Assume not mapped */
-		t->mapped_flag = FALSE;
-	}
-
-
-	/* Nuke "displayed" */
-	term_win_nuke(t->old, w, h);
-
-	/* Kill "displayed" */
-	free(t->old);
-	t->old = NULL;
-
-	/* Nuke "requested" */
-	term_win_nuke(t->scr, w, h);
-
-	/* Kill "requested" */
-	free(t->scr);
-	t->scr = NULL;
-
-	/* If needed */
-	if (t->mem)
-	{
-		/* Nuke "memorized" */
-		term_win_nuke(t->mem, w, h);
-
-		/* Kill "memorized" */
-		free(t->mem);
-		t->mem = NULL;
-	}
-
-	/* Free some arrays */
-	free(t->x1);
-	t->x1 = NULL;
-	free(t->x2);
-	t->x2 = NULL;
-
-	/* Free the input queue */
-	free(t->key_queue);
-	t->key_queue = NULL;
-
-	/* Success */
-	return (0);
+	delete t;
 }
 
 
@@ -1999,75 +1913,17 @@ errr term_nuke(term *t)
  */
 term *term_init(void *data, int w, int h, int k)
 {
-	int y;
-
-	/* Wipe it */
-	term *t = (term *) safe_calloc(1, sizeof(term));
-	memset(t, 0, sizeof(term));
-
-	/* Prepare the input queue */
-	t->key_head = t->key_tail = 0;
-
-	/* Determine the input queue size */
-	t->key_size = k;
-
-	/* Allocate the input queue */
-	t->key_queue = (char *) safe_calloc(t->key_size, sizeof(char));
-
-
-	/* Save the size */
-	t->wid = w;
-	t->hgt = h;
-
-	/* Allocate change arrays */
-	t->x1 = (byte *) safe_calloc(h, sizeof(byte));
-	t->x2 = (byte *) safe_calloc(h, sizeof(byte));
-
-
-	/* Allocate "displayed" */
-	t->old = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-	/* Initialize "displayed" */
-	term_win_init(t->old, w, h);
-
-
-	/* Allocate "requested" */
-	t->scr = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
-
-	/* Initialize "requested" */
-	term_win_init(t->scr, w, h);
-
-
-	/* Assume change */
-	for (y = 0; y < h; y++)
-	{
-		/* Assume change */
-		t->x1[y] = 0;
-		t->x2[y] = w - 1;
-	}
-
-	/* Assume change */
-	t->y1 = 0;
-	t->y2 = h - 1;
-
-	/* Force "total erase" */
-	t->total_erase = TRUE;
-
-	/* Store data pointer */
-	t->data = data;
-
-	/* Success */
-	return t;
+	return new term(w, h, k, data);
 }
 
 void term_init_icky_corner(term *t)
 {
-	t->icky_corner = TRUE;
+	t->icky_corner = true;
 }
 
 void term_init_soft_cursor(term *t)
 {
-	t->soft_cursor = TRUE;
+	t->soft_cursor = true;
 }
 
 void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
