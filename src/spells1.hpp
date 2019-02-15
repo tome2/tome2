@@ -17,6 +17,7 @@ void teleport_monster_to(int m_idx, int ny, int nx);
 void teleport_player_level();
 void recall_player(int d, int f);
 void take_hit(int damage, const char *kb_str);
+void take_hit(int damage, std::string const &kb_str);
 void take_sanity_hit(int damage, const char *hit_from);
 void acid_dam(int dam, const char *kb_str);
 void elec_dam(int dam, const char *kb_str);

@@ -4,12 +4,14 @@
 
 #include "feature_flag_set.hpp"
 
+#include <string>
+
 /**
  * Terrain feature descriptor.
  */
 struct feature_type
 {
-	char *name = nullptr;                    /* Name */
+	std::string name;                        /* Name */
 
 	const char *text = nullptr;              /* Text. May point to shared read-only memory, DO NOT FREE! */
 	const char *tunnel = nullptr;            /* Text for tunneling. May point to shared read-only memory, DO NOT FREE! */

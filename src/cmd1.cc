@@ -16,6 +16,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "hooks.hpp"
@@ -3021,13 +3022,17 @@ void move_player_aux(int dir, int do_pickup, int run)
 		else if (cave[y][x].feat >= FEAT_ALTAR_HEAD &&
 		                cave[y][x].feat <= FEAT_ALTAR_TAIL)
 		{
-			const char *name = f_info[cave[y][x].feat].name;
-			const char *pref = (is_a_vowel(name[0])) ? "an" : "a";
+			auto msg = fmt::format(
+				"You see {}.",
+				singular_prefix(f_info[cave[y][x].feat].name));
 
-			msg_format("You see %s %s.", pref, name);
+			msg_print(msg);
 
 			/* Flush message while running */
-			if (running) msg_print(NULL);
+			if (running)
+			{
+				msg_print(nullptr);
+			}
 		}
 
 		/* Execute the inscription */

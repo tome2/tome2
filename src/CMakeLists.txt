@@ -25,6 +25,7 @@ SET(SRCS_COMMON
   dice.cc
   dungeon.cc
   files.cc
+  format_ext.cc
   game.cc
   game_edit_data.cc
   gen_evol.cc

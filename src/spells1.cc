@@ -18,6 +18,7 @@
 #include "files.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "melee2.hpp"
@@ -1470,6 +1471,11 @@ void take_hit(int damage, const char *hit_from)
 	{
 		lite_spot(p_ptr->py, p_ptr->px);
 	}
+}
+
+void take_hit(int damage, std::string const &kb_str)
+{
+	take_hit(damage, kb_str.c_str());
 }
 
 
@@ -6769,27 +6775,14 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 	int k = 0, do_move = 0, a = 0, b = 0, x1 = 0, y1 = 0;
 
-	/* Hack -- assume obvious */
-	bool_ obvious = TRUE;
-
 	/* Player blind-ness */
 	bool_ blind = (p_ptr->blind ? TRUE : FALSE);
 
 	/* Player needs a "description" (he is blind) */
 	bool_ fuzzy = FALSE;
 
-	/* Source monster */
-	monster_type *m_ptr = NULL;
-
-	/* Monster name (for attacks) */
-	char m_name[80];
-
 	/* Monster name (for damage) */
-	char killer[80];
-
-	/* Hack -- messages */
-	const char *act = NULL;
-
+	std::string killer;
 
 	/* Player is not here */
 	if ((x != p_ptr->px) || (y != p_ptr->py)) return (FALSE);
@@ -6857,32 +6850,40 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 		if (p_ptr->pgod)
 		{
 			/* Find out the name of player's god. */
-			sprintf(killer, "%s",
-			        deity_info[p_ptr->pgod].name);
+			killer = deity_info[p_ptr->pgod].name;
 		}
-		else strcpy(killer, "Divine Wrath");
+		else
+		{
+			killer = "Divine Wrath";
+		}
 	}
 
 	/* Did the dungeon do it? */
 	if (who == -100)
 	{
-		sprintf(killer, "%s", d_info[dungeon_type].name.c_str());
+		killer = d_info[dungeon_type].name;
 	}
 	if (who == -101)
 	{
-		sprintf(killer, "%s", f_info[cave[p_ptr->py][p_ptr->px].feat].name);
+		killer = fmt::format("{}", singular_prefix(
+			f_info[cave[p_ptr->py][p_ptr->px].feat].name));
 	}
 
 	if (who >= -1)
 	{
+		/* Monster name (for attacks) */
+		char m_name[80];
+
 		/* Get the source monster */
-		m_ptr = &m_list[who];
+		auto m_ptr = &m_list[who];
 
 		/* Get the monster name */
 		monster_desc(m_name, m_ptr, 0);
 
 		/* Get the monster's real name */
-		monster_desc(killer, m_ptr, 0x88);
+		char m_desc[80];
+		monster_desc(m_desc, m_ptr, 0x88);
+		killer += m_desc;
 	}
 
 	/* Analyze the damage */
@@ -6899,7 +6900,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_ACID:
 		{
 			if (fuzzy) msg_print("You are hit by acid!");
-			acid_dam(dam, killer);
+			acid_dam(dam, killer.c_str());
 			break;
 		}
 
@@ -6907,7 +6908,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_FIRE:
 		{
 			if (fuzzy) msg_print("You are hit by fire!");
-			fire_dam(dam, killer);
+			fire_dam(dam, killer.c_str());
 			break;
 		}
 
@@ -6915,7 +6916,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_COLD:
 		{
 			if (fuzzy) msg_print("You are hit by cold!");
-			cold_dam(dam, killer);
+			cold_dam(dam, killer.c_str());
 			break;
 		}
 
@@ -6923,7 +6924,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_ELEC:
 		{
 			if (fuzzy) msg_print("You are hit by lightning!");
-			elec_dam(dam, killer);
+			elec_dam(dam, killer.c_str());
 			break;
 		}
 
@@ -7218,7 +7219,13 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 		/* Nexus -- see above */
 	case GF_NEXUS:
 		{
-			if (fuzzy) msg_print("You are hit by something strange!");
+			auto m_ptr = &m_list[who];
+
+			if (fuzzy)
+			{
+				msg_print("You are hit by something strange!");
+			}
+
 			if (p_ptr->resist_nexus)
 			{
 				dam *= 6;
@@ -7228,6 +7235,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 			{
 				apply_nexus(m_ptr);
 			}
+
 			take_hit(dam, killer);
 			break;
 		}
@@ -7248,6 +7256,8 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 				 */
 				if (who > 0)
 				{
+					auto m_ptr = &m_list[who];
+
 					a = 0;
 					b = 0;
 
@@ -7441,6 +7451,8 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 				case 8:
 				case 9:
 					{
+						const char *act = nullptr;
+
 						switch (randint(6))
 						{
 						case 1:
@@ -7590,7 +7602,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 	case GF_ICE:
 		{
 			if (fuzzy) msg_print("You are hit by something sharp and cold!");
-			cold_dam(dam, killer);
+			cold_dam(dam, killer.c_str());
 			if (!p_ptr->resist_shard)
 			{
 				set_cut(p_ptr->cut + damroll(5, 8));
@@ -7719,7 +7731,7 @@ static bool_ project_p(int who, int r, int y, int x, int dam, int typ, int a_rad
 
 
 	/* Return "Anything seen?" */
-	return (obvious);
+	return TRUE;
 }
 
 

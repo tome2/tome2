@@ -56,6 +56,7 @@
 #include "z-rand.hpp"
 
 #include <chrono>
+#include <fmt/format.h>
 #include <thread>
 
 using std::this_thread::sleep_for;
@@ -2187,8 +2188,9 @@ void do_cmd_rest()
 		flush_on_failure();
 
 		/* Tell the player why */
-		msg_print(format("Resting on a %s is too dangerous!",
-				 f_info[cave[p_ptr->py][p_ptr->px].feat].name));
+		msg_print(fmt::format(
+			"Resting on a {} is too dangerous!",
+			f_info[cave[p_ptr->py][p_ptr->px].feat].name));
 
 		/* Done */
 		return;

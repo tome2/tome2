@@ -2223,10 +2223,13 @@ void do_cmd_visuals()
 				auto f_ptr = &f_info[f_idx];
 
 				/* Skip non-entries */
-				if (!f_ptr->name) continue;
+				if (f_ptr->name.empty())
+				{
+					continue;
+				}
 
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", f_ptr->name);
+				fprintf(fff, "# %s\n", f_ptr->name.c_str());
 
 				/* Dump the feature attr/char info */
 				fprintf(fff, "F:%zu:0x%02X:0x%02X\n\n", f_idx,
@@ -2377,7 +2380,7 @@ void do_cmd_visuals()
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Terrain = %d, Name = %-40.40s",
-						   f, f_ptr->name));
+						   f, f_ptr->name.c_str()));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,

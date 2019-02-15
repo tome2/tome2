@@ -2050,8 +2050,8 @@ errr init_f_info_txt(FILE *fp)
 			f_ptr = &expand_to_fit_index(f_info, i);
 
 			/* Copy name */
-			assert(!f_ptr->name);
-			f_ptr->name = my_strdup(s);
+			assert(f_ptr->name.empty());
+			f_ptr->name = s;
 
 			/* Initialize */
 			f_ptr->mimic = i;
