@@ -56,6 +56,7 @@
 #include "wilderness_type_info.hpp"
 
 #include <cassert>
+#include <fmt/format.h>
 #include <type_traits>
 
 /*
@@ -1240,29 +1241,17 @@ void init_angband()
 	/* Initialise feature info */
 	note("[Initialising user pref files...]");
 
-	/* Access the "basic" pref file */
-	strcpy(buf, "pref.prf");
+	/* Process the "basic" pref file */
+	process_pref_file(name_file_pref("pref"));
 
-	/* Process that file */
-	process_pref_file(buf);
+	/* Process the "basic" system pref file */
+	process_pref_file(name_file_pref(fmt::format("pref-{}", ANGBAND_SYS)));
 
-	/* Access the "basic" system pref file */
-	sprintf(buf, "pref-%s.prf", ANGBAND_SYS);
+	/* Process the "user" pref file */
+	process_pref_file(name_file_pref("user"));
 
-	/* Process that file */
-	process_pref_file(buf);
-
-	/* Access the "user" pref file */
-	sprintf(buf, "user.prf");
-
-	/* Process that file */
-	process_pref_file(buf);
-
-	/* Access the "user" system pref file */
-	sprintf(buf, "user-%s.prf", ANGBAND_SYS);
-
-	/* Process that file */
-	process_pref_file(buf);
+	/* Process the "user" system pref file */
+	process_pref_file(name_file_pref(fmt::format("user-{}", ANGBAND_SYS)));
 
 	/* Done */
 	note("[Initialisation complete]");

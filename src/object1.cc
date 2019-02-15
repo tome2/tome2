@@ -440,7 +440,7 @@ void reset_visuals()
 	}
 
 	/* Normal symbols */
-	process_pref_file("font.prf");
+	process_pref_file(name_file_pref("font"));
 }
 
 

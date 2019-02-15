@@ -77,6 +77,15 @@ std::string name_file_note(std::string_view sv)
 	return buf;
 }
 
+std::string name_file_pref(std::string_view sv)
+{
+	std::string buf;
+	buf.reserve(sv.size() + 4);
+	buf += sv;
+	buf += ".prf";
+	return buf;
+}
+
 /*
  * Extract the first few "tokens" from a buffer
  *
@@ -253,7 +262,7 @@ errr process_pref_file_aux(char *buf)
 	if (buf[0] == '%')
 	{
 		/* Attempt to Process the given file */
-		return (process_pref_file(buf + 2));
+		return process_pref_file(buf + 2);
 	}
 
 
@@ -877,6 +886,7 @@ static const char *process_pref_file_expr(char **sp, char *fp)
 
 
 
+
 /*
  * Process the "user pref file" with the given name
  *
@@ -885,7 +895,7 @@ static const char *process_pref_file_expr(char **sp, char *fp)
  * We also accept the special "?" and "%" directives, which
  * allow conditional evaluation and filename inclusion.
  */
-errr process_pref_file(const char *name)
+errr process_pref_file(std::string const &name)
 {
 	FILE *fp;
 
@@ -898,7 +908,7 @@ errr process_pref_file(const char *name)
 	bool_ bypass = FALSE;
 
 	/* Build the filename -- Allow users to override system pref files */
-	path_build(buf, 1024, ANGBAND_DIR_USER, name);
+	path_build(buf, 1024, ANGBAND_DIR_USER, name.c_str());
 
 	/* Open the file */
 	fp = my_fopen(buf, "r");
@@ -907,7 +917,7 @@ errr process_pref_file(const char *name)
 	if (!fp)
 	{
 		/* Build the pathname, this time using the system pref directory */
-		path_build(buf, 1024, ANGBAND_DIR_PREF, name);
+		path_build(buf, 1024, ANGBAND_DIR_PREF, name.c_str());
 
 		/* Open the file */
 		fp = my_fopen(buf, "r");
@@ -981,7 +991,7 @@ errr process_pref_file(const char *name)
 	if (err)
 	{
 		/* Useful error message */
-		msg_format("Error %d in line %d of file '%s'.", err, num, name);
+		msg_format("Error %d in line %d of file '%s'.", err, num, name.c_str());
 		msg_format("Parsing '%s'", buf);
 	}
 

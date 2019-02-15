@@ -286,7 +286,7 @@ bool_ select_module()
 	sel = 0;
 
 	/* Preprocess the basic prefs, we need them to have movement keys */
-	process_pref_file("pref.prf");
+	process_pref_file(name_file_pref("pref"));
 
 	while (TRUE)
 	{

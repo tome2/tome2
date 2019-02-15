@@ -1105,7 +1105,7 @@ static void do_cmd_pref_file_hack(int row)
 	prt("File: ", row + 2, 0);
 
 	/* Default filename */
-	std::string ftmp = fmt::format("{}.prf", game->player_base);
+	auto ftmp = name_file_pref(game->player_base);
 
 	/* Ask for a file (or cancel) */
 	if (!askfor_aux(&ftmp, 80))
@@ -1114,7 +1114,7 @@ static void do_cmd_pref_file_hack(int row)
 	}
 
 	/* Process the given filename */
-	if (process_pref_file(ftmp.c_str()))
+	if (process_pref_file(ftmp))
 	{
 		/* Mention failure */
 		msg_format("Failed to load '%s'!", ftmp.c_str());
@@ -1210,7 +1210,7 @@ void do_cmd_options()
 				prt("File: ", 21, 0);
 
 				/* Default filename */
-				auto ftmp = fmt::format("{}.prf", game->player_base);
+				auto ftmp = name_file_pref(game->player_base);
 
 				/* Ask for a file */
 				if (!askfor_aux(&ftmp, 80)) continue;
@@ -1716,7 +1716,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -1725,7 +1725,7 @@ void do_cmd_macros()
 			}
 
 			/* Process the given filename */
-			if (0 != process_pref_file(tmp.c_str()))
+			if (0 != process_pref_file(tmp))
 			{
 				/* Prompt */
 				msg_print("Could not load file!");
@@ -1742,7 +1742,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -1864,7 +1864,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -2027,7 +2027,6 @@ void do_cmd_visuals()
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
 
-	char tmp[160];
 	char buf[1024];
 
 	/* Enter "icky" mode */
@@ -2077,10 +2076,10 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Query */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Process the given filename */
 			process_pref_file(tmp);
@@ -2096,13 +2095,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2151,13 +2150,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2202,13 +2201,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2457,8 +2456,6 @@ void do_cmd_colors()
 
 	FILE *fff;
 
-	char tmp[160];
-
 	char buf[1024];
 
 
@@ -2502,10 +2499,10 @@ void do_cmd_colors()
 			prt("File: ", 10, 0);
 
 			/* Default file */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Query */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Process the given filename */
 			process_pref_file(tmp);
@@ -2527,13 +2524,13 @@ void do_cmd_colors()
 			prt("File: ", 10, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			fff = my_fopen(buf, "a");

@@ -4601,27 +4601,16 @@ static void dungeon()
  */
 static void load_all_pref_files()
 {
-	char buf[1024];
-
 	std::string const &player_name = game->player_name;
 
-	/* Access the "race" pref file */
-	sprintf(buf, "%s.prf", rp_ptr->title.c_str());
+	/* Process the "race" pref file */
+	process_pref_file(name_file_pref(rp_ptr->title));
 
-	/* Process that file */
-	process_pref_file(buf);
+	/* Process the "class" pref file */
+	process_pref_file(name_file_pref(spp_ptr->title));
 
-	/* Access the "class" pref file */
-	sprintf(buf, "%s.prf", spp_ptr->title);
-
-	/* Process that file */
-	process_pref_file(buf);
-
-	/* Access the "character" pref file */
-	sprintf(buf, "%s.prf", player_name.c_str());
-
-	/* Process that file */
-	process_pref_file(buf);
+	/* Process the "character" pref file */
+	process_pref_file(name_file_pref(player_name));
 
 	/* Load automatizer settings. Character-specific automatizer
 	 * file gets priority over the "template" file. We do not try
@@ -4770,7 +4759,7 @@ void play_game()
 	window_stuff();
 
 	/* load user file */
-	process_pref_file("user.prf");
+	process_pref_file(name_file_pref("user"));
 
 	/* Load the "pref" files */
 	load_all_pref_files();
