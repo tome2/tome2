@@ -10,6 +10,7 @@
 
 #include "z-term.hpp"
 
+#include <boost/circular_buffer.hpp>
 #include <cassert>
 #include <memory>
 #include <vector>
@@ -385,77 +386,57 @@ static errr push_result_to_errr(push_result r)
 struct key_queue {
 
 private:
-	u16b m_head = 0;
-	u16b m_tail = 0;
-	std::vector<char> m_queue;
+	boost::circular_buffer<char> m_buffer;
 
 public:
-	explicit key_queue(int k)
-		: m_queue(k)
+	explicit key_queue(std::size_t k)
+		: m_buffer(k)
 	{
 	}
 
 	void clear()
 	{
-		m_head = 0;
-		m_tail = 0;
+		m_buffer.clear();
 	}
 
 	void push_back(char c)
 	{
-		/* Store the char, advance the queue */
-		m_queue[m_head++] = c;
-
-		/* Circular queue, handle wrap */
-		if (m_head == m_queue.size())
+		if (m_buffer.full())
 		{
-			m_head = 0;
+			return; // Ignore
 		}
+
+		m_buffer.push_back(c);
 	}
 
 	push_result push_front(char k)
 	{
-		/* Hack -- Overflow may induce circular queue */
-		if (m_tail == 0)
-		{
-			m_tail = m_queue.size();
-		}
-
-		/* Back up, Store the char */
-		m_queue[--m_tail] = k;
-
-		/* Success (unless overflow) */
-		if (m_head != m_tail)
-		{
-			return push_result::OK;
-		}
-		else
+		if (m_buffer.full())
 		{
 			return push_result::OVERFLOW;
 		}
+
+		m_buffer.push_front(k);
+		return push_result::OK;
 	}
 
-	char back() const
+	char front() const
 	{
 		assert(!empty());
-		return m_queue[m_tail];
+		return m_buffer.front();
 	}
 
-	char pop_back()
+	char pop_front()
 	{
-		auto ch = back();
-
-		if (++m_tail == m_queue.size())
-		{
-			m_tail = 0;
-		}
-
+		assert(!empty());
+		auto ch = m_buffer.front();
+		m_buffer.pop_front();
 		return ch;
 	}
 
 	bool empty() const
 	{
-		return m_head == m_tail;
+		return m_buffer.empty();
 	}
 
 };
@@ -1650,11 +1631,11 @@ errr Term_inkey(char *ch, bool wait, bool take)
 	/* Extract the next keypress */
 	if (take)
 	{
-		*ch = key_queue.pop_back();
+		*ch = key_queue.pop_front();
 	}
 	else
 	{
-		*ch = key_queue.back();
+		*ch = key_queue.front();
 	}
 
 	/* Success */
