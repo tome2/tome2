@@ -2858,10 +2858,6 @@ int load_savefile_names()
 	if (!fff) return (0);
 
 
-	/* Save the current 'player_base' */
-	player_base_save = game->player_base;
-
-
 	/*
 	 * Parse, use '@' intead of ':' as a separator because it cannot exists
 	 * in savefiles
@@ -2917,11 +2913,10 @@ int load_savefile_names()
 		strcpy(savefile_desc[max], buf + i);
 
 		/* Build platform-dependent savefile name */
-		game->player_base = savefile_names[max];
-		process_player_name();
+		auto player_base = process_player_name(savefile_names[max]);
 
 		/* Try to open the savefile */
-		fd = fd_open(name_file_save().c_str(), O_RDONLY);
+		fd = fd_open(name_file_save(player_base).c_str(), O_RDONLY);
 
 		/* Still existing ? */
 		if (fd >= 0)
@@ -2932,10 +2927,6 @@ int load_savefile_names()
 	}
 
 	my_fclose(fff);
-
-	/* Restore the values of 'player_base' and 'savefile' */
-	game->player_base  = player_base_save;
-	process_player_name();
 
 	return (max);
 }
@@ -3108,19 +3099,11 @@ savefile_try_again:
 		{
 			if (!get_check(format("Really delete '%s'?", savefile_names[savefile_idx[sel - 2]]))) continue;
 
-			/* Save current 'player_base' */
-			std::string player_base_save = game->player_base;
-
 			/* Build platform-dependent save file name */
-			game->player_base = savefile_names[savefile_idx[sel - 2]];
-			process_player_name();
+			auto player_base = process_player_name(savefile_names[savefile_idx[sel - 2]]);
 
 			/* Remove the savefile */
-			fd_kill(name_file_save().c_str());
-
-			/* Restore 'player_base' and 'savefile' */
-			game->player_base = player_base_save;
-			process_player_name();
+			fd_kill(name_file_save(player_base).c_str());
 
 			/* Reload, gods I hate using goto .. */
 			goto savefile_try_again;

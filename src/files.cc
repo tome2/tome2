@@ -3676,26 +3676,26 @@ void do_cmd_help()
 
 
 
-void process_player_name()
+std::string process_player_name(std::string const &name)
 {
 	/* Cannot be too long */
-	if (game->player_base.size() > 15)
+	if (name.size() > 15)
 	{
-		quit_fmt("The name '%s' is too long!", game->player_base.c_str());
+		quit_fmt("The name '%s' is too long!", name.c_str());
 	}
 
 	/* Cannot contain control characters */
-	for (auto c : game->player_base)
+	for (auto c : name)
 	{
 		if (iscntrl(c))
 		{
-			quit_fmt("The name '%s' contains control chars!", game->player_base.c_str());
+			quit_fmt("The name '%s' contains control chars!", name.c_str());
 		}
 	}
 
 	/* Extract "useful" letters */
 	std::string buf;
-	for (auto c : game->player_base)
+	for (auto c : name)
 	{
 		/* Accept some letters */
 		if (isalpha(c) || isdigit(c))
@@ -3710,14 +3710,22 @@ void process_player_name()
 		}
 	}
 
-	/* Terminate */
-	game->player_base = buf;
-
 	/* Require a "base" name */
-	if (game->player_base.empty())
+	if (buf.empty())
 	{
-		game->player_base = "PLAYER";
+		buf = "PLAYER";
 	}
+
+	/* Terminate */
+	return buf;
+}
+
+
+
+
+void process_player_name()
+{
+	game->player_base = process_player_name(game->player_base);
 }
 
 
