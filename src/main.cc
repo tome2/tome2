@@ -9,7 +9,7 @@
 #include "main.h"
 
 #include "birth.hpp"
-#include "dungeon.h"
+#include "dungeon.hpp"
 #include "files.hpp"
 #include "game.hpp"
 #include "init2.h"

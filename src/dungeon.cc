@@ -6,7 +6,7 @@
  * included in all such copies.
  */
 
-#include "dungeon.h"
+#include "dungeon.hpp"
 
 #include "birth.hpp"
 #include "cave.hpp"
