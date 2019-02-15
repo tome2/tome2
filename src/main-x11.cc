@@ -852,10 +852,8 @@ static const char *opcode_pairs[] =
  */
 static int Infoclr_Opcode(const char *str)
 {
-	register int i;
-
 	/* Scan through all legal operation names */
-	for (i = 0; opcode_pairs[i*2]; ++i)
+	for (int i = 0; opcode_pairs[i*2]; ++i)
 	{
 		/* Is this the right oprname? */
 		if (streq(opcode_pairs[i*2], str))
@@ -1171,7 +1169,7 @@ static errr Infofnt_text_non(int x, int y, const char *str, int len)
 /*
  * Hack -- cursor color
  */
-static infoclr *xor;
+static infoclr *cursor_clr;
 
 /*
  * Actual color table
@@ -1609,7 +1607,7 @@ static void Term_xtra_x11(void *data, int n, int v)
 static void Term_curs_x11(void *data, int x, int y)
 {
 	/* Draw the cursor */
-	Infoclr_set(xor);
+	Infoclr_set(cursor_clr);
 
 	/* Hilite the cursor character */
 	Infofnt_text_non(x, y, " ", 1);
@@ -1765,7 +1763,7 @@ static term *term_data_init(term_data *td, int i)
 
 
 	/* Prepare the standard font */
-	td->fnt = calloc(1, sizeof(struct infofnt));
+	td->fnt = (infofnt *) calloc(1, sizeof(struct infofnt));
 	if (td->fnt == NULL)
 	{
 		abort();
@@ -1781,7 +1779,7 @@ static term *term_data_init(term_data *td, int i)
 	hgt = rows * td->fnt->hgt + (oy + oy);
 
 	/* Create a top-window */
-	td->win = calloc(1, sizeof(struct infowin));
+	td->win = (infowin *) calloc(1, sizeof(struct infowin));
 	if (td->win == NULL)
 	{
 		abort();
@@ -1925,12 +1923,12 @@ errr init_x11(int argc, char *argv[])
 
 
 	/* Prepare cursor color */
-	xor = calloc(1, sizeof(struct infoclr));
-	if (xor == NULL)
+	cursor_clr = (infoclr *) calloc(1, sizeof(struct infoclr));
+	if (cursor_clr == NULL)
 	{
 		abort();
 	}
-	Infoclr_set(xor);
+	Infoclr_set(cursor_clr);
 	Infoclr_init_ppn(Metadpy->fg, Metadpy->bg, "xor", 0);
 
 
@@ -1939,7 +1937,7 @@ errr init_x11(int argc, char *argv[])
 	{
 		Pixell pixel;
 
-		clr[i] = calloc(1, sizeof(struct infoclr));
+		clr[i] = (infoclr *) calloc(1, sizeof(struct infoclr));
 		if (clr[i] == NULL)
 		{
 			abort();
