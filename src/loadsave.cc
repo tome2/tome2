@@ -134,16 +134,6 @@ static void do_char(char *c, ls_flag_t flag)
 	do_byte((byte *) c, flag);
 }
 
-static void do_bool(bool *f, ls_flag_t flag)
-{
-	byte b = *f;
-	do_byte(&b, flag);
-	if (flag == ls_flag_t::LOAD)
-	{
-		*f = b;
-	}
-}
-
 static void do_std_bool(bool *x, ls_flag_t flag)
 {
 	switch (flag)
@@ -895,8 +885,8 @@ static bool do_extra(ls_flag_t flag)
 
 	do_byte(&p_ptr->confusing, flag);
 	do_std_bool(&p_ptr->black_breath, flag);
-	do_bool(&fate_flag, flag);
-	do_bool(&ambush_flag, flag);
+	do_std_bool(&fate_flag, flag);
+	do_std_bool(&ambush_flag, flag);
 	do_byte(&p_ptr->allow_one_death, flag);
 
 	do_s16b(&no_breeds, flag);
@@ -979,7 +969,7 @@ static bool do_extra(ls_flag_t flag)
 	do_u16b(&noscore, flag);
 
 	/* Write death */
-	do_bool(&death, flag);
+	do_std_bool(&death, flag);
 
 	/* Level feeling */
 	do_s16b(&feeling, flag);
@@ -1731,7 +1721,7 @@ static void do_options(ls_flag_t flag)
 	do_byte(&options->hitpoint_warn, flag);
 
 	/*** Cheating options ***/
-	do_bool(&wizard, flag);
+	do_std_bool(&wizard, flag);
 	do_std_bool(&options->cheat_peek, flag);
 	do_std_bool(&options->cheat_hear, flag);
 	do_std_bool(&options->cheat_room, flag);
@@ -2103,7 +2093,7 @@ static bool do_monster_lore(ls_flag_t flag)
 		[](auto r_ptr, auto flag) -> void {
 			do_s16b(&r_ptr->r_pkills, flag);
 			do_s16b(&r_ptr->max_num, flag);
-			do_bool(&r_ptr->on_saved, flag);
+			do_std_bool(&r_ptr->on_saved, flag);
 		}
 	);
 
@@ -2120,8 +2110,8 @@ static bool do_object_lore(ls_flag_t flag)
 
 	do_fixed_map(flag, k_info, do_int,
 		[](std::shared_ptr<object_kind> k_ptr, auto flag) -> void {
-			do_bool(&k_ptr->aware, flag);
-			do_bool(&k_ptr->artifact, flag);
+			do_std_bool(&k_ptr->aware, flag);
+			do_std_bool(&k_ptr->artifact, flag);
 		}
 	);
 
@@ -2160,7 +2150,7 @@ static bool do_towns(ls_flag_t flag)
 	{
 		auto town = &town_info[i];
 
-		do_bool(&town->destroyed, flag);
+		do_std_bool(&town->destroyed, flag);
 
 		if (i >= TOWN_RANDOM)
 		{
@@ -2265,7 +2255,7 @@ static bool do_wilderness(ls_flag_t flag)
 			auto w = &wilderness(x, y);
 			do_seed(&w->seed, flag);
 			do_u16b(&w->entrance, flag);
-			do_bool(&w->known, flag);
+			do_std_bool(&w->known, flag);
 		}
 	}
 
@@ -2316,7 +2306,7 @@ static bool do_fates(ls_flag_t flag)
 			do_s16b(&fate->r_idx, flag);
 			do_s16b(&fate->count, flag);
 			do_s16b(&fate->time, flag);
-			do_bool(&fate->know, flag);
+			do_std_bool(&fate->know, flag);
 		}
 	);
 
