@@ -900,7 +900,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		sin = FALSE;
 
 		/* Count maximum drop */
-		n = MAX(drop_gold, drop_item);
+		n = std::max(drop_gold, drop_item);
 
 		/* Intro text */
 		if (n == 0)

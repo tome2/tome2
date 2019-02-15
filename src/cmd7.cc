@@ -461,7 +461,7 @@ void do_cmd_mindcraft()
 				msg_print("Your mind unleashes its power in an uncontrollable storm!");
 				project(1, 2 + plev / 10, p_ptr->py, p_ptr->px, plev * 2,
 				        GF_MANA, PROJECT_JUMP | PROJECT_KILL | PROJECT_GRID | PROJECT_ITEM);
-				p_ptr->csp = MAX(0, p_ptr->csp - plev * MAX(1, plev / 10));
+				p_ptr->csp = std::max(0, p_ptr->csp - plev * std::max(1, plev / 10));
 			}
 		}
 	}

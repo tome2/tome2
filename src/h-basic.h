@@ -159,18 +159,6 @@ typedef unsigned long u32b;
 /**** Simple "Macros" ****/
 
 /*
- * Non-typed minimum value macro
- */
-#undef MIN
-#define MIN(a,b)	(((a) > (b)) ? (b)  : (a))
-
-/*
- * Non-typed maximum value macro
- */
-#undef MAX
-#define MAX(a,b)	(((a) < (b)) ? (b)  : (a))
-
-/*
  * Non-typed absolute value macro
  */
 #undef ABS

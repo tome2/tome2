@@ -4591,7 +4591,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 		else if (command_wrk == (USE_FLOOR))
 		{
 			j = floor_top;
-			k = MIN(floor_top + 23, floor_num) - 1;
+			k = std::min(floor_top + 23, floor_num) - 1;
 
 			/* Extract the legal requests */
 			n1 = I2A(j - floor_top);

@@ -5155,7 +5155,7 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 						/* Injure + mana drain */
 						monster_desc(killer, m_ptr, 0x88);
 						msg_print("Your psychic energy is drained!");
-						p_ptr->csp = MAX(0, p_ptr->csp - damroll(5, dam) / 2);
+						p_ptr->csp = std::max(0, p_ptr->csp - damroll(5, dam) / 2);
 						p_ptr->redraw |= PR_FRAME;
 						take_hit(dam, killer);   /* has already been /3 */
 					}
@@ -5164,11 +5164,10 @@ bool_ project_m(int who, int r, int y, int x, int dam, int typ)
 			}
 			else if (dam > 0)
 			{
-				int b = damroll(5, dam) / 4;
 				msg_format("You convert %s%s pain into psychic energy!",
 				           m_name, (seen ? "'s" : "s"));
-				b = MIN(p_ptr->msp, p_ptr->csp + b);
-				p_ptr->csp = b;
+
+				p_ptr->csp = std::min<int>(p_ptr->msp, p_ptr->csp + damroll(5, dam) / 4);
 				p_ptr->redraw |= PR_FRAME;
 			}
 

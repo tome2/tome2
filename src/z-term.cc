@@ -1790,8 +1790,8 @@ void Term_resize(int w, int h)
 	}
 
 	/* Minimum dimensions */
-	wid = MIN(Term->wid, w);
-	hgt = MIN(Term->hgt, h);
+	wid = std::min<int>(Term->wid, w);
+	hgt = std::min<int>(Term->hgt, h);
 
 	/* Create new window */
 	{
