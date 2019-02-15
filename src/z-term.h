@@ -236,6 +236,7 @@ errr Term_activate(term *t);
 
 errr term_nuke(term *t);
 errr term_init(term *t, int w, int h, int k);
+void term_init_icky_corner(term *t);
 
 #ifdef __cplusplus
 } /* extern "C" */

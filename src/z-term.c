@@ -1975,3 +1975,8 @@ errr term_init(term *t, int w, int h, int k)
 	/* Success */
 	return (0);
 }
+
+void term_init_icky_corner(term *t)
+{
+	t->icky_corner = TRUE;
+}

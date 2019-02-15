@@ -751,9 +751,7 @@ static errr term_data_init_gcu(term_data *td, int rows, int cols, int y, int x)
 
 	/* Initialize the term */
 	term_init(t, cols, rows, 256);
-
-	/* Avoid bottom right corner */
-	t->icky_corner = TRUE;
+	term_init_icky_corner(t);
 
 	/* Set some hooks */
 	t->init_hook = Term_init_gcu;
