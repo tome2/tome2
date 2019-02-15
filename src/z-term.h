@@ -223,6 +223,7 @@ errr Term_flush();
 errr Term_keypress(int k);
 errr Term_key_push(int k);
 errr Term_inkey(char *ch, bool_ wait, bool_ take);
+int Term_queue_space();
 
 errr Term_save(void);
 term_win* Term_save_to(void);
