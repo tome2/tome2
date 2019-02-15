@@ -761,6 +761,26 @@ static bool do_cmd_open_aux(int y, int x)
 }
 
 
+/*
+ * Change a command "argument" to a number of repitions
+ */
+static void allow_repeat_command()
+{
+	// If there's a command argument, we set the number
+	// of repetitions instead.
+	if (command_arg)
+	{
+		/* Set repeat count */
+		command_rep = command_arg - 1;
+
+		/* Redraw the state */
+		p_ptr->redraw |= (PR_FRAME);
+
+		/* Cancel the arg */
+		command_arg = 0;
+	}
+}
+
 
 /*
  * Open a closed/locked/jammed door or a closed/locked chest.
@@ -810,17 +830,7 @@ void do_cmd_open()
 	}
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a "repeated" direction */
 	if (get_rep_dir(&dir))
@@ -959,17 +969,7 @@ void do_cmd_close()
 	}
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a "repeated" direction */
 	if (get_rep_dir(&dir))
@@ -1388,17 +1388,7 @@ void do_cmd_tunnel()
 	if (p_ptr->wild_mode) return;
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a direction to tunnel, or Abort */
 	if (get_rep_dir(&dir))
@@ -1579,17 +1569,7 @@ void do_cmd_bash()
 	}
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a "repeated" direction */
 	if (get_rep_dir(&dir))
@@ -1669,17 +1649,7 @@ void do_cmd_alter()
 
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a direction */
 	if (get_rep_dir(&dir))
@@ -1848,17 +1818,7 @@ static void do_cmd_walk_jump(int pickup)
 
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
+	allow_repeat_command();
 
 	/* Get a "repeated" direction */
 	if (get_rep_dir(&dir))
@@ -1930,18 +1890,7 @@ static void do_cmd_unwalk()
 
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
-
+	allow_repeat_command();
 
 	/* Attack monsters */
 	if (c_ptr->m_idx > 0)
@@ -2143,18 +2092,7 @@ void do_cmd_stay(int pickup)
 
 
 	/* Allow repeated command */
-	if (command_arg)
-	{
-		/* Set repeat count */
-		command_rep = command_arg - 1;
-
-		/* Redraw the state */
-		p_ptr->redraw |= (PR_FRAME);
-
-		/* Cancel the arg */
-		command_arg = 0;
-	}
-
+	allow_repeat_command();
 
 	/* Take a turn */
 	energy_use = 100;
