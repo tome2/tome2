@@ -1218,16 +1218,6 @@ static term_data data[MAX_TERM_DATA];
 #define WIN (Infowin->win)
 
 /*
- * Simply push a set of co-ordinates around.
- */
-typedef struct co_ord co_ord;
-struct co_ord
-{
-	int x;
-	int y;
-};
-
-/*
  * Process a keypress event
  *
  * Also appears in "main-xaw.c".
