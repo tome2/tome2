@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 /*
  * Choose the hardware, operating system, and compiler.
  * Also, choose various "system level" compilation options.
@@ -19,17 +21,6 @@
 # ifndef WINDOWS
 #  define WINDOWS
 # endif
-#endif
-
-
-
-/*
- * OPTION: Define "L64" if a "long" is 64-bits.  See "h-types.h".
- * The only such platform that angband is ported to is currently
- * DEC Alpha AXP running OSF/1 (OpenVMS uses 32-bit longs).
- */
-#if defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(__ia64) || defined(__ia64__) || defined(__mips64) || defined(__ppc64__) || defined(__PPC64__) || defined(__powerpc64__) || defined(__64BIT__) || defined(__sparc64__) || defined(__LP64__)
-# define L64
 #endif
 
 
@@ -101,19 +92,11 @@ typedef int errr;
 /* An unsigned byte of memory */
 typedef unsigned char byte;
 
-/* Signed/Unsigned 16 bit value */
-typedef signed short s16b;
-typedef unsigned short u16b;
-
-/* Signed/Unsigned 32 bit value */
-#ifdef L64	/* 64 bit longs */
-typedef signed int s32b;
-typedef unsigned int u32b;
-#else
-typedef signed long s32b;
-typedef unsigned long u32b;
-#endif
-
+/* Fixed-size integral types */
+using s16b = int16_t;
+using u16b = uint16_t;
+using s32b = int32_t;
+using u32b = uint32_t;
 
 
 /*
