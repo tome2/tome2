@@ -10,7 +10,7 @@
 
 #include "z-term.h"
 
-#include <assert.h>
+#include <cassert>
 
 
 /*
@@ -414,12 +414,12 @@ static errr term_win_init(term_win *s, int w, int h)
 	int y;
 
 	/* Make the window access arrays */
-	s->a = safe_calloc(h, sizeof(byte*));
-	s->c = safe_calloc(h, sizeof(char*));
+	s->a = (byte **) safe_calloc(h, sizeof(byte*));
+	s->c = (char **) safe_calloc(h, sizeof(char*));
 
 	/* Make the window content arrays */
-	s->va = safe_calloc(h * w, sizeof(byte));
-	s->vc = safe_calloc(h * w, sizeof(char));
+	s->va = (byte *) safe_calloc(h * w, sizeof(byte));
+	s->vc = (char *) safe_calloc(h * w, sizeof(char));
 
 	/* Prepare the window access arrays */
 	for (y = 0; y < h; y++)
@@ -1601,7 +1601,7 @@ errr Term_save()
 	if (!Term->mem)
 	{
 		/* Allocate window */
-		Term->mem = safe_calloc(1, sizeof(struct term_win));
+		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize window */
 		term_win_init(Term->mem, w, h);
@@ -1624,7 +1624,7 @@ term_win* Term_save_to()
 	term_win *save;
 
 	/* Allocate window */
-	save = safe_calloc(1, sizeof(struct term_win));
+	save = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize window */
 	term_win_init(save, w, h);
@@ -1652,7 +1652,7 @@ errr Term_load()
 	if (!Term->mem)
 	{
 		/* Allocate window */
-		Term->mem = safe_calloc(1, sizeof(struct term_win));
+		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize window */
 		term_win_init(Term->mem, w, h);
@@ -1756,11 +1756,11 @@ errr Term_resize(int w, int h)
 	hold_mem = Term->mem;
 
 	/* Create new scanners */
-	Term->x1 = safe_calloc(h, sizeof(byte));
-	Term->x2 = safe_calloc(h, sizeof(byte));
+	Term->x1 = (byte *) safe_calloc(h, sizeof(byte));
+	Term->x2 = (byte *) safe_calloc(h, sizeof(byte));
 
 	/* Create new window */
-	Term->old = safe_calloc(1, sizeof(struct term_win));
+	Term->old = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize new window */
 	term_win_init(Term->old, w, h);
@@ -1769,7 +1769,7 @@ errr Term_resize(int w, int h)
 	term_win_copy(Term->old, hold_old, wid, hgt);
 
 	/* Create new window */
-	Term->scr = safe_calloc(1, sizeof(struct term_win));
+	Term->scr = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize new window */
 	term_win_init(Term->scr, w, h);
@@ -1781,7 +1781,7 @@ errr Term_resize(int w, int h)
 	if (hold_mem)
 	{
 		/* Create new window */
-		Term->mem = safe_calloc(1, sizeof(struct term_win));
+		Term->mem = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 		/* Initialize new window */
 		term_win_init(Term->mem, w, h);
@@ -2002,7 +2002,7 @@ term *term_init(void *data, int w, int h, int k)
 	int y;
 
 	/* Wipe it */
-	term *t = safe_calloc(1, sizeof(term));
+	term *t = (term *) safe_calloc(1, sizeof(term));
 	memset(t, 0, sizeof(term));
 
 	/* Prepare the input queue */
@@ -2012,7 +2012,7 @@ term *term_init(void *data, int w, int h, int k)
 	t->key_size = k;
 
 	/* Allocate the input queue */
-	t->key_queue = safe_calloc(t->key_size, sizeof(char));
+	t->key_queue = (char *) safe_calloc(t->key_size, sizeof(char));
 
 
 	/* Save the size */
@@ -2020,19 +2020,19 @@ term *term_init(void *data, int w, int h, int k)
 	t->hgt = h;
 
 	/* Allocate change arrays */
-	t->x1 = safe_calloc(h, sizeof(byte));
-	t->x2 = safe_calloc(h, sizeof(byte));
+	t->x1 = (byte *) safe_calloc(h, sizeof(byte));
+	t->x2 = (byte *) safe_calloc(h, sizeof(byte));
 
 
 	/* Allocate "displayed" */
-	t->old = safe_calloc(1, sizeof(struct term_win));
+	t->old = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize "displayed" */
 	term_win_init(t->old, w, h);
 
 
 	/* Allocate "requested" */
-	t->scr = safe_calloc(1, sizeof(struct term_win));
+	t->scr = (struct term_win *) safe_calloc(1, sizeof(struct term_win));
 
 	/* Initialize "requested" */
 	term_win_init(t->scr, w, h);
