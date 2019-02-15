@@ -65,7 +65,6 @@ packages.
 Each frontend requires the additional packages listed below:
 
 - X11: `libx11-dev`
-- SDL: `libsdl-image1.2-dev` `libsdl-ttf2.0-dev`
 - ncurses: `libncurses5-dev`
 
 
@@ -80,11 +79,6 @@ linking the executable. As a workaround, set the environment variable
 
     $ env LDFLAGS=-L/usr/X11R6/lib cmake .
     $ make
-
-The SDL frontend also requires these packages:
-
-- `sdl-image`
-- `sdl-ttf`
 
 
 ## Compiling on Windows using MinGW

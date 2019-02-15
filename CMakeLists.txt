@@ -83,19 +83,6 @@ FIND_PACKAGE(X11)
 FIND_PACKAGE(GTK2)
 
 #
-# SDL support (OPTIONAL)
-#
-FIND_PACKAGE(SDL)
-IF(SDL_FOUND)
-  # We assume that if we want to compile for SDL that
-  # any required dependencies should be installed.
-  FIND_PACKAGE(SDL_image)
-  FIND_PACKAGE(SDL_ttf)
-  SET_PACKAGE_PROPERTIES(SDL_image PROPERTIES TYPE REQUIRED)
-  SET_PACKAGE_PROPERTIES(SDL_ttf PROPERTIES TYPE REQUIRED)
-ENDIF()
-
-#
 # Curses support (OPTIONAL)
 #
 FIND_PACKAGE(Curses)
