@@ -836,6 +836,205 @@ static bool is_light_safe(object_type const *o_ptr)
 	return (flags | TR_TY_CURSE) && (flags | TR_DG_CURSE);
 }
 
+
+/**
+ * Process lasting effects
+ */
+static void process_lasting_effects()
+{
+	for (int j = 0; j < cur_hgt - 1; j++)
+	{
+		for (int i = 0; i < cur_wid - 1; i++)
+		{
+			int e = cave[j][i].effect;
+
+			if (e)
+			{
+				effect_type *e_ptr = &effects[e];
+
+				if (e_ptr->time)
+				{
+					/* Apply damage */
+					project(0, 0, j, i, e_ptr->dam, e_ptr->type,
+						PROJECT_KILL | PROJECT_ITEM | PROJECT_HIDE);
+				}
+				else
+				{
+					cave[j][i].effect = 0;
+				}
+
+				if ((e_ptr->flags & EFF_WAVE) && !(e_ptr->flags & EFF_LAST))
+				{
+					if (distance(e_ptr->cy, e_ptr->cx, j, i) < e_ptr->rad - 1)
+						cave[j][i].effect = 0;
+				}
+				else if ((e_ptr->flags & EFF_STORM) && !(e_ptr->flags & EFF_LAST))
+				{
+					cave[j][i].effect = 0;
+				}
+
+				lite_spot(j, i);
+			}
+		}
+	}
+
+	/* Reduce & handle effects */
+	for (int i = 0; i < MAX_EFFECTS; i++)
+	{
+		/* Skip empty slots */
+		if (effects[i].time == 0) continue;
+
+		/* Reduce duration */
+		effects[i].time--;
+
+		/* Creates a "wave" effect*/
+		if (effects[i].flags & EFF_WAVE)
+		{
+			effect_type *e_ptr = &effects[i];
+			int x, y, z;
+
+			e_ptr->rad++;
+
+			/* What a frelling ugly line of ifs ... */
+			if (effects[i].flags & EFF_DIR8)
+				for (y = e_ptr->cy - e_ptr->rad, z = 0; y <= e_ptr->cy; y++, z++)
+				{
+					for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR2)
+				for (y = e_ptr->cy, z = e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++, z--)
+				{
+					for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR6)
+				for (x = e_ptr->cx, z = e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++, z--)
+				{
+					for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR4)
+				for (x = e_ptr->cx - e_ptr->rad, z = 0; x <= e_ptr->cx; x++, z++)
+				{
+					for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR9)
+				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
+				{
+					for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR1)
+				for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
+				{
+					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR7)
+				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
+				{
+					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else if (effects[i].flags & EFF_DIR3)
+				for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
+				{
+					for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+			else
+				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
+				{
+					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
+					{
+						if (!in_bounds(y, x)) continue;
+
+						/* This is *slow* -- pelpel */
+						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+								(distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
+							cave[y][x].effect = i;
+					}
+				}
+		}
+		/* Creates a "storm" effect*/
+		else if (effects[i].flags & EFF_STORM)
+		{
+			effect_type *e_ptr = &effects[i];
+			int x, y;
+
+			e_ptr->cy = p_ptr->py;
+			e_ptr->cx = p_ptr->px;
+			for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
+			{
+				for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
+				{
+					if (!in_bounds(y, x)) continue;
+
+					if (los(e_ptr->cy, e_ptr->cx, y, x) &&
+							(distance(e_ptr->cy, e_ptr->cx, y, x) <= e_ptr->rad))
+					{
+						cave[y][x].effect = i;
+						lite_spot(y, x);
+					}
+				}
+			}
+		}
+	}
+
+	apply_effect(p_ptr->py, p_ptr->px);
+}
+
+
 /*
  * Handle certain things once every 10 game turns
  *
@@ -1943,208 +2142,7 @@ static void process_world()
 	/* handle spell effects */
 	if (!p_ptr->wild_mode)
 	{
-		/*
-		 * I noticed significant performance degrade after the introduction
-		 * of staying spell effects. I believe serious optimisation effort
-		 * is required before another release.
-		 *
-		 * More important is to fix that display weirdness...
-		 *
-		 * It seems that the game never expects that monster deaths and
-		 * terrain feature changes should happen here... Moving these
-		 * to process_player() [before resting code, with "every 10 game turn"
-		 * 'if'] may or may not fix the problem... -- pelpel to DG
-		 */
-		for (int j = 0; j < cur_hgt - 1; j++)
-		{
-			for (int i = 0; i < cur_wid - 1; i++)
-			{
-				int e = cave[j][i].effect;
-
-				if (e)
-				{
-					effect_type *e_ptr = &effects[e];
-
-					if (e_ptr->time)
-					{
-						/* Apply damage */
-						project(0, 0, j, i, e_ptr->dam, e_ptr->type,
-						        PROJECT_KILL | PROJECT_ITEM | PROJECT_HIDE);
-					}
-					else
-					{
-						cave[j][i].effect = 0;
-					}
-
-					if ((e_ptr->flags & EFF_WAVE) && !(e_ptr->flags & EFF_LAST))
-					{
-						if (distance(e_ptr->cy, e_ptr->cx, j, i) < e_ptr->rad - 1)
-							cave[j][i].effect = 0;
-					}
-					else if ((e_ptr->flags & EFF_STORM) && !(e_ptr->flags & EFF_LAST))
-					{
-						cave[j][i].effect = 0;
-					}
-
-					lite_spot(j, i);
-				}
-			}
-		}
-
-		/* Reduce & handle effects */
-		for (int i = 0; i < MAX_EFFECTS; i++)
-		{
-			/* Skip empty slots */
-			if (effects[i].time == 0) continue;
-
-			/* Reduce duration */
-			effects[i].time--;
-
-			/* Creates a "wave" effect*/
-			if (effects[i].flags & EFF_WAVE)
-			{
-				effect_type *e_ptr = &effects[i];
-				int x, y, z;
-
-				e_ptr->rad++;
-
-				/* What a frelling ugly line of ifs ... */
-				if (effects[i].flags & EFF_DIR8)
-					for (y = e_ptr->cy - e_ptr->rad, z = 0; y <= e_ptr->cy; y++, z++)
-					{
-						for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR2)
-					for (y = e_ptr->cy, z = e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++, z--)
-					{
-						for (x = e_ptr->cx - (e_ptr->rad - z); x <= e_ptr->cx + (e_ptr->rad - z); x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR6)
-					for (x = e_ptr->cx, z = e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++, z--)
-					{
-						for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR4)
-					for (x = e_ptr->cx - e_ptr->rad, z = 0; x <= e_ptr->cx; x++, z++)
-					{
-						for (y = e_ptr->cy - (e_ptr->rad - z); y <= e_ptr->cy + (e_ptr->rad - z); y++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR9)
-					for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
-					{
-						for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR1)
-					for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
-					{
-						for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR7)
-					for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy; y++)
-					{
-						for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx; x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else if (effects[i].flags & EFF_DIR3)
-					for (y = e_ptr->cy; y <= e_ptr->cy + e_ptr->rad; y++)
-					{
-						for (x = e_ptr->cx; x <= e_ptr->cx + e_ptr->rad; x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-				else
-					for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
-					{
-						for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
-						{
-							if (!in_bounds(y, x)) continue;
-
-							/* This is *slow* -- pelpel */
-							if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-							                (distance(e_ptr->cy, e_ptr->cx, y, x) == e_ptr->rad))
-								cave[y][x].effect = i;
-						}
-					}
-			}
-			/* Creates a "storm" effect*/
-			else if (effects[i].flags & EFF_STORM)
-			{
-				effect_type *e_ptr = &effects[i];
-				int x, y;
-
-				e_ptr->cy = p_ptr->py;
-				e_ptr->cx = p_ptr->px;
-				for (y = e_ptr->cy - e_ptr->rad; y <= e_ptr->cy + e_ptr->rad; y++)
-				{
-					for (x = e_ptr->cx - e_ptr->rad; x <= e_ptr->cx + e_ptr->rad; x++)
-					{
-						if (!in_bounds(y, x)) continue;
-
-						if (los(e_ptr->cy, e_ptr->cx, y, x) &&
-						                (distance(e_ptr->cy, e_ptr->cx, y, x) <= e_ptr->rad))
-						{
-							cave[y][x].effect = i;
-							lite_spot(y, x);
-						}
-					}
-				}
-			}
-		}
-
-		apply_effect(p_ptr->py, p_ptr->px);
+		process_lasting_effects();
 	}
 
 	/* Arg cannot breath? */
