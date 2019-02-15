@@ -1470,8 +1470,8 @@ errr init_player_info_txt(FILE *fp)
 
 			case '1': /* Class title */
 				/* Copy */
-				assert(!c_ptr->titles[tit_idx]);
-				c_ptr->titles[tit_idx] = my_strdup(s);
+				assert(c_ptr->titles[tit_idx].empty());
+				c_ptr->titles[tit_idx] = s;
 
 				/* Go to next title in array */
 				tit_idx++;

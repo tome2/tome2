@@ -11,6 +11,8 @@
 #include "player_spec.hpp"
 #include "skill_modifiers.hpp"
 
+#include <array>
+
 /**
  * Player descriptor and runtime data.
  */
@@ -18,7 +20,7 @@ struct player_class
 {
 	std::string title;                                   /* Type of class */
 	std::string desc;                                    /* Small desc of the class */
-	const char *titles[PY_MAX_LEVEL / 5] { };            /* Titles */
+	std::array<std::string, PY_MAX_LEVEL / 5> titles { };/* Titles */
 
 	int display_order_idx;                               /* Display order index; lowest first */
 

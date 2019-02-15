@@ -296,7 +296,7 @@ static void prt_stat(int stat)
  */
 static void prt_title()
 {
-	const char *p = "";
+	std::string p;
 
 	/* Mimic shape */
 	if (p_ptr->mimic_form)
@@ -329,7 +329,7 @@ static void prt_title()
 
 	}
 
-	prt_field(p, ROW_TITLE, COL_TITLE);
+	prt_field(p.c_str(), ROW_TITLE, COL_TITLE);
 }
 
 
