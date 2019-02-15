@@ -10,6 +10,8 @@
 
 #include "h-basic.hpp"
 
+#include <functional>
+
 typedef struct term_win term_win;
 
 struct term_win; // Opaque
@@ -117,7 +119,6 @@ void Term_xtra(int n, int v);
 void Term_queue_char(int x, int y, byte a, char c);
 
 void Term_fresh();
-void Term_set_cursor(int v);
 errr Term_gotoxy(int x, int y);
 void Term_draw(int x, int y, byte a, char c);
 void Term_addch(byte a, char c);
@@ -130,14 +131,15 @@ void Term_redraw();
 void Term_redraw_section(int x1, int y1, int x2, int y2);
 void Term_bell();
 
-void Term_get_cursor(int *v);
+void Term_with_saved_cursor_flags(std::function<void ()> callback);
+void Term_with_saved_cursor_visbility(std::function<void ()> callback);
+
 void Term_get_size(int *w, int *h);
 void Term_locate(int *x, int *y);
 void Term_what(int x, int y, byte *a, char *c);
 
-void Term_save_cursor_flags();
-void Term_restore_cursor_flags();
-void Term_set_cursor_visible();
+void Term_show_cursor();
+void Term_hide_cursor();
 
 void Term_flush();
 void Term_keypress(int k);

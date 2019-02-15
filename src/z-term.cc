@@ -11,9 +11,11 @@
 #include "z-term.hpp"
 
 #include "key_queue.hpp"
+#include "tome/unique_handle.hpp"
 
 #include <cassert>
 #include <memory>
+#include <optional>
 #include <vector>
 
 
@@ -252,9 +254,6 @@ private:
 	std::vector<byte> va;
 	std::vector<char> vc;
 
-	bool saved_cu = true;
-	bool saved_cv = false;
-
 public:
 
 	bool cu = true;
@@ -311,10 +310,6 @@ public:
 		cy = f->cy;
 		cu = f->cu;
 		cv = f->cv;
-
-		/* Copy saved cursor flags */
-		saved_cu = f->saved_cu;
-		saved_cv = f->saved_cv;
 	}
 
 	/**
@@ -323,24 +318,6 @@ public:
 	void copy_from(std::unique_ptr<term_win> const &p, int w, int h)
 	{
 		copy_from(p.get(), w, h);
-	}
-
-	/**
-	 * Save cursor flags.
-	 */
-	void save_cursor_flags()
-	{
-		saved_cu = cu;
-		saved_cv = cv;
-	}
-
-	/**
-	 * Restore cursor flags.
-	 */
-	void restore_cursor_flags()
-	{
-		cu = saved_cu;
-		cv = saved_cv;
 	}
 
 	/**
@@ -1023,15 +1000,6 @@ void Term_fresh()
 
 
 /*
- * Set the cursor visibility
- */
-void Term_set_cursor(int v)
-{
-	Term->scr->cv = v;
-}
-
-
-/*
  * Place the cursor at a given location
  *
  * Note -- "illegal" requests do not move the cursor.
@@ -1383,7 +1351,6 @@ void Term_redraw_section(int x1, int y1, int x2, int y2)
 	Term_fresh();
 }
 
-
 void Term_bell()
 {
 	Term_xtra(TERM_XTRA_NOISE, 0);
@@ -1391,14 +1358,98 @@ void Term_bell()
 
 /*** Access routines ***/
 
+namespace { // anonymous
 
-/*
- * Extract the cursor visibility
+/**
+ * Policy handler for setting/resetting cursor visibility.
  */
-void Term_get_cursor(int *v)
+struct CursorVisibilyPolicy {
+public:
+	struct handle_type {
+		term *t = nullptr;
+		bool cv = false;
+	};
+
+	static handle_type from(term *t)
+	{
+		return handle_type {
+			.t = t,
+			.cv = t->scr->cv
+		};
+	}
+
+	static handle_type get_null()
+	{
+		return handle_type();
+	}
+
+	static bool is_null(handle_type const &v)
+	{
+		return v.t == nullptr;
+	}
+
+	static void close(handle_type const &v)
+	{
+		Term->scr->cv = v.cv;
+	}
+};
+
+/**
+ * Policy handler for setting/restoring cursor flags.
+ */
+struct CursorFlagsPolicy {
+
+public:
+	struct handle_type {
+		term *t = nullptr;
+		bool cu = false;
+		bool cv = false;
+	};
+
+private:
+	handle_type handle;
+
+public:
+	static handle_type from(term *t)
+	{
+		return handle_type {
+			.t = t,
+			.cu = t->scr->cu,
+			.cv = t->scr->cv
+		};
+	}
+
+	static handle_type get_null()
+	{
+		return handle_type();
+	}
+
+	static bool is_null(handle_type const &h)
+	{
+		return h.t == nullptr;
+	}
+
+	static void close(handle_type &h)
+	{
+		h.t->scr->cu = h.cu;
+		h.t->scr->cv = h.cv;
+	}
+
+};
+
+} // namespace (anonymous)
+
+
+void Term_with_saved_cursor_flags(std::function<void ()> callback)
 {
-	/* Extract visibility */
-	(*v) = Term->scr->cv;
+	unique_handle<CursorFlagsPolicy> resetter(CursorFlagsPolicy::from(Term));
+	callback();
+}
+
+void Term_with_saved_cursor_visbility(std::function<void ()> callback)
+{
+	unique_handle<CursorVisibilyPolicy> resetter(CursorVisibilyPolicy::from(Term));
+	callback();
 }
 
 
@@ -1443,27 +1494,14 @@ void Term_what(int x, int y, byte *a, char *c)
 	(*c) = Term->scr->c[y][x];
 }
 
-/*
- * Save cursor flags for the current terminal.
- */
-void Term_save_cursor_flags()
+
+void Term_hide_cursor()
 {
-	Term->scr->save_cursor_flags();
+	Term->scr->cv = 0;
 }
 
-/**
- * Restore cursor flags for the current terminal. Must have been
- * preceded by a call to Term_save_cursor_flags().
- */
-void Term_restore_cursor_flags()
-{
-	Term->scr->restore_cursor_flags();
-}
 
-/**
- * Set the cursor to "visible".
- */
-void Term_set_cursor_visible()
+void Term_show_cursor()
 {
 	Term->scr->set_cursor_visible();
 }

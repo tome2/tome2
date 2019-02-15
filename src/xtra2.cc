@@ -4921,60 +4921,62 @@ bool get_rep_dir(int *dp)
  */
 bool tgt_pt(int *x, int *y)
 {
-	char ch = 0;
-	int d;
-	int screen_wid, screen_hgt;
 	bool success = false;
 
-	*x = p_ptr->px;
-	*y = p_ptr->py;
-
-	/* Get size */
-	get_screen_size(&screen_wid, &screen_hgt);
-
 	// Make the cursor visible
-	Term_save_cursor_flags();
-	Term_set_cursor_visible();
+	Term_with_saved_cursor_flags([&success, &x, &y]() {
 
-	// Prompt
-	msg_print("Select a point and press space.");
+		*x = p_ptr->px;
+		*y = p_ptr->py;
 
-	while ((ch != 27) && (ch != ' '))
-	{
-		move_cursor_relative(*y, *x);
-		ch = inkey();
-		switch (ch)
+		/* Get size */
+		int screen_wid;
+		int screen_hgt;
+		get_screen_size(&screen_wid, &screen_hgt);
+
+		// Make cursor visible
+		Term_show_cursor();
+
+		// Prompt
+		msg_print("Select a point and press space.");
+
+		char ch = '\0';
+		while ((ch != 27) && (ch != ' '))
 		{
-		case 27:
-			break;
-		case ' ':
-			success = true;
-			break;
-		default:
-			/* Look up the direction */
-			d = get_keymap_dir(ch);
+			move_cursor_relative(*y, *x);
+			ch = inkey();
+			switch (ch)
+			{
+			case 27:
+				break;
+			case ' ':
+				success = true;
+				break;
+			default:
+				/* Look up the direction */
+				int d;
+				d = get_keymap_dir(ch);
 
-			if (!d) break;
+				if (!d) break;
 
-			*x += ddx[d];
-			*y += ddy[d];
+				*x += ddx[d];
+				*y += ddy[d];
 
-			/* Hack -- Verify x */
-			if ((*x >= cur_wid - 1) || (*x >= panel_col_min + screen_wid)) (*x)--;
-			else if ((*x <= 0) || (*x <= panel_col_min)) (*x)++;
+				/* Hack -- Verify x */
+				if ((*x >= cur_wid - 1) || (*x >= panel_col_min + screen_wid)) (*x)--;
+				else if ((*x <= 0) || (*x <= panel_col_min)) (*x)++;
 
-			/* Hack -- Verify y */
-			if ((*y >= cur_hgt - 1) || (*y >= panel_row_min + screen_hgt)) (*y)--;
-			else if ((*y <= 0) || (*y <= panel_row_min)) (*y)++;
+				/* Hack -- Verify y */
+				if ((*y >= cur_hgt - 1) || (*y >= panel_row_min + screen_hgt)) (*y)--;
+				else if ((*y <= 0) || (*y <= panel_row_min)) (*y)++;
 
-			break;
+				break;
+			}
 		}
-	}
+	});
 
-	// Restore cursor state
-	Term_restore_cursor_flags();
+	// Refresh
 	Term_fresh();
-
 	return success;
 }
 

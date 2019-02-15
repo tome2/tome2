@@ -1545,38 +1545,30 @@ void lite_spot(int y, int x)
  */
 void prt_map()
 {
-	int x, y;
-
-	int v;
-
 	/* Access the cursor state */
-	Term_get_cursor(&v);
+	Term_with_saved_cursor_visbility([] {
+		/* Hide the cursor */
+		Term_hide_cursor();
 
-	/* Hide the cursor */
-	Term_set_cursor(0);
-
-	/* Dump the map */
-	for (y = panel_row_min; y <= panel_row_max; y++)
-	{
-		/* Scan the columns of row "y" */
-		for (x = panel_col_min; x <= panel_col_max; x++)
+		/* Dump the map */
+		for (int y = panel_row_min; y <= panel_row_max; y++)
 		{
-			byte a;
-			char c;
+			for (int x = panel_col_min; x <= panel_col_max; x++)
+			{
+				byte a;
+				char c;
 
-			/* Determine what is there */
-			map_info(y, x, &a, &c);
+				/* Determine what is there */
+				map_info(y, x, &a, &c);
 
-			/* Efficiency -- Redraw that grid of the map */
-			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
+				/* Efficiency -- Redraw that grid of the map */
+				Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
+			}
 		}
-	}
 
-	/* Display player */
-	lite_spot(p_ptr->py, p_ptr->px);
-
-	/* Restore the cursor */
-	Term_set_cursor(v);
+		/* Display player */
+		lite_spot(p_ptr->py, p_ptr->px);
+	});
 }
 
 

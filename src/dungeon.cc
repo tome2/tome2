@@ -4602,7 +4602,7 @@ void play_game(program_args const &args)
 
 
 	/* Hack -- turn off the cursor */
-	Term_set_cursor(0);
+	Term_hide_cursor();
 
 	/* Character list */
 	bool new_game = false;
