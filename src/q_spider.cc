@@ -45,7 +45,7 @@ static bool quest_spider_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("spiders.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("spiders.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	return true;
 }
@@ -90,7 +90,7 @@ static bool quest_spider_death_hook(void *, void *, void *)
 		cquest.status = QUEST_STATUS_COMPLETED;
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_spider_death_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		return false;
 	}
@@ -116,14 +116,14 @@ static bool quest_spider_finish_hook(void *, void *in_, void *)
 	object_prep(q_ptr, lookup_kind(TV_POTION, SV_POTION_AUGMENTATION));
 	q_ptr->number = 1;
 	q_ptr->found = OBJ_FOUND_REWARD;
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_POISON;
 	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_spider_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }

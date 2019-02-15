@@ -52,16 +52,16 @@ static const char *wd_his[3] = { "its", "his", "her" };
  */
 static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 {
-	bool_ old = FALSE;
-	bool_ sin = FALSE;
+	bool old = false;
+	bool sin = false;
 
 	int m, n, r;
 
 	const char *p;
 	const char *q;
 
-	bool_ breath = FALSE;
-	bool_ magic = FALSE;
+	bool breath = false;
+	bool magic = false;
 
 	int vn = 0;
 	byte color[64];
@@ -118,7 +118,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 
 
 	/* Nothing yet */
-	old = FALSE;
+	old = false;
 
 	/* Describe location */
 	if (r_ptr->flags & RF_PET)
@@ -126,7 +126,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		text_out(format("%^s is ", wd_he[msex]));
 		text_out_c(TERM_L_BLUE, "friendly");
 		text_out(" to you");
-		old = TRUE;
+		old = true;
 	}
 
 	/* Describe location */
@@ -137,7 +137,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else
 			text_out(format("%^s ", wd_he[msex]));
 		text_out_c(TERM_L_GREEN, "lives in the town or the wilderness");
-		old = TRUE;
+		old = true;
 	}
 	else
 	{
@@ -156,7 +156,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 			text_out_c(TERM_L_GREEN, format("%d", r_ptr->level));
 		}
 
-		old = TRUE;
+		old = true;
 	}
 
 
@@ -170,7 +170,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else
 		{
 			text_out(format("%^s ", wd_he[msex]));
-			old = TRUE;
+			old = true;
 		}
 		text_out("moves");
 
@@ -228,7 +228,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else
 		{
 			text_out(format("%^s ", wd_he[msex]));
-			old = TRUE;
+			old = true;
 		}
 
 		/* Describe */
@@ -239,7 +239,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	if (old)
 	{
 		text_out(".  ");
-		old = FALSE;
+		old = false;
 	}
 
 
@@ -274,7 +274,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else text_out(" creature");
 
 		/* Group some variables */
-		if (TRUE)
+		if (true)
 		{
 			long i, j;
 
@@ -414,7 +414,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	if (vn)
 	{
 		/* Note breath */
-		breath = TRUE;
+		breath = true;
 
 		/* Intro */
 		text_out(format("%^s", wd_he[msex]));
@@ -506,7 +506,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 	if (vn)
 	{
 		/* Note magic */
-		magic = TRUE;
+		magic = true;
 
 		/* Intro */
 		if (breath)
@@ -897,7 +897,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		if (r_ptr->flags & RF_ONLY_ITEM) drop_gold = 0;
 
 		/* No "n" needed */
-		sin = FALSE;
+		sin = false;
 
 		/* Count maximum drop */
 		n = std::max(drop_gold, drop_item);
@@ -911,7 +911,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else if (n == 1)
 		{
 			text_out(format("%^s may carry a", wd_he[msex]));
-			sin = TRUE;
+			sin = true;
 		}
 		else if (n == 2)
 		{
@@ -933,7 +933,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		else if (flags & RF_DROP_GOOD)
 		{
 			p = " good";
-			sin = FALSE;
+			sin = false;
 		}
 
 		/* Okay */
@@ -948,7 +948,7 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		{
 			/* Handle singular "an" */
 			if (sin) text_out("n");
-			sin = FALSE;
+			sin = false;
 
 			/* Dump "object(s)" */
 			if (p) text_out_c(TERM_ORANGE, p);
@@ -963,11 +963,11 @@ static void roff_aux(std::shared_ptr<monster_race const> r_ptr)
 		if (drop_gold)
 		{
 			/* Cancel prefix */
-			if (!p) sin = FALSE;
+			if (!p) sin = false;
 
 			/* Handle singular "an" */
 			if (sin) text_out("n");
-			sin = FALSE;
+			sin = false;
 
 			/* Dump "treasure(s)" */
 			if (p) text_out(p);

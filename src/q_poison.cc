@@ -125,7 +125,7 @@ static bool quest_poison_gen_hook(void *, void *, void *)
 				int m_idx;
 
 				r_idx = get_mon_num(30);
-				m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+				m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_ENEMY);
 				if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 
 				/* Sometimes make it up some levels */
@@ -171,15 +171,15 @@ static bool quest_poison_finish_hook(void *, void *in_, void *)
 	q_ptr->found = OBJ_FOUND_REWARD;
 	q_ptr->number = 1;
 	q_ptr->name2 = EGO_ELVENKIND;
-	apply_magic(q_ptr, 1, FALSE, FALSE, FALSE);
+	apply_magic(q_ptr, 1, false, false, false);
 
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_poison_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -212,10 +212,10 @@ static bool quest_poison_quest_hook(void *, void *in_, void *)
 	q_ptr->number = 99;
 	q_ptr->inscription = "quest";
 
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	del_hook_new(HOOK_INIT_QUEST, quest_poison_quest_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return false;
 }
@@ -293,7 +293,7 @@ static bool quest_poison_drop_hook(void *, void *in_, void *)
 		cquest.status = QUEST_STATUS_COMPLETED;
 
 		del_hook_new(HOOK_DROP, quest_poison_drop_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		return false;
 	}
@@ -312,7 +312,7 @@ void quest_poison_init_hook()
 	/* Get a place to place the poison */
 	if (!cquest.data[1])
 	{
-		cquest.data[1] = TRUE;
+		cquest.data[1] = true;
 		cquest.data[0] = rand_int(4);
 		if (wizard)
 		{

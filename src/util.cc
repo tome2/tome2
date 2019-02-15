@@ -265,7 +265,7 @@ errr my_fgets(FILE *fff, char *buf, unsigned long n)
 {
 	unsigned long i = 0;
 
-	while (TRUE)
+	while (true)
 	{
 		int c = fgetc(fff);
 
@@ -625,7 +625,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
 	const char *str = *strptr;
-	bool_ mod_status[MAX_MACRO_MOD];
+	bool mod_status[MAX_MACRO_MOD];
 
 	int i, len = 0;
 	int shiftstatus = 0;
@@ -635,7 +635,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 		return;
 
 	for (i = 0; macro_modifier_chr[i]; i++)
-		mod_status[i] = FALSE;
+		mod_status[i] = false;
 	str++;
 
 	/* Examine modifier keys */
@@ -649,7 +649,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 		}
 		if (!macro_modifier_chr[i]) break;
 		str += len;
-		mod_status[i] = TRUE;
+		mod_status[i] = true;
 		if ('S' == macro_modifier_chr[i])
 			shiftstatus = 1;
 	}
@@ -844,7 +844,7 @@ void text_to_ascii(char *buf, const char *str)
 }
 
 
-static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
+static bool trigger_ascii_to_text(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
 	const char *str = *strptr;
@@ -853,7 +853,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 	const char *tmp;
 
 	if (macro_template == NULL)
-		return FALSE;
+		return false;
 
 	*s++ = '\\';
 	*s++ = '[';
@@ -880,11 +880,11 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 			key_code[j] = '\0';
 			break;
 		default:
-			if (ch != *str) return FALSE;
+			if (ch != *str) return false;
 			str++;
 		}
 	}
-	if (*str++ != (char)13) return FALSE;
+	if (*str++ != (char)13) return false;
 
 	for (i = 0; i < max_macrotrigger; i++)
 	{
@@ -893,7 +893,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 			break;
 	}
 	if (i == max_macrotrigger)
-		return FALSE;
+		return false;
 
 	tmp = macro_trigger_name[i];
 	while (*tmp) *s++ = *tmp++;
@@ -902,7 +902,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 
 	*bufptr = s;
 	*strptr = str;
-	return TRUE;
+	return true;
 }
 
 
@@ -1011,7 +1011,7 @@ void ascii_to_text(char *buf, const char *str)
 /*
 * Determine if any macros have ever started with a given character.
 */
-static bool_ macro__use[256];
+static bool macro__use[256];
 
 
 /*
@@ -1183,7 +1183,7 @@ errr macro_add(const char *pat, const char *act)
 	macro__act[n] = strdup(act);
 
 	/* Efficiency */
-	macro__use[(byte)(pat[0])] = TRUE;
+	macro__use[(byte)(pat[0])] = true;
 
 	/* Success */
 	return (0);
@@ -1194,7 +1194,7 @@ errr macro_add(const char *pat, const char *act)
 /*
 * Local "need flush" variable
 */
-static bool_ flush_later = FALSE;
+static bool flush_later = false;
 
 
 /*
@@ -1202,14 +1202,14 @@ static bool_ flush_later = FALSE;
 *
 * Do not match any macros until "ascii 30" is found.
 */
-static bool_ parse_macro = FALSE;
+static bool parse_macro = false;
 
 /*
 * Local variable -- we are inside a "macro trigger"
 *
 * Strip all keypresses until a low ascii value is found.
 */
-static bool_ parse_under = FALSE;
+static bool parse_under = false;
 
 
 /*
@@ -1222,7 +1222,7 @@ static bool_ parse_under = FALSE;
 void flush()
 {
 	/* Do it later */
-	flush_later = TRUE;
+	flush_later = true;
 }
 
 
@@ -1292,7 +1292,7 @@ static char inkey_aux()
 
 
 	/* End "macro action" */
-	if (ch == 30) parse_macro = FALSE;
+	if (ch == 30) parse_macro = false;
 
 	/* Inside "macro action" */
 	if (ch == 30) return (ch);
@@ -1317,7 +1317,7 @@ static char inkey_aux()
 
 
 	/* Wait for a macro, or a timeout */
-	while (TRUE)
+	while (true)
 	{
 		/* Check for pending macro */
 		k = macro_find_maybe(buf);
@@ -1387,7 +1387,7 @@ static char inkey_aux()
 
 
 	/* Begin "macro action" */
-	parse_macro = TRUE;
+	parse_macro = true;
 
 	/* Push the "end of macro action" key */
 	if (Term_key_push(30)) return (0);
@@ -1422,32 +1422,32 @@ static char inkey_aux()
 */
 static const char *inkey_next = NULL;
 
-bool_ inkey_flag = FALSE;
+bool inkey_flag = false;
 
 
 /*
 * Get a keypress from the user.
 *
 * This function recognizes a few "global parameters".  These are variables
-* which, if set to TRUE before calling this function, will have an effect
-* on this function, and which are always reset to FALSE by this function
+* which, if set to true before calling this function, will have an effect
+* on this function, and which are always reset to false by this function
 * before this function returns.  Thus they function just like normal
 * parameters, except that most calls to this function can ignore them.
 *
-* If "inkey_scan" is TRUE, then we will immediately return "zero" if no
+* If "inkey_scan" is true, then we will immediately return "zero" if no
 * keypress is available, instead of waiting for a keypress.
 *
-* If "inkey_base" is TRUE, then all macro processing will be bypassed.
-* If "inkey_base" and "inkey_scan" are both TRUE, then this function will
+* If "inkey_base" is true, then all macro processing will be bypassed.
+* If "inkey_base" and "inkey_scan" are both true, then this function will
 * not return immediately, but will wait for a keypress for as long as the
 * normal macro matching code would, allowing the direct entry of macro
 * triggers.  The "inkey_base" flag is extremely dangerous!
 *
-* If "inkey_flag" is TRUE, then we will assume that we are waiting for a
+* If "inkey_flag" is true, then we will assume that we are waiting for a
 * normal command, and we will only show the cursor if "hilite_player" is
-* TRUE (or if the player is in a store), instead of always showing the
+* true (or if the player is in a store), instead of always showing the
 * cursor.  The various "main-xxx.c" files should avoid saving the game
-* in response to a "menu item" request unless "inkey_flag" is TRUE, to
+* in response to a "menu item" request unless "inkey_flag" is true, to
 * prevent savefile corruption.
 *
 * If we are waiting for a keypress, and no keypress is ready, then we will
@@ -1479,7 +1479,7 @@ bool_ inkey_flag = FALSE;
 *
 * Hack -- Note the use of "inkey_next" to allow "keymaps" to be processed.
 */
-static char inkey_real(bool_ inkey_scan)
+static char inkey_real(bool inkey_scan)
 {
 	int v;
 
@@ -1487,7 +1487,7 @@ static char inkey_real(bool_ inkey_scan)
 
 	char ch = 0;
 
-	bool_ done = FALSE;
+	bool done = false;
 
 	term *old = Term;
 
@@ -1498,7 +1498,7 @@ static char inkey_real(bool_ inkey_scan)
 		ch = *inkey_next++;
 
 		/* Cancel the various "global parameters" */
-		inkey_base = inkey_flag = inkey_scan = FALSE;
+		inkey_base = inkey_flag = inkey_scan = false;
 
 		/* Accept result */
 		macro_recorder_add(ch);
@@ -1548,7 +1548,7 @@ static char inkey_real(bool_ inkey_scan)
 			Term_activate(angband_term[0]);
 
 			/* Only once */
-			done = TRUE;
+			done = true;
 		}
 
 
@@ -1572,7 +1572,7 @@ static char inkey_real(bool_ inkey_scan)
 			}
 
 			/* Wait */
-			while (TRUE)
+			while (true)
 			{
 				/* Check for (and remove) a pending key */
 				if (0 == Term_inkey(&ch, false, true))
@@ -1629,7 +1629,7 @@ static char inkey_real(bool_ inkey_scan)
 			ch = 0;
 
 			/* End "macro trigger" */
-			parse_under = FALSE;
+			parse_under = false;
 		}
 
 
@@ -1647,7 +1647,7 @@ static char inkey_real(bool_ inkey_scan)
 			ch = 0;
 
 			/* Begin "macro trigger" */
-			parse_under = TRUE;
+			parse_under = true;
 		}
 
 		/* Inside "macro trigger" */
@@ -1668,7 +1668,7 @@ static char inkey_real(bool_ inkey_scan)
 
 
 	/* Cancel the various "global parameters" */
-	inkey_base = inkey_flag = FALSE;
+	inkey_base = inkey_flag = false;
 
 
 	/* Return the keypress */
@@ -1677,11 +1677,11 @@ static char inkey_real(bool_ inkey_scan)
 }
 
 char inkey() {
-	return inkey_real(FALSE);
+	return inkey_real(false);
 }
 
 char inkey_scan() {
-	return inkey_real(TRUE);
+	return inkey_real(true);
 }
 
 /*
@@ -1790,7 +1790,7 @@ void cmsg_print(byte color, const char *msg)
 		msg_flush(p);
 
 		/* Forget it */
-		msg_flag = FALSE;
+		msg_flag = false;
 
 		/* Reset */
 		p = 0;
@@ -1884,7 +1884,7 @@ void cmsg_print(byte color, const char *msg)
 	}
 
 	/* Remember the message */
-	msg_flag = TRUE;
+	msg_flag = true;
 
 	/* Remember the position */
 	p += n + 1;
@@ -2353,7 +2353,7 @@ static char complete_buf[100];
 static int complete_command(char *buf, int clen, int mlen)
 {
 	int i, j = 1, max = clen;
-	bool_ gotone = FALSE;
+	bool gotone = false;
 
 	/* Forget the characters after the end of the string. */
 	complete_buf[clen] = '\0';
@@ -2371,7 +2371,7 @@ static int complete_command(char *buf, int clen, int mlen)
 			if (!gotone)
 			{
 				sprintf(buf, "%.*s", mlen, cli_ptr->comm);
-				gotone = TRUE;
+				gotone = true;
 			}
 			/* For later matches, simply notice how much of buf it
 			 * matches. */
@@ -2416,12 +2416,12 @@ bool askfor_aux(std::string *buf, std::size_t max_len)
 * Pressing RETURN right away accepts the default entry.
 * Normal chars clear the default and append the char.
 * Backspace clears the default or deletes the final char.
-* ESCAPE clears the buffer and the window and returns FALSE.
-* RETURN accepts the current buffer contents and returns TRUE.
+* ESCAPE clears the buffer and the window and returns false.
+* RETURN accepts the current buffer contents and returns true.
 */
-static bool_ askfor_aux_complete = FALSE;
+static bool askfor_aux_complete = false;
 
-bool_ askfor_aux(char *buf, int len)
+bool askfor_aux(char *buf, int len)
 {
 	int y, x;
 
@@ -2431,7 +2431,7 @@ bool_ askfor_aux(char *buf, int len)
 
         int wid, hgt;
 
-	bool_ done = FALSE;
+	bool done = false;
 
 
 	/* Locate the cursor */
@@ -2476,13 +2476,13 @@ bool_ askfor_aux(char *buf, int len)
 		{
 		case ESCAPE:
 			k = 0;
-			done = TRUE;
+			done = true;
 			break;
 
 		case '\n':
 		case '\r':
 			k = strlen(buf);
-			done = TRUE;
+			done = true;
 			break;
 
 		case '\t':
@@ -2530,17 +2530,17 @@ bool_ askfor_aux(char *buf, int len)
 	}
 
 	/* Aborted */
-	if (i == ESCAPE) return (FALSE);
+	if (i == ESCAPE) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
-bool_ askfor_aux_with_completion(char *buf, int len)
+bool askfor_aux_with_completion(char *buf, int len)
 {
-	askfor_aux_complete = TRUE;
-	bool_ res = askfor_aux(buf, len);
-	askfor_aux_complete = FALSE;
+	askfor_aux_complete = true;
+	bool res = askfor_aux(buf, len);
+	askfor_aux_complete = false;
 	return res;
 }
 
@@ -2552,11 +2552,11 @@ bool_ askfor_aux_with_completion(char *buf, int len)
 * Note that the initial contents of the string is used as
 * the default response, so be sure to "clear" it if needed.
 *
-* We clear the input, and return FALSE, on "ESCAPE".
+* We clear the input, and return false, on "ESCAPE".
 */
-bool_ get_string(const char *prompt, char *buf, int len)
+bool get_string(const char *prompt, char *buf, int len)
 {
-	bool_ res;
+	bool res;
 
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -2582,7 +2582,7 @@ bool_ get_string(const char *prompt, char *buf, int len)
 *
 * Note that "[y/n]" is appended to the prompt.
 */
-bool_ get_check(const char *prompt)
+bool get_check(const char *prompt)
 {
 	int i;
 
@@ -2598,7 +2598,7 @@ bool_ get_check(const char *prompt)
 	prt(buf, 0, 0);
 
 	/* Get an acceptable answer */
-	while (TRUE)
+	while (true)
 	{
 		i = inkey();
 		if (options->quick_messages) break;
@@ -2611,14 +2611,14 @@ bool_ get_check(const char *prompt)
 	prt("", 0, 0);
 
 	/* Normal negation */
-	if ((i != 'Y') && (i != 'y')) return (FALSE);
+	if ((i != 'Y') && (i != 'y')) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
-bool_ get_check(std::string const &prompt)
+bool get_check(std::string const &prompt)
 {
 	return get_check(prompt.c_str());
 }
@@ -2629,9 +2629,9 @@ bool_ get_check(std::string const &prompt)
 *
 * The "prompt" should take the form "Command: "
 *
-* Returns TRUE unless the character is "Escape"
+* Returns true unless the character is "Escape"
 */
-bool_ get_com(const char *prompt, char *command)
+bool get_com(const char *prompt, char *command)
 {
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -2646,10 +2646,10 @@ bool_ get_com(const char *prompt, char *command)
 	prt("", 0, 0);
 
 	/* Handle "cancel" */
-	if (*command == ESCAPE) return (FALSE);
+	if (*command == ESCAPE) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2843,10 +2843,10 @@ void request_command(int shopping)
 		else
 		{
 			/* Hack -- no flush needed */
-			msg_flag = FALSE;
+			msg_flag = false;
 
 			/* Activate "command mode" */
-			inkey_flag = TRUE;
+			inkey_flag = true;
 
 			/* Get a command */
 			cmd = inkey();
@@ -2938,7 +2938,7 @@ void request_command(int shopping)
 			if ((cmd == ' ') || (cmd == '\n') || (cmd == '\r'))
 			{
 				/* Get a real command */
-				bool_ temp = get_com("Command: ", &cmd_char);
+				bool temp = get_com("Command: ", &cmd_char);
 				cmd = cmd_char;
 
 				if (!temp)
@@ -3237,7 +3237,7 @@ static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 	u32b res = def;
 
 	/* Player has not typed anything yet */
-	bool_ no_keys = TRUE;
+	bool no_keys = true;
 
 	/* Begin the input with default */
 	prt(format("%lu", def), y, x);
@@ -3252,7 +3252,7 @@ static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 		if ((*cmd == 0x7F) || (*cmd == KTRL('H')))
 		{
 			/* Override the default */
-			no_keys = FALSE;
+			no_keys = false;
 
 			/* Delete a digit */
 			res = res / 10;
@@ -3266,7 +3266,7 @@ static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
 			/* Override the default */
 			if (no_keys)
 			{
-				no_keys = FALSE;
+				no_keys = false;
 				res = 0;
 			}
 
@@ -3507,7 +3507,7 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 	/* Save the screen */
 	screen_save_no_flush();
 
-	while (TRUE)
+	while (true)
 	{
 		/* Display list */
 		screen_load_no_flush();

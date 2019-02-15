@@ -8,7 +8,7 @@ void attack_special(monster_type *m_ptr, s32b special, int dam);
 bool test_hit_fire(int chance, int ac, int vis);
 bool test_hit_norm(int chance, int ac, int vis);
 s16b critical_shot(int weight, int plus, int dam, int skill);
-s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool_ *done_crit);
+s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool *done_crit);
 s16b tot_dam_aux(object_type *o_ptr, int tdam, monster_type *m_ptr, s32b *special);
 void search();
 void carry(int pickup);

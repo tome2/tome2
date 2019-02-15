@@ -209,12 +209,12 @@ static void display_magic_powers(
 /*
  * Allow user to choose a magic power.
  *
- * If a valid spell is chosen, saves it in '*sn' and returns TRUE
- * If the user hits escape, returns FALSE, and set '*sn' to -1
- * If there are no legal choices, returns FALSE, and sets '*sn' to -2
+ * If a valid spell is chosen, saves it in '*sn' and returns true
+ * If the user hits escape, returns false, and set '*sn' to -1
+ * If there are no legal choices, returns false, and sets '*sn' to -2
  *
  * The "prompt" should be "cast", "recite", or "study"
- * The "known" should be TRUE for cast/pray, FALSE for study
+ * The "known" should be true for cast/pray, false for study
  *
  * nb: This function has a (trivial) display bug which will be obvious
  * when you run it. It's probably easy to fix but I haven't tried,
@@ -241,7 +241,7 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 
 	magic_power spell;
 
-	bool_ flag;
+	bool flag;
 
 
 	/* Assume cancelled */
@@ -259,7 +259,7 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 	}
 
 	/* Nothing chosen yet */
-	flag = FALSE;
+	flag = false;
 
 	/* Count number of powers that satisfies minimum plev requirement */
 	for (i = 0; i < max_powers; i++)
@@ -317,7 +317,7 @@ static bool get_magic_power(int *sn, magic_power *powers, int max_powers,
 		}
 
 		/* Stop the loop */
-		flag = TRUE;
+		flag = true;
 	}
 
 	/* Restore the screen */
@@ -721,7 +721,7 @@ void do_cmd_mindcraft()
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool_ perm = (rand_int(100) < 25);
+			bool perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your mind!");
@@ -859,11 +859,11 @@ void do_cmd_mimic()
 
 	magic_power spell;
 
-	static bool_ added_hooks = FALSE;
+	static bool added_hooks = false;
 	if(!added_hooks)
 	{
 		add_hook_new(HOOK_FORBID_TRAVEL, mimic_forbid_travel, "mimic_forbid_travel", NULL);
-		added_hooks = TRUE;
+		added_hooks = true;
 	}
 
 	/* No magic */
@@ -1121,7 +1121,7 @@ void do_cmd_mimic()
 		/* Damage WIS (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool_ perm = (rand_int(100) < 25);
+			bool perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your mind!");
@@ -1168,7 +1168,7 @@ void do_cmd_beastmaster()
 		/* XXX XXX */
 		if (rand_int(80-(plev) - p_ptr->stat_use[5]-p_ptr->to_s) < 20)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, plev, rand_int(plev / 2), FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, plev, rand_int(plev / 2), false);
 		}
 	}
 	else msg_print("You can't summon more pets");
@@ -1656,7 +1656,7 @@ void brand_ammo(int brand_type, int bolts_only)
 		o_ptr->name2 = aura_type;
 
 		/* Apply the ego */
-		apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
+		apply_magic(o_ptr, dun_level, false, false, false);
 		o_ptr->discount = 100;
 
 		enchant(o_ptr, rand_int(3) + 4, ENCH_TOHIT | ENCH_TODAM);
@@ -1677,7 +1677,7 @@ void summon_monster(int sumtype)
 	/* Take a turn */
 	energy_use = 100;
 
-	if (summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level + randint(5), sumtype, TRUE))
+	if (summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level + randint(5), sumtype, true))
 	{
 		msg_print("You summon some help.");
 	}
@@ -1714,7 +1714,7 @@ void do_cmd_possessor()
 	}
 
 
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com("Use your [R]ace powers or your [I]ncarnating powers?", &ch))
 		{
@@ -1824,7 +1824,7 @@ void do_cmd_archer()
 		strnfmt(com, 80, "Create [S]hots? ");
 	}
 
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com(com, &ch))
 		{
@@ -1873,11 +1873,11 @@ void do_cmd_archer()
 			else
 				q_ptr->number = 1;
 
-			apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
+			apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 			q_ptr->discount = 90;
 			q_ptr->found = OBJ_FOUND_SELFMADE;
 
-			inven_carry(q_ptr, FALSE);
+			inven_carry(q_ptr, false);
 
 			msg_print("You make some ammo.");
 
@@ -1910,7 +1910,7 @@ void do_cmd_archer()
 		else
 			q_ptr->number = 1;
 
-		apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
+		apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
@@ -1918,7 +1918,7 @@ void do_cmd_archer()
 
 		inc_stack_size(item, -1);
 
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 
 	/**********Create bolts*********/
@@ -1944,7 +1944,7 @@ void do_cmd_archer()
 		else
 			q_ptr->number = 1;
 
-		apply_magic(q_ptr, dun_level, TRUE, TRUE, (magik(20)) ? TRUE : FALSE);
+		apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
@@ -1952,7 +1952,7 @@ void do_cmd_archer()
 
 		inc_stack_size(item, -1);
 
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 }
 
@@ -1973,7 +1973,7 @@ void do_cmd_set_piercing()
 
 	strnfmt(com, 80, "Allow shots to pierce? ");
 
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com(com, &ch))
 		{
@@ -2201,10 +2201,10 @@ void do_cmd_necromancer()
 				object_type forge, *o_ptr = &forge;
 				int k_idx = test_item_name("& Necromantic Teeth~");
 
-				k_info[k_idx]->allow_special = TRUE;
+				k_info[k_idx]->allow_special = true;
 
 				object_prep(o_ptr, k_idx);
-				apply_magic(o_ptr, plev * 2, TRUE, TRUE, TRUE);
+				apply_magic(o_ptr, plev * 2, true, true, true);
 
 				o_ptr->art_flags |= TR_TEMPORARY;
 				o_ptr->timeout = dur;
@@ -2212,9 +2212,9 @@ void do_cmd_necromancer()
 				/* These objects are "storebought" */
 				o_ptr->number = 1;
 
-				inven_carry(o_ptr, FALSE);
+				inven_carry(o_ptr, false);
 
-				k_info[k_idx]->allow_special = FALSE;
+				k_info[k_idx]->allow_special = false;
 
 				break;
 			}
@@ -2307,7 +2307,7 @@ void do_cmd_necromancer()
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool_ perm = (rand_int(100) < 25);
+			bool perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your body!");
@@ -2382,7 +2382,7 @@ void do_cmd_unbeliever()
 
 
 	/* Select what to do */
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com("Disrupt [C]ontinuum or [D]estroy Doors", &ch))
 		{
@@ -2480,10 +2480,10 @@ void do_cmd_summoner_extract()
 	/* Get the item */
 	object_type *o_ptr = get_object(item);
 
-	bool_ partial;
+	bool partial;
 	if (r_info[o_ptr->pval2].flags & RF_UNIQUE)
 	{
-		partial = FALSE;
+		partial = false;
 	}
 	else
 	{
@@ -2510,7 +2510,7 @@ void do_cmd_summoner_extract()
 	q_ptr->pval2 = 0;
 	q_ptr->number = 1;
 	q_ptr->found = OBJ_FOUND_SELFMADE;
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	msg_print("You extract a totem from the dead corpse.");
 	energy_use += 100;
@@ -2523,7 +2523,7 @@ void summon_true(int r_idx, int item)
 
 	int i, status, x = 1, y = 1, rx, ry = 0, chance;
 
-	bool_ used;
+	bool used;
 
 	auto r_ptr = &r_info[r_idx];
 
@@ -2532,7 +2532,7 @@ void summon_true(int r_idx, int item)
 	if (r_ptr->flags & RF_UNIQUE)
 	{
 		/* Because it's unique, it will always be destroyed */
-		used = TRUE;
+		used = true;
 
 		/* About twice as hard as non-uniques */
 		chance = (get_skill(SKILL_SUMMON) * 70 / (r_ptr->level + 1));
@@ -2552,16 +2552,16 @@ void summon_true(int r_idx, int item)
 	{
 		if (get_skill(SKILL_SUMMON) == 0)
 		{
-			used = TRUE;
+			used = true;
 		}
 		else
 		{
 			/* It can be used multiple times */
-			used = FALSE;
+			used = false;
 
 			/* But it is not 100% sure (note: skill > 0) */
 			chance = (r_ptr->level * 25 / get_skill(SKILL_SUMMON));
-			if (magik(chance)) used = TRUE;
+			if (magik(chance)) used = true;
 		}
 
 		chance = (get_skill(SKILL_SUMMON) * 130 / (r_ptr->level + 1));
@@ -2597,7 +2597,7 @@ void summon_true(int r_idx, int item)
 	}
 
 	/* Summon the monster */
-	bypass_r_ptr_max_num = TRUE;
+	bypass_r_ptr_max_num = true;
 	if (!(i = place_monster_one (y, x, r_idx, 0, 0, status)))
 	{
 		msg_print("The summoning fails.");
@@ -2607,7 +2607,7 @@ void summon_true(int r_idx, int item)
 		m_list[i].status = status;
 		m_list[i].mflag |= MFLAG_NO_DROP;
 	}
-	bypass_r_ptr_max_num = FALSE;
+	bypass_r_ptr_max_num = false;
 
 	/* Destroy the totem if the used flag is set */
 	if (used)
@@ -2672,10 +2672,10 @@ void do_cmd_summoner_summon()
 	}
 
 	/* Summon the monster */
-	bypass_r_ptr_max_num = TRUE;
-	place_monster_one_no_drop = TRUE;
+	bypass_r_ptr_max_num = true;
+	place_monster_one_no_drop = true;
 	m_idx = place_monster_one(y, x, o_ptr->pval, 0, 0, MSTATUS_PET);
-	bypass_r_ptr_max_num = FALSE;
+	bypass_r_ptr_max_num = false;
 
 	/* Failure. */
 	if (!m_idx)
@@ -2724,7 +2724,7 @@ void do_cmd_summoner()
 	}
 
 	/* Select what to do */
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com("[E]xtract a totem, [S]ummon", &ch))
 		{
@@ -2998,7 +2998,7 @@ void do_cmd_symbiotic()
 
 				if (d >= 100) return;
 
-				if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, FALSE, MSTATUS_PET)) == 0) return;
+				if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, false, MSTATUS_PET)) == 0) return;
 
 				/* Have to be careful here; releasing the symbiote into a
 				* dungeon with leveled monsters will level the symbiote
@@ -3127,7 +3127,7 @@ void do_cmd_symbiotic()
 			/* Summon never-moving pet */
 		case 7:
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, false);
 
 				break;
 			}
@@ -3186,7 +3186,7 @@ void do_cmd_symbiotic()
 		/* Damage CON (possibly permanently) */
 		if (rand_int(100) < 50)
 		{
-			bool_ perm = (rand_int(100) < 25);
+			bool perm = (rand_int(100) < 25);
 
 			/* Message */
 			msg_print("You have damaged your body!");
@@ -3236,7 +3236,7 @@ void do_cmd_create_boulder()
 		q_ptr->discount = 90;
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 
 		msg_print("You make some boulders.");
 

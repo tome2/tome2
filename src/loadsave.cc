@@ -134,7 +134,7 @@ static void do_char(char *c, ls_flag_t flag)
 	do_byte((byte *) c, flag);
 }
 
-static void do_bool(bool_ *f, ls_flag_t flag)
+static void do_bool(bool *f, ls_flag_t flag)
 {
 	byte b = *f;
 	do_byte(&b, flag);
@@ -621,7 +621,7 @@ static void do_level_marker(level_marker *marker, ls_flag_t flag)
 /*
  * Misc. other data
  */
-static bool_ do_extra(ls_flag_t flag)
+static bool do_extra(ls_flag_t flag)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto &s_info = game->s_info;
@@ -990,7 +990,7 @@ static bool_ do_extra(ls_flag_t flag)
 	/* Current turn */
 	do_s32b(&turn, flag);
 
-	return TRUE;
+	return true;
 }
 
 
@@ -1052,7 +1052,7 @@ static void do_monster(monster_type *m_ptr, ls_flag_t flag)
 /*
  * Determine if an item can be wielded/worn (e.g. helmet, sword, bow, arrow)
  */
-static bool_ wearable_p(object_type *o_ptr)
+static bool wearable_p(object_type *o_ptr)
 {
 	/* Valid "tval" codes */
 	switch (o_ptr->tval)
@@ -1092,12 +1092,12 @@ static bool_ wearable_p(object_type *o_ptr)
 	case TV_DAEMON_BOOK:
 	case TV_TOOL:
 		{
-			return (TRUE);
+			return true;
 		}
 	}
 
 	/* Nope */
-	return (FALSE);
+	return false;
 }
 
 
@@ -1535,7 +1535,7 @@ static bool do_monsters(ls_flag_t flag, bool no_companions)
  * The monsters/objects must be loaded in the same order
  * that they were stored, since the actual indexes matter.
  */
-static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
+static bool do_dungeon(ls_flag_t flag, bool no_companions)
 {
 	auto &dungeon_flags = game->dungeon_flags;
 	auto &effects = game->lasting_effects;
@@ -1583,14 +1583,14 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 		int ystart = 0;
 		/* Init the wilderness */
 		process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
-				     TRUE, FALSE);
+				     true, false);
 
 		/* Init the town */
 		xstart = 0;
 		ystart = 0;
 		init_flags = 0;
 		process_dungeon_file("t_info.txt", &ystart, &xstart, cur_hgt, cur_wid,
-				     TRUE, FALSE);
+				     true, false);
 	}
 
 	do_grid(flag);
@@ -1598,13 +1598,13 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 	/*** Objects ***/
 	if (!do_objects(flag, no_companions))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/*** Monsters ***/
 	if (!do_monsters(flag, no_companions))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/*** Success ***/
@@ -1616,7 +1616,7 @@ static bool_ do_dungeon(ls_flag_t flag, bool no_companions)
 	}
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 /* Save the current persistent dungeon -SC- */
@@ -1910,7 +1910,7 @@ static bool do_inventory(ls_flag_t flag)
 				/* Take care of item sets */
 				if (q_ptr->name1)
 				{
-					wield_set(q_ptr->name1, a_info[q_ptr->name1].set, TRUE);
+					wield_set(q_ptr->name1, a_info[q_ptr->name1].set, true);
 				}
 
 				/* One more item */
@@ -1997,7 +1997,7 @@ static void do_messages(ls_flag_t flag)
 	}
 }
 
-/* Returns TRUE if we successfully load the dungeon */
+/* Returns true if we successfully load the dungeon */
 bool load_dungeon(std::string const &ext)
 {
 	byte old_dungeon_type = dungeon_type;
@@ -2351,7 +2351,7 @@ static bool do_player_hd(ls_flag_t flag)
 /*
  * Actually read the savefile
  */
-static bool_ do_savefile_aux(ls_flag_t flag)
+static bool do_savefile_aux(ls_flag_t flag)
 {
 	auto &class_info = game->edit_data.class_info;
 	auto const &race_info = game->edit_data.race_info;
@@ -2363,7 +2363,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 		if (vernum != SAVEFILE_VERSION)
 		{
 			note("Incompatible save file version");
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -2399,7 +2399,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 				note(fmt::format("Bad game module. Savefile was saved with module '{:s}' but game is '{:s}'.",
 					loaded_game_module,
 					game_module).c_str());
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -2421,57 +2421,57 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 
 	if (!do_monster_lore(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_object_lore(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_towns(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_quests(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_wilderness(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_randarts(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_artifacts(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_fates(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_floor_inscriptions(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_extra(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (!do_player_hd(flag))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (flag == ls_flag_t::LOAD)
@@ -2498,7 +2498,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 		if (flag == ls_flag_t::LOAD)
 		{
 			note("Unable to read inventory");
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -2517,7 +2517,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 		if ((flag == ls_flag_t::LOAD) && (!do_dungeon(ls_flag_t::LOAD, false)))
 		{
 			note("Error reading dungeon data");
-			return FALSE;
+			return false;
 		}
 
 		if (flag == ls_flag_t::SAVE)
@@ -2527,7 +2527,7 @@ static bool_ do_savefile_aux(ls_flag_t flag)
 	}
 
 	/* Success */
-	return TRUE;
+	return true;
 }
 
 
@@ -2567,7 +2567,7 @@ static errr rd_savefile()
  * the player loads a savefile belonging to someone else, and then is not
  * allowed to save his game when he quits.
  *
- * We return "TRUE" if the savefile was usable, and we set the global
+ * We return "true" if the savefile was usable, and we set the global
  * flag "character_loaded" if a real, living, character was loaded.
  *
  * Note that we always try to load the "current" savefile, even if
@@ -2583,7 +2583,7 @@ bool load_player(program_args const &args)
 	turn = 0;
 
 	/* Paranoia */
-	death = FALSE;
+	death = false;
 
 	/* Save file */
 	auto savefile = name_file_save();
@@ -2668,7 +2668,7 @@ bool load_player(program_args const &args)
 		if (death)
 		{
 			/* Player is no longer "dead" */
-			death = FALSE;
+			death = false;
 
 			/* Cheat death (unless the character retired) */
 			if (args.wizard && !total_winner)
@@ -2716,9 +2716,9 @@ bool load_player(program_args const &args)
 /*
  * Medium level player saver
  */
-static bool_ save_player_aux(char const *name)
+static bool save_player_aux(char const *name)
 {
-	bool_ ok = FALSE;
+	bool ok = false;
 	int fd = -1;
 	int mode = 0644;
 
@@ -2741,10 +2741,10 @@ static bool_ save_player_aux(char const *name)
 		if (fff)
 		{
 			/* Write the savefile */
-			if (do_savefile_aux(ls_flag_t::SAVE)) ok = TRUE;
+			if (do_savefile_aux(ls_flag_t::SAVE)) ok = true;
 
 			/* Attempt to close it */
-			if (my_fclose(fff)) ok = FALSE;
+			if (my_fclose(fff)) ok = false;
 		}
 
 		/* "broken" savefile */
@@ -2756,18 +2756,18 @@ static bool_ save_player_aux(char const *name)
 	}
 
 	/* Failure */
-	if (!ok) return (FALSE);
+	if (!ok) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 /*
  * Attempt to save the player in a savefile
  */
-bool_ save_player()
+bool save_player()
 {
-	int result = FALSE;
+	int result = false;
 
 	auto savefile = name_file_save();
 
@@ -2799,7 +2799,7 @@ bool_ save_player()
 		character_loaded = true;
 
 		/* Success */
-		result = TRUE;
+		result = true;
 	}
 
 	save_savefile_names();

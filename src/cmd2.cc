@@ -67,23 +67,23 @@ void do_cmd_immovable_special();
 /*
  * Try to bash an altar
  */
-static bool_ do_cmd_bash_altar(int y, int x)
+static bool do_cmd_bash_altar(int y, int x)
 {
 	msg_print("Are you mad? You want to anger the gods?");
-	return (FALSE);
+	return false;
 }
 
 
 /*
  * Try to bash a fountain
  */
-static bool_ do_cmd_bash_fountain(int y, int x)
+static bool do_cmd_bash_fountain(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	int bash, temp;
 
-	bool_ more = TRUE;
+	bool more = true;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -92,7 +92,7 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 	{
 		msg_print("You cannot do that.");
 
-		return (FALSE);
+		return false;
 	}
 
 	/* Take a turn */
@@ -120,7 +120,7 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 		fire_ball(GF_WATER, 5, damroll(6, 8), 2);
 
 		cave_set_feat(y, x, FEAT_DEEP_WATER);
-		more = FALSE;
+		more = false;
 	}
 
 	return (more);
@@ -129,10 +129,10 @@ static bool_ do_cmd_bash_fountain(int y, int x)
 /*
  * Stair hooks
  */
-static bool_ stair_hooks(stairs_direction direction)
+static bool stair_hooks(stairs_direction direction)
 {
 	hook_stair_in in = { direction };
-	hook_stair_out out = { TRUE }; /* Allow by default */
+	hook_stair_out out = { true }; /* Allow by default */
 	process_hooks_new(HOOK_STAIR, &in, &out);
 	return (!out.allow);
 }
@@ -169,7 +169,7 @@ void do_cmd_go_up()
 	auto const &d_info = game->edit_data.d_info;
 	auto const &dungeon_flags = game->dungeon_flags;
 
-	bool_ go_up = FALSE, go_up_many = FALSE, prob_traveling = FALSE;
+	bool go_up = false, go_up_many = false, prob_traveling = false;
 
 	cave_type *c_ptr;
 
@@ -192,7 +192,7 @@ void do_cmd_go_up()
 	{
 		if (!dun_level)
 		{
-			go_up = TRUE;
+			go_up = true;
 		}
 		else if (dungeon_flags & DF_ASK_LEAVE)
 		{
@@ -200,7 +200,7 @@ void do_cmd_go_up()
 		}
 		else if (ask_leave())
 		{
-			go_up = TRUE;
+			go_up = true;
 		}
 	}
 
@@ -209,7 +209,7 @@ void do_cmd_go_up()
 	{
 		if (dun_level == 1)
 		{
-			go_up = TRUE;
+			go_up = true;
 		}
 		else if (dungeon_flags & DF_ASK_LEAVE)
 		{
@@ -217,7 +217,7 @@ void do_cmd_go_up()
 		}
 		else if (ask_leave())
 		{
-			go_up_many = TRUE;
+			go_up_many = true;
 		}
 	}
 
@@ -251,11 +251,11 @@ void do_cmd_go_up()
 			return;
 		}
 
-		prob_traveling = TRUE;
+		prob_traveling = true;
 
 		if (ask_leave())
 		{
-			go_up = TRUE;
+			go_up = true;
 		}
 	}
 	else
@@ -287,9 +287,9 @@ void do_cmd_go_up()
 
 		/* Create a way back */
 		if (go_up_many)
-			create_down_shaft = TRUE;
+			create_down_shaft = true;
 		else
-			create_down_stair = TRUE;
+			create_down_stair = true;
 
 		/* New depth */
 		if (go_up)
@@ -315,9 +315,9 @@ void do_cmd_go_up()
 
 
 /*
- * Returns TRUE if we are in the Between...
+ * Returns true if we are in the Between...
  */
-static bool_ between_effect()
+static bool between_effect()
 {
 	byte bx, by;
 
@@ -336,14 +336,14 @@ static bool_ between_effect()
 		/* To avoid being teleported back */
 		energy_use = 100;
 
-		return (TRUE);
+		return true;
 	}
 
 	else if (cave[p_ptr->py][p_ptr->px].feat == FEAT_BETWEEN2)
 	{
 		between_exit *be_ptr = &between_exits[cave[p_ptr->py][p_ptr->px].special];
 
-		p_ptr->wild_mode = FALSE;
+		p_ptr->wild_mode = false;
 		p_ptr->wilderness_x = be_ptr->wild_x;
 		p_ptr->wilderness_y = be_ptr->wild_y;
 		p_ptr->oldpx = p_ptr->px = be_ptr->px;
@@ -352,10 +352,10 @@ static bool_ between_effect()
 		dun_level = be_ptr->level;
 		p_ptr->leaving = true;
 
-		return (TRUE);
+		return true;
 	}
 	else
-		return (FALSE);
+		return false;
 }
 
 /*
@@ -368,7 +368,7 @@ void do_cmd_go_down()
 
 	cave_type *c_ptr;
 
-	bool_ go_down = FALSE, go_down_many = FALSE, prob_traveling = FALSE;
+	bool go_down = false, go_down_many = false, prob_traveling = false;
 
 	char i;
 
@@ -406,7 +406,7 @@ void do_cmd_go_down()
 	{
 		if (!dun_level)
 		{
-			go_down = TRUE;
+			go_down = true;
 
 			/* Save old player position */
 			p_ptr->oldpx = p_ptr->px;
@@ -416,7 +416,7 @@ void do_cmd_go_down()
 		{
 			if (ask_leave())
 			{
-				go_down_many = TRUE;
+				go_down_many = true;
 			}
 		}
 	}
@@ -430,7 +430,7 @@ void do_cmd_go_down()
 		}
 		if (!dun_level)
 		{
-			go_down = TRUE;
+			go_down = true;
 
 			/* Save old player position */
 			p_ptr->oldpx = p_ptr->px;
@@ -440,7 +440,7 @@ void do_cmd_go_down()
 		{
 			if (ask_leave())
 			{
-				go_down = TRUE;
+				go_down = true;
 			}
 		}
 	}
@@ -465,11 +465,11 @@ void do_cmd_go_down()
 			return;
 		}
 
-		prob_traveling = TRUE;
+		prob_traveling = true;
 
 		if (ask_leave())
 		{
-			go_down = TRUE;
+			go_down = true;
 		}
 	}
 
@@ -560,18 +560,18 @@ void do_cmd_go_down()
 }
 
 /*
- * Return TRUE if the given grid is an open door
+ * Return true if the given grid is an open door
  */
-static bool_ is_open(cave_type *c_ptr)
+static bool is_open(cave_type *c_ptr)
 {
 	return (c_ptr->feat == FEAT_OPEN);
 }
 
 
 /*
- * Return TRUE if the given grid is a closed door
+ * Return true if the given grid is a closed door
  */
-static bool_ is_closed(cave_type *c_ptr)
+static bool is_closed(cave_type *c_ptr)
 {
 	byte feat;
 
@@ -585,8 +585,8 @@ static bool_ is_closed(cave_type *c_ptr)
  * Return the number of doors/traps around (or under)
  * the character using the filter function 'test'
  */
-static int count_feats(int *y, int *x, bool_ (*test) (cave_type *c_ptr),
-                       bool_ under)
+static int count_feats(int *y, int *x, bool (*test) (cave_type *c_ptr),
+                       bool under)
 {
 	int d;
 
@@ -662,9 +662,9 @@ static int coords_to_dir(int y, int x)
  *
  * Assume there is no monster blocking the destination
  *
- * Returns TRUE if repeated commands may continue
+ * Returns true if repeated commands may continue
  */
-static bool_ do_cmd_open_aux(int y, int x, int dir)
+static bool do_cmd_open_aux(int y, int x, int dir)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -672,7 +672,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -681,7 +681,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 	{
 		msg_print("You cannot open doors.");
 
-		return (FALSE);
+		return false;
 	}
 
 	/* Take a turn */
@@ -742,7 +742,7 @@ static bool_ do_cmd_open_aux(int y, int x, int dir)
 			msg_print("You failed to pick the lock.");
 
 			/* We may keep trying */
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -775,7 +775,7 @@ void do_cmd_open()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -790,7 +790,7 @@ void do_cmd_open()
 	/* Pick a direction if there's an obvious target */
 	{
 		/* Count closed doors (locked or jammed) */
-		const int num_doors = count_feats(&y, &x, is_closed, FALSE);
+		const int num_doors = count_feats(&y, &x, is_closed, false);
 
 		/* There is nothing the player can open */
 		if (num_doors == 0)
@@ -874,15 +874,15 @@ void do_cmd_open()
  *
  * Assume there is no monster blocking the destination
  *
- * Returns TRUE if repeated commands may continue
+ * Returns true if repeated commands may continue
  */
-static bool_ do_cmd_close_aux(int y, int x, int dir)
+static bool do_cmd_close_aux(int y, int x, int dir)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -891,7 +891,7 @@ static bool_ do_cmd_close_aux(int y, int x, int dir)
 	{
 		msg_print("You cannot close doors.");
 
-		return (FALSE);
+		return false;
 	}
 
 	/* Take a turn */
@@ -931,7 +931,7 @@ void do_cmd_close()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	/* Pick a direction if there's an obvious choice */
@@ -939,7 +939,7 @@ void do_cmd_close()
 		int num_doors;
 
 		/* Count open doors */
-		num_doors = count_feats(&y, &x, is_open, FALSE);
+		num_doors = count_feats(&y, &x, is_open, false);
 
 		/* There are no doors the player can close */
 		if (num_doors == 0)
@@ -1017,7 +1017,7 @@ void do_cmd_close()
 /*
  * Determine if a given grid may be "tunneled"
  */
-static bool_ do_cmd_tunnel_test(int y, int x)
+static bool do_cmd_tunnel_test(int y, int x)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -1028,7 +1028,7 @@ static bool_ do_cmd_tunnel_test(int y, int x)
 		msg_print("You see nothing there.");
 
 		/* Nope */
-		return (FALSE);
+		return false;
 	}
 
 	/* Must be a wall/door/etc */
@@ -1038,7 +1038,7 @@ static bool_ do_cmd_tunnel_test(int y, int x)
 		msg_print("You see nothing there to tunnel.");
 
 		/* Nope */
-		return (FALSE);
+		return false;
 	}
 
 	/* Must be tunnelable */
@@ -1048,11 +1048,11 @@ static bool_ do_cmd_tunnel_test(int y, int x)
 		msg_print(f_info[cave[y][x].feat].tunnel);
 
 		/* Nope */
-		return (FALSE);
+		return false;
 	}
 
 	/* Okay */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1066,13 +1066,13 @@ static bool_ do_cmd_tunnel_test(int y, int x)
  * This will, however, produce grids which are NOT illuminated
  * (or darkened) along with the rest of the room.
  */
-static bool_ twall(int y, int x, byte feat)
+static bool twall(int y, int x, byte feat)
 {
 	cave_type *c_ptr = &cave[y][x];
 
 
 	/* Paranoia -- Require a wall or door or some such */
-	if (cave_floor_bold(y, x)) return (FALSE);
+	if (cave_floor_bold(y, x)) return false;
 
 	/* Forget the wall */
 	c_ptr->info &= ~(CAVE_MARK);
@@ -1084,7 +1084,7 @@ static bool_ twall(int y, int x, byte feat)
 	p_ptr->update |= (PU_VIEW | PU_FLOW | PU_MONSTERS | PU_MON_LITE);
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1097,9 +1097,9 @@ static bool_ twall(int y, int x, byte feat)
  *
  * Assumes that no monster is blocking the destination
  *
- * Returns TRUE if repeated commands may continue
+ * Returns true if repeated commands may continue
  */
-static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
+static bool do_cmd_tunnel_aux(int y, int x, int dir)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &f_info = game->edit_data.f_info;
@@ -1109,7 +1109,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 
 	auto f_ptr = &f_info[c_ptr->feat];
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	/* Must be have something to dig with (except for sandwalls) */
@@ -1120,12 +1120,12 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			msg_print("You need to have a shovel or pick in your tool slot.");
 
-			return (FALSE);
+			return false;
 		}
 	}
 
 	/* Verify legality */
-	if (!do_cmd_tunnel_test(y, x)) return (FALSE);
+	if (!do_cmd_tunnel_test(y, x)) return false;
 
 	/* Take a turn */
 	energy_use = 100;
@@ -1154,7 +1154,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			/* We may continue chopping */
 			msg_print(f_ptr->tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1176,7 +1176,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			/* We may continue tunelling */
 			msg_print(f_ptr->tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1187,24 +1187,24 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 	                ((c_ptr->feat >= FEAT_SANDWALL) &&
 	                 (c_ptr->feat <= FEAT_SANDWALL_K)))
 	{
-		bool_ okay = FALSE;
-		bool_ gold = FALSE;
-		bool_ hard = FALSE;
-		bool_ soft = FALSE;
+		bool okay = false;
+		bool gold = false;
+		bool hard = false;
+		bool soft = false;
 
 		/* Found gold */
 		if ((c_ptr->feat >= FEAT_MAGMA_H) &&
-		                (c_ptr->feat <= FEAT_QUARTZ_K)) gold = TRUE;
+		                (c_ptr->feat <= FEAT_QUARTZ_K)) gold = true;
 
 		if ((c_ptr->feat == FEAT_SANDWALL_H) ||
 		                (c_ptr->feat == FEAT_SANDWALL_K))
 		{
-			gold = TRUE;
-			soft = TRUE;
+			gold = true;
+			soft = true;
 		}
 		else
 			/* Extract "quartz" flag XXX XXX XXX */
-			if ((c_ptr->feat - FEAT_MAGMA) & 0x01) hard = TRUE;
+			if ((c_ptr->feat - FEAT_MAGMA) & 0x01) hard = true;
 
 		/* Quartz */
 		if (hard)
@@ -1256,7 +1256,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			/* Message, continue digging */
 			msg_print(f_ptr->tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1276,7 +1276,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 			if (rand_int(100) < 10)
 			{
 				/* Create a simple object */
-				place_object(y, x, FALSE, FALSE, OBJ_FOUND_RUBBLE);
+				place_object(y, x, false, false, OBJ_FOUND_RUBBLE);
 
 				/* Observe new object */
 				if (player_can_see_bold(y, x))
@@ -1290,7 +1290,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			/* Message, keep digging */
 			msg_print(f_ptr->tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1318,7 +1318,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 
 			/* We may continue tunelling */
 			msg_print(f_info[feat].tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1338,7 +1338,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		{
 			/* We may continue tunelling */
 			msg_print(f_ptr->tunnel);
-			more = TRUE;
+			more = true;
 		}
 	}
 
@@ -1347,7 +1347,7 @@ static bool_ do_cmd_tunnel_aux(int y, int x, int dir)
 		if (p_ptr->skill_dig < skill_req)
 		{
 			msg_print("You fail to make even the slightest of progress.");
-			more = FALSE;
+			more = false;
 		}
 		else if (p_ptr->skill_dig < skill_req_1pct)
 		{
@@ -1382,7 +1382,7 @@ void do_cmd_tunnel()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	if (p_ptr->wild_mode) return;
@@ -1449,9 +1449,9 @@ void do_cmd_tunnel()
  *
  * Assume there is no monster blocking the destination
  *
- * Returns TRUE if repeated commands may continue
+ * Returns true if repeated commands may continue
  */
-static bool_ do_cmd_bash_aux(int y, int x, int dir)
+static bool do_cmd_bash_aux(int y, int x, int dir)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1459,7 +1459,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -1468,7 +1468,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 	{
 		msg_print("You cannot do that.");
 
-		return (FALSE);
+		return false;
 	}
 
 	/* Take a turn */
@@ -1526,7 +1526,7 @@ static bool_ do_cmd_bash_aux(int y, int x, int dir)
 		msg_print("The door holds firm.");
 
 		/* Allow repeated bashing */
-		more = TRUE;
+		more = true;
 	}
 
 	/* High dexterity yields coolness */
@@ -1566,7 +1566,7 @@ void do_cmd_bash()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 	auto r_ptr = &r_info[p_ptr->body_monster];
 
@@ -1665,7 +1665,7 @@ void do_cmd_alter()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	/* Allow repeated command */
@@ -1734,7 +1734,7 @@ void do_cmd_alter()
  *
  * XXX XXX XXX Let user choose a pile of spikes, perhaps?
  */
-static bool_ get_spike(int *ip)
+static bool get_spike(int *ip)
 {
 	int i;
 
@@ -1756,12 +1756,12 @@ static bool_ get_spike(int *ip)
 			(*ip) = i;
 
 			/* Success */
-			return (TRUE);
+			return true;
 		}
 	}
 
 	/* Oops */
-	return (FALSE);
+	return false;
 }
 
 
@@ -1844,7 +1844,7 @@ static void do_cmd_walk_jump(int pickup)
 
 	int dir;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	/* Allow repeated command */
@@ -1870,7 +1870,7 @@ static void do_cmd_walk_jump(int pickup)
 		move_player(dir, pickup);
 
 		/* Allow more walking */
-		more = TRUE;
+		more = true;
 	}
 
 	/* Hack -- In small scale wilderness it takes MUCH more time to move */
@@ -1888,7 +1888,7 @@ static void do_cmd_walk_jump(int pickup)
 		change_wild_mode();
 
 		/* HACk -- set the encouter flag for the wilderness generation */
-		generate_encounter = TRUE;
+		generate_encounter = true;
 		p_ptr->oldpx = MAX_WID / 2;
 		p_ptr->oldpy = MAX_HGT / 2;
 
@@ -1910,7 +1910,7 @@ static void do_cmd_unwalk()
 
 	cave_type *c_ptr;
 
-	bool_ more = FALSE;
+	bool more = false;
 
 
 	if (!get_rep_dir(&dir)) return;
@@ -1964,7 +1964,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x--;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == 0) && (x == MAX_WID - 1))
@@ -1973,7 +1973,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x++;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == MAX_HGT - 1) && (x == 0))
@@ -1982,7 +1982,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x--;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == MAX_HGT - 1) && (x == MAX_WID - 1))
@@ -1991,7 +1991,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x++;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (y == 0)
@@ -1999,7 +1999,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_y--;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (y == cur_hgt - 1)
@@ -2007,7 +2007,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_y++;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (x == 0)
@@ -2015,7 +2015,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x--;
 				p_ptr->oldpx = cur_wid - 2;
 				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (x == cur_wid - 1)
@@ -2023,7 +2023,7 @@ static void do_cmd_unwalk()
 				p_ptr->wilderness_x++;
 				p_ptr->oldpx = 1;
 				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			p_ptr->leaving = true;
@@ -2043,7 +2043,7 @@ static void do_cmd_unwalk()
 			((feat >= FEAT_LESS) && (feat <= FEAT_MORE)))
 	{
 		move_player(dir, options->always_pickup);
-		more = FALSE;
+		more = false;
 	}
 
 	/* Hack -- Ignore wilderness mofe. */
@@ -2431,7 +2431,7 @@ void do_cmd_fire()
 
 	object_type *j_ptr;
 
-	bool_ hit_body = FALSE;
+	bool hit_body = false;
 
 	byte missile_attr;
 
@@ -2510,7 +2510,7 @@ void do_cmd_fire()
 
 
 	/* Describe the object */
-	object_desc(o_name, q_ptr, FALSE, 3);
+	object_desc(o_name, q_ptr, false, 3);
 
 	/* Find the color and symbol for the object for throwing */
 	missile_attr = object_attr(q_ptr);
@@ -2579,7 +2579,7 @@ void do_cmd_fire()
 	handle_stuff();
 
 	oldtdam = tdam;
-	while (TRUE)
+	while (true)
 	{
 		/* Reset after a piercing shot */
 		tdam = oldtdam;
@@ -2638,7 +2638,7 @@ void do_cmd_fire()
 				visible = m_ptr->ml;
 
 				/* Note the collision */
-				hit_body = TRUE;
+				hit_body = true;
 
 				/* Did we hit it (penalize range) */
 				if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
@@ -2794,7 +2794,7 @@ void do_cmd_fire()
 		                (magik(45 + get_skill(SKILL_ARCHERY))))
 		{
 			num_pierce--;
-			hit_body = FALSE;
+			hit_body = false;
 
 			/* If target isn't reached, continue moving to target */
 			if ( !((tx < x && x < bx) || (bx < x && x < tx)) &&
@@ -2859,9 +2859,9 @@ void do_cmd_throw()
 
 	object_type *q_ptr;
 
-	bool_ hit_body = FALSE;
+	bool hit_body = false;
 
-	bool_ hit_wall = FALSE;
+	bool hit_wall = false;
 
 	byte missile_attr;
 
@@ -2940,7 +2940,7 @@ void do_cmd_throw()
 	inc_stack_size(item, -1);
 
 	/* Description */
-	object_desc(o_name, q_ptr, FALSE, 3);
+	object_desc(o_name, q_ptr, false, 3);
 
 	/* Find the color and symbol for the object for throwing */
 	missile_attr = object_attr(q_ptr);
@@ -3004,7 +3004,7 @@ void do_cmd_throw()
 		/* Stopped by walls/doors */
 		if (!cave_floor_bold(ny, nx))
 		{
-			hit_wall = TRUE;
+			hit_wall = true;
 			break;
 		}
 
@@ -3048,7 +3048,7 @@ void do_cmd_throw()
 			visible = m_ptr->ml;
 
 			/* Note the collision */
-			hit_body = TRUE;
+			hit_body = true;
 
 			/* Did we hit it (penalize range) */
 			if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
@@ -3230,7 +3230,7 @@ void do_cmd_boomerang()
 
 	object_type *o_ptr;
 
-	bool_ hit_body = FALSE;
+	bool hit_body = false;
 
 	byte missile_attr;
 
@@ -3261,7 +3261,7 @@ void do_cmd_boomerang()
 	q_ptr->number = 1;
 
 	/* Description */
-	object_desc(o_name, q_ptr, FALSE, 3);
+	object_desc(o_name, q_ptr, false, 3);
 
 	/* Find the color and symbol for the object for throwing */
 	missile_attr = object_attr(q_ptr);
@@ -3372,7 +3372,7 @@ void do_cmd_boomerang()
 			visible = m_ptr->ml;
 
 			/* Note the collision */
-			hit_body = TRUE;
+			hit_body = true;
 
 			/* Did we hit it (penalize range) */
 			if (test_hit_fire(chance - cur_dis, m_ptr->ac, m_ptr->ml))
@@ -3534,7 +3534,7 @@ void do_cmd_boomerang()
 }
 
 
-static bool_ tport_vertically(bool_ how)
+static bool tport_vertically(bool how)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &dungeon_flags = game->dungeon_flags;
@@ -3543,13 +3543,13 @@ static bool_ tport_vertically(bool_ how)
 	if (p_ptr->inside_quest)
 	{
 		msg_print("There is no effect.");
-		return (FALSE);
+		return false;
 	}
 
 	if (dungeon_flags & DF_NO_EASY_MOVE)
 	{
 		msg_print("Some powerful force prevents you from teleporting.");
-		return FALSE;
+		return false;
 	}
 
 	/* Go down */
@@ -3558,7 +3558,7 @@ static bool_ tport_vertically(bool_ how)
 		if (dun_level >= d_info[dungeon_type].maxdepth)
 		{
 			msg_print("The floor is impermeable.");
-			return (FALSE);
+			return false;
 		}
 
 		msg_print("You sink through the floor.");
@@ -3570,7 +3570,7 @@ static bool_ tport_vertically(bool_ how)
 		if (dun_level < d_info[dungeon_type].mindepth)
 		{
 			msg_print("There is nothing above you but air.");
-			return (FALSE);
+			return false;
 		}
 
 		msg_print("You rise through the ceiling.");
@@ -3578,7 +3578,7 @@ static bool_ tport_vertically(bool_ how)
 		p_ptr->leaving = true;
 	}
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -3596,9 +3596,9 @@ void do_cmd_immovable_special()
 
 	int lose_hp = 0;
 
-	bool_ did_act = FALSE;
+	bool did_act = false;
 
-	bool_ did_load = FALSE;
+	bool did_load = false;
 
 
 	if (foo > 1)
@@ -3629,7 +3629,7 @@ void do_cmd_immovable_special()
 	}
 
 	/* Enter "icky" mode */
-	character_icky = TRUE;
+	character_icky = true;
 
 	/* Save the screen */
 	Term_save();
@@ -3663,15 +3663,15 @@ void do_cmd_immovable_special()
 		if (i == 'a')
 		{
 			Term_load();
-			character_icky = FALSE;
-			did_load = TRUE;
+			character_icky = false;
+			did_load = true;
 
 			if (!tgt_pt(&ii, &ij)) break;
 
 			/* Teleport to the target */
 			teleport_player_to(ij, ii);
 
-			did_act = TRUE;
+			did_act = true;
 			break;
 		}
 
@@ -3679,14 +3679,14 @@ void do_cmd_immovable_special()
 		else if (i == 'b')
 		{
 			Term_load();
-			character_icky = FALSE;
-			did_load = TRUE;
+			character_icky = false;
+			did_load = true;
 
 			if (!get_aim_dir(&dir)) return;
-			fetch(dir, p_ptr->lev * 15, FALSE);
+			fetch(dir, p_ptr->lev * 15, false);
 			py_pickup_floor(options->always_pickup);
 
-			did_act = TRUE;
+			did_act = true;
 			break;
 		}
 
@@ -3694,12 +3694,12 @@ void do_cmd_immovable_special()
 		else if (i == 'c')
 		{
 			Term_load();
-			character_icky = FALSE;
-			did_load = TRUE;
+			character_icky = false;
+			did_load = true;
 
-			if (!tport_vertically(FALSE)) return;
+			if (!tport_vertically(false)) return;
 
-			did_act = TRUE;
+			did_act = true;
 			break;
 		}
 
@@ -3707,12 +3707,12 @@ void do_cmd_immovable_special()
 		else if (i == 'd')
 		{
 			Term_load();
-			character_icky = FALSE;
-			did_load = TRUE;
+			character_icky = false;
+			did_load = true;
 
-			if (!tport_vertically(TRUE)) return;
+			if (!tport_vertically(true)) return;
 
-			did_act = TRUE;
+			did_act = true;
 			break;
 		}
 
@@ -3731,7 +3731,7 @@ void do_cmd_immovable_special()
 		Term_load();
 
 		/* Leave "icky" mode */
-		character_icky = FALSE;
+		character_icky = false;
 	}
 
 	/* Apply stat losses if something was done */
@@ -3762,17 +3762,17 @@ static bool item_tester_hook_sacrificable(object_type const *o_ptr)
 	{
 		/* Corpses are */
 		if (o_ptr->tval == TV_CORPSE && o_ptr->sval == SV_CORPSE_CORPSE)
-			return (TRUE);
+			return true;
 
 		/* Books without any udun spells */
 		if ((o_ptr->tval == TV_BOOK) && udun_in_book(o_ptr->sval, o_ptr->pval) <= 0)
 		{
-			return TRUE;
+			return true;
 		}
 	}
 
 	/* Assume not */
-	return (FALSE);
+	return false;
 }
 
 /*
@@ -3844,7 +3844,7 @@ void do_cmd_sacrifice()
 			}
 			if (get_check(fmt::format("Do you want to worship {}? ", deity_info[agod].name)))
 			{
-				follow_god(agod, FALSE);
+				follow_god(agod, false);
 				p_ptr->grace = -200;
 				inc_piety(p_ptr->pgod, 0);
 			}
@@ -3975,7 +3975,7 @@ std::vector<s16b> show_monster_inven(int m_idx)
 
 		/* Describe the object */
 		char o_name[80];
-		object_desc(o_name, o_ptr, TRUE, 3);
+		object_desc(o_name, o_ptr, true, 3);
 
 		/* Hack -- enforce max length */
 		o_name[lim] = '\0';
@@ -4043,7 +4043,7 @@ void do_cmd_steal()
 
 	int dir = 0, item = -1, k = -1;
 
-	bool_ done = FALSE;
+	bool done = false;
 
 	/* Only works on adjacent monsters */
 	if (!get_rep_dir(&dir)) return;
@@ -4099,7 +4099,7 @@ void do_cmd_steal()
 		{
 		case ESCAPE:
 			{
-				done = TRUE;
+				done = true;
 
 				break;
 			}
@@ -4123,14 +4123,14 @@ void do_cmd_steal()
 				/* Verify the item */
 				if (ver && !verify("Try", -objects[k]))
 				{
-					done = TRUE;
+					done = true;
 
 					break;
 				}
 
 				/* Accept that choice */
 				item = objects[k];
-				done = TRUE;
+				done = true;
 
 				break;
 			}
@@ -4205,7 +4205,7 @@ void do_cmd_steal()
 		{
 			object_copy(o_ptr, &o_list[item]);
 
-			inven_carry(o_ptr, FALSE);
+			inven_carry(o_ptr, false);
 		}
 
 		/* Delete source item */

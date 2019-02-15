@@ -89,12 +89,12 @@ border */
 /**************/
 
 /* flag signifying whether the game is in full screen */
-static bool_ arg_full_screen = FALSE;
+static bool arg_full_screen = false;
 
 /* a flag to show whether window properties have been
 set or not... if so, the properties can be dumped
 upon quit*/
-static bool_ window_properties_set = FALSE;
+static bool window_properties_set = false;
 
 /*************************************************
  GLOBAL SDL-ToME VARIABLES
@@ -112,7 +112,7 @@ redrawn -- like when doing a Term_redraw() or when
 redoing the entire screen -- all of the changes
 can be stored up before doing an update. This
 should cut down on screen flicker */
-static bool_ suspendUpdate = FALSE;
+static bool suspendUpdate = false;
 
 /* some helper surfaces that are used for rendering 
 characters */
@@ -425,7 +425,7 @@ void handleEvent(SDL_Event *event)
 			{
 				SDL_WM_ToggleFullScreen(screen);
 				/* toggle the internal full screen flag */
-				arg_full_screen = (arg_full_screen ? FALSE : TRUE);
+				arg_full_screen = (arg_full_screen ? false : true);
 			}
 
 			/* entry into window manipulation mode */
@@ -551,7 +551,7 @@ static void Term_xtra_sdl(void *data, int n, int v)
 		{
 			/* Clear the terminal */
 			DB("TERM_XTRA_CLEAR");
-			suspendUpdate = TRUE;
+			suspendUpdate = true;
 			eraseTerminal(td);
 			return;
 		}
@@ -574,7 +574,7 @@ static void Term_xtra_sdl(void *data, int n, int v)
 			if (suspendUpdate)
 			{
 				DB("  update WAS suspended... updating now");
-				suspendUpdate = FALSE;				
+				suspendUpdate = false;				
 				drawTermStuff(td,NULL);
 			}
 			return;
@@ -679,9 +679,9 @@ void screen_to_term(SDL_Rect *scrrect, term_data *td)
 /* A function to calculate the intersection of two rectangles. Takes base
 rectangle and then updates it to include only the rectangles that intersect 
 with the test rectangle. If there is an intersection, the function returns
-TRUE and base now contains the intersecting rectangle. If there is no
-intersection, then the function returns FALSE */
-bool_ intersectRects(SDL_Rect *base, SDL_Rect *test)
+true and base now contains the intersecting rectangle. If there is no
+intersection, then the function returns false */
+bool intersectRects(SDL_Rect *base, SDL_Rect *test)
 {
 	if (INTERSECT((*base),(*test)))
 	{
@@ -707,11 +707,11 @@ bool_ intersectRects(SDL_Rect *base, SDL_Rect *test)
 		{
 			base->h = test->y + test->h - base->y;
 		}
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -757,7 +757,7 @@ drawn, but occluding terminals will then re-blit to re-cover the area. */
 void drawTermStuff(term_data *td, SDL_Rect *rect)
 {
 	int n = 0, i;
-	bool_ block = FALSE, cover = FALSE;
+	bool block = false, cover = false;
 	SDL_Rect spot, isect_term, isect_scr;
 
 	/* first of all, if updating is suspended, do nothing! */
@@ -792,13 +792,13 @@ void drawTermStuff(term_data *td, SDL_Rect *rect)
 			if (BLOCKS(term_order[i]->rect,spot))
 			{
 				/* Higher terminal completely occludes this spot */
-				block = TRUE;
+				block = true;
 				DB("  Blocks!");
 			}
 			else if (INTERSECT(term_order[i]->rect,spot))
 			{
 				/* Partial occlusion */
-				cover = TRUE;
+				cover = true;
 				DB("  Covers!");
 			}
 		}
@@ -1350,7 +1350,7 @@ void manipulationMode(void)
 {
 	term_data *td;
 	SDL_Event event;
-	bool_ done = FALSE, moveMode = TRUE;
+	bool done = false, moveMode = true;
 	int mouse_x, mouse_y;
 	int value = 0, delta_x = 0, delta_y = 0;
 	int current_term;
@@ -1386,13 +1386,13 @@ void manipulationMode(void)
 				case SDLK_ESCAPE:
 				{
 					/* Escape has been pressed, so we're done!*/
-					done = TRUE;
+					done = true;
 					break;
 				}
 				case SDLK_SPACE:
 				{
 					/* Space has been pressed: toggle move mode */
-					moveMode = ( moveMode ? FALSE : TRUE );
+					moveMode = ( moveMode ? false : true );
 					break;
 				}
 				case SDLK_RETURN:
@@ -1842,7 +1842,7 @@ int init_sdl(int argc, char **argv)
 		else if (equals(argv[i], "-fs"))
 		{
 			DB("Full-screen enabled!");
-			arg_full_screen = TRUE;
+			arg_full_screen = true;
 		}
 		/* change the font size */
 		else if (equals(argv[i], "-s"))
@@ -1967,7 +1967,7 @@ int init_sdl(int argc, char **argv)
 
 	/* Initialize the windows, or whatever that means in this case.
 	Do this in reverse order so that the main window is on top.*/
-	suspendUpdate = TRUE;	/* draw everything at the end */
+	suspendUpdate = true;	/* draw everything at the end */
 	i = arg_console_count;
 	while (i--)
 	{
@@ -1988,13 +1988,13 @@ int init_sdl(int argc, char **argv)
 	the main terminal surface */
 	screen_black  = SDL_MapRGB(screen->format,  0,  0,  0);
 
-	suspendUpdate = FALSE; /* now draw everything */
+	suspendUpdate = false; /* now draw everything */
 	redrawAllTerminals();
 	/*SDL_REDRAW_SCREEN;*/
 	
 	/* now that the windows have been set, their settings can
 	be dumped upon quit! */
-	window_properties_set = TRUE;
+	window_properties_set = true;
 
 	/* Enable UNICODE keysyms - needed for current eventHandling routine */
 	SDL_EnableUNICODE(1);

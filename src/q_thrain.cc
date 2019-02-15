@@ -136,7 +136,7 @@ static bool quest_thrain_death_hook(void *, void *in_, void *)
 
 
 	del_hook_new(HOOK_MONSTER_DEATH, quest_thrain_death_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return false;
 }
@@ -161,7 +161,7 @@ static bool quest_thrain_gen_hook(void *, void *in_, void *)
 	get_map_size("thrain.map", &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
-	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval)) return false;
+	if (!room_alloc(xsize + 2, ysize + 2, false, by0, bx0, &xval, &yval)) return false;
 
 	/* Get corner values */
 	y1 = yval - ysize / 2;
@@ -190,7 +190,7 @@ static bool quest_thrain_gen_hook(void *, void *in_, void *)
 	xstart = x1;
 	ystart = y1;
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("thrain.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("thrain.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	for (x = x1; x < xstart; x++)
 		for (y = y1; y < ystart; y++)
@@ -198,9 +198,9 @@ static bool quest_thrain_gen_hook(void *, void *in_, void *)
 			cave[y][x].info |= CAVE_ICKY | CAVE_ROOM | CAVE_FREE;
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				m_allow_special[get_thrain()] = TRUE;
-				int i = place_monster_one(y, x, get_thrain(), 0, FALSE, MSTATUS_NEUTRAL);
-				m_allow_special[get_thrain()] = FALSE;
+				m_allow_special[get_thrain()] = true;
+				int i = place_monster_one(y, x, get_thrain(), 0, false, MSTATUS_NEUTRAL);
+				m_allow_special[get_thrain()] = false;
 
 				if (i) m_list[i].mflag |= MFLAG_QUEST;
 			}

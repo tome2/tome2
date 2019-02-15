@@ -64,15 +64,15 @@ struct object_kind
 
 	byte flavor = 0;                         /* Special object flavor (or zero) */
 
-	bool_ easy_know = 0;                     /* This object is always known (if aware) */
+	bool easy_know = 0;                     /* This object is always known (if aware) */
 
-	bool_ aware = 0;                         /* The player is "aware" of the item's effects */
+	bool aware = 0;                         /* The player is "aware" of the item's effects */
 
-	bool_ allow_special = 0;
+	bool allow_special = 0;
 
 	byte btval = 0;                          /* Become Object type */
 	byte bsval = 0;                          /* Become Object sub type */
-	bool_ artifact = 0;                      /* Is it a normal artifact(already generated) */
+	bool artifact = 0;                      /* Is it a normal artifact(already generated) */
 
 	boost::optional<int> power;              /* Power granted */
 

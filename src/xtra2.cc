@@ -73,9 +73,9 @@ static void corrupt_corrupted();
  * Set "p_ptr->parasite" and "p_ptr->parasite_r_idx"
  * notice observable changes
  */
-bool_ set_parasite(int v, int r)
+bool set_parasite(int v, int r)
 {
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -86,7 +86,7 @@ bool_ set_parasite(int v, int r)
 		if (!p_ptr->parasite)
 		{
 			msg_print("You feel something growing in you.");
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -109,7 +109,7 @@ bool_ set_parasite(int v, int r)
 				}
 				while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
-				if (place_monster_one(wy, wx, p_ptr->parasite_r_idx, 0, FALSE, MSTATUS_ENEMY))
+				if (place_monster_one(wy, wx, p_ptr->parasite_r_idx, 0, false, MSTATUS_ENEMY))
 				{
 					cmsg_format(TERM_L_BLUE, "Your body convulses and spawns %s.", r_name);
 					p_ptr->food -= 750;
@@ -120,7 +120,7 @@ bool_ set_parasite(int v, int r)
 			{
 				cmsg_print(TERM_L_BLUE, "The hideous thing growing in you seems to die.");
 			}
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -129,7 +129,7 @@ bool_ set_parasite(int v, int r)
 	p_ptr->parasite_r_idx = r;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -138,13 +138,13 @@ bool_ set_parasite(int v, int r)
 	p_ptr->update |= (PU_BONUS);
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 /*
  * Set a simple player field.
  */
-static bool_ set_simple_field(
+static bool set_simple_field(
 	s16b *p_field,
 	s16b v,
 	byte activate_color,
@@ -152,7 +152,7 @@ static bool_ set_simple_field(
 	byte deactivate_color,
 	const char *deactivate_msg)
 {
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -163,7 +163,7 @@ static bool_ set_simple_field(
 		if (!*p_field)
 		{
 			cmsg_print(activate_color, activate_msg);
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -173,7 +173,7 @@ static bool_ set_simple_field(
 		if (*p_field)
 		{
 			cmsg_print(deactivate_color, deactivate_msg);
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -182,7 +182,7 @@ static bool_ set_simple_field(
 
 	/* Nothing to notice */
 	if (!notice)
-		return (FALSE);
+		return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -191,16 +191,16 @@ static bool_ set_simple_field(
 	p_ptr->update |= (PU_BONUS);
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 /*
  * Set "p_ptr->tim_project" and others
  * notice observable changes
  */
-bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
+bool set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_project, v,
 		TERM_WHITE, "Your weapon starts glowing.",
 		TERM_WHITE, "Your weapon stops glowing.");
@@ -219,9 +219,9 @@ bool_ set_project(int v, s16b gf, s16b dam, s16b rad, s16b flag)
  * Set "p_ptr->tim_roots" and others
  * notice observable changes
  */
-bool_ set_roots(int v, s16b ac, s16b dam)
+bool set_roots(int v, s16b ac, s16b dam)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_roots, v,
 		TERM_WHITE, "Roots dive into the floor from your feet.",
 		TERM_WHITE, "The roots of your feet suddenly vanish.");
@@ -238,7 +238,7 @@ bool_ set_roots(int v, s16b ac, s16b dam)
  * Set "p_ptr->tim_(magic|water)_breath" and others
  * notice observable changes
  */
-bool_ set_tim_breath(int v, bool_ magical)
+bool set_tim_breath(int v, bool magical)
 {
 	if (magical)
 	{
@@ -259,7 +259,7 @@ bool_ set_tim_breath(int v, bool_ magical)
 /*
  * Set timered precognition
  */
-bool_ set_tim_precognition(int v)
+bool set_tim_precognition(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_precognition, v,
@@ -271,7 +271,7 @@ bool_ set_tim_precognition(int v)
  * Set "p_ptr->absorb_soul"
  * notice observable changes
  */
-bool_ set_absorb_soul(int v)
+bool set_absorb_soul(int v)
 {
 	return set_simple_field(
 		&p_ptr->absorb_soul, v,
@@ -283,7 +283,7 @@ bool_ set_absorb_soul(int v)
  * Set "p_ptr->disrupt_shield"
  * notice observable changes
  */
-bool_ set_disrupt_shield(int v)
+bool set_disrupt_shield(int v)
 {
 	return set_simple_field(
 		&p_ptr->disrupt_shield, v,
@@ -295,7 +295,7 @@ bool_ set_disrupt_shield(int v)
  * Set "p_ptr->prob_travel"
  * notice observable changes
  */
-bool_ set_prob_travel(int v)
+bool set_prob_travel(int v)
 {
 	return set_simple_field(
 		&p_ptr->prob_travel, v,
@@ -307,9 +307,9 @@ bool_ set_prob_travel(int v)
  * Set "p_ptr->tim_invis", and "p_ptr->tim_inv_pow",
  * notice observable changes
  */
-bool_ set_invis(int v, int p)
+bool set_invis(int v, int p)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_invisible, v,
 		TERM_WHITE, "You feel your body fade away.",
 		TERM_WHITE, "You are no longer invisible.");
@@ -325,7 +325,7 @@ bool_ set_invis(int v, int p)
  * Set "p_ptr->tim_poison",
  * notice observable changes
  */
-bool_ set_poison(int v)
+bool set_poison(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_poison, v,
@@ -336,7 +336,7 @@ bool_ set_poison(int v)
 /*
  * Set "no_breeds"
  */
-bool_ set_no_breeders(int v)
+bool set_no_breeders(int v)
 {
 	return set_simple_field(
 		&no_breeds, v,
@@ -347,7 +347,7 @@ bool_ set_no_breeders(int v)
 /*
  * Set "p_ptr->tim_deadly"
  */
-bool_ set_tim_deadly(int v)
+bool set_tim_deadly(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_deadly, v,
@@ -358,7 +358,7 @@ bool_ set_tim_deadly(int v)
 /*
  * Set "p_ptr->tim_ffall"
  */
-bool_ set_tim_ffall(int v)
+bool set_tim_ffall(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_ffall, v,
@@ -369,7 +369,7 @@ bool_ set_tim_ffall(int v)
 /*
  * Set "p_ptr->tim_fly"
  */
-bool_ set_tim_fly(int v)
+bool set_tim_fly(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_fly, v,
@@ -380,7 +380,7 @@ bool_ set_tim_fly(int v)
 /*
  * Set "p_ptr->tim_reflect"
  */
-bool_ set_tim_reflect(int v)
+bool set_tim_reflect(int v)
 {
 	return set_simple_field(
 		&p_ptr->tim_reflect, v,
@@ -391,7 +391,7 @@ bool_ set_tim_reflect(int v)
 /*
  * Set "p_ptr->strike"
  */
-bool_ set_strike(int v)
+bool set_strike(int v)
 {
 	return set_simple_field(
 		&p_ptr->strike, v,
@@ -402,7 +402,7 @@ bool_ set_strike(int v)
 /*
  * Set "p_ptr->oppose_cc"
  */
-bool_ set_oppose_cc(int v)
+bool set_oppose_cc(int v)
 {
 	return set_simple_field(
 		&p_ptr->oppose_cc, v,
@@ -414,11 +414,11 @@ bool_ set_oppose_cc(int v)
  * Set "p_ptr->tim_mimic", and "p_ptr->mimic_form",
  * notice observable changes
  */
-bool_ set_mimic(int v, int p, int level)
+bool set_mimic(int v, int p, int level)
 {
 	auto &s_info = game->s_info;
 
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -430,7 +430,7 @@ bool_ set_mimic(int v, int p, int level)
 		{
 			msg_print("You feel your body change.");
 			p_ptr->mimic_form = p;
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -441,7 +441,7 @@ bool_ set_mimic(int v, int p, int level)
 		{
 			msg_print("You are no longer transformed.");
 			p_ptr->mimic_form = 0;
-			notice = TRUE;
+			notice = true;
 			if (p == resolve_mimic_name("Bear"))
 			{
 				s_info[SKILL_BEAR].hidden = true;
@@ -456,7 +456,7 @@ bool_ set_mimic(int v, int p, int level)
 	p_ptr->mimic_level = level;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -468,7 +468,7 @@ bool_ set_mimic(int v, int p, int level)
 	p_ptr->update |= (PU_BODY | PU_BONUS | PU_SANITY);
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 /*
@@ -479,9 +479,9 @@ bool_ set_mimic(int v, int p, int level)
  * Note that blindness is currently the only thing which can affect
  * "player_can_see_bold()".
  */
-bool_ set_blind(int v)
+bool set_blind(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->blind, v,
 		TERM_WHITE, "You are blind!",
 		TERM_WHITE, "You can see again.");
@@ -516,9 +516,9 @@ bool_ set_blind(int v)
  * Note that blindness is currently the only thing which can affect
  * "player_can_see_bold()".
  */
-bool_ set_lite(int v)
+bool set_lite(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_lite, v,
 		TERM_WHITE, "You suddenly seem brighter!",
 		TERM_WHITE, "You are no longer bright.");
@@ -545,9 +545,9 @@ bool_ set_lite(int v)
 /*
  * Set "p_ptr->confused", notice observable changes
  */
-bool_ set_confused(int v)
+bool set_confused(int v)
 {
-	bool_ notice = 
+	bool notice = 
 		set_simple_field(
 			&p_ptr->confused, v,
 			TERM_WHITE, "You are confused!",
@@ -570,9 +570,9 @@ bool_ set_confused(int v)
 /*
  * Set "p_ptr->poisoned", notice observable changes
  */
-bool_ set_poisoned(int v)
+bool set_poisoned(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->poisoned, v,
 		TERM_WHITE, "You are poisoned!",
 		TERM_WHITE, "You are no longer poisoned.");
@@ -594,9 +594,9 @@ bool_ set_poisoned(int v)
 /*
  * Set "p_ptr->afraid", notice observable changes
  */
-bool_ set_afraid(int v)
+bool set_afraid(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->afraid, v,
 		TERM_WHITE, "You are terrified!",
 		TERM_WHITE, "You feel bolder now.");
@@ -618,9 +618,9 @@ bool_ set_afraid(int v)
 /*
  * Mechanics for setting the "paralyzed" field.
  */
-static bool_ set_paralyzed_aux(int v)
+static bool set_paralyzed_aux(int v)
 {
-	bool_ notice;
+	bool notice;
 
 	/* Normal processing */
 	notice = set_simple_field(
@@ -644,7 +644,7 @@ static bool_ set_paralyzed_aux(int v)
 /*
  * Set "p_ptr->paralyzed", notice observable changes
  */
-bool_ set_paralyzed(int v)
+bool set_paralyzed(int v)
 {
 	/* Paralysis effects do not accumulate -- this is to
 	   prevent the uninteresting insta-death effect, but
@@ -652,7 +652,7 @@ bool_ set_paralyzed(int v)
 	   faster than the player. */
 
 	if (p_ptr->paralyzed > 0) {
-		return FALSE;
+		return false;
 	}
 
 	/* Normal processing */
@@ -673,9 +673,9 @@ void dec_paralyzed()
  *
  * Note that we must redraw the map when hallucination changes.
  */
-bool_ set_image(int v)
+bool set_image(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->image, v,
 		TERM_WHITE, "Oh, wow! Everything looks so cosmic now!",
 		TERM_WHITE, "You can see clearly again.");
@@ -702,9 +702,9 @@ bool_ set_image(int v)
 /*
  * Set "p_ptr->lightspeed", notice observable changes
  */
-bool_ set_light_speed(int v)
+bool set_light_speed(int v)
 {
-	bool_ notice = 
+	bool notice = 
 		set_simple_field(
 			&p_ptr->lightspeed, v,
 			TERM_WHITE, "You feel as if time has stopped!",
@@ -720,9 +720,9 @@ bool_ set_light_speed(int v)
 	return notice;
 }
 
-bool_ set_fast(int v, int p)
+bool set_fast(int v, int p)
 {
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -733,7 +733,7 @@ bool_ set_fast(int v, int p)
 		if (!p_ptr->fast)
 		{
 			msg_print("You feel yourself moving faster!");
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -744,7 +744,7 @@ bool_ set_fast(int v, int p)
 		{
 			msg_print("You feel yourself slow down.");
 			p = 0;
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -753,7 +753,7 @@ bool_ set_fast(int v, int p)
 	p_ptr->speed_factor = p;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -765,16 +765,16 @@ bool_ set_fast(int v, int p)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 
 /*
  * Set "p_ptr->slow", notice observable changes
  */
-bool_ set_slow(int v)
+bool set_slow(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->slow, v,
 		TERM_WHITE, "You feel yourself moving slower!",
 		TERM_WHITE, "You feel yourself speed up.");
@@ -793,9 +793,9 @@ bool_ set_slow(int v)
 /*
  * Set "p_ptr->shield", notice observable changes
  */
-bool_ set_shield(int v, int p, s16b o, s16b d1, s16b d2)
+bool set_shield(int v, int p, s16b o, s16b d1, s16b d2)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->shield, v,
 		TERM_WHITE, "A mystic shield forms around your body!",
 		TERM_WHITE, "Your mystic shield crumbles away.");
@@ -822,9 +822,9 @@ bool_ set_shield(int v, int p, s16b o, s16b d1, s16b d2)
 /*
  * Set "p_ptr->blessed", notice observable changes
  */
-bool_ set_blessed(int v)
+bool set_blessed(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->blessed, v,
 		TERM_WHITE, "You feel righteous!",
 		TERM_WHITE, "The prayer has expired.");
@@ -843,9 +843,9 @@ bool_ set_blessed(int v)
 /*
  * Set "p_ptr->hero", notice observable changes
  */
-bool_ set_hero(int v)
+bool set_hero(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->hero, v,
 		TERM_WHITE, "You feel like a hero!",
 		TERM_WHITE, "The heroism wears off.");
@@ -866,9 +866,9 @@ bool_ set_hero(int v)
 /*
  * Set "p_ptr->holy", notice observable changes
  */
-bool_ set_holy(int v)
+bool set_holy(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->holy, v,
 		TERM_WHITE, "You feel a holy aura around you!",
 		TERM_WHITE, "The holy aura vanishes.");
@@ -886,9 +886,9 @@ bool_ set_holy(int v)
 /*
  * Set "p_ptr->shero", notice observable changes
  */
-bool_ set_shero(int v)
+bool set_shero(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->shero, v,
 		TERM_WHITE, "You feel like a killing machine!",
 		TERM_WHITE, "You feel less berserk.");
@@ -916,9 +916,9 @@ bool_ set_shero(int v)
 /*
  * Set "p_ptr->protevil", notice observable changes
  */
-bool_ set_protevil(int v)
+bool set_protevil(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->protevil, v,
 		TERM_WHITE, "You feel safe from evil!",
 		TERM_WHITE, "You no longer feel safe from evil.");
@@ -936,9 +936,9 @@ bool_ set_protevil(int v)
 /*
  * Set "p_ptr->set_shadow", notice observable changes
  */
-bool_ set_shadow(int v)
+bool set_shadow(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_wraith, v,
 		TERM_WHITE, "You leave the physical world and turn into a wraith-being!",
 		TERM_WHITE, "You feel opaque.");
@@ -968,9 +968,9 @@ bool_ set_shadow(int v)
 /*
  * Set "p_ptr->invuln", notice observable changes
  */
-bool_ set_invuln(int v)
+bool set_invuln(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->invuln, v,
 		TERM_L_BLUE, "Invulnerability!",
 		TERM_L_RED, "The invulnerability wears off.");
@@ -999,9 +999,9 @@ bool_ set_invuln(int v)
 /*
  * Set "p_ptr->tim_esp", notice observable changes
  */
-bool_ set_tim_esp(int v)
+bool set_tim_esp(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_esp, v,
 		TERM_WHITE, "You feel your consciousness expand!",
 		TERM_WHITE, "Your consciousness contracts again.");
@@ -1022,9 +1022,9 @@ bool_ set_tim_esp(int v)
 /*
  * Set "p_ptr->tim_thunder", notice observable changes
  */
-bool_ set_tim_thunder(int v, int p1, int p2)
+bool set_tim_thunder(int v, int p1, int p2)
 {
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1035,7 +1035,7 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 		if (!p_ptr->tim_thunder)
 		{
 			msg_print("The air around you charges with lightning!");
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -1045,7 +1045,7 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 		if (p_ptr->tim_thunder)
 		{
 			msg_print("The air around you discharges.");
-			notice = TRUE;
+			notice = true;
 			p1 = p2 = 0;
 		}
 	}
@@ -1056,7 +1056,7 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 	p_ptr->tim_thunder_p2 = p2;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -1071,15 +1071,15 @@ bool_ set_tim_thunder(int v, int p1, int p2)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 /*
  * Set "p_ptr->tim_invis", notice observable changes
  */
-bool_ set_tim_invis(int v)
+bool set_tim_invis(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_invis, v,
 		TERM_WHITE, "Your eyes feel very sensitive!",
 		TERM_WHITE, "Your eyes feel less sensitive.");
@@ -1101,9 +1101,9 @@ bool_ set_tim_invis(int v)
 /*
  * Set "p_ptr->tim_infra", notice observable changes
  */
-bool_ set_tim_infra(int v)
+bool set_tim_infra(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->tim_infra, v,
 		TERM_WHITE, "Your eyes begin to tingle!",
 		TERM_WHITE, "Your eyes stop tingling.");
@@ -1125,9 +1125,9 @@ bool_ set_tim_infra(int v)
 /*
  * Set "p_ptr->oppose_acid", notice observable changes
  */
-bool_ set_oppose_acid(int v)
+bool set_oppose_acid(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->oppose_acid, v,
 		TERM_WHITE, "You feel resistant to acid!",
 		TERM_WHITE, "You feel less resistant to acid.");
@@ -1146,9 +1146,9 @@ bool_ set_oppose_acid(int v)
 /*
  * Set "p_ptr->oppose_elec", notice observable changes
  */
-bool_ set_oppose_elec(int v)
+bool set_oppose_elec(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->oppose_elec, v,
 		TERM_WHITE, "You feel resistant to electricity!",
 		TERM_WHITE, "You feel less resistant to electricity.");
@@ -1167,9 +1167,9 @@ bool_ set_oppose_elec(int v)
 /*
  * Set "p_ptr->oppose_fire", notice observable changes
  */
-bool_ set_oppose_fire(int v)
+bool set_oppose_fire(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->oppose_fire, v,
 		TERM_WHITE, "You feel resistant to fire!",
 		TERM_WHITE, "You feel less resistant to fire.");
@@ -1188,9 +1188,9 @@ bool_ set_oppose_fire(int v)
 /*
  * Set "p_ptr->oppose_cold", notice observable changes
  */
-bool_ set_oppose_cold(int v)
+bool set_oppose_cold(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->oppose_cold, v,
 		TERM_WHITE, "You feel resistant to cold!",
 		TERM_WHITE, "You feel less resistant to cold.");
@@ -1209,9 +1209,9 @@ bool_ set_oppose_cold(int v)
 /*
  * Set "p_ptr->oppose_pois", notice observable changes
  */
-bool_ set_oppose_pois(int v)
+bool set_oppose_pois(int v)
 {
-	bool_ notice = set_simple_field(
+	bool notice = set_simple_field(
 		&p_ptr->oppose_pois, v,
 		TERM_WHITE, "You feel resistant to poison!",
 		TERM_WHITE, "You feel less resistant to poison.");
@@ -1230,9 +1230,9 @@ bool_ set_oppose_pois(int v)
 /*
  * Set "p_ptr->tim_regen", notice observable changes
  */
-bool_ set_tim_regen(int v, int p)
+bool set_tim_regen(int v, int p)
 {
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1243,7 +1243,7 @@ bool_ set_tim_regen(int v, int p)
 		if (!p_ptr->tim_regen)
 		{
 			msg_print("Your body regenerates much more quickly!");
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -1254,7 +1254,7 @@ bool_ set_tim_regen(int v, int p)
 		{
 			p = 0;
 			msg_print("Your body regenerates much more slowly.");
-			notice = TRUE;
+			notice = true;
 		}
 	}
 
@@ -1263,7 +1263,7 @@ bool_ set_tim_regen(int v, int p)
 	p_ptr->tim_regen_pow = p;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -1272,7 +1272,7 @@ bool_ set_tim_regen(int v, int p)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1281,10 +1281,10 @@ bool_ set_tim_regen(int v, int p)
  *
  * Note the special code to only notice "range" changes.
  */
-bool_ set_stun(int v)
+bool set_stun(int v)
 {
 	int old_aux, new_aux;
-	bool_ notice = FALSE;
+	bool notice = false;
 
 
 	/* Hack -- Force good values */
@@ -1394,7 +1394,7 @@ bool_ set_stun(int v)
 		}
 
 		/* Notice */
-		notice = TRUE;
+		notice = true;
 	}
 
 	/* Decrease cut */
@@ -1411,14 +1411,14 @@ bool_ set_stun(int v)
 		}
 
 		/* Notice */
-		notice = TRUE;
+		notice = true;
 	}
 
 	/* Use the value */
 	p_ptr->stun = v;
 
 	/* No change */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -1433,7 +1433,7 @@ bool_ set_stun(int v)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1442,11 +1442,11 @@ bool_ set_stun(int v)
  *
  * Note the special code to only notice "range" changes.
  */
-bool_ set_cut(int v)
+bool set_cut(int v)
 {
 	int old_aux, new_aux;
 
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 10000) ? 10000 : (v < 0) ? 0 : v;
@@ -1592,7 +1592,7 @@ bool_ set_cut(int v)
 		}
 
 		/* Notice */
-		notice = TRUE;
+		notice = true;
 
 		if (randint(1000) < v || randint(16) == 1)
 		{
@@ -1619,14 +1619,14 @@ bool_ set_cut(int v)
 		}
 
 		/* Notice */
-		notice = TRUE;
+		notice = true;
 	}
 
 	/* Use the value */
 	p_ptr->cut = v;
 
 	/* No change */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -1641,7 +1641,7 @@ bool_ set_cut(int v)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 void drop_from_wild()
@@ -1681,11 +1681,11 @@ void drop_from_wild()
  * game turns, or 500/(100/5) = 25 player turns (if nothing else is
  * affecting the player speed).
  */
-bool_ set_food(int v)
+bool set_food(int v)
 {
 	int old_aux, new_aux;
 
-	bool_ notice = FALSE;
+	bool notice = false;
 
 	/* Hack -- Force good values */
 	v = (v > 20000) ? 20000 : (v < 0) ? 0 : v;
@@ -1795,7 +1795,7 @@ bool_ set_food(int v)
 		}
 
 		/* Change */
-		notice = TRUE;
+		notice = true;
 	}
 
 	/* Food decrease */
@@ -1833,14 +1833,14 @@ bool_ set_food(int v)
 		}
 
 		/* Change */
-		notice = TRUE;
+		notice = true;
 	}
 
 	/* Use the value */
 	p_ptr->food = v;
 
 	/* Nothing to notice */
-	if (!notice) return (FALSE);
+	if (!notice) return false;
 
 	/* Disturb */
 	disturb_on_state();
@@ -1855,7 +1855,7 @@ bool_ set_food(int v)
 	handle_stuff();
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1865,7 +1865,7 @@ bool_ set_food(int v)
 void check_experience()
 {
 	int gained = 0;
-	bool_ level_corruption = FALSE;
+	bool level_corruption = false;
 
 
 	/* Hack -- lower limit */
@@ -1929,7 +1929,7 @@ void check_experience()
 			if ((race_flags_p(PR_CORRUPT)) &&
 			                (randint(3) == 1))
 			{
-				level_corruption = TRUE;
+				level_corruption = true;
 			}
 		}
 
@@ -1972,7 +1972,7 @@ void check_experience()
 		{
 			msg_print("You feel different...");
 			corrupt_corrupted();
-			level_corruption = FALSE;
+			level_corruption = false;
 		}
 	}
 
@@ -2183,17 +2183,17 @@ void place_corpse(monster_type *m_ptr)
  * Check if monster race is in a given list. The list
  * must be NULL-terminated.
  */
-static bool_ monster_race_in_list_p(monster_type *m_ptr, const char *races[])
+static bool monster_race_in_list_p(monster_type *m_ptr, const char *races[])
 {
 	int i=0;
 	for (i=0; races[i] != NULL; i++)
 	{
 		if (m_ptr->r_idx == test_monster_name(races[i])) {
-			return TRUE;
+			return true;
 		}
 	}
 	/* Not found */
-	return FALSE;
+	return false;
 }
 
 /*
@@ -2406,7 +2406,7 @@ void monster_death(int m_idx)
 
 	auto const r_ptr = m_ptr->race();
 
-	bool_ create_stairs = FALSE;
+	bool create_stairs = false;
 	int force_coin = get_coin_type(r_ptr);
 
 	object_type forge;
@@ -2562,7 +2562,7 @@ void monster_death(int m_idx)
 			{
 				if (is_friend(m_ptr) > 0)
 				{
-					if (summon_specific_friendly(wy, wx, 100, SUMMON_DAWN, FALSE))
+					if (summon_specific_friendly(wy, wx, 100, SUMMON_DAWN, false))
 					{
 						if (player_can_see_bold(wy, wx))
 							msg_print ("A new warrior steps forth!");
@@ -2626,7 +2626,7 @@ void monster_death(int m_idx)
 			q_ptr->name1 = ART_GROND;
 
 			/* Mega-Hack -- Actually create "Grond" */
-			apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+			apply_magic(q_ptr, -1, true, true, true);
 
 			/* Drop it in the dungeon */
 			drop_near(q_ptr, -1, y, x);
@@ -2641,7 +2641,7 @@ void monster_death(int m_idx)
 			q_ptr->name1 = ART_MORGOTH;
 
 			/* Mega-Hack -- Actually create "Morgoth" */
-			apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+			apply_magic(q_ptr, -1, true, true, true);
 
 			q_ptr->found = OBJ_FOUND_MONSTER;
 			q_ptr->found_aux1 = m_ptr->r_idx;
@@ -2663,7 +2663,7 @@ void monster_death(int m_idx)
 			object_prep(q_ptr, lookup_kind(TV_RING, SV_RING_INVIS));
 			q_ptr->number = 1;
 
-			apply_magic(q_ptr, -1, TRUE, TRUE, FALSE);
+			apply_magic(q_ptr, -1, true, true, false);
 
 			q_ptr->found = OBJ_FOUND_MONSTER;
 			q_ptr->found_aux1 = m_ptr->r_idx;
@@ -2685,7 +2685,7 @@ void monster_death(int m_idx)
 			object_prep(q_ptr, lookup_kind(TV_RING, SV_RING_SPECIAL));
 			q_ptr->number = 1;
 
-			apply_magic(q_ptr, -1, TRUE, TRUE, FALSE);
+			apply_magic(q_ptr, -1, true, true, false);
 
 			/* Create a random artifact */
 			create_artifact(q_ptr, true, false);
@@ -2775,7 +2775,7 @@ void monster_death(int m_idx)
 		}
 		while (!(in_bounds(yy, xx) && cave_floor_bold(yy, xx)) && --attempts);
 
-		place_monster_aux(yy, xx, test_monster_name("Great Wyrm of Power"), FALSE, FALSE, m_ptr->status);
+		place_monster_aux(yy, xx, test_monster_name("Great Wyrm of Power"), false, false, m_ptr->status);
 	}
 
 	/* Let monsters explode! */
@@ -2946,7 +2946,7 @@ void monster_death(int m_idx)
 /*
  * Decreases monsters hit points, handling monster death.
  *
- * We return TRUE if the monster has been killed (and deleted).
+ * We return true if the monster has been killed (and deleted).
  *
  * We announce monster death (using an optional "death message"
  * if given, and a otherwise a generic killed/destroyed message).
@@ -3288,11 +3288,11 @@ static void panel_bounds()
 /*
  * Handle a request to change the current panel
  *
- * Return TRUE if the panel was changed.
+ * Return true if the panel was changed.
  *
  * Also used in do_cmd_locate()
  */
-bool_ change_panel(int dy, int dx)
+bool change_panel(int dy, int dx)
 {
 	int y, x;
 	int wid, hgt;
@@ -3330,11 +3330,11 @@ bool_ change_panel(int dy, int dx)
 		handle_stuff();
 
 		/* Success */
-		return (TRUE);
+		return true;
 	}
 
 	/* No changes */
-	return (FALSE);
+	return false;
 }
 
 
@@ -3344,7 +3344,7 @@ bool_ change_panel(int dy, int dx)
  *
  * "Update" forces a "full update" to take place.
  *
- * The map is reprinted if necessary, and "TRUE" is returned.
+ * The map is reprinted if necessary, and "true" is returned.
  */
 void verify_panel()
 {
@@ -3570,15 +3570,15 @@ void resize_window()
  */
 static const char *look_mon_desc(int m_idx)
 {
-	bool_ living = TRUE;
+	bool living = true;
 
 	/* Determine if the monster is "living" (vs "undead") */
 	monster_type *m_ptr = &m_list[m_idx];
 	auto const r_ptr = m_ptr->race();
-	if (r_ptr->flags & RF_UNDEAD) living = FALSE;
-	if (r_ptr->flags & RF_DEMON) living = FALSE;
-	if (r_ptr->flags & RF_NONLIVING) living = FALSE;
-	if (strchr("Egv", r_ptr->d_char)) living = FALSE;
+	if (r_ptr->flags & RF_UNDEAD) living = false;
+	if (r_ptr->flags & RF_DEMON) living = false;
+	if (r_ptr->flags & RF_NONLIVING) living = false;
+	if (strchr("Egv", r_ptr->d_char)) living = false;
 
 
 	/* Healthy monsters */
@@ -3638,28 +3638,28 @@ static bool target_able(int m_idx)
 	monster_type *m_ptr = &m_list[m_idx];
 
 	/* Monster must be alive */
-	if (!m_ptr->r_idx) return (FALSE);
+	if (!m_ptr->r_idx) return false;
 
 	/* Monster must be visible */
-	if (!m_ptr->ml) return (FALSE);
+	if (!m_ptr->ml) return false;
 
 	/* Monster must be projectable */
-	if (!projectable(p_ptr->py, p_ptr->px, m_ptr->fy, m_ptr->fx)) return (FALSE);
+	if (!projectable(p_ptr->py, p_ptr->px, m_ptr->fy, m_ptr->fx)) return false;
 
 	/* Hack -- no targeting hallucinations */
-	if (p_ptr->image) return (FALSE);
+	if (p_ptr->image) return false;
 
 	/* Dont target pets */
-	if (is_friend(m_ptr) > 0) return (FALSE);
+	if (is_friend(m_ptr) > 0) return false;
 
 	/* Honor flag */
-	if (r_info[m_ptr->r_idx].flags & RF_NO_TARGET) return (FALSE);
+	if (r_info[m_ptr->r_idx].flags & RF_NO_TARGET) return false;
 
 	/* XXX XXX XXX Hack -- Never target trappers */
-	/* if (CLEAR_ATTR && (CLEAR_CHAR)) return (FALSE); */
+	/* if (CLEAR_ATTR && (CLEAR_CHAR)) return false; */
 
 	/* Assume okay */
-	return (TRUE);
+	return true;
 }
 
 
@@ -3668,12 +3668,12 @@ static bool target_able(int m_idx)
 /*
  * Update (if necessary) and verify (if possible) the target.
  *
- * We return TRUE if the target is "okay" and FALSE otherwise.
+ * We return true if the target is "okay" and false otherwise.
  */
-bool_ target_okay()
+bool target_okay()
 {
 	/* Accept stationary targets */
-	if (target_who < 0) return (TRUE);
+	if (target_who < 0) return true;
 
 	/* Check moving targets */
 	if (target_who > 0)
@@ -3688,12 +3688,12 @@ bool_ target_okay()
 			target_col = m_ptr->fx;
 
 			/* Good target */
-			return (TRUE);
+			return true;
 		}
 	}
 
 	/* Assume no target */
-	return (FALSE);
+	return false;
 }
 
 
@@ -3749,17 +3749,17 @@ static s16b target_pick(point p, int dy, int dx, std::vector<point> const &point
 /*
  * Hack -- determine if a given location is "interesting"
  */
-static bool_ target_set_accept(int y, int x)
+static bool target_set_accept(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 
 	/* Player grid is always interesting */
-	if ((y == p_ptr->py) && (x == p_ptr->px)) return (TRUE);
+	if ((y == p_ptr->py) && (x == p_ptr->px)) return true;
 
 
 	/* Handle hallucination */
-	if (p_ptr->image) return (FALSE);
+	if (p_ptr->image) return false;
 
 
 	/* Examine the grid */
@@ -3771,7 +3771,7 @@ static bool_ target_set_accept(int y, int x)
 
 		monster_type *m_ptr = &m_list[c_ptr->m_idx];
 		/* Visible monsters */
-		if (m_ptr->ml) return (TRUE);
+		if (m_ptr->ml) return true;
 	}
 
 	/* Scan all objects in the grid */
@@ -3783,7 +3783,7 @@ static bool_ target_set_accept(int y, int x)
 		/* Memorized object */
 		if (o_ptr->marked)
 		{
-			return (TRUE);
+			return true;
 		}
 	}
 
@@ -3791,17 +3791,17 @@ static bool_ target_set_accept(int y, int x)
 	if (c_ptr->info & (CAVE_MARK))
 	{
 		/* Hack -- Doors are boring */
-		if (c_ptr->feat == FEAT_OPEN) return (FALSE);
-		if (c_ptr->feat == FEAT_BROKEN) return (FALSE);
+		if (c_ptr->feat == FEAT_OPEN) return false;
+		if (c_ptr->feat == FEAT_BROKEN) return false;
 		if ((c_ptr->feat >= FEAT_DOOR_HEAD) &&
-		                (c_ptr->feat <= FEAT_DOOR_TAIL)) return (FALSE);
+		                (c_ptr->feat <= FEAT_DOOR_TAIL)) return false;
 
 		/* Accept 'naturally' interesting features */
-		if (f_info[c_ptr->feat].flags & FF_NOTICE) return (TRUE);
+		if (f_info[c_ptr->feat].flags & FF_NOTICE) return true;
 	}
 
 	/* Nope */
-	return (FALSE);
+	return false;
 }
 
 
@@ -3849,17 +3849,17 @@ static std::vector<point> target_set_prepare(int mode)
 }
 
 
-bool_ target_object(int y, int x, int mode, const char *info, bool_ *boring,
+bool target_object(int y, int x, int mode, const char *info, bool *boring,
                    object_type *o_ptr, char *out_val, const char **s1, const char **s2, const char **s3,
                    int *query)
 {
 	char o_name[80];
 
 	/* Not boring */
-	*boring = FALSE;
+	*boring = false;
 
 	/* Obtain an object description */
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Describe the object */
 	sprintf(out_val, "%s%s%s%s [%s]", *s1, *s2, *s3, o_name, info);
@@ -3868,10 +3868,10 @@ bool_ target_object(int y, int x, int mode, const char *info, bool_ *boring,
 	*query = inkey();
 
 	/* Always stop at "normal" keys */
-	if ((*query != '\r') && (*query != '\n') && (*query != ' ')) return (TRUE);
+	if ((*query != '\r') && (*query != '\n') && (*query != ' ')) return true;
 
 	/* Sometimes stop at "space" key */
-	if ((*query == ' ') && !(mode & (TARGET_LOOK))) return (TRUE);
+	if ((*query == ' ') && !(mode & (TARGET_LOOK))) return true;
 
 	/* Change the intro */
 	*s1 = "It is ";
@@ -3881,7 +3881,7 @@ bool_ target_object(int y, int x, int mode, const char *info, bool_ *boring,
 
 	/* Preposition */
 	*s2 = "on ";
-	return (FALSE);
+	return false;
 }
 
 /*
@@ -3921,7 +3921,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 	const char *s2;
 	const char *s3;
 
-	bool_ boring;
+	bool boring;
 
 	int feat;
 
@@ -3937,7 +3937,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 		query = ' ';
 
 		/* Assume boring */
-		boring = TRUE;
+		boring = true;
 
 		/* Default */
 		s1 = "You see ";
@@ -3999,12 +3999,12 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 				/* Visible */
 				if (m_ptr->ml)
 				{
-					bool_ recall = FALSE;
+					bool recall = false;
 
 					char m_name[80];
 
 					/* Not boring */
-					boring = FALSE;
+					boring = false;
 
 					/* Get the monster name ("a kobold") */
 					monster_desc(m_name, m_ptr, 0x08);
@@ -4119,7 +4119,7 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
 
 						/* Obtain an object description */
 						char o_name[80];
-						object_desc(o_name, o_ptr, TRUE, 3);
+						object_desc(o_name, o_ptr, true, 3);
 
 						/* Describe the object */
 						sprintf(out_val, "%s%s%s%s [%s]", s1, s2, s3, o_name, info.c_str());
@@ -4336,15 +4336,15 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
  * This command will cancel any old target, even if used from
  * inside the "look" command.
  */
-bool_ target_set(int mode)
+bool target_set(int mode)
 {
 	int i, d, m;
 	int y = p_ptr->py;
 	int x = p_ptr->px;
 
-	bool_ done = FALSE;
+	bool done = false;
 
-	bool_ flag = TRUE;
+	bool flag = true;
 
 	char query;
 
@@ -4413,7 +4413,7 @@ bool_ target_set(int mode)
 			case ESCAPE:
 			case 'q':
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
@@ -4428,7 +4428,7 @@ bool_ target_set(int mode)
 						target_who = c_ptr->m_idx;
 						target_row = y;
 						target_col = x;
-						done = TRUE;
+						done = true;
 					}
 					else
 					{
@@ -4485,7 +4485,7 @@ bool_ target_set(int mode)
 
 			case 'o':
 				{
-					flag = FALSE;
+					flag = false;
 					break;
 				}
 
@@ -4568,7 +4568,7 @@ bool_ target_set(int mode)
 			case ESCAPE:
 			case 'q':
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
@@ -4580,7 +4580,7 @@ bool_ target_set(int mode)
 					target_who = -1;
 					target_row = y;
 					target_col = x;
-					done = TRUE;
+					done = true;
 					break;
 				}
 
@@ -4605,7 +4605,7 @@ bool_ target_set(int mode)
 
 			case 'm':
 				{
-					flag = TRUE;
+					flag = true;
 					break;
 				}
 
@@ -4696,10 +4696,10 @@ bool_ target_set(int mode)
 	handle_stuff();
 
 	/* Failure to set target */
-	if (!target_who) return (FALSE);
+	if (!target_who) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
@@ -4715,7 +4715,7 @@ bool_ target_set(int mode)
  *
  * Note that confusion over-rides any (explicit?) user choice.
  */
-bool_ get_aim_dir(int *dp)
+bool get_aim_dir(int *dp)
 {
 	int dir;
 
@@ -4730,7 +4730,7 @@ bool_ get_aim_dir(int *dp)
 		/* Verify */
 		if (!(*dp == 5 && !target_okay()))
 		{
-			return (TRUE);
+			return true;
 		}
 	}
 
@@ -4800,7 +4800,7 @@ bool_ get_aim_dir(int *dp)
 	}
 
 	/* No direction */
-	if (!dir) return (FALSE);
+	if (!dir) return false;
 
 	/* Save the direction */
 	command_dir = dir;
@@ -4827,7 +4827,7 @@ bool_ get_aim_dir(int *dp)
 	repeat_push(dir);
 
 	/* A "valid" direction was entered */
-	return (TRUE);
+	return true;
 }
 
 
@@ -4848,13 +4848,13 @@ bool_ get_aim_dir(int *dp)
  * This function tracks and uses the "global direction", and uses
  * that as the "desired direction", to which "confusion" is applied.
  */
-bool_ get_rep_dir(int *dp)
+bool get_rep_dir(int *dp)
 {
 	int dir;
 
 	if (repeat_pull(dp))
 	{
-		return (TRUE);
+		return true;
 	}
 
 	/* Initialize */
@@ -4882,7 +4882,7 @@ bool_ get_rep_dir(int *dp)
 	if (dir == 5) dir = 0;
 
 	/* Aborted */
-	if (!dir) return (FALSE);
+	if (!dir) return false;
 
 	/* Save desired direction */
 	command_dir = dir;
@@ -4912,19 +4912,19 @@ bool_ get_rep_dir(int *dp)
 	repeat_push(dir);
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
 /*
  * old -- from PsiAngband.
  */
-bool_ tgt_pt(int *x, int *y)
+bool tgt_pt(int *x, int *y)
 {
 	char ch = 0;
 	int d;
 	int screen_wid, screen_hgt;
-	bool_ success = FALSE;
+	bool success = false;
 
 	*x = p_ptr->px;
 	*y = p_ptr->py;
@@ -4948,7 +4948,7 @@ bool_ tgt_pt(int *x, int *y)
 		case 27:
 			break;
 		case ' ':
-			success = TRUE;
+			success = true;
 			break;
 		default:
 			/* Look up the direction */
@@ -4991,7 +4991,7 @@ void set_grace(s32b v)
 	handle_stuff();
 }
 
-static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
+static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge, const char *what)
 {
 	auto &k_info = game->edit_data.k_info;
 	auto const &e_info = game->edit_data.e_info;
@@ -5012,12 +5012,12 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 		object_prep(o_ptr, k_entry.first);
 		o_ptr->name1 = 0;
 		o_ptr->name2 = 0;
-		apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
+		apply_magic(o_ptr, dun_level, false, false, false);
 		/* Hack : aware status must be restored after describing the item name */
 		save_aware = k_ptr->aware;
 		object_aware(o_ptr);
 		object_known(o_ptr);
-		object_desc(buf, o_ptr, FALSE, 0);
+		object_desc(buf, o_ptr, false, 0);
 		strlower(buf);
 		k_ptr->aware = save_aware;
 
@@ -5029,7 +5029,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 			for (std::size_t j = 0; j < e_info.size(); j++)
 			{
 				auto e_ptr = &e_info[j];
-				bool_ ok = FALSE;
+				bool ok = false;
 
 				if (j && e_ptr->name.empty())
 				{
@@ -5046,7 +5046,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 						if (e_ptr->tval[z] == k_ptr->tval)
 						{
 							if ((e_ptr->min_sval[z] <= k_ptr->sval) &&
-							                (e_ptr->max_sval[z] >= k_ptr->sval)) ok = TRUE;
+							                (e_ptr->max_sval[z] >= k_ptr->sval)) ok = true;
 						}
 						if (ok) break;
 					}
@@ -5060,7 +5060,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 				for (std::size_t jb = 0; jb < e_info.size(); jb++)
 				{
 					auto eb_ptr = &e_info[jb];
-					bool_ ok = FALSE;
+					bool ok = false;
 
 					if (jb && eb_ptr->name.empty())
 					{
@@ -5079,7 +5079,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 							if (eb_ptr->tval[z] == k_ptr->tval)
 							{
 								if ((eb_ptr->min_sval[z] <= k_ptr->sval) &&
-								                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = TRUE;
+								                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = true;
 							}
 							if (ok) break;
 						}
@@ -5093,16 +5093,16 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 					o_ptr->name1 = 0;
 					o_ptr->name2 = j;
 					o_ptr->name2b = jb;
-					apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
+					apply_magic(o_ptr, dun_level, false, false, false);
 					object_aware(o_ptr);
 					object_known(o_ptr);
-					object_desc(buf, o_ptr, FALSE, 0);
+					object_desc(buf, o_ptr, false, 0);
 					strlower(buf);
 
 					if (iequals(buf, name))
 					{
 						/* Don't search any more */
-						return TRUE;
+						return true;
 					}
 					else
 					{
@@ -5113,7 +5113,7 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 			}
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 static void clean_wish_name(char *buf, char *name)
@@ -5274,7 +5274,7 @@ void make_wish()
 					while (!(in_bounds(wy, wx) && cave_floor_bold(wy, wx)) && --attempts);
 
 					/* Create the monster */
-					if (place_monster_one(wy, wx, i, j, FALSE, mstatus))
+					if (place_monster_one(wy, wx, i, j, false, mstatus))
 					{
 						msg_print("Your wish becomes truth!");
 					}
@@ -5310,7 +5310,7 @@ static void corrupt_corrupted()
 /*
  * Change to an other subrace
  */
-void switch_subrace(std::size_t racem, bool_ copy_old)
+void switch_subrace(std::size_t racem, bool copy_old)
 {
 	auto &race_mod_info = game->edit_data.race_mod_info;
 

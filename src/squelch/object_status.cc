@@ -34,7 +34,7 @@ status_type object_status(object_type *o_ptr)
 	}
 	else
 	{
-		s16b slot = wield_slot_ideal(o_ptr, TRUE);
+		s16b slot = wield_slot_ideal(o_ptr, true);
 
 		if (artifact_p(o_ptr))
 		{

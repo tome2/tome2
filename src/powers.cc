@@ -45,7 +45,7 @@
 static bool power_chance(power_activation const &x_ref)
 {
 	auto x_ptr = &x_ref;
-	bool use_hp = FALSE;
+	bool use_hp = false;
 	int diff = x_ptr->diff;
 
 	/* Always true ? */
@@ -218,7 +218,7 @@ static void power_activate(int power)
 		{
 			if (!get_aim_dir(&dir))
 				break;
-			if (passwall(dir, TRUE))
+			if (passwall(dir, true))
 				msg_print("A passage opens, and you step through.");
 			else
 				msg_print("There is no wall there!");
@@ -273,7 +273,7 @@ static void power_activate(int power)
 
 	case PWR_ROHAN:
 		/* Select power to use */
-		while (TRUE)
+		while (true)
 		{
 			if (!get_com("Use [F]lash aura or [L]ight speed jump? ", &ch))
 			{
@@ -353,7 +353,7 @@ static void power_activate(int power)
 
 	case PWR_THUNDER:
 		/* Select power to use */
-		while (TRUE)
+		while (true)
 		{
 			if (!get_com("Use [T]hunder strike, [R]ide the straight road, go [B]ack in town? ", &ch))
 			{
@@ -624,7 +624,7 @@ static void power_activate(int power)
 
 			if (d >= 100) return;
 
-			if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, FALSE, MSTATUS_PET)) == 0) return;
+			if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, false, MSTATUS_PET)) == 0) return;
 
 			m_ptr = &m_list[m_idx];
 			m_ptr->hp = o_ptr->pval2;
@@ -674,7 +674,7 @@ static void power_activate(int power)
 		{
 			msg_print("You concentrate...");
 			if (get_aim_dir(&dir))
-				fetch(dir, p_ptr->lev * 10, TRUE);
+				fetch(dir, p_ptr->lev * 10, true);
 		}
 		break;
 
@@ -826,7 +826,7 @@ static void power_activate(int power)
 			int i;
 			for (i = 0; i < 8; i++)
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, false);
 			}
 		}
 		break;

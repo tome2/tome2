@@ -49,7 +49,7 @@ int highscore_where(int highscore_fd, high_score *score)
 int highscore_add(int highscore_fd, high_score *score)
 {
 	int i, slot;
-	bool_ done = FALSE;
+	bool done = false;
 
 	high_score the_score, tmpscore;
 
@@ -71,7 +71,7 @@ int highscore_add(int highscore_fd, high_score *score)
 	{
 		/* Read the old guy, note errors */
 		if (highscore_seek(highscore_fd, i)) return ( -1);
-		if (highscore_read(highscore_fd, &tmpscore)) done = TRUE;
+		if (highscore_read(highscore_fd, &tmpscore)) done = true;
 
 		/* Back up and dump the score we were holding */
 		if (highscore_seek(highscore_fd, i)) return ( -1);

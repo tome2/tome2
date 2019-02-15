@@ -51,7 +51,7 @@ static bool quest_wight_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("wights.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("wights.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	for (x = 3; x < xstart; x++)
 	{
@@ -61,9 +61,9 @@ static bool quest_wight_gen_hook(void *, void *, void *)
 			{
 				int m_idx = 0;
 
-				m_allow_special[get_wight_king()] = TRUE;
-				m_idx = place_monster_one(y, x, get_wight_king(), 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[get_wight_king()] = FALSE;
+				m_allow_special[get_wight_king()] = true;
+				m_idx = place_monster_one(y, x, get_wight_king(), 0, false, MSTATUS_ENEMY);
+				m_allow_special[get_wight_king()] = false;
 
 				if (m_idx)
 				{
@@ -152,7 +152,7 @@ static bool quest_wight_death_hook(void *, void *in_, void *)
 		cquest.status = QUEST_STATUS_COMPLETED;
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_wight_death_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		return false;
 	}
@@ -178,7 +178,7 @@ static bool quest_wight_finish_hook(void *, void *in_, void *)
 	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_wight_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }

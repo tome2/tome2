@@ -59,7 +59,7 @@ static bool quest_evil_gen_hook(void *, void *in_, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("evil.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("evil.map", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Place some random balrogs */
@@ -70,13 +70,13 @@ static bool quest_evil_gen_hook(void *, void *in_, void *)
 		auto const flags = f_info[cave[y][x].feat].flags;
 		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
-			int m_idx = place_monster_one(y, x, 996, 0, FALSE, MSTATUS_ENEMY);
+			int m_idx = place_monster_one(y, x, 996, 0, false, MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
 	}
 
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -111,7 +111,7 @@ static bool quest_evil_death_hook(void *, void *, void *)
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_evil_death_hook);
 		del_hook_new(HOOK_GEN_QUEST,     quest_evil_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		cmsg_print(TERM_YELLOW, "Khazad-Dum is safer now.");
 		return false;

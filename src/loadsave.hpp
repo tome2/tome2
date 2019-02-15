@@ -8,4 +8,4 @@
 bool load_dungeon(std::string const &ext);
 bool load_player(program_args const &);
 void save_dungeon();
-bool_ save_player();
+bool save_player();

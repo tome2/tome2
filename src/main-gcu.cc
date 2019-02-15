@@ -223,12 +223,12 @@ static int active = 0;
 /*
  * Software flag -- we are allowed to use color
  */
-static int can_use_color = FALSE;
+static int can_use_color = false;
 
 /*
  * Software flag -- we are allowed to change the colors
  */
-static int can_fix_color = FALSE;
+static int can_fix_color = false;
 
 /*
  * Simple Angband to Curses color conversion table
@@ -608,7 +608,7 @@ static void Term_xtra_gcu(void *data, int n, int v)
 
 		/* Flush events */
 	case TERM_XTRA_FLUSH:
-		while (!Term_xtra_gcu_event(FALSE));
+		while (!Term_xtra_gcu_event(false));
 		return;
 
 		/* React to events */
@@ -719,7 +719,7 @@ int init_gcu(int argc, char **argv)
 
 	int num_term = MAX_TERM_DATA, next_win = 0;
 
-	bool_ use_big_screen = FALSE;
+	bool use_big_screen = false;
 
 
 	/* Parse args */
@@ -727,7 +727,7 @@ int init_gcu(int argc, char **argv)
 	{
 		if (starts_with(argv[i], "-b"))
 		{
-			use_big_screen = TRUE;
+			use_big_screen = true;
 			continue;
 		}
 

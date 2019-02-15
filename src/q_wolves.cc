@@ -60,7 +60,7 @@ static bool quest_wolves_gen_hook(void *, void *in_, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("wolves.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("wolves.map", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Place some random wolves */
@@ -91,7 +91,7 @@ static bool quest_wolves_gen_hook(void *, void *in_, void *)
 		}
 	}
 
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -124,7 +124,7 @@ static bool quest_wolves_death_hook(void *, void *, void *)
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_wolves_death_hook);
 		del_hook_new(HOOK_GEN_QUEST,     quest_wolves_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		cmsg_print(TERM_YELLOW, "Lothlorien is safer now.");
 		return false;

@@ -37,7 +37,7 @@ public:
 	/**
 	 * Invoke the hook with the given input and output pointers.
 	 */
-	bool_ invoke(void *in, void *out) const {
+	bool invoke(void *in, void *out) const {
 		return m_hook_func(m_hook_data, in, out);
 	}
 };
@@ -49,7 +49,7 @@ std::unordered_map<size_t, std::vector<hook_data>> &hooks_instance()
 }
 
 
-int process_hooks_restart = FALSE;
+int process_hooks_restart = false;
 
 static std::vector<hook_data>::iterator find_hook(std::vector<hook_data> &hooks, hook_func_t hook_func)
 {
@@ -91,7 +91,7 @@ bool process_hooks_new(int h_idx, void *in, void *out)
 		auto &hook_data = *hooks_it;
 
 		/* Invoke hook function; stop processing if the hook
-		   returns TRUE */
+		   returns true */
 		if (hook_data.invoke(in, out))
 		{
 			return true;
@@ -101,7 +101,7 @@ bool process_hooks_new(int h_idx, void *in, void *out)
 		if (process_hooks_restart)
 		{
 			hooks_it = hooks.begin();
-			process_hooks_restart = FALSE;
+			process_hooks_restart = false;
 		}
 		else
 		{

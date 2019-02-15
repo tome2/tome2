@@ -188,7 +188,7 @@ static void wiz_create_named_art()
 	/* Save the name */
 	q_ptr->name1 = a_idx;
 
-	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+	apply_magic(q_ptr, -1, true, true, true);
 
 	/* Apply any random resistances/powers */
 	random_artifact_resistance(q_ptr);
@@ -418,7 +418,7 @@ static void wiz_display_item(object_type *o_ptr)
 	for (i = 1; i <= 23; i++) prt("", i, j - 2);
 
 	/* Describe fully */
-	object_desc_store(buf, o_ptr, TRUE, 3);
+	object_desc_store(buf, o_ptr, true, 3);
 
 	prt(buf, 2, j);
 
@@ -716,7 +716,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 
 	char ch;
 
-	bool_ changed = FALSE;
+	bool changed = false;
 
 
 	/* Hack -- leave artifacts alone */
@@ -733,7 +733,7 @@ static void wiz_reroll_item(object_type *o_ptr)
 
 
 	/* Main loop. Ask for magification and artifactification */
-	while (TRUE)
+	while (true)
 	{
 		/* Display full item debug information */
 		wiz_display_item(q_ptr);
@@ -741,14 +741,14 @@ static void wiz_reroll_item(object_type *o_ptr)
 		/* Ask wizard what to do. */
 		if (!get_com("[a]ccept, [b]ad, [n]ormal, [g]ood, [e]xcellent, [r]andart? ", &ch))
 		{
-			changed = FALSE;
+			changed = false;
 			break;
 		}
 
 		/* Create/change it! */
 		if (ch == 'A' || ch == 'a')
 		{
-			changed = TRUE;
+			changed = true;
 			break;
 		}
 
@@ -756,28 +756,28 @@ static void wiz_reroll_item(object_type *o_ptr)
 		else if (ch == 'b' || ch == 'B')
 		{
 			object_prep(q_ptr, k_idx);
-			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE, boost::make_optional(-2));
+			apply_magic(q_ptr, dun_level, false, false, false, boost::make_optional(-2));
 		}
 
 		/* Apply normal magic, but first clear object */
 		else if (ch == 'n' || ch == 'N')
 		{
 			object_prep(q_ptr, k_idx);
-			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
+			apply_magic(q_ptr, dun_level, false, false, false);
 		}
 
 		/* Apply good magic, but first clear object */
 		else if (ch == 'g' || ch == 'g')
 		{
 			object_prep(q_ptr, k_idx);
-			apply_magic(q_ptr, dun_level, FALSE, TRUE, FALSE);
+			apply_magic(q_ptr, dun_level, false, true, false);
 		}
 
 		/* Apply great magic, but first clear object */
 		else if (ch == 'e' || ch == 'e')
 		{
 			object_prep(q_ptr, k_idx);
-			apply_magic(q_ptr, dun_level, FALSE, TRUE, TRUE);
+			apply_magic(q_ptr, dun_level, false, true, true);
 		}
 
 		/* Apply great magic, but first clear object */
@@ -833,7 +833,7 @@ static void wiz_statistics(object_type *o_ptr)
 	char ch;
 	const char *quality;
 
-	bool_ good, great;
+	bool good, great;
 
 	object_type forge;
 	object_type	*q_ptr;
@@ -845,7 +845,7 @@ static void wiz_statistics(object_type *o_ptr)
 	{
 		if (o_ptr->tval == TV_RANDART)
 		{
-			random_artifacts[o_ptr->sval].generated = FALSE;
+			random_artifacts[o_ptr->sval].generated = false;
 		}
 		else
 		{
@@ -855,7 +855,7 @@ static void wiz_statistics(object_type *o_ptr)
 
 
 	/* Interact */
-	while (TRUE)
+	while (true)
 	{
 		const char *pmt = "Roll for [n]ormal, [g]ood, or [e]xcellent treasure? ";
 
@@ -867,26 +867,26 @@ static void wiz_statistics(object_type *o_ptr)
 
 		if (ch == 'n' || ch == 'N')
 		{
-			good = FALSE;
-			great = FALSE;
+			good = false;
+			great = false;
 			quality = "normal";
 		}
 		else if (ch == 'g' || ch == 'G')
 		{
-			good = TRUE;
-			great = FALSE;
+			good = true;
+			great = false;
 			quality = "good";
 		}
 		else if (ch == 'e' || ch == 'E')
 		{
-			good = TRUE;
-			great = TRUE;
+			good = true;
+			great = true;
 			quality = "excellent";
 		}
 		else
 		{
-			good = FALSE;
-			great = FALSE;
+			good = false;
+			great = false;
 			break;
 		}
 
@@ -935,7 +935,7 @@ static void wiz_statistics(object_type *o_ptr)
 			{
 				if (q_ptr->tval == TV_RANDART)
 				{
-					random_artifacts[q_ptr->sval].generated = FALSE;
+					random_artifacts[q_ptr->sval].generated = false;
 				}
 				else
 				{
@@ -993,7 +993,7 @@ static void wiz_statistics(object_type *o_ptr)
 	{
 		if (o_ptr->tval == TV_RANDART)
 		{
-			random_artifacts[o_ptr->sval].generated = TRUE;
+			random_artifacts[o_ptr->sval].generated = true;
 		}
 		else
 		{
@@ -1055,11 +1055,11 @@ static void do_cmd_wiz_play()
 
 
 	/* The item was not changed */
-	bool_ changed = FALSE;
+	bool changed = false;
 
 
 	/* Icky */
-	character_icky = TRUE;
+	character_icky = true;
 
 	/* Save the screen */
 	Term_save();
@@ -1074,7 +1074,7 @@ static void do_cmd_wiz_play()
 
 
 	/* The main loop */
-	while (TRUE)
+	while (true)
 	{
 		char ch;
 
@@ -1084,13 +1084,13 @@ static void do_cmd_wiz_play()
 		/* Get choice */
 		if (!get_com("[a]ccept [s]tatistics [r]eroll [t]weak [q]uantity apply[m]agic? ", &ch))
 		{
-			changed = FALSE;
+			changed = false;
 			break;
 		}
 
 		if (ch == 'A' || ch == 'a')
 		{
-			changed = TRUE;
+			changed = true;
 			break;
 		}
 
@@ -1121,7 +1121,7 @@ static void do_cmd_wiz_play()
 			object_prep(q_ptr, q_ptr->k_ptr->idx);
 			q_ptr->name2 = e;
 			q_ptr->name2b = eb;
-			apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
+			apply_magic(q_ptr, dun_level, false, false, false);
 		}
 	}
 
@@ -1130,7 +1130,7 @@ static void do_cmd_wiz_play()
 	Term_load();
 
 	/* Not Icky */
-	character_icky = FALSE;
+	character_icky = false;
 
 
 	/* Accept change */
@@ -1178,7 +1178,7 @@ static void wiz_create_item()
 
 
 	/* Icky */
-	character_icky = TRUE;
+	character_icky = true;
 
 	/* Save the screen */
 	Term_save();
@@ -1190,7 +1190,7 @@ static void wiz_create_item()
 	Term_load();
 
 	/* Not Icky */
-	character_icky = FALSE;
+	character_icky = false;
 
 
 	/* Return if failed */
@@ -1203,7 +1203,7 @@ static void wiz_create_item()
 	object_prep(q_ptr, k_idx);
 
 	/* Apply magic (no messages, no artifacts) */
-	apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
+	apply_magic(q_ptr, dun_level, false, false, false);
 
 	/* Drop the object from heaven */
 	drop_near(q_ptr, -1, p_ptr->py, p_ptr->px);
@@ -1239,7 +1239,7 @@ static void wiz_create_item_2()
 	object_prep(q_ptr, k_idx);
 
 	/* Apply magic (no messages, no artifacts) */
-	apply_magic(q_ptr, dun_level, FALSE, FALSE, FALSE);
+	apply_magic(q_ptr, dun_level, false, false, false);
 
 	/* Drop the object from heaven */
 	drop_near(q_ptr, -1, p_ptr->py, p_ptr->px);
@@ -1260,12 +1260,12 @@ void do_cmd_wiz_cure_all()
 	remove_all_curse();
 
 	/* Restore stats */
-	res_stat(A_STR, TRUE);
-	res_stat(A_INT, TRUE);
-	res_stat(A_WIS, TRUE);
-	res_stat(A_CON, TRUE);
-	res_stat(A_DEX, TRUE);
-	res_stat(A_CHR, TRUE);
+	res_stat(A_STR, true);
+	res_stat(A_INT, true);
+	res_stat(A_WIS, true);
+	res_stat(A_CON, true);
+	res_stat(A_DEX, true);
+	res_stat(A_CHR, true);
 
 	/* Restore the level */
 	restore_level();
@@ -1380,7 +1380,7 @@ static void do_cmd_wiz_summon(int num)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-static void do_cmd_wiz_named(std::size_t r_idx, bool_ slp)
+static void do_cmd_wiz_named(std::size_t r_idx, bool slp)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1404,9 +1404,9 @@ static void do_cmd_wiz_named(std::size_t r_idx, bool_ slp)
 		if (!cave_empty_bold(y, x)) continue;
 
 		/* Place it (allow groups) */
-		m_allow_special[r_idx] = TRUE;
-		int m_idx = place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_ENEMY);
-		m_allow_special[r_idx] = FALSE;
+		m_allow_special[r_idx] = true;
+		int m_idx = place_monster_aux(y, x, r_idx, slp, true, MSTATUS_ENEMY);
+		m_allow_special[r_idx] = false;
 
 		// If summoning succeeded, we stop.
 		if (m_idx)
@@ -1422,7 +1422,7 @@ static void do_cmd_wiz_named(std::size_t r_idx, bool_ slp)
  *
  * XXX XXX XXX This function is rather dangerous
  */
-void do_cmd_wiz_named_friendly(std::size_t r_idx, bool_ slp)
+void do_cmd_wiz_named_friendly(std::size_t r_idx, bool slp)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1446,9 +1446,9 @@ void do_cmd_wiz_named_friendly(std::size_t r_idx, bool_ slp)
 		if (!cave_empty_bold(y, x)) continue;
 
 		/* Place it (allow groups) */
-		m_allow_special[r_idx] = TRUE;
-		int m_idx = place_monster_aux(y, x, r_idx, slp, TRUE, MSTATUS_PET);
-		m_allow_special[r_idx] = FALSE;
+		m_allow_special[r_idx] = true;
+		int m_idx = place_monster_aux(y, x, r_idx, slp, true, MSTATUS_PET);
+		m_allow_special[r_idx] = false;
 
 		// Stop if we succeeded
 		if (m_idx)
@@ -1586,7 +1586,7 @@ void do_cmd_debug()
 		/* Good Objects */
 	case 'g':
 		if (command_arg <= 0) command_arg = 1;
-		acquirement(p_ptr->py, p_ptr->px, command_arg, FALSE);
+		acquirement(p_ptr->py, p_ptr->px, command_arg, false);
 		break;
 
 		/* Hitpoint rerating */
@@ -1613,12 +1613,12 @@ void do_cmd_debug()
 
 		/* Summon _friendly_ named monster */
 	case 'N':
-		do_cmd_wiz_named_friendly(command_arg, TRUE);
+		do_cmd_wiz_named_friendly(command_arg, true);
 		break;
 
 		/* Summon Named Monster */
 	case 'n':
-		do_cmd_wiz_named(command_arg, TRUE);
+		do_cmd_wiz_named(command_arg, true);
 		break;
 
 		/* Object playing routines */
@@ -1662,7 +1662,7 @@ void do_cmd_debug()
 	case 'U':
 		{
 			p_ptr->necro_extra |= CLASS_UNDEAD;
-			do_cmd_wiz_named(5, TRUE);
+			do_cmd_wiz_named(5, true);
 
 			p_ptr->necro_extra2 = 1;
 
@@ -1688,9 +1688,9 @@ void do_cmd_debug()
 
 		/* Teleport */
 	case 't':
-		teleport_player_bypass = TRUE;
+		teleport_player_bypass = true;
 		teleport_player(100);
-		teleport_player_bypass = FALSE;
+		teleport_player_bypass = false;
 		break;
 
 		/* Teleport to a town */
@@ -1702,7 +1702,7 @@ void do_cmd_debug()
 		/* Very Good Objects */
 	case 'v':
 		if (command_arg <= 0) command_arg = 1;
-		acquirement(p_ptr->py, p_ptr->px, command_arg, TRUE);
+		acquirement(p_ptr->py, p_ptr->px, command_arg, true);
 		break;
 
 		/* Wizard Light the Level */
@@ -1748,7 +1748,7 @@ void do_cmd_debug()
 			int i;
 			gain_fate(command_arg);
 			for (i = 0; i < MAX_FATES; i++)
-				fates[i].know = TRUE;
+				fates[i].know = true;
 			break;
 		}
 

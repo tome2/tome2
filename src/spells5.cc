@@ -2315,7 +2315,7 @@ void school_spells_init()
 		spells_init_theme();
 		break;
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 
 }

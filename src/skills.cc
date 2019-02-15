@@ -211,13 +211,13 @@ static std::size_t get_idx(int i)
 	return 0;
 }
 
-static bool_ is_known(int s_idx)
+static bool is_known(int s_idx)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto const &s_info = game->s_info;
 
-	if (wizard) return TRUE;
-	if (s_info[s_idx].value || s_info[s_idx].mod) return TRUE;
+	if (wizard) return true;
+	if (s_info[s_idx].value || s_info[s_idx].mod) return true;
 
 	for (std::size_t i = 0; i < s_descriptors.size(); i++)
 	{
@@ -225,12 +225,12 @@ static bool_ is_known(int s_idx)
 		if (s_descriptors[i].father == s_idx)
 		{
 			if (is_known(i))
-				return TRUE;
+				return true;
 		}
 	}
 
 	/* Ok know none */
-	return FALSE;
+	return false;
 }
 
 namespace { // anonymous
@@ -242,7 +242,7 @@ struct skill_entry {
 
 }
 
-static void init_table_aux(std::vector<skill_entry> *table, int father, int lev, bool_ full)
+static void init_table_aux(std::vector<skill_entry> *table, int father, int lev, bool full)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto const &s_info = game->s_info;
@@ -267,7 +267,7 @@ static void init_table_aux(std::vector<skill_entry> *table, int father, int lev,
 	}
 }
 
-static void init_table(std::vector<skill_entry> *table, bool_ full)
+static void init_table(std::vector<skill_entry> *table, bool full)
 {
 	table->clear();
 	init_table_aux(table, -1, 0, full);
@@ -301,7 +301,7 @@ void dump_skills(FILE *fff)
 
 	std::vector<skill_entry> table;
 	table.reserve(s_descriptors.size());
-	init_table(&table, TRUE);
+	init_table(&table, true);
 
 	fprintf(fff, "\nSkills (points left: %d)", p_ptr->skill_points);
 
@@ -439,7 +439,7 @@ static void print_skills(std::vector<skill_entry> const &table, int sel, int sta
 /*
  * Checks various stuff to do when skills change, like new spells, ...
  */
-void recalc_skills(bool_ init)
+void recalc_skills(bool init)
 {
 	auto const &s_info = game->s_info;
 
@@ -570,7 +570,7 @@ void do_cmd_skill()
 	int wid, hgt;
 	s16b skill_points_save;
 
-	recalc_skills(TRUE);
+	recalc_skills(true);
 
 	/* Save the screen */
 	screen_save();
@@ -598,9 +598,9 @@ void do_cmd_skill()
 	/* Initialise the skill list */
 	std::vector<skill_entry> table;
 	table.reserve(s_descriptors.size());
-	init_table(&table, FALSE);
+	init_table(&table, false);
 
-	while (TRUE)
+	while (true)
 	{
 		Term_get_size(&wid, &hgt);
 
@@ -620,7 +620,7 @@ void do_cmd_skill()
 			// Toggle the selected skill
 			s_info[table[sel].skill_idx].dev = !s_info[table[sel].skill_idx].dev;
 			// Re-populate table
-			init_table(&table, FALSE);
+			init_table(&table, false);
 		}
 
 		/* Next page */
@@ -714,7 +714,7 @@ void do_cmd_skill()
 	/* Load the screen */
 	screen_load();
 
-	recalc_skills(FALSE);
+	recalc_skills(false);
 }
 
 
@@ -734,7 +734,7 @@ static const char *melee_names[MAX_MELEE] =
 	"Barehanded combat",
 	"Bearform combat",
 };
-static bool_ melee_bool[MAX_MELEE];
+static bool melee_bool[MAX_MELEE];
 static int melee_num[MAX_MELEE];
 
 s16b get_melee_skill()
@@ -764,11 +764,11 @@ s16b get_melee_skills()
 	{
 		if ((s_info[melee_skills[i]].value > 0) && (!s_info[melee_skills[i]].hidden))
 		{
-			melee_bool[i] = TRUE;
+			melee_bool[i] = true;
 			j++;
 		}
 		else
-			melee_bool[i] = FALSE;
+			melee_bool[i] = false;
 	}
 
 	return (j);
@@ -777,7 +777,7 @@ s16b get_melee_skills()
 static void choose_melee()
 {
 	int i, j, z = 0;
-	int force_drop = FALSE, style_unchanged = FALSE;
+	int force_drop = false, style_unchanged = false;
 
 	screen_save_no_flush();
 
@@ -795,7 +795,7 @@ static void choose_melee()
 		}
 	}
 
-	while (TRUE)
+	while (true)
 	{
 		char c = inkey();
 
@@ -808,7 +808,7 @@ static void choose_melee()
 
 		if (p_ptr->melee_style == melee_skills[melee_num[z]])
 		{
-			style_unchanged = TRUE;
+			style_unchanged = true;
 			break;
 		}
 
@@ -825,7 +825,7 @@ static void choose_melee()
 				}
 				else if (INVEN_PACK == inven_takeoff(i, 255, force_drop))
 				{
-					force_drop = TRUE;
+					force_drop = true;
 				}
 			}
 		}
@@ -917,14 +917,14 @@ static int do_cmd_activate_skill_aux()
 	{
 		if (s_descriptors[i].action_mkey && s_info[i].value && ((!s_info[i].hidden) || (i == SKILL_LEARN)))
 		{
-			bool_ next = FALSE;
+			bool next = false;
 
 			/* Already got it ? */
 			for (size_t j = 0; j < p.size(); j++)
 			{
 				if (s_descriptors[i].action_mkey == std::get<1>(p[j]))
 				{
-					next = TRUE;
+					next = true;
 					break;
 				}
 			}
@@ -939,14 +939,14 @@ static int do_cmd_activate_skill_aux()
 	{
 		if (ab_info[i].action_mkey && p_ptr->has_ability(i))
 		{
-			bool_ next = FALSE;
+			bool next = false;
 
 			/* Already got it ? */
 			for (size_t j = 0; j < p.size(); j++)
 			{
 				if (ab_info[i].action_mkey == std::get<1>(p[j]))
 				{
-					next = TRUE;
+					next = true;
 					break;
 				}
 			}
@@ -999,7 +999,7 @@ static int do_cmd_activate_skill_aux()
 
 			strcpy(buf, "Cast a spell");
 			if (!get_string("Skill action? ", buf, 79))
-				return FALSE;
+				return false;
 
 			/* Find the skill it is related to */
 			size_t i = 0;
@@ -1048,12 +1048,12 @@ void do_cmd_activate_skill()
 	auto const &s_info = game->s_info;
 
 	int x_idx;
-	bool_ push = TRUE;
+	bool push = true;
 
 	/* Get the skill, if available */
 	if (repeat_pull(&x_idx))
 	{
-		push = FALSE;
+		push = false;
 	}
 	else if (!command_arg)
 	{
@@ -1203,7 +1203,7 @@ void do_cmd_activate_skill()
 		s = get_school_spell("cast", BOOK_GEOMANCY);
 		if (s >= 0)
 		{
-			lua_cast_school_spell(s, FALSE);
+			lua_cast_school_spell(s, false);
 		}
 
 		break;
@@ -1258,23 +1258,23 @@ void do_cmd_activate_skill()
 
 
 /* Which magic forbids non FA gloves */
-bool_ forbid_gloves()
+bool forbid_gloves()
 {
-	if (get_skill(SKILL_SORCERY)) return (TRUE);
-	if (get_skill(SKILL_MANA)) return (TRUE);
-	if (get_skill(SKILL_FIRE)) return (TRUE);
-	if (get_skill(SKILL_AIR)) return (TRUE);
-	if (get_skill(SKILL_WATER)) return (TRUE);
-	if (get_skill(SKILL_EARTH)) return (TRUE);
-	if (get_skill(SKILL_THAUMATURGY)) return (TRUE);
-	return (FALSE);
+	if (get_skill(SKILL_SORCERY)) return true;
+	if (get_skill(SKILL_MANA)) return true;
+	if (get_skill(SKILL_FIRE)) return true;
+	if (get_skill(SKILL_AIR)) return true;
+	if (get_skill(SKILL_WATER)) return true;
+	if (get_skill(SKILL_EARTH)) return true;
+	if (get_skill(SKILL_THAUMATURGY)) return true;
+	return false;
 }
 
 /* Which gods forbid edged weapons */
-bool_ forbid_non_blessed()
+bool forbid_non_blessed()
 {
-	if (p_ptr->pgod == GOD_ERU) return (TRUE);
-	return (FALSE);
+	if (p_ptr->pgod == GOD_ERU) return true;
+	return false;
 }
 
 
@@ -1385,7 +1385,7 @@ void do_get_new_skill()
 	auto &s_info = game->s_info;
 
 	/* Check if some skills didn't influence other stuff */
-	recalc_skills(TRUE);
+	recalc_skills(true);
 
 	/* Grab the ones we can gain */
 	std::vector<size_t> available_skills;
@@ -1461,7 +1461,7 @@ void do_get_new_skill()
 	}
 
 	// Ask for a skill
-	while (TRUE)
+	while (true)
 	{
 		char last = 'a' + (LOST_SWORD_NSKILLS-1);
 		char buf[80];
@@ -1473,7 +1473,7 @@ void do_get_new_skill()
 		{
 			std::size_t chosen_skill = skl[res];
 
-			bool_ oppose = FALSE;
+			bool oppose = false;
 			int oppose_skill = -1;
 
 			/* Check we don't oppose a skill the player already has */
@@ -1492,7 +1492,7 @@ void do_get_new_skill()
 
 					if (found != s_descriptor.excludes.end())
 					{
-						oppose = TRUE;
+						oppose = true;
 						oppose_skill = i;
 						break;
 					}
@@ -1543,7 +1543,7 @@ void do_get_new_skill()
 	}
 
 	/* Check if some skills didn't influence other stuff */
-	recalc_skills(FALSE);
+	recalc_skills(false);
 }
 
 
@@ -1587,19 +1587,19 @@ static bool can_learn_ability(int ab)
 
 	if (p_ptr->has_ability(ab))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (p_ptr->skill_points < ab_info[ab].cost)
 	{
-		return FALSE;
+		return false;
 	}
 
 	for (auto const &need_skill: ab_ptr->need_skills)
 	{
 		if (get_skill(need_skill.skill_idx) < need_skill.level)
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -1607,7 +1607,7 @@ static bool can_learn_ability(int ab)
 	{
 		if (!p_ptr->has_ability(need_ability))
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -1617,11 +1617,11 @@ static bool can_learn_ability(int ab)
 		if (ab_ptr->stat[i] > -1)
 		{
 			if (p_ptr->stat_ind[i] < ab_ptr->stat[i] - 3)
-				return FALSE;
+				return false;
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 /* Learn an ability */
@@ -1792,7 +1792,7 @@ void do_cmd_ability()
 		  std::end(table),
 		  compare_abilities);
 
-	while (TRUE)
+	while (true)
 	{
 		Term_get_size(&wid, &hgt);
 

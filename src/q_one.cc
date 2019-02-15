@@ -186,11 +186,11 @@ static bool quest_one_wield_hook(void *, void *in_, void *)
 	 * Towns aren't, right ?
 	 * So let's destroy them !
 	 */
-	town_info[1].destroyed = TRUE;
-	town_info[2].destroyed = TRUE;
-	town_info[3].destroyed = TRUE;
-	town_info[4].destroyed = TRUE;
-	town_info[5].destroyed = TRUE;
+	town_info[1].destroyed = true;
+	town_info[2].destroyed = true;
+	town_info[3].destroyed = true;
+	town_info[4].destroyed = true;
+	town_info[5].destroyed = true;
 
 	/* Continue the plot */
 	cquest.status = QUEST_STATUS_FAILED_DONE;
@@ -322,7 +322,7 @@ static bool quest_one_death_hook(void *, void *in_, void *)
 		q_ptr->name1 = ART_POWER;
 
 		/* Mega-Hack -- Actually create "the one ring" */
-		apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+		apply_magic(q_ptr, -1, true, true, true);
 
 		/* Find a space */
 		for (i = 0; i < INVEN_PACK; i++)
@@ -338,17 +338,17 @@ static bool quest_one_death_hook(void *, void *in_, void *)
 		{
 			char o_name[200];
 
-			object_desc(o_name, &p_ptr->inventory[INVEN_PACK - 1], FALSE, 0);
+			object_desc(o_name, &p_ptr->inventory[INVEN_PACK - 1], false, 0);
 
 			/* Drop the item */
-			inven_drop(INVEN_PACK - 1, 99, p_ptr->py, p_ptr->px, FALSE);
+			inven_drop(INVEN_PACK - 1, 99, p_ptr->py, p_ptr->px, false);
 
 			cmsg_format(TERM_VIOLET, "You feel the urge to drop your %s to make room in your inventory.", o_name);
 		}
 
 		/* Carry it */
 		cmsg_format(TERM_VIOLET, "You feel the urge to pick up that plain gold ring you see.");
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 
 	return false;
@@ -400,7 +400,7 @@ static bool quest_one_gen_hook(void *, void *, void *)
 
 	if (tries)
 	{
-		int m_idx = place_monster_one(y, x, test_monster_name("Sauron, the Sorcerer"), 0, FALSE, MSTATUS_ENEMY);
+		int m_idx = place_monster_one(y, x, test_monster_name("Sauron, the Sorcerer"), 0, false, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 	}
 

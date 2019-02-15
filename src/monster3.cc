@@ -126,7 +126,7 @@ bool ai_multiply(int m_idx)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 	int k, y, x, oy = m_ptr->fy, ox = m_ptr->fx;
-	bool_ is_frien = (is_friend(m_ptr) > 0);
+	bool is_frien = (is_friend(m_ptr) > 0);
 
 	/* Count the adjacent monsters */
 	for (k = 0, y = oy - 1; y <= oy + 1; y++)
@@ -139,18 +139,18 @@ bool ai_multiply(int m_idx)
 
 	if (is_friend(m_ptr) > 0)
 	{
-		is_frien = TRUE;
+		is_frien = true;
 	}
 	else
 	{
-		is_frien = FALSE;
+		is_frien = false;
 	}
 
 	/* Hack -- multiply slower in crowded areas */
 	if ((k < 4) && (!k || !rand_int(k * MON_MULT_ADJ)))
 	{
 		/* Try to multiply */
-		if (multiply_monster(m_idx, (is_frien), FALSE))
+		if (multiply_monster(m_idx, (is_frien), false))
 		{
 			/* Multiplying takes energy */
 			return true;
@@ -232,7 +232,7 @@ void ai_possessor(int m_idx, int o_idx)
 	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = TRUE;
+	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = true;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;
@@ -241,7 +241,7 @@ void ai_possessor(int m_idx, int o_idx)
 	m_ptr->possessor = r_idx;
 
 	/* Update the monster */
-	update_mon(m_idx, TRUE);
+	update_mon(m_idx, true);
 }
 
 void ai_deincarnate(int m_idx)
@@ -307,7 +307,7 @@ void ai_deincarnate(int m_idx)
 	if (r_ptr->spells & SF_MULTIPLY) num_repro++;
 
 	/* Hack -- Notice new multi-hued monsters */
-	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = TRUE;
+	if (r_ptr->flags & RF_ATTR_MULTI) shimmer_monsters = true;
 
 	/* Hack -- Count the monsters on the level */
 	r_ptr->cur_num++;
@@ -316,7 +316,7 @@ void ai_deincarnate(int m_idx)
 	m_ptr->possessor = 0;
 
 	/* Update the monster */
-	update_mon(m_idx, TRUE);
+	update_mon(m_idx, true);
 }
 
 /* Returns if a new companion is allowed */
@@ -416,7 +416,7 @@ bool do_control_pickup()
 		excise_object_idx(this_o_idx);
 
 		/* Forget mark */
-		o_ptr->marked = FALSE;
+		o_ptr->marked = false;
 
 		/* Forget location */
 		o_ptr->iy = o_ptr->ix = 0;
@@ -454,7 +454,7 @@ bool do_control_magic()
 	auto const &r_info = game->edit_data.r_info;
 
 	int i;
-	bool_ flag, redraw;
+	bool flag, redraw;
 	int ask;
 	char choice;
 	char out_val[160];
@@ -486,11 +486,11 @@ bool do_control_magic()
 	}
 
 	/* Nothing chosen yet */
-	flag = FALSE;
+	flag = false;
 	monster_power const *power = nullptr;
 
 	/* No redraw yet */
-	redraw = FALSE;
+	redraw = false;
 
 	/* Get the last label */
 	label = (num <= 26) ? I2A(num - 1) : I2D(num - 1 - 26);
@@ -516,7 +516,7 @@ bool do_control_magic()
 				strcpy(dummy, "");
 
 				/* Show list */
-				redraw = TRUE;
+				redraw = true;
 
 				/* Save the screen */
 				screen_save_no_flush();
@@ -558,7 +558,7 @@ bool do_control_magic()
 			else
 			{
 				/* Hide list */
-				redraw = FALSE;
+				redraw = false;
 
 				/* Restore the screen */
 				screen_load_no_flush();
@@ -587,7 +587,7 @@ bool do_control_magic()
 		else
 		{
 			/* Can't uppercase digits XXX XXX XXX */
-			ask = FALSE;
+			ask = false;
 
 			i = choice - '0' + 26;
 		}
@@ -615,7 +615,7 @@ bool do_control_magic()
 		}
 
 		/* Stop the loop */
-		flag = TRUE;
+		flag = true;
 	}
 
 	/* Restore the screen */

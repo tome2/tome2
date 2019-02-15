@@ -43,7 +43,7 @@ struct dungeon_info_type
 	s16b mindepth = 0;                            /* Minimal depth */
 	s16b maxdepth = 0;                            /* Maximal depth */
 
-	bool_ principal = 0;                          /* If it's a part of the main dungeon */
+	bool principal = 0;                          /* If it's a part of the main dungeon */
 	byte min_plev = 0;                            /* Minimal plev needed to enter -- it's an anti-cheating mesure */
 
 	int min_m_alloc_level = 0;                    /* Minimal number of monsters per level */

@@ -507,7 +507,7 @@ static void init_basic()
 	/* Macro variables */
 	macro__pat = make_array<char *>(MACRO_MAX);
 	macro__act = make_array<char *>(MACRO_MAX);
-	macro__cmd = make_array<bool_>(MACRO_MAX);
+	macro__cmd = make_array<bool>(MACRO_MAX);
 
 	/* Macro action buffer */
 	macro__buf = make_array<char>(1024);
@@ -529,7 +529,7 @@ static errr init_misc()
 	{
 		int xstart = 0;
 		int ystart = 0;
-		process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, TRUE, FALSE);
+		process_dungeon_file("misc.txt", &ystart, &xstart, 0, 0, true, false);
 	}
 
 	/* Initialize timers */
@@ -597,7 +597,7 @@ void create_stores_stock(int t)
 		st_ptr->stock.reserve(st_ptr->stock_size);
 	}
 
-	t_ptr->stocked = TRUE;
+	t_ptr->stocked = true;
 }
 
 /*
@@ -613,8 +613,8 @@ static errr init_other()
 	/*** Prepare the "dungeon" information ***/
 
 	/* Allocate and Wipe the special gene flags */
-	m_allow_special = make_array<bool_>(r_info.size());
-	a_allow_special = make_array<bool_>(a_info.size());
+	m_allow_special = make_array<bool>(r_info.size());
+	a_allow_special = make_array<bool>(a_info.size());
 
 
 	/*** Prepare "vinfo" array ***/

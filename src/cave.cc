@@ -65,7 +65,7 @@ int distance(int y1, int x1, int y2, int x2)
 
 
 /*
- * Returns TRUE if a grid is considered to be a wall for the purpose
+ * Returns true if a grid is considered to be a wall for the purpose
  * of magic mapping / clairvoyance
  */
 static bool is_wall(cave_type *c_ptr)
@@ -116,10 +116,10 @@ static bool is_wall(cave_type *c_ptr)
  * A simple, fast, integer-based line-of-sight algorithm.  By Joseph Hall,
  * 4116 Brewster Drive, Raleigh NC 27606.  Email to jnh@ecemwl.ncsu.edu.
  *
- * Returns TRUE if a line of sight can be traced from (x1,y1) to (x2,y2).
+ * Returns true if a line of sight can be traced from (x1,y1) to (x2,y2).
  *
  * The LOS begins at the center of the tile (x1,y1) and ends at the center of
- * the tile (x2,y2).  If los() is to return TRUE, all of the tiles this line
+ * the tile (x2,y2).  If los() is to return true, all of the tiles this line
  * passes through must be floor tiles, except for (x1,y1) and (x2,y2).
  *
  * We assume that the "mathematical corner" of a non-floor tile does not
@@ -188,7 +188,7 @@ bool los(int y1, int x1, int y2, int x2)
 
 
 	/* Paranoia -- require "safe" origin */
-	/* if (!in_bounds(y1, x1)) return (FALSE); */
+	/* if (!in_bounds(y1, x1)) return false; */
 
 
 	/* Directly South/North */
@@ -621,7 +621,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 	/* Check breaths */
 	for (std::size_t i = 0; i < monster_spell_flag_set::nbits; i++)
 	{
-		bool_ stored = FALSE;
+		bool stored = false;
 
 		/* Don't have that breath */
 		if (!(r_ptr->spells.bit(i))) continue;
@@ -651,7 +651,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 		for (std::size_t j = 0; j < stored_colors; j++)
 		{
 			/* Already stored */
-			if (allowed_attrs[j] == first_color) stored = TRUE;
+			if (allowed_attrs[j] == first_color) stored = true;
 		}
 		if (!stored)
 		{
@@ -1471,7 +1471,7 @@ void note_spot(int y, int x)
 		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Memorize objects */
-		o_ptr->marked = TRUE;
+		o_ptr->marked = true;
 	}
 
 	if (c_ptr->m_idx)
@@ -1482,7 +1482,7 @@ void note_spot(int y, int x)
 		if (r_ptr->flags & RF_MIMIC)
 		{
 			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
-			o_ptr->marked = TRUE;
+			o_ptr->marked = true;
 		}
 	}
 
@@ -1679,7 +1679,7 @@ static byte priority(byte a, char c)
 	int i, p0, p1;
 
 	/* Scan the table */
-	for (i = 0; TRUE; i++)
+	for (i = 0; true; i++)
 	{
 		/* Priority level */
 		p1 = priority_table[i][1];
@@ -3241,7 +3241,7 @@ void update_mon_lite()
 	cave_type *c_ptr;
 	u16b info;
 
-	bool_ invis;
+	bool invis;
 
 	s16b fast_lite_n = lite_n;
 	s16b fast_temp_n;
@@ -3405,7 +3405,7 @@ void update_mon_lite()
 			if (player_has_los_bold(y, x) && c_ptr->m_idx)
 			{
 				/* Hide the monster */
-				update_mon(c_ptr->m_idx, FALSE);
+				update_mon(c_ptr->m_idx, false);
 			}
 			else
 			{
@@ -3443,7 +3443,7 @@ void update_mon_lite()
 			if (c_ptr->m_idx)
 			{
 				/* Show it */
-				update_mon(c_ptr->m_idx, FALSE);
+				update_mon(c_ptr->m_idx, false);
 			}
 			else
 			{
@@ -3692,7 +3692,7 @@ void wiz_lite()
 		if (o_ptr->held_m_idx) continue;
 
 		/* Memorize */
-		o_ptr->marked = TRUE;
+		o_ptr->marked = true;
 	}
 
 	/* Scan all normal grids */
@@ -3711,7 +3711,7 @@ void wiz_lite()
 				if (r_ptr->flags & RF_MIMIC)
 				{
 					object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
-					o_ptr->marked = TRUE;
+					o_ptr->marked = true;
 				}
 			}
 
@@ -3803,7 +3803,7 @@ void wiz_dark()
 		if (o_ptr->held_m_idx) continue;
 
 		/* Forget the object */
-		o_ptr->marked = FALSE;
+		o_ptr->marked = false;
 	}
 
 	/* Fully update the visuals */

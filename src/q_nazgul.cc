@@ -51,9 +51,9 @@ static bool quest_nazgul_gen_hook(void *, void *in_, void *)
 	/* Place the nazgul */
 	int r_idx = get_uvatha();
 
-	m_allow_special[r_idx] = TRUE;
-	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
-	m_allow_special[r_idx] = FALSE;
+	m_allow_special[r_idx] = true;
+	m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_ENEMY);
+	m_allow_special[r_idx] = false;
 
 	if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 
@@ -79,13 +79,13 @@ static bool quest_nazgul_finish_hook(void *, void *in_, void *)
 	object_prep(q_ptr, lookup_kind(TV_FOOD, SV_FOOD_ATHELAS));
 	q_ptr->found = OBJ_FOUND_REWARD;
 	q_ptr->number = 6;
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	/* End the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_nazgul_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -140,7 +140,7 @@ static bool quest_nazgul_death_hook(void *, void *in_, void *)
 	cquest.status = QUEST_STATUS_COMPLETED;
 
 	del_hook_new(HOOK_MONSTER_DEATH, quest_nazgul_death_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return false;
 }

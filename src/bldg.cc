@@ -377,7 +377,7 @@ static void gamble_comm(int cmd)
 			wager = 1;
 		}
 		msg_print(NULL);
-		win = FALSE;
+		win = false;
 		odds = 0;
 		oldgold = p_ptr->au;
 
@@ -395,7 +395,7 @@ static void gamble_comm(int cmd)
 				{
 					c_put_str(TERM_GREEN, "In Between", 5, 2);
 					odds = 3;
-					win = FALSE;
+					win = false;
 					roll1 = randint(10);
 					roll2 = randint(10);
 					choice = randint(10);
@@ -406,7 +406,7 @@ static void gamble_comm(int cmd)
 					prt(tmp_str, 11, 14);
 					if (((choice > roll1) && (choice < roll2)) ||
 					                ((choice < roll1) && (choice > roll2)))
-						win = TRUE;
+						win = true;
 
 					break;
 				}
@@ -423,9 +423,9 @@ static void gamble_comm(int cmd)
 					        roll2, roll3);
 					prt(tmp_str, 7, 5);
 					if ((roll3 == 7) || (roll3 == 11))
-						win = TRUE;
+						win = true;
 					else if ((roll3 == 2) || (roll3 == 3) || (roll3 == 12))
-						win = FALSE;
+						win = false;
 					else
 					{
 						do
@@ -440,11 +440,11 @@ static void gamble_comm(int cmd)
 							        roll1, roll2, roll3);
 							prt(tmp_str, 8, 5);
 							if (roll3 == choice)
-								win = TRUE;
+								win = true;
 							else if (roll3 == 7)
-								win = FALSE;
+								win = false;
 						}
-						while ((win != TRUE) && (win != FALSE));
+						while ((win != true) && (win != false));
 					}
 
 					break;
@@ -453,7 +453,7 @@ static void gamble_comm(int cmd)
 			case BACT_DICE_SLOTS:  /* The Dice Slots */
 				{
 					c_put_str(TERM_GREEN, "Dice Slots", 5, 2);
-					win = FALSE;
+					win = false;
 					roll1 = randint(6);
 					roll2 = randint(6);
 					choice = randint(6);
@@ -468,7 +468,7 @@ static void gamble_comm(int cmd)
 					display_fruit(8, 21, choice - 1);
 					if ((roll1 == roll2) && (roll2 == choice))
 					{
-						win = TRUE;
+						win = true;
 						if (roll1 == 1)
 							odds = 4;
 						else if (roll1 == 2)
@@ -478,7 +478,7 @@ static void gamble_comm(int cmd)
 					}
 					else if ((roll1 == 6) && (roll2 == 6))
 					{
-						win = TRUE;
+						win = true;
 						odds = choice + 1;
 					}
 
@@ -868,7 +868,7 @@ static void list_weapon(object_type *o_ptr, int row, int col)
 	char tmp_str[80];
 
 
-	object_desc(o_name, o_ptr, TRUE, 0);
+	object_desc(o_name, o_ptr, true, 0);
 	c_put_str(TERM_YELLOW, o_name, row, col);
 	strnfmt(tmp_str, 80, "To Hit: %d   To Damage: %d", o_ptr->to_h, o_ptr->to_d);
 	put_str(tmp_str, row + 1, col);
@@ -1011,7 +1011,7 @@ static bool fix_item(int istart, int iend, int ispecific, bool iac)
 
 		if (o_ptr->tval)
 		{
-			object_desc(tmp_str, o_ptr, FALSE, 1);
+			object_desc(tmp_str, o_ptr, false, 1);
 
 			if (o_ptr->name1 && o_ptr->identified)
 				strnfmt(out_val, 80, "%-40s: beyond our skills!", tmp_str);
@@ -1250,12 +1250,12 @@ bool bldg_process_command(const store_type *s_ptr, store_action_type const *ba_p
 		/* needs work */
 	case BACT_RESTORE:
 		{
-			if (do_res_stat(A_STR, TRUE)) paid = true;
-			if (do_res_stat(A_INT, TRUE)) paid = true;
-			if (do_res_stat(A_WIS, TRUE)) paid = true;
-			if (do_res_stat(A_DEX, TRUE)) paid = true;
-			if (do_res_stat(A_CON, TRUE)) paid = true;
-			if (do_res_stat(A_CHR, TRUE)) paid = true;
+			if (do_res_stat(A_STR, true)) paid = true;
+			if (do_res_stat(A_INT, true)) paid = true;
+			if (do_res_stat(A_WIS, true)) paid = true;
+			if (do_res_stat(A_DEX, true)) paid = true;
+			if (do_res_stat(A_CON, true)) paid = true;
+			if (do_res_stat(A_CHR, true)) paid = true;
 			break;
 		}
 
@@ -1282,7 +1282,7 @@ bool bldg_process_command(const store_type *s_ptr, store_action_type const *ba_p
 
 	case BACT_TELEPORT_LEVEL:
 		{
-			if (reset_recall(FALSE))
+			if (reset_recall(false))
 			{
 				p_ptr->word_recall = 1;
 				msg_print("The air about you becomes charged...");
@@ -1310,7 +1310,7 @@ bool bldg_process_command(const store_type *s_ptr, store_action_type const *ba_p
 				if (fates[i].know) continue;
 				msg_print("You know a little more of your fate.");
 
-				fates[i].know = TRUE;
+				fates[i].know = true;
 
 				found = true;
 				break;

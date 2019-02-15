@@ -28,13 +28,13 @@
 /*
  * Attempt to add a power to a randart
  */
-static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s16b> &max_times)
+static bool grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s16b> &max_times)
 {
 	auto const &ra_info = game->edit_data.ra_info;
 
 	assert(max_times.size() >= ra_info.size());
 
-	bool_ ret = FALSE;
+	bool ret = false;
 
 	std::vector<size_t> ok_ra;
 
@@ -42,7 +42,7 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 	for (size_t i = 0; i < ra_info.size(); i++)
 	{
 		auto ra_ptr = &ra_info[i];
-		bool_ ok = FALSE;
+		bool ok = false;
 
 		/* Must have the correct fields */
 		for (auto const &filter: ra_ptr->kind_filter)
@@ -51,14 +51,14 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 				(filter.min_sval <= o_ptr->sval) &&
 				(o_ptr->sval <= filter.max_sval))
 			{
-				ok = TRUE;
+				ok = true;
 				break;
 			}
 		}
 
 		if ((0 < ra_ptr->max_pval) && (ra_ptr->max_pval < o_ptr->pval))
 		{
-			ok = FALSE;
+			ok = false;
 		}
 
 		if (!ok)
@@ -111,7 +111,7 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 		max_times[i]++;
 
 		/* Success */
-		ret = TRUE;
+		ret = true;
 		break;
 	}
 
@@ -250,9 +250,9 @@ bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 	char new_name[80];
 	int powers = 0;
 	s32b total_flags, total_power = 0;
-	bool a_cursed = FALSE;
+	bool a_cursed = false;
 	s16b pval = 0;
-	bool_ limit_blows = FALSE;
+	bool limit_blows = false;
 
 	strcpy(new_name, "");
 
@@ -343,7 +343,7 @@ bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 			object_known(o_ptr);
 
 			strcpy(dummy_name, "");
-			object_out_desc(o_ptr, NULL, FALSE, TRUE);
+			object_out_desc(o_ptr, NULL, false, true);
 
 			if (get_string("What do you want to call the artifact? ", dummy_name, 80))
 			{
@@ -382,7 +382,7 @@ bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 		o_ptr->pval2 = -1;
 	}
 
-	return TRUE;
+	return true;
 }
 
 
@@ -404,7 +404,7 @@ bool artifact_scroll()
 
 	/* Description */
 	char o_name[80];
-	object_desc(o_name, o_ptr, FALSE, 0);
+	object_desc(o_name, o_ptr, false, 0);
 
 	/* Describe */
 	msg_format("%s %s radiate%s a blinding light!",

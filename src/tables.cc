@@ -2405,7 +2405,7 @@ std::vector<flags_group> const &flags_groups()
 quest_type quest[MAX_Q_IDX] =
 {
 	{
-		FALSE,
+		false,
 		"",
 		{
 			"",
@@ -2428,7 +2428,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Dol Guldur",
 		{
 			"The forest of Mirkwood is a very dangerous place to go, mainly due to",
@@ -2451,7 +2451,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Sauron",
 		{
 			"It is time to take the battle to Morgoth. But, before you can",
@@ -2474,7 +2474,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Morgoth",
 		{
 			"Your final quest is the ultimate quest that has always been",
@@ -2499,7 +2499,7 @@ quest_type quest[MAX_Q_IDX] =
 	
 	/* Bree plot */
 	{
-		FALSE,
+		false,
 		"Thieves!",
 		{
 			"There are thieves robbing my people! They live in a small",
@@ -2523,7 +2523,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"Random Quest",
 		{
 			"",
@@ -2547,7 +2547,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"Lost Hobbit",
 		{
 			"Merton Proudfoot, a young hobbit, seems to have disappeared.",
@@ -2571,7 +2571,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"The Dark Horseman",
 		{
 			"A dark-cloaked horseman has been spotted several times in town.",
@@ -2595,7 +2595,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"The Trolls Glade",
 		{
 			"A group of Forest Trolls settled in an abandoned forest in the",
@@ -2614,12 +2614,12 @@ quest_type quest[MAX_Q_IDX] =
 	
 		&plots[PLOT_BREE],
 		quest_troll_init_hook,
-		{FALSE, 0},
+		{false, 0},
 		NULL,
 	},
 	
 	{
-		FALSE,
+		false,
 		"The Wight Grave",
 		{
 			"The Barrow-Downs hides many mysteries and dangers.",
@@ -2638,13 +2638,13 @@ quest_type quest[MAX_Q_IDX] =
 	
 		&plots[PLOT_BREE],
 		quest_wight_init_hook,
-		{FALSE, 0},
+		{false, 0},
 		NULL,
 	},
 	
 	/* Lorien plot */
 	{
-		FALSE,
+		false,
 		"Spiders of Mirkwood",
 		{
 			"Powers lurk deep within Mirkwood. Spiders have blocked the",
@@ -2667,7 +2667,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Poisoned Water",
 		{
 			"A curse has beset Lothlorien. All trees along the shorelines of Nimrodel",
@@ -2691,7 +2691,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Other quests */
 	{
-		FALSE,
+		false,
 		"The Broken Sword",
 		{
 			"You have found Narsil, a broken sword. It is said that the sword that",
@@ -2715,7 +2715,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Gondolin plot */
 	{
-		FALSE,
+		false,
 		"Eol the Dark Elf",
 		{
 			"We have disturbing tidings. Eol the Dark Elf has come seeking his kin in",
@@ -2738,7 +2738,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Nirnaeth Arnoediad",
 		{
 			"The fortunes of war in the north turn against us.",
@@ -2761,7 +2761,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Invasion of Gondolin",
 		{
 			"Morgoth is upon us! Dragons and Balrogs have poured over secret",
@@ -2785,7 +2785,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Minas Anor Plot*/
 	{
-		FALSE,
+		false,
 		"The Last Alliance",
 		{
 			"The armies of Morgoth are closing in on the last remaining strongholds",
@@ -2808,7 +2808,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"The One Ring",
 		{
 			"Find the One Ring, then bring it to Mount Doom, in Mordor, to drop",
@@ -2832,7 +2832,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"Mushroom supplies",
 		{
 			"Farmer Maggot asked you to bring him back his mushrooms.",
@@ -2856,7 +2856,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	
 	{
-		FALSE,
+		false,
 		"The prisoner of Dol Guldur",
 		{
 			"You keep hearing distress cries in the dark tower of",
@@ -2881,7 +2881,7 @@ quest_type quest[MAX_Q_IDX] =
 	
 	/* The 2 ultra endings go here */
 	{
-		FALSE,
+		false,
 		"Falling Toward Apotheosis",
 		{
 			"You must enter the Void where Melkor spirit lurks to destroy",
@@ -2904,7 +2904,7 @@ quest_type quest[MAX_Q_IDX] =
 		NULL,
 	},
 	{
-		FALSE,
+		false,
 		"Falling Toward Apotheosis",
 		{
 			"You must now launch an onslaught on Valinor itself to eliminate",
@@ -2928,7 +2928,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* More Lorien */
 	{
-		FALSE,
+		false,
 		"Wolves!",
 		{
 			"There are wolves pestering my people! They gather in a hut",
@@ -2952,7 +2952,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* More Gondolin */
 	{
-		FALSE,
+		false,
 		"Dragons!",
 		{
 			"There are dragons pestering my people! They gather in a",
@@ -2976,7 +2976,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* More Minas Anor */
 	{
-		FALSE,
+		false,
 		"Haunted House!",
 		{
 			"There are undead pestering my people! They gather in a hut",
@@ -3000,7 +3000,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Khazad-Dum Plot*/
 	{
-		FALSE,
+		false,
 		"Evil!",
 		{
 			"We have burrowed too deep, and let out some creatures of",
@@ -3024,7 +3024,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Bounty */
 	{
-		FALSE,
+		false,
 		"Bounty quest",
 		{
 			"", /* dynamic desc */
@@ -3038,7 +3038,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Fireproofing */
 	{
-		FALSE,
+		false,
 		"Old Mages quest",
 		{
 			"", /* dynamic desc */
@@ -3052,7 +3052,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* Library */
 	{
-		FALSE,
+		false,
 		"Library quest",
 		{
 			"", /* dynamic desc */
@@ -3066,7 +3066,7 @@ quest_type quest[MAX_Q_IDX] =
 	},
 	/* God quest */
 	{
-		FALSE,
+		false,
 		"God quest",
 		{
 			"", /* dynamic desc */
@@ -3081,7 +3081,7 @@ quest_type quest[MAX_Q_IDX] =
 		  4 /* dun_maxdepth */,
 		  0 /* dun_minplev */,
 		  0 /* relic_gen_tries */,
-		  FALSE /* relic_generated */,
+		  false /* relic_generated */,
 		  1 /* dung_x */,
 		  1 /* dung_y */,
 		},
@@ -3093,94 +3093,94 @@ quest_type quest[MAX_Q_IDX] =
 /* List of powers for Symbiants/Powers */
 monster_power monster_powers[] =
 	{
-		{ SF_SHRIEK_IDX, "Aggravate Monster", 1, FALSE },
-		{ SF_MULTIPLY_IDX, "Multiply", 10, FALSE },
-		{ SF_S_ANIMAL_IDX, "Summon Animal", 30, FALSE },
-		{ SF_ROCKET_IDX, "Fire a Rocket", 40, TRUE },
-		{ SF_ARROW_1_IDX, "Light Arrow", 1, FALSE },
-		{ SF_ARROW_2_IDX, "Minor Arrow", 3, FALSE },
-		{ SF_ARROW_3_IDX, "Major Arrow", 7, TRUE },
-		{ SF_ARROW_4_IDX, "Great Arrow", 9, TRUE },
-		{ SF_BR_ACID_IDX, "Breathe Acid", 10, FALSE },
-		{ SF_BR_ELEC_IDX, "Breathe Lightning", 10, FALSE },
-		{ SF_BR_FIRE_IDX, "Breathe Fire", 10, FALSE },
-		{ SF_BR_COLD_IDX, "Breathe Cold", 10, FALSE },
-		{ SF_BR_POIS_IDX, "Breathe Poison", 15, TRUE },
-		{ SF_BR_NETH_IDX, "Breathe Nether", 30, TRUE },
-		{ SF_BR_LITE_IDX, "Breathe Light", 20, TRUE },
-		{ SF_BR_DARK_IDX, "Breathe Dark", 20, TRUE },
-		{ SF_BR_CONF_IDX, "Breathe Confusion", 15, TRUE },
-		{ SF_BR_SOUN_IDX, "Breathe Sound", 30, TRUE },
-		{ SF_BR_CHAO_IDX, "Breathe Chaos", 30, TRUE },
-		{ SF_BR_DISE_IDX, "Breathe Disenchantment", 30, TRUE },
-		{ SF_BR_NEXU_IDX, "Breathe Nexus", 30, TRUE },
-		{ SF_BR_TIME_IDX, "Breathe Time", 30, TRUE },
-		{ SF_BR_INER_IDX, "Breathe Inertia", 30, TRUE },
-		{ SF_BR_GRAV_IDX, "Breathe Gravity", 30, TRUE },
-		{ SF_BR_SHAR_IDX, "Breathe Shards", 30, TRUE },
-		{ SF_BR_PLAS_IDX, "Breathe Plasma", 30, TRUE },
-		{ SF_BR_WALL_IDX, "Breathe Force", 30, TRUE },
-		{ SF_BR_MANA_IDX, "Breathe Mana", 40, TRUE },
-		{ SF_BA_NUKE_IDX, "Nuke Ball", 30, TRUE },
-		{ SF_BR_NUKE_IDX, "Breathe Nuke", 40, TRUE },
-		{ SF_BA_CHAO_IDX, "Chaos Ball", 30, TRUE },
-		{ SF_BR_DISI_IDX, "Breathe Disintegration", 40, TRUE },
-		{ SF_BA_ACID_IDX, "Acid Ball", 8, FALSE },
-		{ SF_BA_ELEC_IDX, "Lightning Ball", 8, FALSE },
-		{ SF_BA_FIRE_IDX, "Fire Ball", 8, FALSE },
-		{ SF_BA_COLD_IDX, "Cold Ball", 8, FALSE },
-		{ SF_BA_POIS_IDX, "Poison Ball", 20, TRUE },
-		{ SF_BA_NETH_IDX, "Nether Ball", 20, TRUE },
-		{ SF_BA_WATE_IDX, "Water Ball", 20, TRUE },
-		{ SF_BA_MANA_IDX, "Mana Ball", 50, TRUE },
-		{ SF_BA_DARK_IDX, "Darkness Ball", 20, TRUE },
-		{ SF_CAUSE_1_IDX, "Cause Light Wounds", 20, FALSE },
-		{ SF_CAUSE_2_IDX, "Cause Medium Wounds", 30, FALSE },
-		{ SF_CAUSE_3_IDX, "Cause Critical Wounds", 35, TRUE },
-		{ SF_CAUSE_4_IDX, "Cause Mortal Wounds", 45, TRUE },
-		{ SF_BO_ACID_IDX, "Acid Bolt", 5, FALSE },
-		{ SF_BO_ELEC_IDX, "Lightning Bolt", 5, FALSE },
-		{ SF_BO_FIRE_IDX, "Fire Bolt", 5, FALSE },
-		{ SF_BO_COLD_IDX, "Cold Bolt", 5, FALSE },
-		{ SF_BO_POIS_IDX, "Poison Bolt", 10, TRUE },
-		{ SF_BO_NETH_IDX, "Nether Bolt", 15, TRUE },
-		{ SF_BO_WATE_IDX, "Water Bolt", 20, TRUE },
-		{ SF_BO_MANA_IDX, "Mana Bolt", 25, TRUE },
-		{ SF_BO_PLAS_IDX, "Plasma Bolt", 20, TRUE },
-		{ SF_BO_ICEE_IDX, "Ice Bolt", 20, TRUE },
-		{ SF_MISSILE_IDX, "Magic Missile", 1, FALSE },
-		{ SF_SCARE_IDX, "Scare", 4, FALSE },
-		{ SF_BLIND_IDX, "Blindness", 6, FALSE },
-		{ SF_CONF_IDX, "Confusion", 7, FALSE },
-		{ SF_SLOW_IDX, "Slowness", 10, FALSE },
-		{ SF_HOLD_IDX, "Paralyse", 10, FALSE },
-		{ SF_HASTE_IDX, "Haste Self", 50, FALSE },
-		{ SF_HAND_DOOM_IDX, "Hand of Doom", 30, TRUE },
-		{ SF_HEAL_IDX, "Healing", 60, FALSE },
-		{ SF_S_ANIMALS_IDX, "Summon Animals", 60, TRUE },
-		{ SF_BLINK_IDX, "Phase Door", 2, FALSE },
-		{ SF_TPORT_IDX, "Teleport", 10, FALSE },
-		{ SF_TELE_TO_IDX, "Teleport To", 20, TRUE },
-		{ SF_TELE_AWAY_IDX, "Teleport Away", 20, FALSE },
-		{ SF_TELE_LEVEL_IDX, "Teleport Level", 20, TRUE },
-		{ SF_DARKNESS_IDX, "Darkness", 3, FALSE },
-		{ SF_RAISE_DEAD_IDX, "Raise the Dead", 400, TRUE },
-		{ SF_S_THUNDERLORD_IDX, "Summon Thunderlords", 90, TRUE },
-		{ SF_S_KIN_IDX, "Summon Kin", 80, FALSE },
-		{ SF_S_HI_DEMON_IDX, "Summon Greater Demons", 90, TRUE },
-		{ SF_S_MONSTER_IDX, "Summon Monster", 50, FALSE },
-		{ SF_S_MONSTERS_IDX, "Summon Monsters", 60, TRUE },
-		{ SF_S_ANT_IDX, "Summon Ants", 30, FALSE },
-		{ SF_S_SPIDER_IDX, "Summon Spider", 30, FALSE },
-		{ SF_S_HOUND_IDX, "Summon Hound", 50, TRUE },
-		{ SF_S_HYDRA_IDX, "Summon Hydra", 40, TRUE },
-		{ SF_S_ANGEL_IDX, "Summon Angel", 60, TRUE },
-		{ SF_S_DEMON_IDX, "Summon Demon", 60, TRUE },
-		{ SF_S_UNDEAD_IDX, "Summon Undead", 70, TRUE },
-		{ SF_S_DRAGON_IDX, "Summon Dragon", 70, TRUE },
-		{ SF_S_HI_UNDEAD_IDX, "Summon High Undead", 90, TRUE },
-		{ SF_S_HI_DRAGON_IDX, "Summon High Dragon", 90, TRUE },
-		{ SF_S_WRAITH_IDX, "Summon Wraith", 90, TRUE },
+		{ SF_SHRIEK_IDX, "Aggravate Monster", 1, false },
+		{ SF_MULTIPLY_IDX, "Multiply", 10, false },
+		{ SF_S_ANIMAL_IDX, "Summon Animal", 30, false },
+		{ SF_ROCKET_IDX, "Fire a Rocket", 40, true },
+		{ SF_ARROW_1_IDX, "Light Arrow", 1, false },
+		{ SF_ARROW_2_IDX, "Minor Arrow", 3, false },
+		{ SF_ARROW_3_IDX, "Major Arrow", 7, true },
+		{ SF_ARROW_4_IDX, "Great Arrow", 9, true },
+		{ SF_BR_ACID_IDX, "Breathe Acid", 10, false },
+		{ SF_BR_ELEC_IDX, "Breathe Lightning", 10, false },
+		{ SF_BR_FIRE_IDX, "Breathe Fire", 10, false },
+		{ SF_BR_COLD_IDX, "Breathe Cold", 10, false },
+		{ SF_BR_POIS_IDX, "Breathe Poison", 15, true },
+		{ SF_BR_NETH_IDX, "Breathe Nether", 30, true },
+		{ SF_BR_LITE_IDX, "Breathe Light", 20, true },
+		{ SF_BR_DARK_IDX, "Breathe Dark", 20, true },
+		{ SF_BR_CONF_IDX, "Breathe Confusion", 15, true },
+		{ SF_BR_SOUN_IDX, "Breathe Sound", 30, true },
+		{ SF_BR_CHAO_IDX, "Breathe Chaos", 30, true },
+		{ SF_BR_DISE_IDX, "Breathe Disenchantment", 30, true },
+		{ SF_BR_NEXU_IDX, "Breathe Nexus", 30, true },
+		{ SF_BR_TIME_IDX, "Breathe Time", 30, true },
+		{ SF_BR_INER_IDX, "Breathe Inertia", 30, true },
+		{ SF_BR_GRAV_IDX, "Breathe Gravity", 30, true },
+		{ SF_BR_SHAR_IDX, "Breathe Shards", 30, true },
+		{ SF_BR_PLAS_IDX, "Breathe Plasma", 30, true },
+		{ SF_BR_WALL_IDX, "Breathe Force", 30, true },
+		{ SF_BR_MANA_IDX, "Breathe Mana", 40, true },
+		{ SF_BA_NUKE_IDX, "Nuke Ball", 30, true },
+		{ SF_BR_NUKE_IDX, "Breathe Nuke", 40, true },
+		{ SF_BA_CHAO_IDX, "Chaos Ball", 30, true },
+		{ SF_BR_DISI_IDX, "Breathe Disintegration", 40, true },
+		{ SF_BA_ACID_IDX, "Acid Ball", 8, false },
+		{ SF_BA_ELEC_IDX, "Lightning Ball", 8, false },
+		{ SF_BA_FIRE_IDX, "Fire Ball", 8, false },
+		{ SF_BA_COLD_IDX, "Cold Ball", 8, false },
+		{ SF_BA_POIS_IDX, "Poison Ball", 20, true },
+		{ SF_BA_NETH_IDX, "Nether Ball", 20, true },
+		{ SF_BA_WATE_IDX, "Water Ball", 20, true },
+		{ SF_BA_MANA_IDX, "Mana Ball", 50, true },
+		{ SF_BA_DARK_IDX, "Darkness Ball", 20, true },
+		{ SF_CAUSE_1_IDX, "Cause Light Wounds", 20, false },
+		{ SF_CAUSE_2_IDX, "Cause Medium Wounds", 30, false },
+		{ SF_CAUSE_3_IDX, "Cause Critical Wounds", 35, true },
+		{ SF_CAUSE_4_IDX, "Cause Mortal Wounds", 45, true },
+		{ SF_BO_ACID_IDX, "Acid Bolt", 5, false },
+		{ SF_BO_ELEC_IDX, "Lightning Bolt", 5, false },
+		{ SF_BO_FIRE_IDX, "Fire Bolt", 5, false },
+		{ SF_BO_COLD_IDX, "Cold Bolt", 5, false },
+		{ SF_BO_POIS_IDX, "Poison Bolt", 10, true },
+		{ SF_BO_NETH_IDX, "Nether Bolt", 15, true },
+		{ SF_BO_WATE_IDX, "Water Bolt", 20, true },
+		{ SF_BO_MANA_IDX, "Mana Bolt", 25, true },
+		{ SF_BO_PLAS_IDX, "Plasma Bolt", 20, true },
+		{ SF_BO_ICEE_IDX, "Ice Bolt", 20, true },
+		{ SF_MISSILE_IDX, "Magic Missile", 1, false },
+		{ SF_SCARE_IDX, "Scare", 4, false },
+		{ SF_BLIND_IDX, "Blindness", 6, false },
+		{ SF_CONF_IDX, "Confusion", 7, false },
+		{ SF_SLOW_IDX, "Slowness", 10, false },
+		{ SF_HOLD_IDX, "Paralyse", 10, false },
+		{ SF_HASTE_IDX, "Haste Self", 50, false },
+		{ SF_HAND_DOOM_IDX, "Hand of Doom", 30, true },
+		{ SF_HEAL_IDX, "Healing", 60, false },
+		{ SF_S_ANIMALS_IDX, "Summon Animals", 60, true },
+		{ SF_BLINK_IDX, "Phase Door", 2, false },
+		{ SF_TPORT_IDX, "Teleport", 10, false },
+		{ SF_TELE_TO_IDX, "Teleport To", 20, true },
+		{ SF_TELE_AWAY_IDX, "Teleport Away", 20, false },
+		{ SF_TELE_LEVEL_IDX, "Teleport Level", 20, true },
+		{ SF_DARKNESS_IDX, "Darkness", 3, false },
+		{ SF_RAISE_DEAD_IDX, "Raise the Dead", 400, true },
+		{ SF_S_THUNDERLORD_IDX, "Summon Thunderlords", 90, true },
+		{ SF_S_KIN_IDX, "Summon Kin", 80, false },
+		{ SF_S_HI_DEMON_IDX, "Summon Greater Demons", 90, true },
+		{ SF_S_MONSTER_IDX, "Summon Monster", 50, false },
+		{ SF_S_MONSTERS_IDX, "Summon Monsters", 60, true },
+		{ SF_S_ANT_IDX, "Summon Ants", 30, false },
+		{ SF_S_SPIDER_IDX, "Summon Spider", 30, false },
+		{ SF_S_HOUND_IDX, "Summon Hound", 50, true },
+		{ SF_S_HYDRA_IDX, "Summon Hydra", 40, true },
+		{ SF_S_ANGEL_IDX, "Summon Angel", 60, true },
+		{ SF_S_DEMON_IDX, "Summon Demon", 60, true },
+		{ SF_S_UNDEAD_IDX, "Summon Undead", 70, true },
+		{ SF_S_DRAGON_IDX, "Summon Dragon", 70, true },
+		{ SF_S_HI_UNDEAD_IDX, "Summon High Undead", 90, true },
+		{ SF_S_HI_DRAGON_IDX, "Summon High Dragon", 90, true },
+		{ SF_S_WRAITH_IDX, "Summon Wraith", 90, true },
 	};
 
 
@@ -3470,7 +3470,7 @@ tval_desc tval_descs[] =
 /*
  * List of the between exits
  *       s16b corresp;           Corresponding between gate
- *       bool_ dungeon;           Do we exit in a dungeon or in the wild ?
+ *       bool dungeon;           Do we exit in a dungeon or in the wild ?
  *
  *       s16b wild_x, wild_y;    Wilderness spot to land onto
  *       s16b p_ptr->px, p_ptr->py;            Location of the map

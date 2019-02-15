@@ -42,4 +42,4 @@ std::string process_player_name(std::string const &);
 void set_player_base(std::string const &name);
 
 void do_cmd_save_game();
-void predict_score_gui(bool_ *initialized, bool_ *game_in_progress);
+void predict_score_gui(bool *initialized, bool *game_in_progress);

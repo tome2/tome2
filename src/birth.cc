@@ -333,7 +333,7 @@ static void get_stats()
 
 
 	/* Roll and verify some stats */
-	while (TRUE)
+	while (true)
 	{
 		/* Roll some dice */
 		for (j = i = 0; i < 18; i++)
@@ -487,7 +487,7 @@ static errr init_randart()
 		ra.name_full = get_line("rart_f.txt", ANGBAND_DIR_FILE, buf, i);
 		ra.attr = randint(15);
 		ra.activation = rand_int(MAX_T_ACT);
-		ra.generated = FALSE;
+		ra.generated = false;
 		ra.cost = cost;
 
 		// Push
@@ -636,7 +636,7 @@ static void player_wipe()
 	for (auto &k_entry: k_info)
 	{
 		auto k_ptr = k_entry.second;
-		k_ptr->aware = FALSE;
+		k_ptr->aware = false;
 		k_ptr->artifact = 0;
 	}
 
@@ -659,7 +659,7 @@ static void player_wipe()
 		r_ptr->r_pkills = 0;
 
 		/* Clear saved flag */
-		r_ptr->on_saved = FALSE;
+		r_ptr->on_saved = false;
 	}
 
 
@@ -671,7 +671,7 @@ static void player_wipe()
 
 	/* Assume no winning game */
 	total_winner = 0;
-	has_won = FALSE;
+	has_won = false;
 
 	/* Assume no cheating */
 	noscore = 0;
@@ -682,15 +682,15 @@ static void player_wipe()
 	{
 		fates[i].fate = 0;
 	}
-	p_ptr->no_mortal = FALSE;
+	p_ptr->no_mortal = false;
 
 	/* Player don't have the black breath from the beginning !*/
 	p_ptr->black_breath = false;
 
 	/* Default pet command settings */
 	p_ptr->pet_follow_distance = 6;
-	p_ptr->pet_open_doors = FALSE;
-	p_ptr->pet_pickup_items = FALSE;
+	p_ptr->pet_open_doors = false;
+	p_ptr->pet_pickup_items = false;
 
 	/* Body changing initialisation */
 	p_ptr->body_monster = 0;
@@ -717,7 +717,7 @@ static void player_wipe()
 		inscription_known = false;
 	}
 
-	/* Reset wild_mode to FALSE */
+	/* Reset wild_mode to false */
 	p_ptr->wild_mode = false;
 	p_ptr->old_wild_mode = false;
 
@@ -759,7 +759,7 @@ static void outfit_obj(object_proto const *proto)
 	/* These objects are "storebought" */
 	q_ptr->number = damroll(proto->dd, proto->ds);
 
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 }
 
 
@@ -781,7 +781,7 @@ static void player_outfit_object(int qty, int tval, int sval)
 	object_type *q_ptr = &forge;
 	object_prep(q_ptr, lookup_kind(tval, sval));
 	q_ptr->number = qty;
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 }
 
 
@@ -796,7 +796,7 @@ static void player_outfit_spellbook(const char *spell_name)
 		object_type *q_ptr = &forge;
 		object_prep(q_ptr, lookup_kind(TV_BOOK, 255));
 		q_ptr->pval = *spell_idx;
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 	else
 	{
@@ -935,7 +935,7 @@ static void player_outfit()
 		
 		object_prep(q_ptr, lookup_kind(TV_CLOAK, SV_MIMIC_CLOAK));
 		q_ptr->pval2 = resolve_mimic_name("Mouse");
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 
 	if (game_module_idx == MODULE_THEME)
@@ -967,7 +967,7 @@ static void player_outfit()
 		object_prep(q_ptr, lookup_kind(TV_LITE, SV_LITE_TORCH));
 		q_ptr->number = (byte)rand_range(3, 7);
 		q_ptr->timeout = rand_range(3, 7) * 500;
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 
 	/* Outfit the player with starting items */
@@ -1350,7 +1350,7 @@ static bool player_birth_aux_ask()
 			put_str("Use same character as last time (y/n)? ", 20, 2);
 			c = inkey();
 			if (c == 'Q') quit(NULL);
-			else if (c == 'S') return (FALSE);
+			else if (c == 'S') return false;
 			else if ((c == 'y') || (c == 'Y'))
 			{
 				do_quick_start = true;
@@ -1417,7 +1417,7 @@ static bool player_birth_aux_ask()
 				else if (c == '=')
 				{
 					screen_save();
-					do_cmd_options_aux(6, "Startup Options", FALSE);
+					do_cmd_options_aux(6, "Startup Options", false);
 					screen_load();
 				}
 				else if (c == '2')
@@ -1560,7 +1560,7 @@ static bool player_birth_aux_ask()
 					else if (c == '=')
 					{
 						screen_save();
-						do_cmd_options_aux(6, "Startup Options", FALSE);
+						do_cmd_options_aux(6, "Startup Options", false);
 						screen_load();
 					}
 					else if (c == '2')
@@ -1679,7 +1679,7 @@ static bool player_birth_aux_ask()
 				else if (c == '=')
 				{
 					screen_save();
-					do_cmd_options_aux(6, "Startup Options", FALSE);
+					do_cmd_options_aux(6, "Startup Options", false);
 					screen_load();
 				}
 				else if (c == '2')
@@ -1757,7 +1757,7 @@ static bool player_birth_aux_ask()
 				else if (c == '=')
 				{
 					screen_save();
-					do_cmd_options_aux(6, "Startup Options", FALSE);
+					do_cmd_options_aux(6, "Startup Options", false);
 					screen_load();
 				}
 				else if (c == '2')
@@ -1876,7 +1876,7 @@ static bool player_birth_aux_ask()
 				else if (c == '=')
 				{
 					screen_save();
-					do_cmd_options_aux(6, "Startup Options", FALSE);
+					do_cmd_options_aux(6, "Startup Options", false);
 					screen_load();
 				}
 				else if (c == '2')
@@ -1941,7 +1941,7 @@ static bool player_birth_aux_ask()
 		if (get_check("Do you want to modify the options"))
 		{
 			screen_save();
-			do_cmd_options_aux(6, "Startup Options", FALSE);
+			do_cmd_options_aux(6, "Startup Options", false);
 			screen_load();
 		}
 	}
@@ -1996,13 +1996,13 @@ static bool player_birth_aux_ask()
 			            "If you do not want any optional quests, enter 0.");
 
 			/* Ask the number of additional quests */
-			while (TRUE)
+			while (true)
 			{
 				put_str(format("Number of quests? (0-%u) ",
 				               MAX_RANDOM_QUEST - 1), 20, 2);
 
 				/* Get a the number of additional quest */
-				while (TRUE)
+				while (true)
 				{
 					/* Move the cursor */
 					put_str("", 20, 27);
@@ -2292,7 +2292,7 @@ static bool player_birth_aux_auto()
 			j = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i];
 
 			/* Obtain the "maximal" stat */
-			m = adjust_stat(17, j, TRUE);
+			m = adjust_stat(17, j, true);
 
 
 			/* Save the maximum */
@@ -2314,7 +2314,7 @@ static bool player_birth_aux_auto()
 		for (i = 0; i < 6; i++)
 		{
 			/* Get a minimum stat */
-			while (TRUE)
+			while (true)
 			{
 				char *s;
 
@@ -2473,7 +2473,7 @@ static bool player_birth_aux_auto()
 		get_money();
 
 		/* Input loop */
-		while (TRUE)
+		while (true)
 		{
 			/* Calculate the bonuses and hitpoints */
 			p_ptr->update |= (PU_BONUS | PU_HP | PU_MANA | PU_BODY);
@@ -2624,12 +2624,12 @@ static bool player_birth_aux()
 		/* Point based */
 		if (options->point_based)
 		{
-			if (!player_birth_aux_point()) return FALSE;
+			if (!player_birth_aux_point()) return false;
 		}
 		/* Auto-roll */
 		else
 		{
-			if (!player_birth_aux_auto()) return FALSE;
+			if (!player_birth_aux_auto()) return false;
 		}
 
 		/*** Finish up ***/
@@ -2712,7 +2712,7 @@ void player_birth()
 	p_ptr->skill_points = 0;
 	p_ptr->skill_last_level = 1;
 
-	recalc_skills(FALSE);
+	recalc_skills(false);
 
 	/* grab level 1 abilities */
 	p_ptr->abilities.clear();
@@ -2722,7 +2722,7 @@ void player_birth()
 	{
 		byte i = p_ptr->pgod;
 		p_ptr->pgod = 0;
-		follow_god(i, TRUE);
+		follow_god(i, true);
 	}
 
 	/* Select the default melee type */
@@ -2763,7 +2763,7 @@ void player_birth()
 			d_ptr->t_idx[num] = rtown;
 			rtown++;
 
-			while (TRUE)
+			while (true)
 			{
 				bool ok = true;
 
@@ -2807,7 +2807,7 @@ void player_birth()
 	for (std::size_t i = 1; i < max_towns; i++)
 	{
 		/* Not destroyed ! yet .. ;) */
-		town_info[i].destroyed = FALSE;
+		town_info[i].destroyed = false;
 
 		/* Ignore non-existent towns */
 		if (!(town_info[i].flags & (TOWN_REAL))) continue;
@@ -2831,7 +2831,7 @@ void player_birth()
 			auto &w = wilderness(x, y);
 			w.seed = seed_t::system();
 			w.entrance = 0;
-			w.known = FALSE;
+			w.known = false;
 		}
 	}
 }
@@ -3036,7 +3036,7 @@ static void dump_savefiles(int sel, int max)
 
 
 /* Asks for new game or load game */
-bool no_begin_screen = FALSE;
+bool no_begin_screen = false;
 
 bool begin_screen()
 {
@@ -3062,7 +3062,7 @@ savefile_try_again:
 	max = m + 2;
 	if (max > 2) sel = 2;
 
-	while (TRUE)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -3145,7 +3145,7 @@ savefile_try_again:
 			set_player_base(tmp);
 
 			// If the savefile already exists, we do *NOT* want to
-			// create a new game, so we'll need to return FALSE for
+			// create a new game, so we'll need to return false for
 			// that.
 			if (boost::filesystem::exists(name_file_save()))
 			{
@@ -3165,12 +3165,12 @@ savefile_try_again:
 				prt("", 0, 0);
 
 				// Load character
-				return FALSE;
+				return false;
 			}
 			else
 			{
 				// Start new game
-				return TRUE;
+				return true;
 			}
 		}
 		if (k == 'b')

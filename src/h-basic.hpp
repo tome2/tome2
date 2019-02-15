@@ -101,11 +101,6 @@ typedef int errr;
 /* An unsigned byte of memory */
 typedef unsigned char byte;
 
-/* Note that a bool is smaller than a full "int" */
-/* Simple True/False type */
-typedef char bool_;
-
-
 /* Signed/Unsigned 16 bit value */
 typedef signed short s16b;
 typedef unsigned short u16b;
@@ -137,19 +132,6 @@ typedef unsigned long u32b;
 #  define NULL ((char*)0)
 # endif /* __STDC__ */
 #endif /* NULL */
-
-
-/*
- * The constants "TRUE" and "FALSE"
- */
-
-#undef TRUE
-#define TRUE	1
-
-#undef FALSE
-#define FALSE	0
-
-
 
 
 /**** Simple "Macros" ****/

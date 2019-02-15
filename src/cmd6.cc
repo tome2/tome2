@@ -145,14 +145,14 @@ static select_by_name_t select_object_by_name(std::string const &prompt)
  * Determine the effects of eating a corpse. A corpse can be
  * eaten whole or cut into pieces for later.
  */
-static void corpse_effect(object_type *o_ptr, bool_ cutting)
+static void corpse_effect(object_type *o_ptr, bool cutting)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	auto r_ptr = &r_info[o_ptr->pval2];
 
 	/* Assume no bad effects */
-	bool_ harmful = FALSE;
+	bool harmful = false;
 
 	byte method, effect, d_dice, d_side;
 
@@ -240,7 +240,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 					if (!(p_ptr->resist_pois || p_ptr->oppose_pois))
 					{
 						set_poisoned(p_ptr->poisoned + dam + idam + 10);
-						harmful = TRUE;
+						harmful = true;
 					}
 
 					break;
@@ -257,7 +257,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 
 						/* Take damage */
 						take_hit(dam, "acidic food");
-						harmful = TRUE;
+						harmful = true;
 					}
 					else
 					{
@@ -278,7 +278,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 
 						/* Take damage */
 						take_hit(dam, "a fiery meal");
-						harmful = TRUE;
+						harmful = true;
 					}
 					else
 					{
@@ -550,7 +550,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			/* Take damage */
 			acid_dam(brdam, "a gush of acid");
-			harmful = TRUE;
+			harmful = true;
 		}
 		o_ptr->pval = 1;
 	}
@@ -571,7 +571,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			/* Take damage */
 			elec_dam(brdam, "an electric shock");
-			harmful = TRUE;
+			harmful = true;
 		}
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
@@ -593,7 +593,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			/* Take damage */
 			fire_dam(brdam, "an explosion");
-			harmful = TRUE;
+			harmful = true;
 		}
 		o_ptr->pval = 1;
 	}
@@ -614,7 +614,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			/* Take damage */
 			cold_dam(brdam, "a chilling blast");
-			harmful = TRUE;
+			harmful = true;
 		}
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
@@ -644,7 +644,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		take_hit(brdam, "toxic gases");
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
-		harmful = TRUE;
+		harmful = true;
 	}
 
 	/* Nether */
@@ -679,7 +679,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 
 		/* Take damage */
 		take_hit(brdam, "an unholy blast");
-		harmful = TRUE;
+		harmful = true;
 		o_ptr->weight = o_ptr->weight - brpow;
 		o_ptr->pval = o_ptr->weight;
 	}
@@ -783,7 +783,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 
 		/* Take damage */
 		take_hit(brdam, "an explosion");
-		harmful = TRUE;
+		harmful = true;
 		o_ptr->pval = 1;
 	}
 
@@ -802,7 +802,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 			/* Take damage */
 			take_hit(dam, "acidic food");
 		}
-		harmful = TRUE;
+		harmful = true;
 	}
 
 	/*
@@ -816,7 +816,7 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		{
 			set_poisoned(p_ptr->poisoned + rand_int(15) + 10);
 		}
-		harmful = TRUE;
+		harmful = true;
 	}
 
 	/*
@@ -882,75 +882,75 @@ static void corpse_effect(object_type *o_ptr, bool_ cutting)
 		}
 		if (r_ptr->spells & SF_S_THUNDERLORD)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_THUNDERLORD, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_THUNDERLORD, false);
 		}
 		if (r_ptr->spells & SF_S_DEMON)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DEMON, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DEMON, false);
 		}
 		if (r_ptr->spells & SF_S_KIN)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_KIN, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_KIN, false);
 		}
 		if (r_ptr->spells & SF_S_HI_DEMON)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DEMON, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DEMON, false);
 		}
 		if (r_ptr->spells & SF_S_MONSTER)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, false);
 		}
 		if (r_ptr->spells & SF_S_MONSTERS)
 		{
 			int k;
 			for (k = 0; k < 8; k++)
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, 0, false);
 			}
 		}
 		if (r_ptr->spells & SF_S_UNDEAD)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNDEAD, false);
 		}
 		if (r_ptr->spells & SF_S_DRAGON)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DRAGON, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DRAGON, false);
 		}
 		if (r_ptr->spells & SF_S_ANT)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANT, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANT, false);
 		}
 		if (r_ptr->spells & SF_S_SPIDER)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_SPIDER, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_SPIDER, false);
 		}
 		if (r_ptr->spells & SF_S_HOUND)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HOUND, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HOUND, false);
 		}
 		if (r_ptr->spells & SF_S_HYDRA)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HYDRA, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HYDRA, false);
 		}
 		if (r_ptr->spells & SF_S_ANGEL)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANGEL, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_ANGEL, false);
 		}
 		if (r_ptr->spells & SF_S_HI_DRAGON)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DRAGON, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_DRAGON, false);
 		}
 		if (r_ptr->spells & SF_S_HI_UNDEAD)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_UNDEAD, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_HI_UNDEAD, false);
 		}
 		if (r_ptr->spells & SF_S_WRAITH)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_WRAITH, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_WRAITH, false);
 		}
 		if (r_ptr->spells & SF_S_UNIQUE)
 		{
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNIQUE, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_UNIQUE, false);
 		}
 	}
 }
@@ -981,7 +981,7 @@ void do_cmd_eat_food()
 
 	object_type *q_ptr, forge;
 
-	bool_ destroy = TRUE;
+	bool destroy = true;
 
 	/* Get an item */
 	int item;
@@ -1167,26 +1167,26 @@ void do_cmd_eat_food()
 
 		case SV_FOOD_RESTORE_STR:
 			{
-				do_res_stat(A_STR, TRUE);
+				do_res_stat(A_STR, true);
 
 				break;
 			}
 
 		case SV_FOOD_RESTORE_CON:
 			{
-				do_res_stat(A_CON, TRUE);
+				do_res_stat(A_CON, true);
 
 				break;
 			}
 
 		case SV_FOOD_RESTORING:
 			{
-				do_res_stat(A_STR, TRUE);
-				do_res_stat(A_INT, TRUE);
-				do_res_stat(A_WIS, TRUE);
-				do_res_stat(A_DEX, TRUE);
-				do_res_stat(A_CON, TRUE);
-				do_res_stat(A_CHR, TRUE);
+				do_res_stat(A_STR, true);
+				do_res_stat(A_INT, true);
+				do_res_stat(A_WIS, true);
+				do_res_stat(A_DEX, true);
+				do_res_stat(A_CON, true);
+				do_res_stat(A_CHR, true);
 
 				break;
 			}
@@ -1274,7 +1274,7 @@ void do_cmd_eat_food()
 				q_ptr = &forge;
 				object_prep(q_ptr, lookup_kind(TV_BOTTLE, 1));
 				q_ptr->number = 1;
-				inven_carry(q_ptr, FALSE);
+				inven_carry(q_ptr, false);
 
 				break;
 			}
@@ -1307,7 +1307,7 @@ void do_cmd_eat_food()
 		{
 		case SV_CORPSE_CORPSE:
 			{
-				bool_ no_meat = FALSE;
+				bool no_meat = false;
 
 				/* Not all is edible. Apologies if messy. */
 
@@ -1316,7 +1316,7 @@ void do_cmd_eat_food()
 				{
 					if (o_ptr->weight <= (r_ptr->weight * 3) / 5)
 					{
-						no_meat = TRUE;
+						no_meat = true;
 					}
 				}
 
@@ -1325,7 +1325,7 @@ void do_cmd_eat_food()
 				{
 					if (o_ptr->weight <= (r_ptr->weight * 7) / 20)
 					{
-						no_meat = TRUE;
+						no_meat = true;
 					}
 				}
 
@@ -1347,7 +1347,7 @@ void do_cmd_eat_food()
 				o_ptr->weight -= 10;
 
 				/* Corpses still have meat on them */
-				destroy = FALSE;
+				destroy = false;
 
 				break;
 			}
@@ -1361,7 +1361,7 @@ void do_cmd_eat_food()
 				o_ptr->weight -= 10;
 
 				/* Corpses still have meat on them */
-				destroy = FALSE;
+				destroy = false;
 
 				break;
 			}
@@ -1384,7 +1384,7 @@ void do_cmd_eat_food()
 			}
 		}
 
-		corpse_effect(o_ptr, FALSE);
+		corpse_effect(o_ptr, false);
 
 		/* Less nutritious than food rations, but much more of it. */
 		fval = (o_ptr->timeout) ? 2000 : 2500;
@@ -1531,7 +1531,7 @@ void do_cmd_cut_corpse()
 
 	msg_print("You hack some meat off the corpse.");
 
-	corpse_effect(o_ptr, TRUE);
+	corpse_effect(o_ptr, true);
 
 	/* Get local object */
 	object_type object_type_body;
@@ -1548,7 +1548,7 @@ void do_cmd_cut_corpse()
 
 	if (inven_carry_okay(i_ptr))
 	{
-		inven_carry(i_ptr, TRUE);
+		inven_carry(i_ptr, true);
 	}
 	else
 	{
@@ -1809,12 +1809,12 @@ static void quaff_potion(int tval, int sval, int pval, int pval2)
 			{
 				msg_print("Your nerves and muscles feel weak and lifeless!");
 				take_hit(damroll(10, 10), "a potion of Ruination");
-				dec_stat(A_DEX, 25, TRUE);
-				dec_stat(A_WIS, 25, TRUE);
-				dec_stat(A_CON, 25, TRUE);
-				dec_stat(A_STR, 25, TRUE);
-				dec_stat(A_CHR, 25, TRUE);
-				dec_stat(A_INT, 25, TRUE);
+				dec_stat(A_DEX, 25, true);
+				dec_stat(A_WIS, 25, true);
+				dec_stat(A_CON, 25, true);
+				dec_stat(A_STR, 25, true);
+				dec_stat(A_CHR, 25, true);
+				dec_stat(A_INT, 25, true);
 				break;
 			}
 
@@ -2003,12 +2003,12 @@ static void quaff_potion(int tval, int sval, int pval, int pval2)
 				set_image(0);
 				set_stun(0);
 				set_cut(0);
-				do_res_stat(A_STR, TRUE);
-				do_res_stat(A_CON, TRUE);
-				do_res_stat(A_DEX, TRUE);
-				do_res_stat(A_WIS, TRUE);
-				do_res_stat(A_INT, TRUE);
-				do_res_stat(A_CHR, TRUE);
+				do_res_stat(A_STR, true);
+				do_res_stat(A_CON, true);
+				do_res_stat(A_DEX, true);
+				do_res_stat(A_WIS, true);
+				do_res_stat(A_INT, true);
+				do_res_stat(A_CHR, true);
 				if (p_ptr->black_breath)
 				{
 					msg_print("The hold of the Black Breath on you is broken!");
@@ -2039,37 +2039,37 @@ static void quaff_potion(int tval, int sval, int pval, int pval2)
 
 		case SV_POTION_RES_STR:
 			{
-				do_res_stat(A_STR, TRUE);
+				do_res_stat(A_STR, true);
 				break;
 			}
 
 		case SV_POTION_RES_INT:
 			{
-				do_res_stat(A_INT, TRUE);
+				do_res_stat(A_INT, true);
 				break;
 			}
 
 		case SV_POTION_RES_WIS:
 			{
-				do_res_stat(A_WIS, TRUE);
+				do_res_stat(A_WIS, true);
 				break;
 			}
 
 		case SV_POTION_RES_DEX:
 			{
-				do_res_stat(A_DEX, TRUE);
+				do_res_stat(A_DEX, true);
 				break;
 			}
 
 		case SV_POTION_RES_CON:
 			{
-				do_res_stat(A_CON, TRUE);
+				do_res_stat(A_CON, true);
 				break;
 			}
 
 		case SV_POTION_RES_CHR:
 			{
-				do_res_stat(A_CHR, TRUE);
+				do_res_stat(A_CHR, true);
 				break;
 			}
 
@@ -2406,7 +2406,7 @@ static void do_cmd_fill_bottle()
 	object_prep(q_ptr, lookup_kind(tval, sval));
 	q_ptr->number = amt;
 
-	inven_carry(q_ptr, TRUE);
+	inven_carry(q_ptr, true);
 
 	c_ptr->special2 -= amt;
 
@@ -2506,7 +2506,7 @@ static void curse_armor()
 
 	/* Describe */
 	char o_name[80];
-	object_desc(o_name, o_ptr, FALSE, 3);
+	object_desc(o_name, o_ptr, false, 3);
 
 	/* Attempt a saving throw for artifacts */
 	if (artifact_p(o_ptr) && (rand_int(100) < 50))
@@ -2561,7 +2561,7 @@ static void curse_weapon()
 
 	/* Describe */
 	char o_name[80];
-	object_desc(o_name, o_ptr, FALSE, 3);
+	object_desc(o_name, o_ptr, false, 3);
 
 	/* Attempt a saving throw */
 	if (artifact_p(o_ptr) && (rand_int(100) < 50))
@@ -2665,13 +2665,13 @@ void do_cmd_read_scroll()
 	energy_use = 100;
 
 	/* Assume the scroll will get used up */
-	int used_up = TRUE;
+	int used_up = true;
 
 	/* Corruption */
 	if (player_has_corruption(CORRUPT_BALROG_AURA) && magik(5))
 	{
 		msg_print("Your demon aura burns the scroll before you read it!");
-		used_up = TRUE;
+		used_up = true;
 	}
 
 	/* Scrolls */
@@ -2704,13 +2704,13 @@ void do_cmd_read_scroll()
 				if (!get_check("Do you really want to leave your body? "
 				                "(beware, it'll be destroyed!) "))
 				{
-					used_up = FALSE;
+					used_up = false;
 					break;
 				}
 
 				do_cmd_leave_body(false);
 
-				used_up = TRUE;
+				used_up = true;
 
 				break;
 			}
@@ -2718,9 +2718,9 @@ void do_cmd_read_scroll()
 			/* original didn't set used_up flag ??? -- pelpel */
 		case SV_SCROLL_RESET_RECALL:
 			{
-				if (!reset_recall(TRUE))
+				if (!reset_recall(true))
 				{
-					used_up = FALSE;
+					used_up = false;
 					break;
 				}
 
@@ -2728,7 +2728,7 @@ void do_cmd_read_scroll()
 					   d_info[p_ptr->recall_dungeon].name.c_str(),
 				           max_dlv[p_ptr->recall_dungeon]);
 
-				used_up = TRUE;
+				used_up = true;
 
 				break;
 			}
@@ -2752,7 +2752,7 @@ void do_cmd_read_scroll()
 					msg_print(NULL);
 					msg_print("The scroll disappears in a puff of smoke!");
 
-					fates[i].know = TRUE;
+					fates[i].know = true;
 
 					break;
 				}
@@ -2803,7 +2803,7 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_SUMMON_MINE:
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_MINE, false);
 				break;
 			}
 
@@ -2838,7 +2838,7 @@ void do_cmd_read_scroll()
 			{
 				if ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				else
 				{
@@ -2870,7 +2870,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(0, 0, 1, 0))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2879,7 +2879,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(1, 0, 0, 0))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2888,7 +2888,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(0, 1, 0, 0))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2897,7 +2897,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(0, 0, 0, 1))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2906,7 +2906,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(0, 0, randint(3) + 2, 0))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2915,7 +2915,7 @@ void do_cmd_read_scroll()
 			{
 				if (!enchant_spell(randint(3), randint(3), 0, 0))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2924,7 +2924,7 @@ void do_cmd_read_scroll()
 			{
 				if (!recharge(60))
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 				break;
 			}
@@ -2996,7 +2996,7 @@ void do_cmd_read_scroll()
 				if (p_ptr->confusing == 0)
 				{
 					msg_print("Your hands begin to glow.");
-					p_ptr->confusing = TRUE;
+					p_ptr->confusing = true;
 				}
 
 				break;
@@ -3049,13 +3049,13 @@ void do_cmd_read_scroll()
 
 		case SV_SCROLL_ACQUIREMENT:
 			{
-				acquirement(p_ptr->py, p_ptr->px, 1, TRUE);
+				acquirement(p_ptr->py, p_ptr->px, 1, true);
 				break;
 			}
 
 		case SV_SCROLL_STAR_ACQUIREMENT:
 			{
-				acquirement(p_ptr->py, p_ptr->px, randint(2) + 1, TRUE);
+				acquirement(p_ptr->py, p_ptr->px, randint(2) + 1, true);
 				break;
 			}
 
@@ -3157,7 +3157,7 @@ void do_cmd_read_scroll()
 			{
 				if (!artifact_scroll())
 				{
-					used_up = FALSE;
+					used_up = false;
 				}
 
 				break;
@@ -3222,10 +3222,10 @@ void do_cmd_read_scroll()
 			/* Inscriptions become known upon reading */
 			if (o_ptr->sval >= 100)
 			{
-				p_ptr->inscriptions[o_ptr->sval - 100] = TRUE;
+				p_ptr->inscriptions[o_ptr->sval - 100] = true;
 			}
 
-			used_up = FALSE;
+			used_up = false;
 		}
 	}
 
@@ -3272,7 +3272,7 @@ void unset_stick_mode()
 /*
  * Activate a device
  */
-static void activate_stick(object_type *o_ptr, bool_ *use_charge)
+static void activate_stick(object_type *o_ptr, bool *use_charge)
 {
 	spell_type *spell = spell_at(o_ptr->pval2);
 
@@ -3285,13 +3285,13 @@ static void activate_stick(object_type *o_ptr, bool_ *use_charge)
 	switch (ret)
 	{
 	case NO_CAST:
-		*use_charge = FALSE;
+		*use_charge = false;
 		break;
 	case CAST:
-		*use_charge = TRUE;
+		*use_charge = true;
 		break;
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 }
 
@@ -3305,7 +3305,7 @@ static void activate_stick(object_type *o_ptr, bool_ *use_charge)
  */
 void do_cmd_use_staff()
 {
-	bool_ use_charge;
+	bool use_charge;
 
 	/* No magic */
 	if (p_ptr->antimagic)
@@ -3424,7 +3424,7 @@ void do_cmd_use_staff()
 
 		/* Unstack the used item */
 		o_ptr->number--;
-		item = inven_carry(q_ptr, FALSE);
+		item = inven_carry(q_ptr, false);
 
 		/* Message */
 		msg_print("You unstack your staff.");
@@ -3466,7 +3466,7 @@ void do_cmd_use_staff()
  */
 void do_cmd_aim_wand()
 {
-	bool_ use_charge;
+	bool use_charge;
 
 	/* No magic */
 	if (p_ptr->antimagic)
@@ -3675,10 +3675,10 @@ void do_cmd_zap_rod()
 
 	int cost;
 
-	bool_ require_dir;
+	bool require_dir;
 
 	/* Hack -- let perception get aborted */
-	bool_ use_charge = TRUE;
+	bool use_charge = true;
 
 
 	/* No magic */
@@ -3722,7 +3722,7 @@ void do_cmd_zap_rod()
 	/* Non-directed rods */
 	if (o_ptr->pval < SV_ROD_MIN_DIRECTION)
 	{
-		require_dir = FALSE;
+		require_dir = false;
 	}
 
 	/* Some rods always require direction */
@@ -3733,13 +3733,13 @@ void do_cmd_zap_rod()
 		case SV_ROD_HAVOC:
 		case SV_ROD_HOME:
 			{
-				require_dir = FALSE;
+				require_dir = false;
 				break;
 			}
 
 		default:
 			{
-				require_dir = TRUE;
+				require_dir = true;
 				break;
 			}
 		}
@@ -3846,7 +3846,7 @@ void do_cmd_zap_rod()
 		{
 			if ((dungeon_flags & DF_ASK_LEAVE) && !get_check("Leave this unique level forever? "))
 			{
-				use_charge = FALSE;
+				use_charge = false;
 			}
 			else
 			{
@@ -3896,12 +3896,12 @@ void do_cmd_zap_rod()
 	case SV_ROD_RESTORATION:
 		{
 			restore_level();
-			do_res_stat(A_STR, TRUE);
-			do_res_stat(A_INT, TRUE);
-			do_res_stat(A_WIS, TRUE);
-			do_res_stat(A_DEX, TRUE);
-			do_res_stat(A_CON, TRUE);
-			do_res_stat(A_CHR, TRUE);
+			do_res_stat(A_STR, true);
+			do_res_stat(A_INT, true);
+			do_res_stat(A_WIS, true);
+			do_res_stat(A_DEX, true);
+			do_res_stat(A_CON, true);
+			do_res_stat(A_CHR, true);
 			break;
 		}
 
@@ -4058,7 +4058,7 @@ int ring_of_power()
 
 
 	/* Select power to use */
-	while (TRUE)
+	while (true)
 	{
 		if (!get_com("[S]ummon a wraith, [R]ule the world or "
 		                "[C]ast a powerful attack? ", &ch))
@@ -4089,7 +4089,7 @@ int ring_of_power()
 		/* Rewrite this -- pelpel */
 		if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 		                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-		                             (((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+		                             (((plev > 24) && (randint(3) == 1)) ? true : false)))
 		{
 			msg_print("Cold winds begin to blow around you, "
 			          "carrying with them the stench of decay...");
@@ -4141,7 +4141,7 @@ int ring_of_power()
 /*
  * Enchant some bolts
  */
-bool_ brand_bolts()
+bool brand_bolts()
 {
 	int i;
 
@@ -4170,13 +4170,13 @@ bool_ brand_bolts()
 		o_ptr->name2 = EGO_FLAME;
 
 		/* Apply the ego */
-		apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
+		apply_magic(o_ptr, dun_level, false, false, false);
 
 		/* Enchant */
 		enchant(o_ptr, rand_int(3) + 4, ENCH_TOHIT | ENCH_TODAM);
 
 		/* Notice */
-		return (TRUE);
+		return true;
 	}
 
 	/* Flush */
@@ -4186,7 +4186,7 @@ bool_ brand_bolts()
 	msg_print("The fiery enchantment failed.");
 
 	/* Notice */
-	return (TRUE);
+	return true;
 }
 
 
@@ -4236,7 +4236,7 @@ static bool eternal_flame_item_tester_hook(object_type const *o_ptr)
 	if ((o_ptr->name1 > 0) ||
 	    (o_ptr->name2 > 0))
 	{
-		return FALSE;
+		return false;
 	}
 
 	return (get_eternal_artifact_idx(o_ptr) >= 0);
@@ -4264,7 +4264,7 @@ static bool activate_eternal_flame(int flame_item)
 	object_type *o_ptr = get_object(item);
 	o_ptr->name1 = artifact_idx;
 
-	apply_magic(o_ptr, -1, TRUE, TRUE, TRUE);
+	apply_magic(o_ptr, -1, true, true, true);
 
 	o_ptr->found = OBJ_FOUND_SELFMADE;
 
@@ -4298,12 +4298,12 @@ static void activate_radagast()
 {
 	cmsg_print(TERM_GREEN, "The staff's power cleanses you completely!");
 	remove_all_curse();
-	do_res_stat(A_STR, TRUE);
-	do_res_stat(A_CON, TRUE);
-	do_res_stat(A_DEX, TRUE);
-	do_res_stat(A_WIS, TRUE);
-	do_res_stat(A_INT, TRUE);
-	do_res_stat(A_CHR, TRUE);
+	do_res_stat(A_STR, true);
+	do_res_stat(A_CON, true);
+	do_res_stat(A_DEX, true);
+	do_res_stat(A_WIS, true);
+	do_res_stat(A_INT, true);
+	do_res_stat(A_CHR, true);
 	restore_level();
 	// clean_corruptions(); TODO: Do we want to implement this?
 	hp_player(5000);
@@ -4464,7 +4464,7 @@ void do_cmd_activate()
 	/* New mostly unified activation code
 	   This has to be early to allow artifacts to override normal items -- neil */
 
-	if ( activation_aux(o_ptr, TRUE, item) == NULL )
+	if ( activation_aux(o_ptr, true, item) == NULL )
 	{
 		/* Window stuff */
 		p_ptr->window |= (PW_INVEN | PW_EQUIP);
@@ -4507,7 +4507,7 @@ void do_cmd_activate()
 	msg_print("Oops.  That object cannot be activated.");
 }
 
-const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
+const char *activation_aux(object_type * o_ptr, bool doit, int item)
 {
 	auto const &a_info = game->edit_data.a_info;
 	auto const &e_info = game->edit_data.e_info;
@@ -4517,7 +4517,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 
 	int i = 0, ii = 0, ij = 0, k, dir, dummy = 0;
 	int chance;
-	bool_ is_junkart = (o_ptr->tval == TV_RANDART);
+	bool is_junkart = (o_ptr->tval == TV_RANDART);
 
 	int spell = 0;
 
@@ -4928,7 +4928,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return "summon the Legion of the Dawn every 500+d500 turns";
 			msg_print("You summon the Legion of the Dawn.");
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DAWN, TRUE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_DAWN, true);
 
 			o_ptr->timeout = 500 + randint(500);
 
@@ -5017,7 +5017,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			else
 			{
 				if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-				                             SUMMON_THUNDERLORD, (plev == 50 ? TRUE : FALSE)))
+				                             SUMMON_THUNDERLORD, (plev == 50 ? true : false)))
 				{
 					msg_print("A Thunderlord comes from thin air!");
 					msg_print("'I will help you in your difficult task.'");
@@ -5048,7 +5048,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			msg_print("Your pick twists in your hands.");
 
 			if (!get_aim_dir(&dir)) break;
-			if (passwall(dir, TRUE))
+			if (passwall(dir, true))
 			{
 				msg_print("A passage opens, and you step through.");
 			}
@@ -5107,7 +5107,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			msg_print("Your horn calls for help.");
 			for (i = 0; i < 15; i++)
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2), SUMMON_HUMAN, TRUE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2), SUMMON_HUMAN, true);
 			}
 
 			o_ptr->timeout = 1000;
@@ -5679,7 +5679,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_SUMMON_ANIMAL:
 		{
 			if (!doit) return "summon animal every 200+d300 turns";
-			summon_specific_friendly(p_ptr->py, p_ptr->px, plev, SUMMON_ANIMAL_RANGER, TRUE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, plev, SUMMON_ANIMAL_RANGER, true);
 
 			o_ptr->timeout = 200 + randint(300);
 
@@ -5690,7 +5690,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return "summon phantasmal servant every 200+d200 turns";
 			msg_print("You summon a phantasmal servant.");
-			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_PHANTOM, TRUE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, dun_level, SUMMON_PHANTOM, true);
 
 			o_ptr->timeout = 200 + randint(200);
 
@@ -5711,7 +5711,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			else
 			{
 				if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-				                             SUMMON_ELEMENTAL, (plev == 50 ? TRUE : FALSE)))
+				                             SUMMON_ELEMENTAL, (plev == 50 ? true : false)))
 				{
 					msg_print("An elemental materialises...");
 					msg_print("It seems obedient to you.");
@@ -5737,7 +5737,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			else
 			{
 				if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
-				                             SUMMON_DEMON, (plev == 50 ? TRUE : FALSE)))
+				                             SUMMON_DEMON, (plev == 50 ? true : false)))
 				{
 					msg_print("The area fills with a stench of sulphur and brimstone.");
 					msg_print("'What is thy bidding... Master?'");
@@ -5765,7 +5765,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			{
 				if (summon_specific_friendly(p_ptr->py, p_ptr->px, ((plev * 3) / 2),
 				                             (plev > 47 ? SUMMON_HI_UNDEAD_NO_UNIQUES : SUMMON_UNDEAD),
-				                             (((plev > 24) && (randint(3) == 1)) ? TRUE : FALSE)))
+				                             (((plev > 24) && (randint(3) == 1)) ? true : false)))
 				{
 					msg_print("Cold winds begin to blow around you, carrying with them the stench of decay...");
 					msg_print("Ancient, long-dead forms arise from the ground to serve you!");
@@ -5829,12 +5829,12 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 		{
 			if (!doit) return format("restore stats and life levels every %d turns", (is_junkart ? 200 : 750));
 			msg_print("It glows a deep green...");
-			do_res_stat(A_STR, TRUE);
-			do_res_stat(A_INT, TRUE);
-			do_res_stat(A_WIS, TRUE);
-			do_res_stat(A_DEX, TRUE);
-			do_res_stat(A_CON, TRUE);
-			do_res_stat(A_CHR, TRUE);
+			do_res_stat(A_STR, true);
+			do_res_stat(A_INT, true);
+			do_res_stat(A_WIS, true);
+			do_res_stat(A_DEX, true);
+			do_res_stat(A_CON, true);
+			do_res_stat(A_CHR, true);
 			restore_level();
 
 			o_ptr->timeout = 750;
@@ -6170,12 +6170,12 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			msg_print("Your nerves and muscles feel weak and lifeless!");
 
 			take_hit(damroll(10, 10), "activating Ruination");
-			dec_stat(A_DEX, 25, TRUE);
-			dec_stat(A_WIS, 25, TRUE);
-			dec_stat(A_CON, 25, TRUE);
-			dec_stat(A_STR, 25, TRUE);
-			dec_stat(A_CHR, 25, TRUE);
-			dec_stat(A_INT, 25, TRUE);
+			dec_stat(A_DEX, 25, true);
+			dec_stat(A_WIS, 25, true);
+			dec_stat(A_CON, 25, true);
+			dec_stat(A_STR, 25, true);
+			dec_stat(A_CHR, 25, true);
+			dec_stat(A_INT, 25, true);
 
 			/* Timeout is set before return */
 
@@ -6195,7 +6195,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNINT:
 		{
 			if (!doit) return "decreasing Intelligence";
-			dec_stat(A_INT, 25, FALSE);
+			dec_stat(A_INT, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6205,7 +6205,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNSTR:
 		{
 			if (!doit) return "decreasing Strength";
-			dec_stat(A_STR, 25, FALSE);
+			dec_stat(A_STR, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6215,7 +6215,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNCON:
 		{
 			if (!doit) return "decreasing Constitution";
-			dec_stat(A_CON, 25, FALSE);
+			dec_stat(A_CON, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6225,7 +6225,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNCHR:
 		{
 			if (!doit) return "decreasing Charisma";
-			dec_stat(A_CHR, 25, FALSE);
+			dec_stat(A_CHR, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6235,7 +6235,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNDEX:
 		{
 			if (!doit) return "decreasing Dexterity";
-			dec_stat(A_DEX, 25, FALSE);
+			dec_stat(A_DEX, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6245,7 +6245,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_UNWIS:
 		{
 			if (!doit) return "decreasing Wisdom";
-			dec_stat(A_WIS, 25, FALSE);
+			dec_stat(A_WIS, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6255,12 +6255,12 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_STATLOSS:
 		{
 			if (!doit) return "stat loss";
-			dec_stat(A_STR, 15, FALSE);
-			dec_stat(A_INT, 15, FALSE);
-			dec_stat(A_WIS, 15, FALSE);
-			dec_stat(A_DEX, 15, FALSE);
-			dec_stat(A_CON, 15, FALSE);
-			dec_stat(A_CHR, 15, FALSE);
+			dec_stat(A_STR, 15, false);
+			dec_stat(A_INT, 15, false);
+			dec_stat(A_WIS, 15, false);
+			dec_stat(A_DEX, 15, false);
+			dec_stat(A_CON, 15, false);
+			dec_stat(A_CHR, 15, false);
 
 			/* Timeout is set before return */
 
@@ -6270,12 +6270,12 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_HISTATLOSS:
 		{
 			if (!doit) return "high stat loss";
-			dec_stat(A_STR, 25, FALSE);
-			dec_stat(A_INT, 25, FALSE);
-			dec_stat(A_WIS, 25, FALSE);
-			dec_stat(A_DEX, 25, FALSE);
-			dec_stat(A_CON, 25, FALSE);
-			dec_stat(A_CHR, 25, FALSE);
+			dec_stat(A_STR, 25, false);
+			dec_stat(A_INT, 25, false);
+			dec_stat(A_WIS, 25, false);
+			dec_stat(A_DEX, 25, false);
+			dec_stat(A_CON, 25, false);
+			dec_stat(A_CHR, 25, false);
 
 			/* Timeout is set before return */
 
@@ -6405,7 +6405,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_PET_SUMMON:
 		{
 			if (!doit) return "summon pet every 101 turns";
-			summon_specific_friendly(p_ptr->py, p_ptr->px, max_dlv[dungeon_type], 0, FALSE);
+			summon_specific_friendly(p_ptr->py, p_ptr->px, max_dlv[dungeon_type], 0, false);
 
 			/* Timeout is set before return */
 			/*FINDME*/
@@ -6541,7 +6541,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 	case ACT_ACQUIREMENT:
 		{
 			if (!doit) return "acquirement every 3000 turns";
-			acquirement(p_ptr->py, p_ptr->px, 1, FALSE);
+			acquirement(p_ptr->py, p_ptr->px, 1, false);
 
 			/* Timeout is set before return */
 
@@ -6636,7 +6636,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 						if (c_ptr->m_idx)
 						{
 							/* Update the monster */
-							update_mon(c_ptr->m_idx, FALSE);
+							update_mon(c_ptr->m_idx, false);
 						}
 
 						/* Redraw */
@@ -7041,7 +7041,7 @@ const char *activation_aux(object_type * o_ptr, bool_ doit, int item)
 			if (!doit) return "grow mushrooms every 50+d50 turns";
 			msg_print("You twirl and spores fly everywhere!");
 			for (i = 0; i < 8; i++)
-				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, false);
 
 			o_ptr->timeout = randint(50) + 50;
 

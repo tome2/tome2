@@ -504,7 +504,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 
 	/* Interact with the player */
 	size_t k = 0; /* Currently selected option index */
-	while (TRUE)
+	while (true)
 	{
 		/* Prompt XXX XXX XXX */
 		char buf[80];
@@ -581,7 +581,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 				{
 					break;
 				}
-				*(options[k].o_var) = TRUE;
+				*(options[k].o_var) = true;
 				k = (k + 1) % n;
 				break;
 			}
@@ -595,7 +595,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 					break;
 				}
 
-				*(options[k].o_var) = FALSE;
+				*(options[k].o_var) = false;
 				k = (k + 1) % n;
 				break;
 			}
@@ -622,7 +622,7 @@ static void do_cmd_options_cheat(const char *info)
 	// Interact
 	interact_with_options(options->cheat_options, info, interaction_mode_t::READ_WRITE);
 
-	// If user toggled any of the options to TRUE, then we add those cheats
+	// If user toggled any of the options to true, then we add those cheats
 	// to the player's "noscore" flags. Note that it doesn't matter what the
 	// previous value was -- we don't "unset" noscore flags anyway.
 	for (auto const &option: options->cheat_options)
@@ -671,7 +671,7 @@ static void do_cmd_options_autosave(const char *info)
 	Term_clear();
 
 	/* Interact with the player */
-	while (TRUE)
+	while (true)
 	{
 		/* Prompt XXX XXX XXX */
 		strnfmt(buf, 80,
@@ -744,7 +744,7 @@ static void do_cmd_options_autosave(const char *info)
 		case 'Y':
 		case '6':
 			{
-			        (*options->autosave_options[k].o_var) = TRUE;
+			        (*options->autosave_options[k].o_var) = true;
 				k = (k + 1) % n;
 
 				break;
@@ -754,7 +754,7 @@ static void do_cmd_options_autosave(const char *info)
 		case 'N':
 		case '4':
 			{
-			        (*options->autosave_options[k].o_var) = FALSE;
+			        (*options->autosave_options[k].o_var) = false;
 				k = (k + 1) % n;
 
 				break;
@@ -783,7 +783,7 @@ static void do_cmd_options_autosave(const char *info)
 /*
  * Interact with some options
  */
-void do_cmd_options_aux(int page, const char *info, bool_ read_only)
+void do_cmd_options_aux(int page, const char *info, bool read_only)
 {
 	// Scrape together all the options from the relevant page.
 	std::vector<option_type> page_options;
@@ -818,7 +818,7 @@ static void do_cmd_options_win()
 
 	char ch;
 
-	bool_ go = TRUE;
+	bool go = true;
 
 	u32b old_flag[8];
 
@@ -899,7 +899,7 @@ static void do_cmd_options_win()
 		{
 		case ESCAPE:
 			{
-				go = FALSE;
+				go = false;
 
 				break;
 			}
@@ -1223,7 +1223,7 @@ void do_cmd_options()
 		case '1':
 			{
 				/* Process the general options */
-				do_cmd_options_aux(1, "User Interface Options", FALSE);
+				do_cmd_options_aux(1, "User Interface Options", false);
 
 				break;
 			}
@@ -1232,7 +1232,7 @@ void do_cmd_options()
 		case '2':
 			{
 				/* Spawn */
-				do_cmd_options_aux(2, "Disturbance Options", FALSE);
+				do_cmd_options_aux(2, "Disturbance Options", false);
 
 				break;
 			}
@@ -1241,7 +1241,7 @@ void do_cmd_options()
 		case '3':
 			{
 				/* Spawn */
-				do_cmd_options_aux(3, "Game-Play Options", FALSE);
+				do_cmd_options_aux(3, "Game-Play Options", false);
 
 				break;
 			}
@@ -1250,7 +1250,7 @@ void do_cmd_options()
 		case '4':
 			{
 				/* Spawn */
-				do_cmd_options_aux(4, "Efficiency Options", FALSE);
+				do_cmd_options_aux(4, "Efficiency Options", false);
 
 				break;
 			}
@@ -1258,7 +1258,7 @@ void do_cmd_options()
 			/* ToME Options */
 		case '5':
 			{
-				do_cmd_options_aux(5, "ToME Options", FALSE);
+				do_cmd_options_aux(5, "ToME Options", false);
 
 				break;
 			}
@@ -1266,7 +1266,7 @@ void do_cmd_options()
 			/* Birth Options - read only */
 		case '6':
 			{
-				do_cmd_options_aux(6, "Birth Options(read only)", TRUE);
+				do_cmd_options_aux(6, "Birth Options(read only)", true);
 
 				break;
 			}
@@ -1483,7 +1483,7 @@ static errr macro_dump(const char *fname)
  *
  * Note that both "flush()" calls are extremely important.
  */
-static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
+static void do_cmd_macro_aux(char *buf, bool macro_screen)
 {
 	int i, n = 0;
 
@@ -1494,7 +1494,7 @@ static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 	flush();
 
 	/* Do not process macros */
-	inkey_base = TRUE;
+	inkey_base = true;
 
 	/* First key */
 	i = inkey();
@@ -1506,7 +1506,7 @@ static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 		buf[n++] = i;
 
 		/* Do not process macros */
-		inkey_base = TRUE;
+		inkey_base = true;
 
 		/* Attempt to read a key */
 		i = inkey_scan();
@@ -1753,7 +1753,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Acquire action */
 			k = macro_find_exact(buf);
@@ -1794,7 +1794,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Clear */
 			clear_from(20);
@@ -1829,7 +1829,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Link the macro */
 			macro_add(buf, buf);
@@ -2769,7 +2769,7 @@ void do_cmd_load_screen()
 	byte a = 0;
 	char c = ' ';
 
-	bool_ okay = TRUE;
+	bool okay = true;
 
 	FILE *fff;
 
@@ -2800,7 +2800,7 @@ void do_cmd_load_screen()
 	for (y = 0; okay; y++)
 	{
 		/* Get a line of data */
-		if (my_fgets(fff, buf, 1024)) okay = FALSE;
+		if (my_fgets(fff, buf, 1024)) okay = false;
 
 		/* Stop on blank line */
 		if (!buf[0]) break;
@@ -2826,7 +2826,7 @@ void do_cmd_load_screen()
 	for (y = 0; okay; y++)
 	{
 		/* Get a line of data */
-		if (my_fgets(fff, buf, 1024)) okay = FALSE;
+		if (my_fgets(fff, buf, 1024)) okay = false;
 
 		/* Stop on blank line */
 		if (!buf[0]) break;
@@ -2983,7 +2983,7 @@ void do_cmd_knowledge_artifacts()
 	char base_name[80];
 
 	/* Scan the artifacts */
-	std::vector<bool_> okay(a_info.size(), FALSE);
+	std::vector<bool> okay(a_info.size(), false);
 
 	for (std::size_t k = 0; k < a_info.size(); k++)
 	{
@@ -2996,7 +2996,7 @@ void do_cmd_knowledge_artifacts()
 		if (!a_ptr->cur_num) continue;
 
 		/* Assume okay */
-		okay[k] = TRUE;
+		okay[k] = true;
 	}
 
 	std::unordered_set<int> okayk;
@@ -3043,7 +3043,7 @@ void do_cmd_knowledge_artifacts()
 				}
 				else
 				{
-					okay[o_ptr->name1] = FALSE;
+					okay[o_ptr->name1] = false;
 				}
 			}
 		}
@@ -3074,7 +3074,7 @@ void do_cmd_knowledge_artifacts()
 			}
 			else
 			{
-				okay[o_ptr->name1] = FALSE;
+				okay[o_ptr->name1] = false;
 			}
 		}
 	}
@@ -3103,7 +3103,7 @@ void do_cmd_knowledge_artifacts()
 		}
 		else
 		{
-			okay[o_ptr->name1] = FALSE;
+			okay[o_ptr->name1] = false;
 		}
 	}
 
@@ -3147,7 +3147,7 @@ void do_cmd_knowledge_artifacts()
 			}
 
 			/* Describe the artifact */
-			object_desc_store(base_name, q_ptr, FALSE, 0);
+			object_desc_store(base_name, q_ptr, false, 0);
 		}
 
 		/* Hack -- Build the artifact name */
@@ -3175,7 +3175,7 @@ void do_cmd_knowledge_artifacts()
 		object_prep(q_ptr, k);
 
 		/* Describe the artifact */
-		object_desc_store(base_name, q_ptr, FALSE, 0);
+		object_desc_store(base_name, q_ptr, false, 0);
 
 		/* Hack -- Build the artifact name */
 		w.write("     The {}\n", base_name);
@@ -3249,7 +3249,7 @@ static void do_cmd_knowledge_uniques()
 		/* Only print Uniques */
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			bool_ dead = (r_ptr->max_num == 0);
+			bool dead = (r_ptr->max_num == 0);
 
 			/* Print a message */
 			if (dead)
@@ -3479,7 +3479,7 @@ static void do_cmd_knowledge_kill_count()
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			bool_ dead = (r_ptr->max_num == 0);
+			bool dead = (r_ptr->max_num == 0);
 
 			if (dead)
 			{
@@ -4021,7 +4021,7 @@ void macro_recorder_stop()
 		prt("Trigger: ", 0, 0);
 
 		/* Get a macro trigger */
-		do_cmd_macro_aux(buf, FALSE);
+		do_cmd_macro_aux(buf, false);
 
 		/* Link the macro */
 		macro_add(buf, macro.c_str());

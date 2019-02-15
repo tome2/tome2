@@ -154,7 +154,7 @@ static void pattern_teleport()
 
 
 /*
- * Returns TRUE if we are on the Straight Road...
+ * Returns true if we are on the Straight Road...
  */
 static bool pattern_effect()
 {
@@ -172,12 +172,12 @@ static bool pattern_effect()
 		set_cut(0);
 		set_blind(0);
 		set_afraid(0);
-		do_res_stat(A_STR, TRUE);
-		do_res_stat(A_INT, TRUE);
-		do_res_stat(A_WIS, TRUE);
-		do_res_stat(A_DEX, TRUE);
-		do_res_stat(A_CON, TRUE);
-		do_res_stat(A_CHR, TRUE);
+		do_res_stat(A_STR, true);
+		do_res_stat(A_INT, true);
+		do_res_stat(A_WIS, true);
+		do_res_stat(A_DEX, true);
+		do_res_stat(A_CON, true);
+		do_res_stat(A_CHR, true);
 		restore_level();
 		hp_player(1000);
 		cave_set_feat(p_ptr->py, p_ptr->px, FEAT_PATTERN_OLD);
@@ -238,7 +238,7 @@ static void recharged_notice(object_type *o_ptr)
 		{
 			/* Describe (briefly) */
 			char o_name[80];
-			object_desc(o_name, o_ptr, FALSE, 0);
+			object_desc(o_name, o_ptr, false, 0);
 
 			/* Notify the player */
 			if (o_ptr->number > 1)
@@ -823,9 +823,9 @@ static bool is_light_safe(object_type const *o_ptr)
 {
 	// Get the flags of the object; we don't bother with sets since we're only
 	// interested in "innate" flags on the light source itself.
-	object_flags_no_set = TRUE;
+	object_flags_no_set = true;
 	auto flags = object_flags(o_ptr);
-	object_flags_no_set = FALSE;
+	object_flags_no_set = false;
 
 	// We only allow really badly cursed items. This is to provide
 	// an "out" in case of severely bad luck, but these lights cannot
@@ -1195,10 +1195,10 @@ static void process_world()
 	{
 		if ((turn % (static_cast<s32b>(options->autosave_freq) * 10)) == 0)
 		{
-			is_autosave = TRUE;
+			is_autosave = true;
 			msg_print("Autosaving the game...");
 			do_cmd_save_game();
-			is_autosave = FALSE;
+			is_autosave = false;
 		}
 	}
 
@@ -1288,7 +1288,7 @@ static void process_world()
 		/* Make a new monster */
 		if (!(dungeon_flags & DF_NO_NEW_MONSTER))
 		{
-			alloc_monster(MAX_SIGHT + 5, FALSE);
+			alloc_monster(MAX_SIGHT + 5, false);
 		}
 	}
 
@@ -1328,14 +1328,14 @@ static void process_world()
 			char ouch [80];
 
 			/* Get an object description */
-			object_desc(o_name, o_ptr, FALSE, 0);
+			object_desc(o_name, o_ptr, false, 0);
 
 			msg_format("The %s scorches your undead flesh!", o_name);
 
 			cave_no_regen = true;
 
 			/* Get an object description */
-			object_desc(o_name, o_ptr, TRUE, 0);
+			object_desc(o_name, o_ptr, true, 0);
 
 			sprintf(ouch, "wielding %s", o_name);
 			take_hit(1, ouch);
@@ -1710,7 +1710,7 @@ static void process_world()
 			p_ptr->stat_cnt[i]--;
 			if (p_ptr->stat_cnt[i] == 0)
 			{
-				do_res_stat(i, FALSE);
+				do_res_stat(i, false);
 			}
 		}
 	}
@@ -1775,13 +1775,13 @@ static void process_world()
 			}
 
 			/* No longer a winner */
-			total_winner = FALSE;
+			total_winner = false;
 
 			/* Leaving */
 			p_ptr->leaving = true;
 
 			/* Note death */
-			death = TRUE;
+			death = true;
 
 			options->quick_messages = false;
 			if (get_check("Make a last screenshot? "))
@@ -1830,11 +1830,11 @@ static void process_world()
 	/* Timed breath */
 	if (p_ptr->tim_water_breath)
 	{
-		set_tim_breath(p_ptr->tim_water_breath - 1, FALSE);
+		set_tim_breath(p_ptr->tim_water_breath - 1, false);
 	}
 	if (p_ptr->tim_magic_breath)
 	{
-		set_tim_breath(p_ptr->tim_magic_breath - 1, TRUE);
+		set_tim_breath(p_ptr->tim_magic_breath - 1, true);
 	}
 
 	/* Timed precognition */
@@ -2618,7 +2618,7 @@ static void process_world()
 					int my = p_ptr->py + 1;
 					get_pos_player(5, &my, &mx);
 					msg_print("Your egg hatches!");
-					place_monster_aux(my, mx, o_ptr->pval2, FALSE, FALSE, MSTATUS_PET);
+					place_monster_aux(my, mx, o_ptr->pval2, false, false, MSTATUS_PET);
 
 					monster_type *m_ptr = &m_list[cave[my][mx].m_idx];
 					auto const r_ptr = m_ptr->race();
@@ -2736,7 +2736,7 @@ static void process_world()
 				my = o_ptr->iy;
 				get_pos_player(5, &my, &mx);
 				msg_print("An egg hatches!");
-				place_monster_one(my, mx, o_ptr->pval2, 0, FALSE, MSTATUS_ENEMY);
+				place_monster_one(my, mx, o_ptr->pval2, 0, false, MSTATUS_ENEMY);
 				floor_item_increase(i, -1);
 				floor_item_describe(i);
 				floor_item_optimize(i);
@@ -2947,12 +2947,12 @@ static void process_command()
 		{
 			if (wizard)
 			{
-				wizard = FALSE;
+				wizard = false;
 				msg_print("Wizard mode off.");
 			}
 			else if (enter_wizard_mode())
 			{
-				wizard = TRUE;
+				wizard = true;
 				msg_print("Wizard mode on.");
 			}
 
@@ -3717,7 +3717,7 @@ static void process_command()
 		/* Hack -- Save and don't quit */
 	case KTRL('S'):
 		{
-			is_autosave = FALSE;
+			is_autosave = false;
 			do_cmd_save_game();
 			break;
 		}
@@ -3731,7 +3731,7 @@ static void process_command()
 		/* Save and quit */
 	case KTRL('X'):
 		{
-			alive = FALSE;
+			alive = false;
 
 			/* Leaving */
 			p_ptr->leaving = true;
@@ -3964,7 +3964,7 @@ static void process_player()
 		if (!p_ptr->wild_mode && dun_level == 0)
 		{
 			auto &wilderness = game->wilderness;
-			wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).known = TRUE;
+			wilderness(p_ptr->wilderness_x, p_ptr->wilderness_y).known = true;
 		}
 
 
@@ -3990,7 +3990,7 @@ static void process_player()
 
 			/* Describe */
 			char o_name[80];
-			object_desc(o_name, o_ptr, TRUE, 3);
+			object_desc(o_name, o_ptr, true, 3);
 
 			/* Message */
 			msg_format("You drop %s (%c).", o_name, index_to_label(item));
@@ -4057,7 +4057,7 @@ static void process_player()
 			 * instead of using running commands when s/he follows
 			 * Eru and do the opposite for the other deities -- pelpel
 			 */
-			/* p_ptr->did_nothing = TRUE; */
+			/* p_ptr->did_nothing = true; */
 		}
 
 		/* Repeated command */
@@ -4073,7 +4073,7 @@ static void process_player()
 			redraw_stuff();
 
 			/* Hack -- Assume messages were seen */
-			msg_flag = FALSE;
+			msg_flag = false;
 
 			/* Clear the top line */
 			prt("", 0, 0);
@@ -4091,7 +4091,7 @@ static void process_player()
 			move_cursor_relative(p_ptr->py, p_ptr->px);
 
 			/* Get a command (normal) */
-			request_command(FALSE);
+			request_command(false);
 
 			/* Process the command */
 			process_command();
@@ -4115,7 +4115,7 @@ static void process_player()
 			if (!options->avoid_other && shimmer_monsters)
 			{
 				/* Clear the flag */
-				shimmer_monsters = FALSE;
+				shimmer_monsters = false;
 
 				/* Shimmer multi-hued monsters */
 				for (i = 1; i < m_max; i++)
@@ -4133,7 +4133,7 @@ static void process_player()
 					if (!(r_ptr->flags & RF_ATTR_MULTI)) continue;
 
 					/* Reset the flag */
-					shimmer_monsters = TRUE;
+					shimmer_monsters = true;
 
 					/* Redraw regardless */
 					lite_spot(m_ptr->fy, m_ptr->fx);
@@ -4144,7 +4144,7 @@ static void process_player()
 			if (!options->avoid_other && !options->avoid_shimmer && shimmer_objects)
 			{
 				/* Clear the flag */
-				shimmer_objects = FALSE;
+				shimmer_objects = false;
 
 				/* Shimmer multi-hued objects */
 				for (i = 1; i < o_max; i++)
@@ -4159,7 +4159,7 @@ static void process_player()
 					if (!(o_ptr->k_ptr->flags & TR_ATTR_MULTI)) continue;
 
 					/* Reset the flag */
-					shimmer_objects = TRUE;
+					shimmer_objects = true;
 
 					/* Redraw regardless */
 					lite_spot(o_ptr->iy, o_ptr->ix);
@@ -4205,7 +4205,7 @@ static void process_player()
 			if (repair_monsters)
 			{
 				/* Reset the flag */
-				repair_monsters = FALSE;
+				repair_monsters = false;
 
 				/* Rotate detection flags */
 				for (i = 1; i < m_max; i++)
@@ -4235,7 +4235,7 @@ static void process_player()
 							m_ptr->mflag &= ~(MFLAG_SHOW);
 
 							/* Still need repairs */
-							repair_monsters = TRUE;
+							repair_monsters = true;
 						}
 
 						/* Remove detection */
@@ -4245,10 +4245,10 @@ static void process_player()
 							m_ptr->mflag &= ~(MFLAG_MARK);
 
 							/* Assume invisible */
-							m_ptr->ml = FALSE;
+							m_ptr->ml = false;
 
 							/* Update the monster */
-							update_mon(i, FALSE);
+							update_mon(i, false);
 
 							/* Redraw regardless */
 							lite_spot(m_ptr->fy, m_ptr->fx);
@@ -4293,7 +4293,7 @@ static void dungeon()
 	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Reset various flags */
-	hack_mind = FALSE;
+	hack_mind = false;
 
 	/* Not leaving */
 	p_ptr->leaving = false;
@@ -4316,9 +4316,9 @@ static void dungeon()
 
 
 	/* Check visual effects */
-	shimmer_monsters = TRUE;
-	shimmer_objects = TRUE;
-	repair_monsters = TRUE;
+	shimmer_monsters = true;
+	shimmer_objects = true;
+	repair_monsters = true;
 
 
 	/* Disturb */
@@ -4339,21 +4339,21 @@ static void dungeon()
 	/* No stairs down from Quest */
 	if (is_quest(dun_level) && !p_ptr->astral)
 	{
-		create_down_stair = FALSE;
-		create_down_shaft = FALSE;
+		create_down_stair = false;
+		create_down_shaft = false;
 	}
 
 	/* Paranoia -- no stairs from town or wilderness */
-	if (!dun_level) create_down_stair = create_up_stair = FALSE;
-	if (!dun_level) create_down_shaft = create_up_shaft = FALSE;
+	if (!dun_level) create_down_stair = create_up_stair = false;
+	if (!dun_level) create_down_shaft = create_up_shaft = false;
 
 	/* Option -- no connected stairs */
-	if (!options->dungeon_stair) create_down_stair = create_up_stair = FALSE;
-	if (!options->dungeon_stair) create_down_shaft = create_up_shaft = FALSE;
+	if (!options->dungeon_stair) create_down_stair = create_up_stair = false;
+	if (!options->dungeon_stair) create_down_shaft = create_up_shaft = false;
 
 	/* no connecting stairs on special levels */
-	if (!(dungeon_flags & DF_NO_STAIR)) create_down_stair = create_up_stair = FALSE;
-	if (!(dungeon_flags & DF_NO_STAIR)) create_down_shaft = create_up_shaft = FALSE;
+	if (!(dungeon_flags & DF_NO_STAIR)) create_down_stair = create_up_stair = false;
+	if (!(dungeon_flags & DF_NO_STAIR)) create_down_shaft = create_up_shaft = false;
 
 	/* Make a stairway. */
 	if ((create_up_stair || create_down_stair ||
@@ -4386,8 +4386,8 @@ static void dungeon()
 		}
 
 		/* Cancel the stair request */
-		create_down_stair = create_up_stair = FALSE;
-		create_down_shaft = create_up_shaft = FALSE;
+		create_down_stair = create_up_stair = false;
+		create_down_shaft = create_up_shaft = false;
 	}
 
 	/* Hack - Assume invalid panel */
@@ -4485,7 +4485,7 @@ static void dungeon()
 	/* Reset the object generation level */
 	object_level = dun_level;
 
-	hack_mind = TRUE;
+	hack_mind = true;
 
 	/* Mega Hack, if needed wipe all stairs */
 	if (dungeon_type == DUNGEON_DEATH)
@@ -4520,7 +4520,7 @@ static void dungeon()
 	}
 
 	/* Main loop */
-	while (TRUE)
+	while (true)
 	{
 		/* Hack -- Compact the monster list occasionally */
 		if (m_cnt + 32 > max_m_idx) compact_monsters(64);
@@ -4707,13 +4707,13 @@ void play_game(program_args const &args)
 
 	int i, tmp_dun;
 
-	bool cheat_death = FALSE;
+	bool cheat_death = false;
 
 	/* Initialize player */
 	p_ptr = new player_type();
 
 	/* Hack -- Character is "icky" */
-	character_icky = TRUE;
+	character_icky = true;
 
 
 	/* Make sure main term is active */
@@ -4807,12 +4807,12 @@ void play_game(program_args const &args)
 	Term_fresh();
 
 	/* Be sure to not bother the player */
-	calc_powers_silent = TRUE;
+	calc_powers_silent = true;
 
 	/* Hack -- Enter wizard mode */
 	if (args.wizard && enter_wizard_mode())
 	{
-		wizard = TRUE;
+		wizard = true;
 	}
 
 	/* Flavor the objects */
@@ -4874,21 +4874,21 @@ void play_game(program_args const &args)
 	process_hooks_new(HOOK_GAME_START, NULL, NULL);
 
 	/* Character is now "complete" */
-	character_generated = TRUE;
+	character_generated = true;
 
 
 	/* Hack -- Character is no longer "icky" */
-	character_icky = FALSE;
+	character_icky = false;
 
 
 	/* Start game */
-	alive = TRUE;
+	alive = true;
 
 	/* Hack -- Enforce "delayed death" */
-	if (p_ptr->chp < 0) death = TRUE;
+	if (p_ptr->chp < 0) death = true;
 
 	/* Process */
-	while (TRUE)
+	while (true)
 	{
 		/* Save the level */
 		old_dun_level = dun_level;
@@ -5081,7 +5081,7 @@ void play_game(program_args const &args)
 				game->died_from = "Cheating death";
 
 				/* Do not die */
-				death = FALSE;
+				death = false;
 
 				/* New depth -KMW- */
 				/* dun_level = 0; */

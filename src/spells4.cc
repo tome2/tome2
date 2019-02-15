@@ -445,9 +445,9 @@ int print_spell(const char *label_, byte color, int y, s32b s)
 	return y + 1;
 }
 
-void lua_cast_school_spell(s32b s, bool_ no_cost)
+void lua_cast_school_spell(s32b s, bool no_cost)
 {
-	bool_ use = FALSE;
+	bool use = false;
 	spell_type *spell = spell_at(s);
 
 	/* No magic? */
@@ -504,7 +504,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 		}
 		else
 		{
-			use  = TRUE;
+			use  = true;
 
 			/* failures are dangerous; we'll flush the input buffer
 			   so it isn't missed. */
@@ -519,7 +519,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	}
 
 	/* Use the mana/piety */
-	if (use == TRUE)
+	if (use == true)
 	{
 		/* Reduce mana */
 		adjust_power(s, -get_mana(s));

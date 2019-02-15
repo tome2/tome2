@@ -75,7 +75,7 @@ struct monster_race
 
 	s16b r_pkills = 0;                       /* Count monsters killed in this life */
 
-	bool_ on_saved = 0;                      /* Is the (unique) on a saved level ? */
+	bool on_saved = 0;                      /* Is the (unique) on a saved level ? */
 
 	obj_theme drops;                         /* The drops type */
 

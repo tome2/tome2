@@ -9,7 +9,7 @@
  */
 struct quest_type
 {
-	bool_ silent;
+	bool silent;
 
 	char name[40];          /* Quest name */
 

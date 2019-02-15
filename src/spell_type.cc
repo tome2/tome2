@@ -64,8 +64,8 @@ public:
 		, minimum_pval(0)
 		, casting_type(USE_SPELL_POINTS)
 		, casting_stat(0)
-		, castable_while_blind(FALSE)
-		, castable_while_confused(FALSE)
+		, castable_while_blind(false)
+		, castable_while_confused(false)
 		, device_charges({ 0, 0, 0 })
 		, m_device_allocation()
 		, random_type(-1)
@@ -155,7 +155,7 @@ void spell_type_init_mage(spell_type *spell,
 		break;
 	default:
 		/* Cannot happen */
-		assert(FALSE);
+		assert(false);
 	}
 
 	/* Add first school */
@@ -374,7 +374,7 @@ bool spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay)
 	if ((spell->inertia_difficulty < 0) ||
 	    (spell->inertia_delay < 0))
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (difficulty != NULL)
@@ -387,7 +387,7 @@ bool spell_type_inertia(spell_type *spell, s32b *difficulty, s32b *delay)
 		*delay = spell->inertia_delay;
 	}
 
-	return TRUE;
+	return true;
 }
 
 const char *spell_type_info(spell_type *spell)

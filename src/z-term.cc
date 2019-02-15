@@ -1626,7 +1626,7 @@ errr Term_inkey(char *ch, bool wait, bool take)
 		while (key_queue.empty())
 		{
 			/* Process events (wait for one) */
-			Term_xtra(TERM_XTRA_EVENT, TRUE);
+			Term_xtra(TERM_XTRA_EVENT, true);
 		}
 	}
 
@@ -1637,7 +1637,7 @@ errr Term_inkey(char *ch, bool wait, bool take)
 		if (key_queue.empty())
 		{
 			/* Process events (do not wait) */
-			Term_xtra(TERM_XTRA_EVENT, FALSE);
+			Term_xtra(TERM_XTRA_EVENT, false);
 		}
 	}
 

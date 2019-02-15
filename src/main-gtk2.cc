@@ -95,7 +95,7 @@ struct term_data
 	GdkFont *font;
 	GdkGC *gc;
 
-	bool_ shown;
+	bool shown;
 	byte last_attr;
 
 	int font_wid;
@@ -146,9 +146,9 @@ static guint32 angband_colours[16];
 
 
 /*
- * Set to TRUE when a game is in progress
+ * Set to true when a game is in progress
  */
-static bool_ game_in_progress = FALSE;
+static bool game_in_progress = false;
 
 
 /*
@@ -158,7 +158,7 @@ static bool_ game_in_progress = FALSE;
  * with the MIT Shm extention which is usually active if you run
  * Angband locally, because it reduces amount of memory-to-memory copy.
  */
-static bool_ use_backing_store = TRUE;
+static bool use_backing_store = true;
 
 
 
@@ -198,7 +198,7 @@ static const char *get_default_font(int term)
 /*
  * New global flag to indicate if it's safe to save now
  */
-#define can_save TRUE
+#define can_save true
 
 
 
@@ -332,7 +332,7 @@ static errr Term_wipe_gtk(term_data *td, int x, int y, int n)
 	gdk_draw_rectangle(
 	        TERM_DATA_DRAWABLE(td),
 	        td->drawing_area->style->black_gc,
-	        TRUE,
+	        true,
 	        x * td->font_wid,
 	        y * td->font_hgt,
 	        n * td->font_wid,
@@ -408,7 +408,7 @@ static void Term_curs_gtk(void *data, int x, int y)
 	gdk_draw_rectangle(
 	        TERM_DATA_DRAWABLE(td),
 	        td->gc,
-	        FALSE,
+	        false,
 	        x * td->font_wid,
 	        y * td->font_hgt,
 	        td->font_wid * cells - 1,
@@ -425,7 +425,7 @@ static void Term_curs_gtk(void *data, int x, int y)
  * Process an event, if there's none block when wait is set true,
  * return immediately otherwise.
  */
-static void CheckEvent(bool_ wait)
+static void CheckEvent(bool wait)
 {
 	/* Process an event */
 	(void)gtk_main_iteration_do(wait);
@@ -469,7 +469,7 @@ static void Term_xtra_gtk(void *term_data_ctx, int n, int v)
 		/* Process random events */
 	case TERM_XTRA_BORED:
 		{
-			CheckEvent(FALSE);
+			CheckEvent(false);
 			return;
 		}
 
@@ -624,7 +624,7 @@ static void term_data_set_backing_store(term_data *td)
 		gdk_draw_rectangle(
 		        td->backing_store,
 		        td->drawing_area->style->black_gc,
-		        TRUE,
+		        true,
 		        0,
 		        0,
 		        td->cols * td->font_wid,
@@ -649,7 +649,7 @@ static void save_game_gtk(void)
 	}
 
 	/* Hack -- Forget messages */
-	msg_flag = FALSE;
+	msg_flag = false;
 
 	/* Save the game */
 	do_cmd_save_game();
@@ -689,7 +689,7 @@ static void gtk_message(const char *msg)
 	        label);
 
 	/* And make it modal */
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	gtk_window_set_modal(GTK_WINDOW(dialog), true);
 
 	/* Show the dialog */
 	gtk_widget_show_all(dialog);
@@ -877,7 +877,7 @@ static gboolean delete_event_handler(
 	save_game_gtk();
 
 	/* Don't prevent closure */
-	return (FALSE);
+	return false;
 }
 
 
@@ -895,17 +895,17 @@ static gboolean keypress_event_handler(
 	char msg[128];
 
 	/* Hack - do not do anything until the player picks from the menu */
-	if (!game_in_progress) return (TRUE);
+	if (!game_in_progress) return true;
 
 	/* Hack - Ignore parameters */
 	(void) widget;
 	(void) user_data;
 
 	/* Extract four "modifier flags" */
-	mc = (event->state & GDK_CONTROL_MASK) ? TRUE : FALSE;
-	ms = (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE;
-	mo = (event->state & GDK_MOD1_MASK) ? TRUE : FALSE;
-	mx = (event->state & GDK_MOD3_MASK) ? TRUE : FALSE;
+	mc = (event->state & GDK_CONTROL_MASK) ? true : false;
+	ms = (event->state & GDK_SHIFT_MASK) ? true : false;
+	mo = (event->state & GDK_MOD1_MASK) ? true : false;
+	mx = (event->state & GDK_MOD3_MASK) ? true : false;
 
 	/*
 	 * Hack XXX
@@ -927,7 +927,7 @@ static gboolean keypress_event_handler(
 			macro_add(msg, event->string);
 		}
 
-		return (TRUE);
+		return true;
 	}
 
 	/* Normal keys with no modifiers */
@@ -937,7 +937,7 @@ static gboolean keypress_event_handler(
 		for (i = 0; i < event->length; i++) Term_keypress(event->string[i]);
 
 		/* All done */
-		return (TRUE);
+		return true;
 	}
 
 
@@ -947,26 +947,26 @@ static gboolean keypress_event_handler(
 	case GDK_Escape:
 		{
 			Term_keypress(ESCAPE);
-			return (TRUE);
+			return true;
 		}
 
 	case GDK_Return:
 		{
 			Term_keypress('\r');
-			return (TRUE);
+			return true;
 		}
 
 	case GDK_Tab:
 		{
 			Term_keypress('\t');
-			return (TRUE);
+			return true;
 		}
 
 	case GDK_Delete:
 	case GDK_BackSpace:
 		{
 			Term_keypress('\010');
-			return (TRUE);
+			return true;
 		}
 
 	case GDK_Shift_L:
@@ -985,7 +985,7 @@ static gboolean keypress_event_handler(
 	case GDK_Hyper_R:
 		{
 			/* Hack - do nothing to control characters */
-			return (TRUE);
+			return true;
 		}
 	}
 
@@ -1005,7 +1005,7 @@ static gboolean keypress_event_handler(
 		macro_add(msg, event->string);
 	}
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -1038,7 +1038,7 @@ static void realize_event_handler(
 	gdk_draw_rectangle(
 	        widget->window,
 	        widget->style->black_gc,
-	        TRUE,
+	        true,
 	        0,
 	        0,
 	        td->cols * td->font_wid,
@@ -1056,7 +1056,7 @@ static void show_event_handler(
 	term_data *td = (term_data *)user_data;
 
 	/* Set the shown flag */
-	td->shown = TRUE;
+	td->shown = true;
 }
 
 
@@ -1070,7 +1070,7 @@ static void hide_event_handler(
 	term_data *td = (term_data *)user_data;
 
 	/* Set the shown flag */
-	td->shown = FALSE;
+	td->shown = false;
 }
 
 
@@ -1154,7 +1154,7 @@ static gboolean expose_event_handler(
 
 
 	/* Paranoia */
-	if (td == NULL) return (TRUE);
+	if (td == NULL) return true;
 
 	/* The window has a backing store */
 	if (td->backing_store)
@@ -1218,7 +1218,7 @@ static gboolean expose_event_handler(
 	}
 
 	/* We've processed the event ourselves */
-	return (TRUE);
+	return true;
 }
 
 
@@ -1521,7 +1521,7 @@ static GtkWidget *get_widget_from_path(const char *path)
 /*
  * Enable/disable a menu item
  */
-void enable_menu_item(const char *path, bool_ enabled)
+void enable_menu_item(const char *path, bool enabled)
 {
 	GtkWidget *widget;
 
@@ -1543,7 +1543,7 @@ void enable_menu_item(const char *path, bool_ enabled)
 /*
  * Check/uncheck a menu item. The item should be of the GtkCheckMenuItem type
  */
-void check_menu_item(const char *path, bool_ checked)
+void check_menu_item(const char *path, bool checked)
 {
 	GtkWidget *widget;
 
@@ -1574,18 +1574,18 @@ static void file_menu_update_handler(
         GtkWidget *widget,
         gpointer user_data)
 {
-	bool_ save_ok, quit_ok;
+	bool save_ok, quit_ok;
 
 	/* Cave we save/quit now? */
 	if (!character_generated || !game_in_progress)
 	{
-		save_ok = FALSE;
-		quit_ok = TRUE;
+		save_ok = false;
+		quit_ok = true;
 	}
 	else
 	{
-		if (inkey_flag && can_save) save_ok = quit_ok = TRUE;
-		else save_ok = quit_ok = FALSE;
+		if (inkey_flag && can_save) save_ok = quit_ok = true;
+		else save_ok = quit_ok = false;
 	}
 
 	/* Enable / disable menu items according to those conditions */
@@ -1771,7 +1771,7 @@ static void init_gtk_window(term_data *td, int i)
 	GtkWidget *menu_bar = NULL, *box;
 	const char *font;
 
-	bool_ main_window = (i == 0) ? TRUE : FALSE;
+	bool main_window = (i == 0) ? true : false;
 
 
 	/* Create window */
@@ -1876,7 +1876,7 @@ static void init_gtk_window(term_data *td, int i)
 
 	/* Pack the menu bar together with the main window */
 	/* For vertical placement of the menu bar and the drawing area */
-	box = gtk_vbox_new(FALSE, 0);
+	box = gtk_vbox_new(false, 0);
 
 	/* Let the window widget own it */
 	gtk_container_add(GTK_CONTAINER(td->window), box);
@@ -1886,8 +1886,8 @@ static void init_gtk_window(term_data *td, int i)
 		gtk_box_pack_start(
 		        GTK_BOX(box),
 		        menu_bar,
-		        FALSE,
-		        FALSE,
+		        false,
+		        false,
 		        NO_PADDING);
 
 	/* And place the drawing area just beneath it */
@@ -1942,7 +1942,7 @@ int init_gtk2(int argc, char **argv)
 		/* Disable use of pixmaps as backing store */
 		if (equals(argv[i], "-b"))
 		{
-			use_backing_store = FALSE;
+			use_backing_store = false;
 			continue;
 		}
 
@@ -1970,8 +1970,8 @@ int init_gtk2(int argc, char **argv)
 		term *t = term_data_init(td, i);
 
 		/* Hack - Set the shown flag, meaning "to be shown" XXX XXX */
-		if (i < num_term) td->shown = TRUE;
-		else td->shown = FALSE;
+		if (i < num_term) td->shown = true;
+		else td->shown = false;
 
 		/* Save global entry */
 		angband_term[i] = t;
@@ -1987,7 +1987,7 @@ int init_gtk2(int argc, char **argv)
 	plog_aux = hook_plog;
 
 	/* It's too early to set this, but cannot do so elsewhere XXX XXX */
-	game_in_progress = TRUE;
+	game_in_progress = true;
 
 	/* Success */
 	return (0);

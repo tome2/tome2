@@ -65,8 +65,8 @@ struct player_type
 
 	s32b wilderness_x = 0;                                  /* Coordinates in the wilderness */
 	s32b wilderness_y = 0;
-	bool wild_mode = false;                                /* TRUE = Small map, FLASE = Big map */
-	bool old_wild_mode = false;                            /* TRUE = Small map, FLASE = Big map */
+	bool wild_mode = false;                                /* true = Small map, FLASE = Big map */
+	bool old_wild_mode = false;                            /* true = Small map, FLASE = Big map */
 
 	s16b mhp = 0;                                           /* Max hit pts */
 	s16b chp = 0;                                           /* Cur hit pts */
@@ -261,8 +261,8 @@ struct player_type
 	bool teleport = false;                                  /* Random teleporting */
 
 	bool exp_drain = false;                                 /* Experience draining */
-	byte drain_mana = FALSE;                                /* mana draining */
-	byte drain_life = FALSE;                                /* hp draining */
+	byte drain_mana = false;                                /* mana draining */
+	byte drain_life = false;                                /* hp draining */
 
 	bool magical_breath = false;                            /* Magical breathing -- can breath anywhere */
 	bool water_breath = false;                              /* Water breathing -- can breath underwater */

@@ -51,7 +51,7 @@ static void quit_hook(const char *s)
 /*
  * Check existence of ".ToME/" directory in the user's
  * home directory or try to create it if it doesn't exist.
- * Returns FALSE if all the attempts fail.
+ * Returns false if all the attempts fail.
  */
 static void init_save_dir()
 {

@@ -768,7 +768,7 @@ casting_result demonology_summon_demon()
 		type = SUMMON_HI_DEMON;
 	}
 
-	if (!summon_specific_friendly(p_ptr->py, p_ptr->px, level, type, TRUE))
+	if (!summon_specific_friendly(p_ptr->py, p_ptr->px, level, type, true))
 	{
 		msg_print("Something blocks your summoning!");
 	}
@@ -1322,9 +1322,9 @@ casting_result fire_golem()
 
 	/* Summon it */
 	int r_idx = get_fire_golem();
-	m_allow_special[r_idx] = TRUE;
-	int m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
-	m_allow_special[r_idx] = FALSE;
+	m_allow_special[r_idx] = true;
+	int m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_FRIEND);
+	m_allow_special[r_idx] = false;
 
 	/* level it */
 	if (m_idx != 0)
@@ -1420,7 +1420,7 @@ static u32b dir_to_eff_flags(int dir)
 	case 8: return EFF_DIR8;
 	case 9: return EFF_DIR9;
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 	/* Default */
 	return 0;
@@ -1738,7 +1738,7 @@ casting_result geomancy_elemental_minion()
 
 		/* Summon it */
 		find_position(y, x, &my, &mx);
-		m_idx = place_monster_one(my, mx, r_idx, 0, FALSE, MSTATUS_FRIEND);
+		m_idx = place_monster_one(my, mx, r_idx, 0, false, MSTATUS_FRIEND);
 
 		/* Level it */
 		if (m_idx)
@@ -1994,7 +1994,7 @@ casting_result manwe_call()
 	r_idx = test_monster_name("Great eagle");
 	assert(r_idx >= 1);
 
-	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_FRIEND);
 
 	if (m_idx > 0)
 	{
@@ -2451,7 +2451,7 @@ void meta_inertia_control_timer_callback()
 	else if ((p_ptr->inertia_controlled_spell != -1) &&
 		 (!p_ptr->wild_mode))
 	{
-		lua_cast_school_spell(p_ptr->inertia_controlled_spell, TRUE);
+		lua_cast_school_spell(p_ptr->inertia_controlled_spell, true);
 	}
 }
 
@@ -2922,7 +2922,7 @@ casting_result udun_drain()
 	}
 
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 
 	return CAST;
@@ -3344,7 +3344,7 @@ casting_result yavanna_uproot()
 
 		/* Summon it */
 		find_position(y, x, &y, &x);
-		m_idx = place_monster_one(y, x, test_monster_name("Ent"), 0, FALSE, MSTATUS_FRIEND);
+		m_idx = place_monster_one(y, x, test_monster_name("Ent"), 0, false, MSTATUS_FRIEND);
 
 		/* level it */
 		if (m_idx != 0)
@@ -3429,12 +3429,12 @@ casting_result nature_recovery()
 
 	if (get_level_s(RECOVERY, 50) >= 10)
 	{
-		do_res_stat(A_STR, TRUE);
-		do_res_stat(A_CON, TRUE);
-		do_res_stat(A_DEX, TRUE);
-		do_res_stat(A_WIS, TRUE);
-		do_res_stat(A_INT, TRUE);
-		do_res_stat(A_CHR, TRUE);
+		do_res_stat(A_STR, true);
+		do_res_stat(A_CON, true);
+		do_res_stat(A_DEX, true);
+		do_res_stat(A_WIS, true);
+		do_res_stat(A_INT, true);
+		do_res_stat(A_CHR, true);
 	}
 
 	if (get_level_s(RECOVERY, 50) >= 15)
@@ -3490,7 +3490,7 @@ casting_result nature_summon_animal()
 		p_ptr->px,
 		dun_level,
 		SUMMON_ANIMAL,
-		TRUE);
+		true);
 	return CAST;
 }
 
@@ -3653,7 +3653,7 @@ casting_result device_thunderlords()
 		}
 
 	default:
-		assert(FALSE);
+		assert(false);
 		return NO_CAST;
 	}
 }
@@ -4106,7 +4106,7 @@ casting_result aule_child_spell()
 
 	find_position(p_ptr->py, p_ptr->px, &y, &x);
 	m_idx = place_monster_one(y, x, test_monster_name("Dwarven warrior"),
-				  0, FALSE, MSTATUS_FRIEND);
+				  0, false, MSTATUS_FRIEND);
  
 	if (m_idx)
 	{
@@ -4161,8 +4161,8 @@ casting_result mandos_spirit_of_the_feanturi_spell()
 
 	if (level >= 20)
 	{
-		do_res_stat(A_WIS, TRUE);
-		do_res_stat(A_INT, TRUE);
+		do_res_stat(A_WIS, true);
+		do_res_stat(A_INT, true);
 	}
             
 	if (level >= 30)
@@ -4227,7 +4227,7 @@ casting_result mandos_call_to_the_halls_spell()
 	assert(r_idx >= 0);
 
 	find_position(p_ptr->py, p_ptr->px, &y, &x);
-	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_FRIEND);
 	if (m_idx)
 	{
 		monster_set_level(m_idx, call_to_the_halls_mlev());
@@ -4300,9 +4300,9 @@ casting_result ulmo_draught_of_ulmonan_spell()
 
 	if (level >= 10)
 	{
-		do_res_stat(A_STR, TRUE);
-		do_res_stat(A_CON, TRUE);
-		do_res_stat(A_DEX, TRUE);
+		do_res_stat(A_STR, true);
+		do_res_stat(A_CON, true);
+		do_res_stat(A_DEX, true);
 	}
 
 	if (level >= 20)
@@ -4342,7 +4342,7 @@ casting_result ulmo_call_of_the_ulumuri_spell()
 
 	find_position(p_ptr->py, p_ptr->px, &y, &x);
 
-	m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
+	m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_FRIEND);
 	if (m_idx)
 	{
 		monster_set_level(m_idx, call_of_the_ulumuri_mlev());

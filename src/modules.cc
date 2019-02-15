@@ -257,7 +257,7 @@ bool select_module(program_args const &args)
 	/* Preprocess the basic prefs, we need them to have movement keys */
 	process_pref_file(name_file_pref("pref"));
 
-	while (TRUE)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -328,7 +328,7 @@ bool select_module(program_args const &args)
 	abort();
 }
 
-static bool_ dleft(byte c, const char *str, int y, int o)
+static bool dleft(byte c, const char *str, int y, int o)
 {
 	int i = strlen(str);
 	int x = 39 - (strlen(str) / 2) + o;
@@ -353,17 +353,17 @@ static bool_ dleft(byte c, const char *str, int y, int o)
 				a = a + 1;
 
 				if (inkey_scan()) {
-					return TRUE;
+					return true;
 				}
 			}
 		}
 
 		i = i - 1;
 	}
-	return FALSE;
+	return false;
 }
 
-static bool_ dright(byte c, const char *str, int y, int o)
+static bool dright(byte c, const char *str, int y, int o)
 {
 	int n = strlen(str); // Conversion to int to avoid warnings
 	int x = 39 - (n / 2) + o;
@@ -386,25 +386,25 @@ static bool_ dright(byte c, const char *str, int y, int o)
 				a = a - 1;
 
 				if (inkey_scan()) {
-					return TRUE;
+					return true;
 				}
 			}
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 typedef struct intro_text intro_text;
 struct intro_text
 {
-	bool_ (*drop_func)(byte, const char *, int, int);
+	bool (*drop_func)(byte, const char *, int, int);
 	byte color;
 	const char *text;
 	int y0;
 	int x0;
 };
 
-static bool_ show_intro(intro_text intro_texts[])
+static bool show_intro(intro_text intro_texts[])
 {
 	int i = 0;
 
@@ -419,7 +419,7 @@ static bool_ show_intro(intro_text intro_texts[])
 		else if (it->drop_func(it->color, it->text, it->y0, it->x0))
 		{
 			/* Abort */
-			return TRUE;
+			return true;
 		}
 	}
 
@@ -428,7 +428,7 @@ static bool_ show_intro(intro_text intro_texts[])
 	inkey();
 
 	/* Continue */
-	return FALSE;
+	return false;
 }
 
 void tome_intro()
@@ -560,12 +560,12 @@ static bool drunk_takes_wine(void *, void *in_, void *)
 			object_type forge;
 			object_prep(&forge, lookup_kind(TV_BOTTLE,1));
 			drop_near(&forge, 50, p_ptr->py, p_ptr->px);
-			return TRUE;
+			return true;
 		}
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -637,7 +637,7 @@ static bool food_vessel(void *, void *in_, void *ut)
 
 		object_prep(&forge, lookup_kind(TV_JUNK, 3));
 
-		inven_carry(&forge, FALSE);
+		inven_carry(&forge, false);
 
 		return true;
 	}
@@ -673,13 +673,13 @@ static bool erebor_stair(void *, void *in_, void *out_)
 		{
 			msg_print("The moon-letters on the map show you "
 				  "the keyhole! You use the key to enter.");
-			out->allow = TRUE;
+			out->allow = true;
 		}
 		else
 		{
 			msg_print("You have found a door, but you cannot "
 				  "find a way to enter. Ask in Dale, perhaps?");
-			out->allow = FALSE;
+			out->allow = false;
 		}
 	}
 
@@ -712,12 +712,12 @@ static bool orthanc_stair(void *, void *in_, void *out_)
 		if (keys >= 1)
 		{
 			msg_print("#BYou have the key to the tower of Orthanc! You may proceed.#w");
-			out->allow = TRUE;
+			out->allow = true;
 		}
 		else
 		{
 			msg_print("#yYou may not enter Orthanc without the key to the gates!#w Rumours say the key was lost in the Mines of Moria...");
-			out->allow = FALSE;
+			out->allow = false;
 		}
 	}
 
@@ -1231,6 +1231,6 @@ void init_hooks_module()
 	}
 
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 }

@@ -66,7 +66,7 @@ static bool quest_narsil_move_hook(void *, void *in_, void *)
 
 	object_prep(o_ptr, lookup_kind(TV_SWORD, SV_LONG_SWORD));
 	o_ptr->name1 = ART_ANDURIL;
-	apply_magic(o_ptr, -1, TRUE, TRUE, TRUE);
+	apply_magic(o_ptr, -1, true, true, true);
 	object_aware(o_ptr);
 	object_known(o_ptr);
 	inven_item_describe(i);
@@ -79,7 +79,7 @@ static bool quest_narsil_move_hook(void *, void *in_, void *)
 	cquest.status = QUEST_STATUS_FINISHED;
 
 	del_hook_new(HOOK_MOVE, quest_narsil_move_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -116,7 +116,7 @@ static bool quest_narsil_identify_hook(void *, void *in_, void *)
 
 			add_hook_new(HOOK_MOVE, quest_narsil_move_hook, "narsil_move", NULL);
 			del_hook_new(HOOK_IDENTIFY, quest_narsil_identify_hook);
-			process_hooks_restart = TRUE;
+			process_hooks_restart = true;
 		}
 	}
 

@@ -225,7 +225,7 @@ void DestroyRule::do_write_tree(TreePrinter *p) const
 bool DestroyRule::do_apply_rule(object_type *o_ptr, int item_idx) const
 {
 	// Must be identified
-	if (object_aware_p(o_ptr) == FALSE)
+	if (object_aware_p(o_ptr) == false)
 	{
 		return false;
 	}

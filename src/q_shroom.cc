@@ -65,24 +65,24 @@ static bool quest_shroom_town_gen_hook(void *, void *in_, void *)
 		/* Throw in some dogs ;) */
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[get_grip()] = TRUE;
-		m_idx = place_monster_one(y, x, get_grip(), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_grip()] = true;
+		m_idx = place_monster_one(y, x, get_grip(), 0, false, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[get_grip()] = FALSE;
+		m_allow_special[get_grip()] = false;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[get_wolf()] = TRUE;
-		m_idx = place_monster_one(y, x, get_wolf(), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_wolf()] = true;
+		m_idx = place_monster_one(y, x, get_wolf(), 0, false, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[get_wolf()] = FALSE;
+		m_allow_special[get_wolf()] = false;
 
 		y = rand_range((cur_hgt / 2) - 5, (cur_hgt / 2) + 5);
 		x = rand_range((cur_wid / 2) - 7, (cur_wid / 2) + 7);
-		m_allow_special[get_fang()] = TRUE;
-		m_idx = place_monster_one(y, x, get_fang(), 0, FALSE, MSTATUS_ENEMY);
+		m_allow_special[get_fang()] = true;
+		m_idx = place_monster_one(y, x, get_fang(), 0, false, MSTATUS_ENEMY);
 		if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
-		m_allow_special[get_fang()] = FALSE;
+		m_allow_special[get_fang()] = false;
 
 		msg_print("You hear frenzied barking.");
 	}
@@ -113,9 +113,9 @@ static bool quest_shroom_town_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Place Farmer Maggot */
-	m_allow_special[get_farmer_maggot()] = TRUE;
-	place_monster_one(y, x, get_farmer_maggot(), 0, FALSE, MSTATUS_ENEMY);
-	m_allow_special[get_farmer_maggot()] = FALSE;
+	m_allow_special[get_farmer_maggot()] = true;
+	place_monster_one(y, x, get_farmer_maggot(), 0, false, MSTATUS_ENEMY);
+	m_allow_special[get_farmer_maggot()] = false;
 
 	return false;
 }
@@ -173,7 +173,7 @@ static bool quest_shroom_give_hook(void *, void *in_, void *)
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
 		del_hook_new(HOOK_CHAT, quest_shroom_speak_hook);
 		del_hook_new(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 		return true;
 	}
 
@@ -205,7 +205,7 @@ static bool quest_shroom_give_hook(void *, void *in_, void *)
 
 		if (inven_carry_okay(q_ptr))
 		{
-			inven_carry(q_ptr, FALSE);
+			inven_carry(q_ptr, false);
 		}
 		else
 		{
@@ -218,16 +218,16 @@ static bool quest_shroom_give_hook(void *, void *in_, void *)
 		q_ptr->found = OBJ_FOUND_REWARD;
 		q_ptr->number = 1;
 		q_ptr->name1 = 149;
-		apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+		apply_magic(q_ptr, -1, true, true, true);
 		q_ptr->discount = 100;
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 
 		delete_monster_idx(m_idx);
 
 		cquest.status = QUEST_STATUS_FINISHED;
 
 		del_hook_new(HOOK_GIVE, quest_shroom_give_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 	}
 	else
 	{
@@ -254,7 +254,7 @@ static void check_dogs_alive(s32b m_idx)
 		del_hook_new(HOOK_MON_SPEAK, quest_shroom_speak_hook);
 		del_hook_new(HOOK_CHAT, quest_shroom_chat_hook);
 		del_hook_new(HOOK_WILD_GEN, quest_shroom_town_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 	}
 	else
 	{

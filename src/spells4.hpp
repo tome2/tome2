@@ -39,4 +39,4 @@ int print_spell(const char *label, byte color, int y, s32b s);
 int school_book_length(int sval);
 int spell_x(int sval, int spell_idx, int i);
 bool school_book_contains_spell(int sval, s32b spell_idx);
-void lua_cast_school_spell(s32b spell_idx, bool_ no_cost);
+void lua_cast_school_spell(s32b spell_idx, bool no_cost);

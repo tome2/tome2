@@ -1254,10 +1254,10 @@ static void react_keypress(XKeyEvent *xev)
 	ks1 = (unsigned int)(ks);
 
 	/* Extract four "modifier flags" */
-	mc = (ev->state & ControlMask) ? TRUE : FALSE;
-	ms = (ev->state & ShiftMask) ? TRUE : FALSE;
-	mo = (ev->state & Mod1Mask) ? TRUE : FALSE;
-	mx = (ev->state & Mod2Mask) ? TRUE : FALSE;
+	mc = (ev->state & ControlMask) ? true : false;
+	ms = (ev->state & ShiftMask) ? true : false;
+	mo = (ev->state & Mod1Mask) ? true : false;
+	mx = (ev->state & Mod2Mask) ? true : false;
 
 
 	/* Normal keys with no modifiers */
@@ -1334,7 +1334,7 @@ static void react_keypress(XKeyEvent *xev)
 /*
  * Process events
  */
-static errr CheckEvent(term_data *old_td, bool_ wait)
+static errr CheckEvent(term_data *old_td, bool wait)
 {
 	XEvent xev_body, *xev = &xev_body;
 
@@ -1582,7 +1582,7 @@ static void Term_xtra_x11(void *data, int n, int v)
 
 		/* Flush the events XXX */
 	case TERM_XTRA_FLUSH:
-		while (!CheckEvent(td, FALSE));
+		while (!CheckEvent(td, false));
 		return;
 
 		/* Handle change in the "level" */

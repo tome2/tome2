@@ -21,7 +21,7 @@ struct player_race_mod
 	std::string title;
 	std::string description;
 
-	bool place = FALSE;                                    /* TRUE = race race modifier, FALSE = Race modifier race */
+	bool place = false;                                    /* true = race race modifier, false = Race modifier race */
 
 	char luck = '\0';                                       /* Luck */
 	s16b mana = 0;                                          /* Mana % */

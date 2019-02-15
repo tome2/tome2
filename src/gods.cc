@@ -56,7 +56,7 @@ void abandon_god(int god)
 /*
  * Check if god may be followed by player
  */
-static bool_ may_follow_god(int god)
+static bool may_follow_god(int god)
 {
 	if (god == GOD_MELKOR)
 	{
@@ -69,18 +69,18 @@ static bool_ may_follow_god(int god)
 			{
 				msg_print("The One Ring has corrupted "
 					  "you, and you are rejected.");
-				return FALSE;
+				return false;
 			}
 		}
 	}
 	/* Default is to allow */
-	return TRUE;
+	return true;
 }
 
 /*
  * Get a religion
  */
-void follow_god(int god, bool_ silent)
+void follow_god(int god, bool silent)
 {
 	auto &s_info = game->s_info;
 
@@ -114,7 +114,7 @@ void follow_god(int god, bool_ silent)
 /*
  * Show religious info.
  */
-bool_ show_god_info()
+bool show_god_info()
 {
 	int pgod = p_ptr->pgod;
 
@@ -124,7 +124,7 @@ bool_ show_god_info()
 	{
 		msg_print("You don't worship anyone.");
 		msg_print(NULL);
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -146,7 +146,7 @@ bool_ show_god_info()
 		screen_load_no_flush();
 	}
 
-	return TRUE;
+	return true;
 }
 
 /*
@@ -178,7 +178,7 @@ deity_type *god_at(byte god_idx)
 /*
  * Check if god is enabled for the current module
  */
-bool_ god_enabled(struct deity_type *deity)
+bool god_enabled(struct deity_type *deity)
 {
 	int i;
 
@@ -186,11 +186,11 @@ bool_ god_enabled(struct deity_type *deity)
 	{
 		if (deity->modules[i] == game_module_idx)
 		{
-			return TRUE;
+			return true;
 		}
 	}
 	/* Not enabled */
-	return FALSE;
+	return false;
 }
 
 /* Find a god by name */

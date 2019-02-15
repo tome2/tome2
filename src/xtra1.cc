@@ -1217,7 +1217,7 @@ static void fix_object()
 
 		/* Display object info */
 		if (tracked_object &&
-			!object_out_desc(tracked_object, NULL, FALSE, FALSE))
+			!object_out_desc(tracked_object, NULL, false, false))
 		{
 			text_out("You see nothing special.");
 		}
@@ -2088,7 +2088,7 @@ void calc_body()
 		if ((!p_ptr->body_parts[i]) && p_ptr->inventory[i + INVEN_WIELD].k_ptr)
 		{
 			/* Drop it NOW ! */
-			inven_takeoff(i + INVEN_WIELD, 255, TRUE);
+			inven_takeoff(i + INVEN_WIELD, 255, true);
 		}
 	}
 }
@@ -2637,11 +2637,11 @@ static void apply_lflags(LF const &lflags)
 /**
  * Are barehand fighter's hands empty?
  */
-static bool_ monk_empty_hands()
+static bool monk_empty_hands()
 {
 	if (p_ptr->melee_style != SKILL_HAND)
 	{
-		return FALSE;
+		return false;
 	}
 
 	for (int i = 0; p_ptr->body_parts[i] == INVEN_WIELD; i++)
@@ -2650,11 +2650,11 @@ static bool_ monk_empty_hands()
 
 		if (o_ptr->k_ptr)
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 
@@ -2678,7 +2678,7 @@ static bool_ monk_empty_hands()
  * are actually added in later, at the appropriate place.
  *
  * This function induces various "status" messages, unless silent is
- * TRUE.
+ * true.
  */
 void calc_bonuses(bool silent)
 {
@@ -2687,14 +2687,14 @@ void calc_bonuses(bool silent)
 	auto &s_info = game->s_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	static bool_ monk_notify_aux = FALSE;
+	static bool monk_notify_aux = false;
 	int i, j, hold;
 	int old_speed;
 	bool old_see_inv;
 	int old_dis_ac;
 	int old_dis_to_a;
 	object_type *o_ptr;
-	bool_ monk_armour_aux;
+	bool monk_armour_aux;
 
 
 	/* Save the old computed_flags */
@@ -2957,9 +2957,9 @@ void calc_bonuses(bool silent)
 		}
 
 		/* Extract the item flags */
-		object_flags_no_set = TRUE;
+		object_flags_no_set = true;
 		auto flags = object_flags(o_ptr);
-		object_flags_no_set = FALSE;
+		object_flags_no_set = false;
 
 		/* MEGA ugly hack -- set spacetime distortion resistance */
 		if (o_ptr->name1 == ART_ANCHOR)
@@ -3431,7 +3431,7 @@ void calc_bonuses(bool silent)
 
 
 	/* Assume not heavy */
-	p_ptr->heavy_shoot = FALSE;
+	p_ptr->heavy_shoot = false;
 
 	/* It is hard to carholdry a heavy bow */
 	if (hold < o_ptr->weight / 10)
@@ -3441,7 +3441,7 @@ void calc_bonuses(bool silent)
 		p_ptr->dis_to_h += 2 * (hold - o_ptr->weight / 10);
 
 		/* Heavy Bow */
-		p_ptr->heavy_shoot = TRUE;
+		p_ptr->heavy_shoot = true;
 	}
 
 	/* Take note of required "tval" for missiles */
@@ -3656,7 +3656,7 @@ void calc_bonuses(bool silent)
 
 	/* Assume okay */
 	p_ptr->icky_wield = false;
-	monk_armour_aux = FALSE;
+	monk_armour_aux = false;
 
 	if (get_weaponmastery_skill() != -1)
 	{
@@ -3784,7 +3784,7 @@ void calc_bonuses(bool silent)
 
 	if (monk_heavy_armor())
 	{
-		monk_armour_aux = TRUE;
+		monk_armour_aux = true;
 	}
 
 	/* Affect Skill -- stealth (bonus one) */
@@ -4051,13 +4051,13 @@ void update_stuff()
 	{
 		p_ptr->update &= ~(PU_DISTANCE);
 		p_ptr->update &= ~(PU_MONSTERS);
-		update_monsters(TRUE);
+		update_monsters(true);
 	}
 
 	if (p_ptr->update & (PU_MONSTERS))
 	{
 		p_ptr->update &= ~(PU_MONSTERS);
-		update_monsters(FALSE);
+		update_monsters(false);
 	}
 
 	if (p_ptr->update & (PU_MON_LITE))
@@ -4336,7 +4336,7 @@ void gain_fate(byte fate)
 			{
 			case FATE_FIND_O:
 				{
-					while (TRUE)
+					while (true)
 					{
 						obj_theme theme;
 
@@ -4369,7 +4369,7 @@ void gain_fate(byte fate)
 					level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 					fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
 					fates[i].serious = rand_int(2);
-					fates[i].know = FALSE;
+					fates[i].know = false;
 					if (wizard) msg_format("New fate : Find object %d on level %d", fates[i].o_idx, fates[i].level);
 					break;
 				}
@@ -4381,7 +4381,7 @@ void gain_fate(byte fate)
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
 				fates[i].serious = rand_int(2);
-				fates[i].know = FALSE;
+				fates[i].know = false;
 				if (wizard) msg_format("New fate : Meet monster %d on level %d", fates[i].r_idx, fates[i].level);
 				break;
 
@@ -4389,21 +4389,21 @@ void gain_fate(byte fate)
 				fates[i].a_idx = get_artifact_idx(max_dlv[dungeon_type] + randint(10));
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
-				fates[i].serious = TRUE;
-				fates[i].know = FALSE;
+				fates[i].serious = true;
+				fates[i].know = false;
 				if (wizard) msg_format("New fate : Find artifact %d on level %d", fates[i].a_idx, fates[i].level);
 				break;
 
 			case FATE_DIE:
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
-				fates[i].serious = TRUE;
-				fates[i].know = FALSE;
+				fates[i].serious = true;
+				fates[i].know = false;
 				if ((wizard) || (p_ptr->precognition)) msg_format("New fate : Death on level %d", fates[i].level);
 				break;
 
 			case FATE_NO_DIE_MORTAL:
-				fates[i].serious = TRUE;
+				fates[i].serious = true;
 				p_ptr->no_mortal = true;
 				if ((wizard) || (p_ptr->precognition)) msg_format("New fate : Never to die by the hand of a mortal being.");
 				break;
@@ -4523,7 +4523,7 @@ std::string fate_desc(int fate)
 
 std::string dump_fates()
 {
-	bool_ pending = FALSE;
+	bool pending = false;
 
 	fmt::MemoryWriter w;
 

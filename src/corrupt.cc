@@ -52,7 +52,7 @@ static void player_gain_vampire_teeth()
 
 	player_race_mod *rmp_ptr = NULL;
 
-	switch_subrace(SUBRACE_SAVE, TRUE);
+	switch_subrace(SUBRACE_SAVE, true);
 
 	rmp_ptr = &race_mod_info[SUBRACE_SAVE];
 	subrace_add_power(rmp_ptr, PWR_VAMPIRISM);
@@ -677,9 +677,9 @@ bool player_has_corruption(int corruption_idx)
 	return p_ptr->corruptions[corruption_idx];
 }
 
-static bool_ player_can_gain_corruption(int corruption_idx)
+static bool player_can_gain_corruption(int corruption_idx)
 {
-	bool_ allowed = TRUE; /* Allowed by default */
+	bool allowed = true; /* Allowed by default */
 
 	assert(corruption_idx >= 0);
 
@@ -688,7 +688,7 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 		/* Ok trolls should not get this one. never. */
 		if (rp_ptr->title == "Troll")
 		{
-			allowed = FALSE;
+			allowed = false;
 		}
 	}
 
@@ -699,14 +699,14 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 		if (rp_ptr->title == "Maia")
 		{
 			/* We use a whitelist of corruptions for Maiar */
-			bool_ allow = FALSE;
+			bool allow = false;
 			if ((corruption_idx == CORRUPT_BALROG_AURA) ||
 			    (corruption_idx == CORRUPT_BALROG_WINGS) ||
 			    (corruption_idx == CORRUPT_BALROG_STRENGTH) ||
 			    (corruption_idx == CORRUPT_BALROG_FORM) ||
 			    (corruption_idx == CORRUPT_DEMON_BREATH))
 			{
-				allow = TRUE;
+				allow = true;
 			};
 
 			/* Mix result into 'allowed' flag */
@@ -718,10 +718,10 @@ static bool_ player_can_gain_corruption(int corruption_idx)
 	return allowed;
 }
 
-static bool_ player_allow_corruption(int corruption_idx)
+static bool player_allow_corruption(int corruption_idx)
 {
 	int i;
-	bool_ found = FALSE;
+	bool found = false;
 	corruption_type *c_ptr = NULL;
 
 	assert(corruption_idx < CORRUPTIONS_MAX);
@@ -732,13 +732,13 @@ static bool_ player_allow_corruption(int corruption_idx)
 	{
 		if (c_ptr->modules[i] == game_module_idx)
 		{
-			found = TRUE;
+			found = true;
 		}
 	}
 	
 	if (!found)
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Vampire teeth is special */
@@ -746,15 +746,15 @@ static bool_ player_allow_corruption(int corruption_idx)
 	{
 		if (race_flags_p(PR_NO_SUBRACE_CHANGE))
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 static void player_set_corruption(int c, bool set)
@@ -799,7 +799,7 @@ static void player_lose_corruption(int corruption_idx)
  * 3) have none of its opposing corruptions
  * 4) pass the possible tests
  */
-static bool_ test_depend_corrupt(s16b corrupt_idx, bool can_gain)
+static bool test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 {
 	s16b i;
 	corruption_type *c_ptr = NULL;
@@ -813,12 +813,12 @@ static bool_ test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	{
 		if (p_ptr->corruptions[corrupt_idx])
 		{
-			return FALSE;
+			return false;
 		}
 	} else {
 		if (!p_ptr->corruptions[corrupt_idx])
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -827,7 +827,7 @@ static bool_ test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	{
 		if (!test_depend_corrupt(c_ptr->depends[i], false))
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -836,7 +836,7 @@ static bool_ test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	{
 		if (test_depend_corrupt(c_ptr->opposes[i], false))
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -891,7 +891,7 @@ void lose_corruption()
 	max = 0;
 	for (i = 0; i < CORRUPTIONS_MAX; i++)
 	{
-		bool_ is_removable = (corruptions[i].lose_text != NULL);
+		bool is_removable = (corruptions[i].lose_text != NULL);
 		if (test_depend_corrupt(i, false) && is_removable)
 		{
 			pos[max] = i;

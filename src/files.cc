@@ -668,7 +668,7 @@ errr process_pref_file_aux(char *buf)
 		{
 			if (option.o_var && equals(option.o_text, buf + 2))
 			{
-				*option.o_var = FALSE;
+				*option.o_var = false;
 				return 0;
 			}
 		}
@@ -681,7 +681,7 @@ errr process_pref_file_aux(char *buf)
 		{
 			if (option.o_var && equals(option.o_text, buf + 2))
 			{
-				*option.o_var = TRUE;
+				*option.o_var = true;
 				return 0;
 			}
 		}
@@ -929,7 +929,7 @@ errr process_pref_file(std::string const &name)
 
 	errr err = 0;
 
-	bool_ bypass = FALSE;
+	bool bypass = false;
 
 	/* Build the filename -- Allow users to override system pref files */
 	path_build(buf, 1024, ANGBAND_DIR_USER, name.c_str());
@@ -982,7 +982,7 @@ errr process_pref_file(std::string const &name)
 			v = process_pref_file_expr(&s, &f);
 
 			/* Set flag */
-			bypass = (equals(v, "0") ? TRUE : FALSE);
+			bypass = (equals(v, "0") ? true : false);
 
 			/* Continue */
 			continue;
@@ -2373,20 +2373,20 @@ std::string describe_player_location()
  *
  * Figure out if a row on the grid is empty
  */
-static bool_ file_character_print_grid_check_row(const char *buf)
+static bool file_character_print_grid_check_row(const char *buf)
 {
-	if (strstr(buf + 12, "+")) return TRUE;
-	if (strstr(buf + 12, "*")) return TRUE;
-	if (strstr(buf + 12, "1")) return TRUE;
-	if (strstr(buf + 12, "2")) return TRUE;
-	if (strstr(buf + 12, "3")) return TRUE;
-	if (strstr(buf + 12, "4")) return TRUE;
-	if (strstr(buf + 12, "5")) return TRUE;
-	if (strstr(buf + 12, "6")) return TRUE;
-	if (strstr(buf + 12, "7")) return TRUE;
-	if (strstr(buf + 12, "8")) return TRUE;
-	if (strstr(buf + 12, "9")) return TRUE;
-	return FALSE;
+	if (strstr(buf + 12, "+")) return true;
+	if (strstr(buf + 12, "*")) return true;
+	if (strstr(buf + 12, "1")) return true;
+	if (strstr(buf + 12, "2")) return true;
+	if (strstr(buf + 12, "3")) return true;
+	if (strstr(buf + 12, "4")) return true;
+	if (strstr(buf + 12, "5")) return true;
+	if (strstr(buf + 12, "6")) return true;
+	if (strstr(buf + 12, "7")) return true;
+	if (strstr(buf + 12, "8")) return true;
+	if (strstr(buf + 12, "9")) return true;
+	return false;
 }
 
 /*
@@ -2394,7 +2394,7 @@ static bool_ file_character_print_grid_check_row(const char *buf)
  *
  * Prints the big ugly grid
  */
-static void file_character_print_grid(FILE *fff, bool_ show_gaps, bool_ show_legend)
+static void file_character_print_grid(FILE *fff, bool show_gaps, bool show_legend)
 {
 	static const char *blank_line = "                                        ";
 	static char buf[1024];
@@ -2441,9 +2441,9 @@ static void file_character_print_item(FILE *fff, char label, object_type *obj)
 	static char o_name[80];
 	static const char *paren = ")";
 
-	object_desc(o_name, obj, TRUE, 3);
+	object_desc(o_name, obj, true, 3);
 	fprintf(fff, "%c%s %s\n", label, paren, o_name);
-	object_out_desc(obj, fff, TRUE, TRUE);
+	object_out_desc(obj, fff, true, true);
 }
 
 /*
@@ -2481,7 +2481,7 @@ static void file_character_print_store(FILE *fff, wilderness_type_info const *pl
  * was not already there.  XXX This is an ugly workaround for the double Gondolin
  * problem.
  */
-static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_stores, wilderness_type_info const *place, int store)
+static bool file_character_check_stores(std::unordered_set<store_type *> *seen_stores, wilderness_type_info const *place, int store)
 {
 	town_type *town = &town_info[place->entrance];
 	store_type *st_ptr = &town->store[store];
@@ -2489,12 +2489,12 @@ static bool_ file_character_check_stores(std::unordered_set<store_type *> *seen_
 	// Already seen store?
 	if (seen_stores->find(st_ptr) != seen_stores->end())
 	{
-		return FALSE;
+		return false;
 	}
 
 	// Add
 	seen_stores->insert(st_ptr);
-	return TRUE;
+	return true;
 }
 
 /*
@@ -2682,7 +2682,7 @@ errr file_character(const char *name)
 
 			if (r_ptr->flags & RF_UNIQUE)
 			{
-				bool_ dead = (r_ptr->max_num == 0);
+				bool dead = (r_ptr->max_num == 0);
 				if (dead)
 				{
 					Total++;
@@ -2721,19 +2721,19 @@ errr file_character(const char *name)
 
 	/* adds and slays */
 	display_player(1);
-	file_character_print_grid(fff, FALSE, TRUE);
+	file_character_print_grid(fff, false, true);
 
 	/* sustains and resistances */
 	display_player(2);
-	file_character_print_grid(fff, TRUE, FALSE);
+	file_character_print_grid(fff, true, false);
 
 	/* stuff */
 	display_player(3);
-	file_character_print_grid(fff, FALSE, FALSE);
+	file_character_print_grid(fff, false, false);
 
 	/* a little bit of stuff */
 	display_player(4);
-	file_character_print_grid(fff, FALSE, FALSE);
+	file_character_print_grid(fff, false, false);
 
 	/* Dump corruptions */
 	fprintf(fff, "\n%s\n", dump_corruptions(false, true).c_str());
@@ -2833,7 +2833,7 @@ errr file_character(const char *name)
 /*
  * Recursive file perusal.
  *
- * Return FALSE on "ESCAPE", otherwise TRUE.
+ * Return false on "ESCAPE", otherwise true.
  *
  * Process various special text in the input file, including
  * the "menu" structures used by the "help file" system.
@@ -2872,7 +2872,7 @@ struct hyperlink
 
 typedef struct hyperlink hyperlink_type;
 
-static bool_ show_file_aux(const char *name, const char *what, int line)
+static bool show_file_aux(const char *name, const char *what, int line)
 {
 	int i, k, x;
 
@@ -2891,7 +2891,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 	byte color = TERM_WHITE;
 
 	/* This screen has sub-screens */
-	bool_ menu = FALSE;
+	bool menu = false;
 
 	/* Current help file */
 	FILE *fff = NULL;
@@ -2980,12 +2980,12 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 		msg_print(NULL);
 
 		/* Oops */
-		return (TRUE);
+		return true;
 	}
 
 
 	/* Pre-Parse the file */
-	while (TRUE)
+	while (true)
 	{
 		/* Read a line or stop */
 		if (my_fgets(fff, h_ptr->rbuf, 1024)) break;
@@ -3083,7 +3083,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 
 
 	/* Display the file */
-	while (TRUE)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -3106,7 +3106,7 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 			/* Oops */
 			if (!fff)
 			{
-				return (FALSE);
+				return false;
 			}
 
 			/* File has been restarted */
@@ -3447,10 +3447,10 @@ static bool_ show_file_aux(const char *name, const char *what, int line)
 	my_fclose(fff);
 
 	/* Escape */
-	if (k == ESCAPE) return (FALSE);
+	if (k == ESCAPE) return false;
 
 	/* Normal return */
-	return (TRUE);
+	return true;
 }
 
 void show_string(const char *lines, const char *title, int line)
@@ -3827,10 +3827,10 @@ void do_cmd_suicide()
 	}
 
 	/* Stop playing */
-	alive = FALSE;
+	alive = false;
 
 	/* Kill the player */
-	death = TRUE;
+	death = true;
 
 	/* Leaving */
 	p_ptr->leaving = true;
@@ -3845,7 +3845,7 @@ void do_cmd_suicide()
 	 * when the game is loaded again
 	 * Alternatively forget_view() and update_view() can be used
 	 */
-void remove_cave_view(bool_ remove)
+void remove_cave_view(bool remove)
 {
 	int i;
 	cave_type *c_ptr;
@@ -3874,7 +3874,7 @@ void remove_cave_view(bool_ remove)
  */
 void do_cmd_save_game()
 {
-	remove_cave_view(TRUE);
+	remove_cave_view(true);
 
 	/* Save the current level if in a persistent level */
 	save_dungeon();
@@ -3913,7 +3913,7 @@ void do_cmd_save_game()
 		prt("Saving game... failed!", 0, 0);
 	}
 
-	remove_cave_view(FALSE);
+	remove_cave_view(false);
 
 	/* Refresh */
 	Term_fresh();
@@ -3929,10 +3929,10 @@ void autosave_checkpoint()
 {
 	if (options->autosave_l)
 	{
-		is_autosave = TRUE;
+		is_autosave = true;
 		msg_print("Autosaving the game...");
 		do_cmd_save_game();
-		is_autosave = FALSE;
+		is_autosave = false;
 	}
 }
 
@@ -3997,7 +3997,7 @@ static long total_points()
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			bool_ dead = (r_ptr->max_num == 0);
+			bool dead = (r_ptr->max_num == 0);
 
 			if (dead)
 			{
@@ -4108,7 +4108,7 @@ static void show_info()
 	prt("Then, hit RETURN to see the character, or ESC to abort.", 22, 0);
 
 	/* Dump character records as requested */
-	while (TRUE)
+	while (true)
 	{
 		char out_val[160];
 
@@ -4194,7 +4194,7 @@ static void show_info()
 					prt(tmp_val, j + 2, 4);
 
 					/* Display object description */
-					object_desc(o_name, o_ptr, TRUE, 3);
+					object_desc(o_name, o_ptr, true, 3);
 					c_put_str(tval_to_attr[o_ptr->tval], o_name, j + 2, 7);
 				}
 
@@ -4840,7 +4840,7 @@ out:
 }
 
 
-void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
+void predict_score_gui(bool *initialized_p, bool *game_in_progress_p)
 {
 	char buf[1024];
 	int highscore_fd;
@@ -4868,7 +4868,7 @@ void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
 	}
 
 	/* Mega-Hack - prevent various functions XXX XXX XXX */
-	*initialized_p = FALSE;
+	*initialized_p = false;
 
 	/* Save screen */
 	screen_save();
@@ -4895,7 +4895,7 @@ void predict_score_gui(bool_ *initialized_p, bool_ *game_in_progress_p)
 	Term_fresh();
 
 	/* Mega-Hack - We are ready again */
-	*initialized_p = TRUE;
+	*initialized_p = true;
 }
 
 
@@ -5000,7 +5000,7 @@ void close_game()
 
 
 	/* Hack -- Character is now "icky" */
-	character_icky = TRUE;
+	character_icky = true;
 
 
 	/* Handle death */
@@ -5053,7 +5053,7 @@ void close_game()
 	/* Still alive */
 	else
 	{
-		is_autosave = FALSE;
+		is_autosave = false;
 
 		/* Save the game */
 		do_cmd_save_game();

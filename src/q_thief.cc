@@ -31,7 +31,7 @@ static bool quest_thieves_gen_hook(void *, void *in_, void *)
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
-	bool_ again = TRUE;
+	bool again = true;
 
 	if (p_ptr->inside_quest != QUEST_THIEVES)
 	{
@@ -62,14 +62,14 @@ static bool quest_thieves_gen_hook(void *, void *in_, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("thieves.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("thieves.map", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Rip the inventory from the player */
 	cmsg_print(TERM_YELLOW, "You feel a vicious blow on your head.");
 	while (again)
 	{
-		again = FALSE;
+		again = false;
 		for (x = 0; x < INVEN_TOTAL; x++)
 		{
 			object_type *o_ptr = &p_ptr->inventory[x];
@@ -84,18 +84,18 @@ static bool quest_thieves_gen_hook(void *, void *in_, void *)
 				continue;
 			}
 
-			inven_drop(x, 99, 4, 24, TRUE);
+			inven_drop(x, 99, 4, 24, true);
 
 			/* Thats ugly .. but it works */
-			again = TRUE;
+			again = true;
 			break;
 		}
 	}
 
 	del_hook_new(HOOK_GEN_QUEST, quest_thieves_gen_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
-	return TRUE;
+	return true;
 }
 
 static bool quest_thieves_hook(void *, void *, void *)
@@ -147,7 +147,7 @@ static bool quest_thieves_hook(void *, void *, void *)
 		quest[p_ptr->inside_quest].status = QUEST_STATUS_COMPLETED;
 
 		del_hook_new(HOOK_END_TURN, quest_thieves_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		cmsg_print(TERM_YELLOW, "You stopped the thieves and saved Bree!");
 		return false;
@@ -191,7 +191,7 @@ static bool quest_thieves_finish_hook(void *, void *in_, void *)
 	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_thieves_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -207,7 +207,7 @@ static bool quest_thieves_feeling_hook(void *, void *, void *)
 	msg_print("All your possessions have been stolen!");
 
 	del_hook_new(HOOK_FEELING, quest_thieves_feeling_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }

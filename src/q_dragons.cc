@@ -30,7 +30,7 @@ static bool quest_dragons_gen_hook(void *, void *in_, void *)
 	int xstart = 2;
 	int ystart = 2;
 
-	if (p_ptr->inside_quest != QUEST_DRAGONS) return FALSE;
+	if (p_ptr->inside_quest != QUEST_DRAGONS) return false;
 
 	/* Just in case we didnt talk the the mayor */
 	if (cquest.status == QUEST_STATUS_UNTAKEN)
@@ -54,7 +54,7 @@ static bool quest_dragons_gen_hook(void *, void *in_, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("dragons.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("dragons.map", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Place some columns */
@@ -105,16 +105,16 @@ static bool quest_dragons_gen_hook(void *, void *in_, void *)
 		}
 	}
 
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
-	return TRUE;
+	return true;
 }
 
 static bool quest_dragons_death_hook(void *, void *, void *)
 {
 	int i, mcnt = 0;
 
-	if (p_ptr->inside_quest != QUEST_DRAGONS) return FALSE;
+	if (p_ptr->inside_quest != QUEST_DRAGONS) return false;
 
 	/* Process the monsters (backwards) */
 	for (i = m_max - 1; i >= 1; i--)
@@ -140,7 +140,7 @@ static bool quest_dragons_death_hook(void *, void *, void *)
 		quest[p_ptr->inside_quest].status = QUEST_STATUS_COMPLETED;
 		del_hook_new(HOOK_MONSTER_DEATH, quest_dragons_death_hook);
 		del_hook_new(HOOK_GEN_QUEST,     quest_dragons_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		cmsg_print(TERM_YELLOW, "Gondolin is safer now.");
 		return false;
