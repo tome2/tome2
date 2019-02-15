@@ -2442,9 +2442,7 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Initialize the term */
 	term_init(t, cols, rows, num);
-
-	/* Use a "soft" cursor */
-	t->soft_cursor = TRUE;
+	term_init_soft_cursor(t);
 
 	/* Hooks */
 	t->xtra_hook = Term_xtra_x11;

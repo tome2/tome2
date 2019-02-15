@@ -1997,3 +1997,8 @@ void term_init_icky_corner(term *t)
 {
 	t->icky_corner = TRUE;
 }
+
+void term_init_soft_cursor(term *t)
+{
+	t->soft_cursor = TRUE;
+}

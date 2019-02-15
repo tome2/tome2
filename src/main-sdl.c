@@ -1734,9 +1734,7 @@ static errr term_data_init(term_data *td, int i)
 	 gets: pointer to address, number of columns, number of rows, number
 	   of keypresses to queue up (guess 24?)*/
 	term_init(t, cols, rows, 24);
-
-	/* Use a "soft" cursor */
-	t->soft_cursor = TRUE;
+	term_init_soft_cursor(t);
 
 	/* Hooks */
 	t->xtra_hook = Term_xtra_sdl;

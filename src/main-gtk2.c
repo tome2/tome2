@@ -1255,6 +1255,7 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Initialize the term */
 	term_init(t, td->cols, td->rows, 1024);
+	term_init_soft_cursor(t);
 
 	/* Store the name of the term */
 	assert(angband_term_name[i] != NULL);
@@ -1262,9 +1263,6 @@ static errr term_data_init(term_data *td, int i)
 
 	/* Instance names should start with a lowercase letter XXX */
 	for (p = (char *)td->name; *p; p++) *p = tolower(*p);
-
-	/* Use a "soft" cursor */
-	t->soft_cursor = TRUE;
 
 	/* Hooks */
 	t->xtra_hook = Term_xtra_gtk;

@@ -1662,9 +1662,7 @@ static void term_data_link(term_data *td)
 
 	/* Initialize the term */
 	term_init(t, td->cols, td->rows, td->keys);
-
-	/* Use a "software" cursor */
-	t->soft_cursor = TRUE;
+	term_init_soft_cursor(t);
 
 	/* Prepare the template hooks */
 	t->xtra_hook = Term_xtra_win;
