@@ -120,8 +120,6 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 {
 	int i;
 
-	bool_ args = TRUE;
-
 	// Initialize game structure
 	game = new Game();
 
@@ -136,10 +134,14 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 
 
 	/* Process the command line arguments */
+	bool args = true;
 	for (i = 1; args && (i < argc); i++)
 	{
 		/* Require proper options */
-		if (argv[i][0] != '-') goto usage;
+		if (argv[i][0] != '-')
+		{
+			goto usage;
+		}
 
 		/* Analyze option */
 		switch (argv[i][1])
@@ -168,7 +170,11 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 		case 'u':
 		case 'U':
 			{
-				if (!argv[i][2]) goto usage;
+				if (!argv[i][2])
+				{
+					goto usage;
+				}
+
 				game->player_name = &argv[i][2];
 				no_begin_screen = true;
 				break;
@@ -176,7 +182,10 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 
 		case 'M':
 			{
-				if (!argv[i][2]) goto usage;
+				if (!argv[i][2])
+				{
+					goto usage;
+				}
 				force_module = &argv[i][2];
 				break;
 			}
@@ -197,7 +206,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 					argv[i] = argv[0];
 					argc = argc - i;
 					argv = argv + i;
-					args = FALSE;
+					args = false;
 					break;
 				}
 			}
