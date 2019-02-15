@@ -2912,14 +2912,15 @@ static bool enter_debug_mode()
  *
  * XXX XXX XXX Make some "blocks"
  */
-static void process_command()
+static void process_command(s16b *command_ptr)
 {
 	auto const &wf_info = game->edit_data.wf_info;
 
-	char error_m[80];
+	assert(command_ptr);
+	auto &command_cmd = *command_ptr;
 
 	/* Handle repeating the last command */
-	repeat_check(&command_cmd);
+	repeat_check(command_ptr);
 
 	/* Parse the command */
 	switch (command_cmd)
@@ -3813,6 +3814,8 @@ static void process_command()
 			/* Would like to have an option disabling this -- pelpel */
 			if (rand_int(100) < insanity)
 			{
+				char error_m[80];
+
 				get_rnd_line("error.txt", error_m);
 				msg_print(error_m);
 			}
@@ -4079,7 +4082,7 @@ static void process_player()
 			prt("", 0, 0);
 
 			/* Process the command */
-			process_command();
+			process_command(&command_cmd);
 
 			p_ptr->did_nothing = true;
 		}
@@ -4094,7 +4097,7 @@ static void process_player()
 			request_command(false);
 
 			/* Process the command */
-			process_command();
+			process_command(&command_cmd);
 		}
 
 
