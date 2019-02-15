@@ -4,7 +4,7 @@
 
 #include "z-util.h"
 
-#include <assert.h>
+#include <cassert>
 
 
 /*
@@ -12,9 +12,9 @@
  */
 bool_ streq(const char *a, const char *b)
 {
-	if ((a == NULL) && (b == NULL)) { return TRUE; }
-	if (a == NULL) { return FALSE; }
-	if (b == NULL) { return FALSE; }
+	if ((a == nullptr) && (b == nullptr)) { return TRUE; }
+	if (a == nullptr) { return FALSE; }
+	if (b == nullptr) { return FALSE; }
 	return (!strcmp(a, b));
 }
 
@@ -41,7 +41,7 @@ bool_ suffix(const char *s, const char *t)
 void capitalize(char *s)
 {
 	char *p = s;
-	assert(s != NULL);
+	assert(s != nullptr);
 
 	for (; *p; p++)
 	{
@@ -61,7 +61,7 @@ void capitalize(char *s)
 /*
  * Redefinable "plog" action
  */
-void (*plog_aux)(const char *) = NULL;
+void (*plog_aux)(const char *) = nullptr;
 
 /*
  * Print (or log) a "warning" message (ala "perror()")
@@ -81,7 +81,7 @@ void plog(const char *str)
 /*
  * Redefinable "quit" action
  */
-void (*quit_aux)(const char *) = NULL;
+void (*quit_aux)(const char *) = nullptr;
 
 /*
  * Exit (ala "exit()").  If 'str' is NULL, do "exit(0)".

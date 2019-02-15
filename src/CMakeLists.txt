@@ -116,7 +116,7 @@ SET(SRCS_COMMON
   z-form.c
   z-rand.cc
   z-term.cc
-  z-util.c
+  z-util.cc
 )
 
 # Sources (TEST)
