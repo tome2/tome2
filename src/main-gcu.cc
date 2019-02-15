@@ -210,8 +210,6 @@ static term_data data[MAX_TERM_DATA];
 static int active = 0;
 
 
-#ifdef A_COLOR
-
 /*
  * Hack -- define "A_BRIGHT" to be "A_BOLD", because on many
  * machines, "A_BRIGHT" produces ugly "inverse" video.
@@ -234,8 +232,6 @@ static int can_fix_color = false;
  * Simple Angband to Curses color conversion table
  */
 static int colortable[16];
-
-#endif
 
 
 
@@ -471,10 +467,8 @@ static void Term_nuke_gcu(void *data)
 	/* Count nuke's, handle last */
 	if (--active != 0) return;
 
-#ifdef A_COLOR
 	/* Reset colors to defaults */
 	start_color();
-#endif
 
 	/* Get current cursor position */
 	getyx(curscr, y, x);
@@ -551,8 +545,6 @@ static errr Term_xtra_gcu_event(int v)
 static void Term_xtra_gcu_react()
 {
 
-#ifdef A_COLOR
-
 	int i;
 
 	/* Cannot handle color redefinition */
@@ -571,7 +563,6 @@ static void Term_xtra_gcu_react()
 		           angband_color_table[i][3] * 1000 / 255);
 	}
 
-#endif
 }
 
 
@@ -638,10 +629,8 @@ static void Term_text_gcu(void *data, int x, int y, int n, byte a, const char *s
 {
 	term_data *td = (term_data *) data;
 
-#ifdef A_COLOR
 	/* Set the color */
 	if (can_use_color) wattrset(td->win, colortable[a & 0x0F]);
-#endif
 
 	/* Move the cursor */
 	wmove(td->win, y, x);
@@ -753,8 +742,6 @@ int init_gcu(int argc, char **argv)
 
 
 
-#ifdef A_COLOR
-
 	/*** Init the Color-pairs and set up a translation table ***/
 
 	/* Do we have color, and enough color, available? */
@@ -824,8 +811,6 @@ int init_gcu(int argc, char **argv)
 		colortable[14] = (COLOR_PAIR(4) | A_BRIGHT); 	/* Light Blue */
 		colortable[15] = (COLOR_PAIR(3) | A_NORMAL); 	/* Light Umber XXX */
 	}
-
-#endif
 
 
 	/*** Low level preparation ***/
