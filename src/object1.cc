@@ -2020,8 +2020,6 @@ void display_ammo_damage(object_type *o_ptr)
  */
 static void describe_device(object_type *o_ptr)
 {
-	char buf[128];
-
 	/* Wands/... of shcool spell */
 	if (((o_ptr->tval == TV_WAND) || (o_ptr->tval == TV_STAFF)) && object_known_p(o_ptr))
 	{
@@ -2039,15 +2037,14 @@ static void describe_device(object_type *o_ptr)
 					       });
 
 		text_out("\nSpell level: ");
-		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50));
-		text_out_c(TERM_L_BLUE, buf);
+
+		text_out_c(TERM_L_BLUE, fmt::format("{}", get_level(o_ptr->pval2, 50)));
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
-		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell)));
+		text_out_c(TERM_L_BLUE, fmt::format("{}", spell_type_skill_level(spell)));
 
 		text_out("\nSpell fail: ");
-		sprintf(buf, FMTs32b, spell_chance_device(spell));
-		text_out_c(TERM_GREEN, buf);
+		text_out_c(TERM_GREEN, fmt::format("{}", spell_chance_device(spell)));
 
 		text_out("\nSpell info: ");
 		text_out_c(TERM_YELLOW, spell_type_info(spell));

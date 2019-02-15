@@ -1794,7 +1794,6 @@ static bool purchase_haggle(object_type *o_ptr, s32b *price)
 {
 	s32b	cur_ask;
 	bool	cancel = false;
-	char	out_val[160];
 	char    prompt[128];
 	char    o_name[80];
 
@@ -1811,8 +1810,7 @@ static bool purchase_haggle(object_type *o_ptr, s32b *price)
 	object_desc_store(o_name, o_ptr, true, 3);
 
 	/* Prompt */
-	strnfmt(out_val, sizeof(out_val), "%s: " FMTs32b, "Price", cur_ask);
-	put_str(out_val, 1, 0);
+	put_str(fmt::format("Price: {}", cur_ask), 1, 0);
 	strnfmt(prompt, sizeof(prompt), "Buy %s?", o_name);
 	cancel = !prompt_yesno(prompt);
 
@@ -1840,7 +1838,6 @@ static bool sell_haggle(object_type *o_ptr, s32b *price)
 {
 	s32b	cur_ask;
 	bool	cancel = false;
-	char	out_val[160];
 	char    prompt[128];
 	char    o_name[80];
 
@@ -1862,8 +1859,8 @@ static bool sell_haggle(object_type *o_ptr, s32b *price)
 	object_desc(o_name, o_ptr, true, 3);
 
 	/* Prompt */
-	strnfmt(out_val, sizeof(out_val), "%s: " FMTs32b, "Price", cur_ask);
-	put_str(out_val, 1, 0);
+	put_str(fmt::format("Price: {}", cur_ask), 1, 0);
+
 	strnfmt(prompt, sizeof(prompt), "Sell %s?", o_name);
 	cancel = !prompt_yesno(prompt);
 
@@ -2296,7 +2293,7 @@ void store_purchase()
 				object_desc(o_name, j_ptr, true, 3);
 
 				/* Message */
-				msg_format("You bought %s for " FMTs32b " gold.", o_name, price);
+				msg_print(fmt::format("You bought {} for {} gold.", o_name, price));
 
 				/* Erase the inscription */
 				j_ptr->inscription.clear();
@@ -2616,7 +2613,7 @@ void store_sell()
 			object_desc(o_name, q_ptr, true, 3);
 
 			/* Describe the result (in message buffer) */
-			msg_format("You sold %s for " FMTs32b " gold.", o_name, price);
+			msg_print(fmt::format("You sold {} for {} gold.", o_name, price));
 
 			/* Analyze the prices (and comment verbally) */
 			purchase_analyze(price, value, dummy);

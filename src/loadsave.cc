@@ -2693,8 +2693,8 @@ bool load_player(program_args const &args)
 
 
 	/* Message */
-	msg_format("Error (%s) reading savefile (version " FMTu32b ").",
-		   what, vernum);
+	msg_print(fmt::format("Error ({}) reading savefile (version {}).",
+		what, vernum));
 	msg_print(nullptr);
 
 	/* Oops */

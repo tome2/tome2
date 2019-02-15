@@ -2194,7 +2194,9 @@ casting_result meta_spellbinder()
 			{
 				if (spell_type_skill_level(spell_at(s)) > 7 + get_level_s(SPELLBINDER, 35))
 				{
-					msg_format("You are only allowed spells with a base level of " FMTs32b ".", (7 + get_level_s(SPELLBINDER, 35)));
+					msg_print(fmt::format(
+						"You are only allowed spells with a base level of {}.",
+						7 + get_level_s(SPELLBINDER, 35)));
 					return CAST;
 				}
 			}
@@ -2308,7 +2310,9 @@ casting_result meta_inertia_control()
 
 	if (difficulty > get_level_s(INERTIA_CONTROL, 10))
 	{
-		msg_format("This spell inertia flow(" FMTs32b ") is too strong to be controlled by your current spell.", difficulty);
+		msg_print(fmt::format(
+			"This spell inertia flow({}) is too strong to be controlled by your current spell.",
+			difficulty));
 		stop_inertia_controlled_spell();
 		return NO_CAST;
 	}
