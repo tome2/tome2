@@ -137,7 +137,7 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 	if ((dir == STAIRS_DOWN) && (dun_level == 149))
 	{
 		int i;
-		bool_ ultimate = FALSE;
+		bool ultimate = false;
 
 		/* Now look for an ULTIMATE artifact, that is, one imbued with the flame */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -153,7 +153,7 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 
 			if (flags & TR_ULTIMATE)
 			{
-				ultimate = TRUE;
+				ultimate = true;
 				break;
 			}
 		}
