@@ -139,6 +139,11 @@ s16b find_skill(const char *needle)
 	return -1;
 }
 
+s16b find_skill_i(std::string const &needle)
+{
+	return find_skill_i(needle.c_str());
+}
+
 s16b find_skill_i(const char *needle)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
@@ -1552,6 +1557,11 @@ void do_get_new_skill()
 
 
 /**************************************** ABILITIES *****************************************/
+
+s16b find_ability(std::string const &name)
+{
+	return find_ability(name.c_str());
+}
 
 /*
  * Given the name of an ability, returns ability index or -1 if no

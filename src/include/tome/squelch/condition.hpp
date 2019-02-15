@@ -121,7 +121,7 @@ private:
 class NameCondition : public Condition
 {
 public:
-	NameCondition(std::string name) :
+	NameCondition(std::string const &name) :
 		Condition(match_type::NAME),
 		m_name(name) {
 	}
@@ -145,7 +145,7 @@ private:
 class ContainCondition : public Condition
 {
 public:
-	ContainCondition(std::string contain) :
+	ContainCondition(std::string const &contain) :
 		Condition(match_type::CONTAIN),
 		m_contain(contain) {
 	}
@@ -290,7 +290,7 @@ private:
 class RaceCondition : public Condition
 {
 public:
-	RaceCondition(std::string race)
+	RaceCondition(std::string const &race)
 		: Condition(match_type::RACE)
 		, m_race(race) {
 	}
@@ -314,7 +314,7 @@ private:
 class SubraceCondition : public Condition
 {
 public:
-	SubraceCondition(std::string subrace)
+	SubraceCondition(std::string const &subrace)
 		: Condition(match_type::SUBRACE)
 		, m_subrace(subrace) {
 	}
@@ -338,7 +338,7 @@ private:
 class ClassCondition : public Condition
 {
 public:
-	ClassCondition(std::string klass)
+	ClassCondition(std::string const &klass)
 		: Condition(match_type::CLASS)
 		, m_class(klass) {
 	}
@@ -362,7 +362,7 @@ private:
 class InscriptionCondition : public Condition
 {
 public:
-	InscriptionCondition(std::string inscription)
+	InscriptionCondition(std::string const &inscription)
 		: Condition(match_type::INSCRIBED)
 		, m_inscription(inscription) {
 	}

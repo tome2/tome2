@@ -35,11 +35,19 @@ public:
 		return i->second.c_str();
 	}
 
+	E parse(std::string const &s) const {
+		return parse(s.c_str());
+	}
+
 	E parse(const char *s) const {
 		E e;
 		bool result = parse(s, &e);
 		assert(result && "Missing string->enum mapping");
 		return e;
+	}
+
+	bool parse(std::string const &s, E *e) const {
+		return parse(s.c_str(), e);
 	}
 
 	bool parse(const char *s, E *e) const {

@@ -3,10 +3,12 @@
 #include "h-basic.h"
 
 #include <cstddef>
+#include <string>
 
 /* Skill functions */
 void dump_skills(FILE *fff);
 s16b find_skill(const char *name);
+s16b find_skill_i(std::string const &name);
 s16b find_skill_i(const char *name);
 s16b get_skill(int skill);
 s16b get_skill_scale(int skill, u32b scale);
@@ -21,6 +23,7 @@ void compute_skills(s32b *v, s32b *m, std::size_t i);
 void select_default_melee();
 void do_get_new_skill();
 void init_skill(s32b value, s32b mod, std::size_t i);
+s16b find_ability(std::string const &name);
 s16b find_ability(const char *name);
 void dump_abilities(FILE *fff);
 void do_cmd_ability();
