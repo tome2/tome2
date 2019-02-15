@@ -949,7 +949,7 @@ static bool compare_weapons()
 
 	i_ptr = &p_ptr->inventory[INVEN_WIELD];
 	object_copy(i_ptr, o1_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	list_weapon(o1_ptr, i, 2);
 	compare_weapon_aux1(o1_ptr, 2, i + 8);
@@ -959,14 +959,14 @@ static bool compare_weapons()
 		object_copy(i_ptr, orig_ptr);
 	else
 		object_copy(i_ptr, o2_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	list_weapon(o2_ptr, i, 40);
 	compare_weapon_aux1(o2_ptr, 40, i + 8);
 
 	i_ptr = &p_ptr->inventory[INVEN_WIELD];
 	object_copy(i_ptr, orig_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	object_wipe(orig_ptr);
 

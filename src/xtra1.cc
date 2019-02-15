@@ -1377,7 +1377,7 @@ static void calc_powers_corruption()
 
 
 /* Ugly hack */
-bool_ calc_powers_silent = FALSE;
+bool calc_powers_silent = false;
 
 /* Add in powers */
 static void add_powers(std::vector<s16b> const &powers)
@@ -1489,7 +1489,7 @@ static void calc_powers()
 		}
 	}
 
-	calc_powers_silent = FALSE;
+	calc_powers_silent = false;
 }
 
 
@@ -2680,7 +2680,7 @@ static bool_ monk_empty_hands()
  * This function induces various "status" messages, unless silent is
  * TRUE.
  */
-void calc_bonuses(bool_ silent)
+void calc_bonuses(bool silent)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto const &r_info = game->edit_data.r_info;
@@ -3983,7 +3983,7 @@ void update_stuff()
 		calc_powers();
 
 		p_ptr->update &= ~(PU_BONUS);
-		calc_bonuses(FALSE);
+		calc_bonuses(false);
 	}
 
 	if (p_ptr->update & (PU_TORCH))
@@ -4210,11 +4210,14 @@ void handle_stuff()
 }
 
 
-bool_ monk_heavy_armor()
+bool monk_heavy_armor()
 {
 	u16b monk_arm_wgt = 0;
 
-	if (p_ptr->melee_style != SKILL_HAND) return FALSE;
+	if (p_ptr->melee_style != SKILL_HAND)
+	{
+		return false;
+	}
 
 	/* Weight the armor */
 	monk_arm_wgt += p_ptr->inventory[INVEN_BODY].weight;
@@ -4224,7 +4227,7 @@ bool_ monk_heavy_armor()
 	monk_arm_wgt += p_ptr->inventory[INVEN_HANDS].weight;
 	monk_arm_wgt += p_ptr->inventory[INVEN_FEET].weight;
 
-	return (monk_arm_wgt > (100 + (get_skill(SKILL_HAND) * 4))) ;
+	return monk_arm_wgt > (100 + (get_skill(SKILL_HAND) * 4));
 }
 
 static int get_artifact_idx(int level)

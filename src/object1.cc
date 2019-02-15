@@ -1873,7 +1873,7 @@ void display_weapon_damage(object_type *o_ptr)
 	/* Ok now the hackish stuff, we replace the current weapon with this one */
 	object_copy(old_ptr, &p_ptr->inventory[INVEN_WIELD]);
 	object_copy(&p_ptr->inventory[INVEN_WIELD], o_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	text_out("\nUsing it you would have ");
 	text_out_c(TERM_L_GREEN, format("%d ", p_ptr->num_blow));
@@ -1906,7 +1906,7 @@ void display_weapon_damage(object_type *o_ptr)
 
 	/* get our weapon back */
 	object_copy(&p_ptr->inventory[INVEN_WIELD], old_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 }
 
 /*
