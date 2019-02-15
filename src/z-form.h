@@ -1,10 +1,10 @@
 #pragma once
 
+#include "h-basic.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "h-basic.h"
 
 /*
  * This file provides functions very similar to "sprintf()", but which

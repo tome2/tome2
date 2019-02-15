@@ -11,11 +11,11 @@
 #ifndef INCLUDED_Z_TERM_H
 #define INCLUDED_Z_TERM_H
 
+#include "h-basic.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "h-basic.h"
 
 typedef struct term_win term_win;
 

@@ -1,11 +1,10 @@
 #pragma once
 
+#include "h-basic.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "h-basic.h"
-
 
 /*
  * Extremely basic stuff, like "streq()".
