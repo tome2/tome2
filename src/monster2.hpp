@@ -21,7 +21,7 @@ void wipe_m_list();
 s16b m_pop();
 void get_mon_num_prep();
 s16b get_mon_num(int level);
-void monster_desc(char *desc, monster_type *m_ptr, int mode);
+void monster_desc(char *desc, const monster_type *m_ptr, int mode);
 void monster_race_desc(char *desc, int r_idx, int ego);
 void update_mon(int m_idx, bool_ full);
 void update_monsters(bool_ full);

@@ -18,5 +18,5 @@ void ai_deincarnate(int m_idx);
 void ai_possessor(int m_idx, int o_idx);
 bool ai_multiply(int m_idx);
 bool change_side(monster_type *m_ptr);
-int is_friend(monster_type *m_ptr);
+int is_friend(const monster_type *m_ptr);
 bool is_enemy(monster_type *m_ptr, monster_type *t_ptr);

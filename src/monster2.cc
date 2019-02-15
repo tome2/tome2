@@ -1161,7 +1161,7 @@ s16b get_mon_num(int level)
  *   0x22 --> Possessive, genderized if visible ("his") or "its"
  *   0x23 --> Reflexive, genderized if visible ("himself") or "itself"
  */
-void monster_desc(char *desc, monster_type *m_ptr, int mode)
+void monster_desc(char *desc, monster_type const *m_ptr, int mode)
 {
 	auto const &re_info = game->edit_data.re_info;
 	auto const &r_info = game->edit_data.r_info;

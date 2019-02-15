@@ -33,7 +33,7 @@
  * Is the mon,ster in friendly state(pet, friend, ..)
  * -1 = enemy, 0 = neutral, 1 = friend
  */
-int is_friend(monster_type *m_ptr)
+int is_friend(monster_type const *m_ptr)
 {
 	switch (m_ptr->status)
 	{
