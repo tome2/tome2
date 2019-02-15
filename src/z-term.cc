@@ -1487,7 +1487,15 @@ void Term_with_active(term *t, std::function<void ()> callback)
  */
 void Term_get_size(int *w, int *h)
 {
-	term_get_size(Term, w, h);
+	if (w)
+	{
+		(*w) = Term->wid;
+	}
+
+	if (h)
+	{
+		(*h) = Term->hgt;
+	}
 }
 
 
@@ -1946,17 +1954,4 @@ void term_init_ui_hooks(term *t, term_ui_hooks_t hooks)
 void term_set_resize_hook(term *t, resize_hook_t *hook)
 {
 	t->resize_hook = hook;
-}
-
-void term_get_size(term *t, int *w, int *h)
-{
-	if (w)
-	{
-		(*w) = t->wid;
-	}
-
-	if (h)
-	{
-		(*h) = t->hgt;
-	}
 }

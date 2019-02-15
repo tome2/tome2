@@ -167,4 +167,3 @@ void term_init_icky_corner(term *t);
 void term_init_soft_cursor(term *t);
 void term_init_ui_hooks(term *t, term_ui_hooks_t hooks);
 void term_set_resize_hook(term *t, resize_hook_t *hook);
-void term_get_size(term *t, int *w, int *h);
