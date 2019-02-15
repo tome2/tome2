@@ -616,19 +616,6 @@ static errr Metadpy_init_2(Display *dpy, const char *name)
 
 
 /*
- * General Flush/ Sync/ Discard routine
- */
-static void Metadpy_update(int flush, int sync, int discard)
-{
-	/* Flush if desired */
-	if (flush) XFlush(Metadpy->dpy);
-
-	/* Sync if desired, using 'discard' */
-	if (sync) XSync(Metadpy->dpy, discard);
-}
-
-
-/*
  * Make a simple beep
  */
 static void Metadpy_do_beep()
@@ -1587,7 +1574,7 @@ static void Term_xtra_x11(void *data, int n, int v)
 
 		/* Flush the output XXX XXX */
 	case TERM_XTRA_FRESH:
-		Metadpy_update(1, 0, 0);
+		XFlush(Metadpy->dpy);
 		return;
 
 		/* Process random events XXX */
