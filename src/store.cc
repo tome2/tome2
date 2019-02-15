@@ -2848,7 +2848,7 @@ static bool store_process_command()
 	bool recreate = false;
 
 	/* Handle repeating the last command */
-	repeat_check();
+	repeat_check(&command_cmd);
 
 	auto ba_ptr = find_store_action(command_cmd);
 

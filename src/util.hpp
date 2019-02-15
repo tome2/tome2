@@ -82,7 +82,7 @@ timer_type *new_timer(void (*callback)(), s32b delay);
 int get_keymap_mode();
 void repeat_push(int what);
 bool repeat_pull(int *what);
-void repeat_check();
+void repeat_check(s16b *command_cmd);
 void get_count(int number, int max);
 bool in_bounds(int y, int x);
 bool in_bounds2(int y, int x);

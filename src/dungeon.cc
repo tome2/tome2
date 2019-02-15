@@ -2919,7 +2919,7 @@ static void process_command()
 	char error_m[80];
 
 	/* Handle repeating the last command */
-	repeat_check();
+	repeat_check(&command_cmd);
 
 	/* Parse the command */
 	switch (command_cmd)

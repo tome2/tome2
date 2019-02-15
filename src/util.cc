@@ -3184,8 +3184,11 @@ bool repeat_pull(int *what)
 	return true;
 }
 
-void repeat_check()
+void repeat_check(s16b *command_ptr)
 {
+	assert(command_ptr);
+	auto &command_cmd = *command_ptr;
+
 	/* Ignore some commands */
 	if (command_cmd == ESCAPE) return;
 	if (command_cmd == ' ') return;
