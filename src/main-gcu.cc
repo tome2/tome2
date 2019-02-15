@@ -621,11 +621,6 @@ public:
 		Term_xtra_gcu_react();
 	}
 
-	void activate_deactivate(bool) final
-	{
-		// No action necessary
-	}
-
 	void rename_main_window(std::string_view) final
 	{
 		// Don't have window titles

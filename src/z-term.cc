@@ -1835,12 +1835,6 @@ void Term_activate(term *t)
 		return;
 	}
 
-	/* Deactivate the old Term */
-	if (Term)
-	{
-		Term->m_frontend->activate_deactivate(false);
-	}
-
 	/* Hack -- Call the special "init" hook */
 	if (t && !t->active_flag)
 	{
@@ -1855,12 +1849,6 @@ void Term_activate(term *t)
 
 	/* Remember the Term */
 	Term = t;
-
-	/* Activate the new Term */
-	if (Term)
-	{
-		Term->m_frontend->activate_deactivate(true);
-	}
 }
 
 

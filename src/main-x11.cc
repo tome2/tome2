@@ -440,28 +440,6 @@ static metadpy metadpy_default;
  * The "current" variables
  */
 static metadpy *Metadpy = &metadpy_default;
-static infowin *Infowin = nullptr;
-static infoclr *Infoclr = nullptr;
-static infofnt *Infofnt = nullptr;
-
-
-/* Set the current Infowin */
-inline static void Infowin_set(infowin *i)
-{
-	Infowin = i;
-}
-
-/* Set the current Infoclr */
-inline static void Infoclr_set(infoclr *c)
-{
-	Infoclr = c;
-}
-
-/* Set the current infofnt */
-inline static void Infofnt_set(infofnt *f)
-{
-	Infofnt = f;
-}
 
 
 /**** Generic code ****/
@@ -556,7 +534,7 @@ static errr Metadpy_new(const char *name)
 /*
  * Set the name (in the title bar) of Infowin
  */
-static void Infowin_set_name(std::string_view name_sv)
+static void Infowin_set_name(infowin *iwin, std::string_view name_sv)
 {
 	char buf[128];
 
@@ -566,14 +544,16 @@ static void Infowin_set_name(std::string_view name_sv)
 
 	// Copy
 	strncpy(buf, name.begin(), name.size());
+	buf[name.size()] = '\0';
 
 	char *bp = buf;
 
 	// Set
 	XTextProperty tp;
 	Status st = XStringListToTextProperty(&bp, 1, &tp);
-	if (st) {
-		XSetWMName(Metadpy->dpy, Infowin->win, &tp);
+	if (st)
+	{
+		XSetWMName(Metadpy->dpy, iwin->win, &tp);
 	}
 }
 
@@ -581,10 +561,8 @@ static void Infowin_set_name(std::string_view name_sv)
 /*
  * Prepare a new 'infowin'.
  */
-static errr Infowin_prepare(Window xid)
+static errr Infowin_prepare(infowin *iwin, Window xid)
 {
-	infowin *iwin = Infowin;
-
 	Window tmp_win;
 	XWindowAttributes xwa;
 	int x, y;
@@ -630,13 +608,13 @@ static errr Infowin_prepare(Window xid)
  * Notes:
  *	If 'dad == None' assume 'dad == root'
  */
-static errr Infowin_init_data(Window dad, int x, int y, int w, int h,
+static errr Infowin_init_data(infowin *iwin, Window dad, int x, int y, int w, int h,
                               int b, Pixell fg, Pixell bg)
 {
 	Window xid;
 
 	/* Wipe it clean */
-	memset(Infowin, 0, sizeof(struct infowin));
+	memset(iwin, 0, sizeof(struct infowin));
 
 
 	/*** Error Check XXX ***/
@@ -672,10 +650,10 @@ static errr Infowin_init_data(Window dad, int x, int y, int w, int h,
 	/*** Prepare the new infowin ***/
 
 	/* Mark it as nukable */
-	Infowin->nuke = 1;
+	iwin->nuke = 1;
 
 	/* Attempt to Initialize the infowin */
-	return (Infowin_prepare(xid));
+	return Infowin_prepare(iwin, xid);
 }
 
 
@@ -683,65 +661,51 @@ static errr Infowin_init_data(Window dad, int x, int y, int w, int h,
 /*
  * Modify the event mask of an Infowin
  */
-static errr Infowin_set_mask(long mask)
+static void Infowin_set_mask(infowin *iwin, long mask)
 {
 	/* Save the new setting */
-	Infowin->mask = mask;
+	iwin->mask = mask;
 
 	/* Execute the Mapping */
-	XSelectInput(Metadpy->dpy, Infowin->win, Infowin->mask);
-
-	/* Success */
-	return (0);
+	XSelectInput(Metadpy->dpy, iwin->win, iwin->mask);
 }
 
 
 /*
  * Request that Infowin be mapped
  */
-static errr Infowin_map()
+static void Infowin_map(infowin *iwin)
 {
 	/* Execute the Mapping */
-	XMapWindow(Metadpy->dpy, Infowin->win);
-
-	/* Success */
-	return (0);
+	XMapWindow(Metadpy->dpy, iwin->win);
 }
 
 
 /*
  * Request that Infowin be raised
  */
-static errr Infowin_raise()
+static void Infowin_raise(infowin *iwin)
 {
 	/* Raise towards visibility */
-	XRaiseWindow(Metadpy->dpy, Infowin->win);
-
-	/* Success */
-	return (0);
+	XRaiseWindow(Metadpy->dpy, iwin->win);
 }
 
 
 /*
  * Request that Infowin be moved to a new location
  */
-static errr Infowin_impell(int x, int y)
+static void Infowin_impell(infowin *iwin, int x, int y)
 {
-	/* Execute the request */
-	XMoveWindow(Metadpy->dpy, Infowin->win, x, y);
-
-	/* Success */
-	return (0);
+	XMoveWindow(Metadpy->dpy, iwin->win, x, y);
 }
 
 
 /*
  * Visually clear Infowin
  */
-static void Infowin_wipe()
+static void Infowin_wipe(infowin *iwin)
 {
-	/* Execute the request */
-	XClearWindow(Metadpy->dpy, Infowin->win);
+	XClearWindow(Metadpy->dpy, iwin->win);
 }
 
 /*
@@ -759,10 +723,8 @@ static constexpr int Infoclr_Opcode_XOR = 6;
  *	op:   The Opcode for the requested Operation (see above)
  *	stip: The stipple mode
  */
-static errr Infoclr_init_data(Pixell fg, Pixell bg, int op)
+static errr Infoclr_init_data(infoclr *iclr, Pixell fg, Pixell bg, int op)
 {
-	infoclr *iclr = Infoclr;
-
 	GC gc;
 	XGCValues gcv;
 	unsigned long gc_mask;
@@ -839,11 +801,8 @@ static errr Infoclr_init_data(Pixell fg, Pixell bg, int op)
  * Inputs:
  *	fg:   The Pixell for the requested Foreground (see above)
  */
-static errr Infoclr_change_fg(Pixell fg)
+static errr Infoclr_change_fg(infoclr *iclr, Pixell fg)
 {
-	infoclr *iclr = Infoclr;
-
-
 	/*** Simple error checking of opr and clr ***/
 
 	/* Check the 'Pixells' for realism */
@@ -864,17 +823,13 @@ static errr Infoclr_change_fg(Pixell fg)
 /*
  * Prepare a new 'infofnt'
  */
-static errr Infofnt_prepare(XFontStruct *info)
+static errr Infofnt_prepare(infofnt *ifnt, XFontStruct *info)
 {
-	infofnt *ifnt = Infofnt;
-
-	XCharStruct *cs;
-
 	/* Assign the struct */
 	ifnt->info = info;
 
 	/* Jump into the max bouonds thing */
-	cs = &(info->max_bounds);
+	auto cs = &(info->max_bounds);
 
 	/* Extract default sizing info */
 	ifnt->asc = info->ascent;
@@ -893,7 +848,7 @@ static errr Infofnt_prepare(XFontStruct *info)
  * Inputs:
  *	name: The name of the requested Font
  */
-static errr Infofnt_init_data(const char *name)
+static errr Infofnt_init_data(infofnt *ifnt, const char *name)
 {
 	XFontStruct *info;
 
@@ -913,10 +868,10 @@ static errr Infofnt_init_data(const char *name)
 	/*** Init the font ***/
 
 	/* Wipe the thing */
-	memset(Infofnt, 0, sizeof(struct infofnt));
+	memset(ifnt, 0, sizeof(struct infofnt));
 
 	/* Attempt to prepare it */
-	if (Infofnt_prepare(info))
+	if (Infofnt_prepare(ifnt, info))
 	{
 		/* Free the font */
 		XFreeFont(Metadpy->dpy, info);
@@ -926,10 +881,10 @@ static errr Infofnt_init_data(const char *name)
 	}
 
 	/* Save a copy of the font name */
-	Infofnt->name = strdup(name);
+	ifnt->name = strdup(name);
 
 	/* Mark it as nukable */
-	Infofnt->nuke = 1;
+	ifnt->nuke = 1;
 
 	/* Success */
 	return (0);
@@ -939,15 +894,15 @@ static errr Infofnt_init_data(const char *name)
 /*
  * Standard Text
  */
-static errr Infofnt_text_std(int x, int y, const char *str, int len)
+static void Infofnt_text_std(infowin *iwin, infoclr *iclr, infofnt *ifnt, int x, int y, const char *str, int len)
 {
-	int i;
-
-
 	/*** Do a brief info analysis ***/
 
 	/* Do nothing if the string is null */
-	if (!str || !*str) return ( -1);
+	if (!str || !*str)
+	{
+		return;
+	}
 
 	/* Get the length of the string */
 	if (len < 0) len = strlen(str);
@@ -956,32 +911,32 @@ static errr Infofnt_text_std(int x, int y, const char *str, int len)
 	/*** Decide where to place the string, vertically ***/
 
 	/* Ignore Vertical Justifications */
-	y = (y * Infofnt->hgt) + Infofnt->asc + Infowin->oy;
+	y = (y * ifnt->hgt) + ifnt->asc + iwin->oy;
 
 
 	/*** Decide where to place the string, horizontally ***/
 
 	/* Line up with x at left edge of column 'x' */
-	x = (x * Infofnt->wid) + Infowin->ox;
+	x = (x * ifnt->wid) + iwin->ox;
 
 
 	/*** Actually draw 'str' onto the infowin ***/
 
 	/* Be sure the correct font is ready */
-	XSetFont(Metadpy->dpy, Infoclr->gc, Infofnt->info->fid);
+	XSetFont(Metadpy->dpy, iclr->gc, ifnt->info->fid);
 
 
 	/*** Handle the fake mono we can enforce on fonts ***/
 
 	/* Monotize the font */
-	if (Infofnt->mono)
+	if (ifnt->mono)
 	{
 		/* Do each character */
-		for (i = 0; i < len; ++i)
+		for (int i = 0; i < len; ++i)
 		{
 			/* Note that the Infoclr is set up to contain the Infofnt */
-			XDrawImageString(Metadpy->dpy, Infowin->win, Infoclr->gc,
-			                 x + i * Infofnt->wid + Infofnt->off, y, str + i, 1);
+			XDrawImageString(Metadpy->dpy, iwin->win, iclr->gc,
+					 x + i * ifnt->wid + ifnt->off, y, str + i, 1);
 		}
 	}
 
@@ -989,55 +944,45 @@ static errr Infofnt_text_std(int x, int y, const char *str, int len)
 	else
 	{
 		/* Note that the Infoclr is set up to contain the Infofnt */
-		XDrawImageString(Metadpy->dpy, Infowin->win, Infoclr->gc,
+		XDrawImageString(Metadpy->dpy, iwin->win, iclr->gc,
 		                 x, y, str, len);
 	}
-
-
-	/* Success */
-	return (0);
 }
 
 
 /*
  * Painting where text would be
  */
-static errr Infofnt_text_non(int x, int y, const char *str, int len)
+static void Infofnt_text_non(infowin *iwin, infoclr *iclr, infofnt *ifnt, int x, int y, const char *str, int len)
 {
-	int w, h;
-
-
 	/*** Find the width ***/
 
 	/* Negative length is a flag to count the characters in str */
 	if (len < 0) len = strlen(str);
 
 	/* The total width will be 'len' chars * standard width */
-	w = len * Infofnt->wid;
+	int const w = len * ifnt->wid;
 
 
 	/*** Find the X dimensions ***/
 
 	/* Line up with x at left edge of column 'x' */
-	x = x * Infofnt->wid + Infowin->ox;
+	x = x * ifnt->wid + iwin->ox;
 
 
 	/*** Find other dimensions ***/
 
 	/* Simply do 'Infofnt->hgt' (a single row) high */
-	h = Infofnt->hgt;
+	int const h = ifnt->hgt;
 
 	/* Simply do "at top" in row 'y' */
-	y = y * h + Infowin->oy;
+	y = y * h + iwin->oy;
 
 
 	/*** Actually 'paint' the area ***/
 
 	/* Just do a Fill Rectangle */
-	XFillRectangle(Metadpy->dpy, Infowin->win, Infoclr->gc, x, y, w, h);
-
-	/* Success */
-	return (0);
+	XFillRectangle(Metadpy->dpy, iwin->win, iclr->gc, x, y, w, h);
 }
 
 
@@ -1252,10 +1197,6 @@ static errr CheckEvent(term_data *old_td, bool wait)
 	/* Hack -- activate the Term */
 	Term_activate(td->term_ptr);
 
-	/* Hack -- activate the window */
-	Infowin_set(iwin);
-
-
 	/* Switch on the Type */
 	switch (xev->type)
 	{
@@ -1292,7 +1233,7 @@ static errr CheckEvent(term_data *old_td, bool wait)
 			if (xev->xexpose.count) break;
 
 			/* Clear the window */
-			Infowin_wipe();
+			Infowin_wipe(iwin);
 
 			/* Redraw */
 			Term_redraw();
@@ -1302,14 +1243,14 @@ static errr CheckEvent(term_data *old_td, bool wait)
 
 	case MapNotify:
 		{
-			Infowin->mapped = 1;
+			iwin->mapped = 1;
 			Term_mapped();
 			break;
 		}
 
 	case UnmapNotify:
 		{
-			Infowin->mapped = 0;
+			iwin->mapped = 0;
 			Term_unmapped();
 			break;
 		}
@@ -1319,18 +1260,18 @@ static errr CheckEvent(term_data *old_td, bool wait)
 		{
 			int cols, rows;
 
-			int ox = Infowin->ox;
-			int oy = Infowin->oy;
+			int ox = iwin->ox;
+			int oy = iwin->oy;
 
 			/* Save the new Window Parms */
-			Infowin->x = xev->xconfigure.x;
-			Infowin->y = xev->xconfigure.y;
-			Infowin->w = xev->xconfigure.width;
-			Infowin->h = xev->xconfigure.height;
+			iwin->x = xev->xconfigure.x;
+			iwin->y = xev->xconfigure.y;
+			iwin->w = xev->xconfigure.width;
+			iwin->h = xev->xconfigure.height;
 
 			/* Determine "proper" number of rows/cols */
-			cols = ((Infowin->w - (ox + ox)) / td->fnt->wid);
-			rows = ((Infowin->h - (oy + oy)) / td->fnt->hgt);
+			cols = ((iwin->w - (ox + ox)) / td->fnt->wid);
+			rows = ((iwin->h - (oy + oy)) / td->fnt->hgt);
 
 			/* Hack -- minimal size */
 			if (td == &data[0])
@@ -1358,10 +1299,6 @@ static errr CheckEvent(term_data *old_td, bool wait)
 
 	/* Hack -- Activate the old term */
 	Term_activate(old_td->term_ptr);
-
-	/* Hack -- Activate the proper window */
-	Infowin_set(old_td->win);
-
 
 	/* Success */
 	return (0);
@@ -1417,7 +1354,7 @@ public:
 
 	void clear() final
 	{
-		Infowin_wipe();
+		Infowin_wipe(m_term_data->win);
 	}
 
 	void flush_output() final
@@ -1462,38 +1399,25 @@ public:
 							     color_table[i][3]);
 
 					/* Change the foreground */
-					Infoclr_set(clr[i]);
-					Infoclr_change_fg(pixel);
+					Infoclr_change_fg(clr[i], pixel);
 				}
 			}
 		}
 	}
 
-	void activate_deactivate(bool resume) final
-	{
-		if (resume)
-		{
-			Infowin_set(m_term_data->win);
-			Infofnt_set(m_term_data->fnt);
-		}
-
-	}
-
 	void rename_main_window(std::string_view sv) final
 	{
-		Infowin_set_name(sv);
+		Infowin_set_name(m_term_data->win, sv);
 	}
 
 	void draw_cursor(int x, int y) final
 	{
-		Infoclr_set(cursor_clr);
-		Infofnt_text_non(x, y, " ", 1);
+		Infofnt_text_non(m_term_data->win, cursor_clr, m_term_data->fnt, x, y, " ", 1);
 	}
 
 	void draw_text(int x, int y, int n, byte a, const char *s) final
 	{
-		Infoclr_set(clr[a]);
-		Infofnt_text_std(x, y, s, n);
+		Infofnt_text_std(m_term_data->win, clr[a], m_term_data->fnt, x, y, s, n);
 	}
 };
 
@@ -1636,8 +1560,7 @@ static term *term_data_init(term_data *td, int i)
 	{
 		abort();
 	}
-	Infofnt_set(td->fnt);
-	Infofnt_init_data(font);
+	Infofnt_init_data(td->fnt, font);
 
 	/* Hack -- key buffer size */
 	num = (i == 0 ? 1024 : 16);
@@ -1652,20 +1575,21 @@ static term *term_data_init(term_data *td, int i)
 	{
 		abort();
 	}
-	Infowin_set(td->win);
-	Infowin_init_data(None, x, y, wid, hgt, 0,
+
+	Infowin_init_data(td->win, None, x, y, wid, hgt, 0,
 	                 Metadpy->fg, Metadpy->bg);
 
 	/* Ask for certain events */
-	Infowin_set_mask(ExposureMask | StructureNotifyMask | KeyPressMask |
-	                 PointerMotionMask | ButtonPressMask | ButtonReleaseMask);
+	Infowin_set_mask(td->win,
+		ExposureMask | StructureNotifyMask | KeyPressMask |
+		PointerMotionMask | ButtonPressMask | ButtonReleaseMask);
 
 	/* Set the window name */
-	Infowin_set_name(name);
+	Infowin_set_name(td->win, name);
 
 	/* Save the inner border */
-	Infowin->ox = ox;
-	Infowin->oy = oy;
+	td->win->ox = ox;
+	td->win->oy = oy;
 
 	/* Make Class Hints */
 	ch = XAllocClassHint();
@@ -1679,7 +1603,7 @@ static term *term_data_init(term_data *td, int i)
 	strcpy(res_class, "Angband");
 	ch->res_class = res_class;
 
-	XSetClassHint(Metadpy->dpy, Infowin->win, ch);
+	XSetClassHint(Metadpy->dpy, td->win->win, ch);
 
 	/* Make Size Hints */
 	sh = XAllocSizeHints();
@@ -1720,14 +1644,17 @@ static term *term_data_init(term_data *td, int i)
 	sh->base_height = (oy + oy);
 
 	/* Use the size hints */
-	XSetWMNormalHints(Metadpy->dpy, Infowin->win, sh);
+	XSetWMNormalHints(Metadpy->dpy, td->win->win, sh);
 
 	/* Map the window */
-	Infowin_map();
+	Infowin_map(td->win);
 
 
 	/* Move the window to requested location */
-	if ((x >= 0) && (y >= 0)) Infowin_impell(x, y);
+	if ((x >= 0) && (y >= 0))
+	{
+		Infowin_impell(td->win, x, y);
+	}
 
 	/* Initialize the term */
 	td->term_ptr = term_init(cols, rows, num, std::make_shared<X11Frontend>(td));
@@ -1785,8 +1712,7 @@ errr init_x11(int argc, char *argv[])
 	{
 		abort();
 	}
-	Infoclr_set(cursor_clr);
-	Infoclr_init_data(Metadpy->fg, Metadpy->bg, Infoclr_Opcode_XOR);
+	Infoclr_init_data(cursor_clr, Metadpy->fg, Metadpy->bg, Infoclr_Opcode_XOR);
 
 
 	/* Prepare normal colors */
@@ -1799,7 +1725,6 @@ errr init_x11(int argc, char *argv[])
 		{
 			abort();
 		}
-		Infoclr_set(clr[i]);
 
 		/* Acquire Angband colors */
 		color_table[i][0] = angband_color_table[i][0];
@@ -1821,7 +1746,7 @@ errr init_x11(int argc, char *argv[])
 		}
 
 		/* Initialize the color */
-		Infoclr_init_data(pixel, Metadpy->bg, Infoclr_Opcode_CPY);
+		Infoclr_init_data(clr[i], pixel, Metadpy->bg, Infoclr_Opcode_CPY);
 	}
 
 
@@ -1838,8 +1763,7 @@ errr init_x11(int argc, char *argv[])
 	}
 
 	/* Raise the "Angband" window */
-	Infowin_set(data[0].win);
-	Infowin_raise();
+	Infowin_raise(data[0].win);
 
 	/* Activate the "Angband" window screen */
 	Term_activate(data[0].term_ptr);

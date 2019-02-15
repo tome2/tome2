@@ -428,11 +428,6 @@ public:
 		init_colours();
 	}
 
-	void activate_deactivate(bool resume) final
-	{
-		// No action necessary
-	};
-
 	void rename_main_window(std::string_view name_sv) final
 	{
 		gtk_window_set_title(GTK_WINDOW(data[0].window), std::string(angband_term_name[0]).c_str());

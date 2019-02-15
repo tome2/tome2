@@ -84,11 +84,6 @@ public:
 	virtual void react() = 0;
 
 	/**
-	 * Signal the activation/deactivation of the user interface.
-	 */
-	virtual void activate_deactivate(bool resume) = 0;
-
-	/**
 	 * Rename the main window.
 	 */
 	virtual void rename_main_window(std::string_view) = 0;
