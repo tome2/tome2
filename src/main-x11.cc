@@ -1201,21 +1201,6 @@ static errr CheckEvent(term_data *old_td, bool wait)
 	switch (xev->type)
 	{
 
-	case EnterNotify:
-	case LeaveNotify:
-		{
-			/* Where is the mouse */
-			/* XXX Handle */
-
-			break;
-		}
-
-	case KeyRelease:
-		{
-			/* Nothing */
-			break;
-		}
-
 	case KeyPress:
 		{
 			/* Hack -- use "old" term */
