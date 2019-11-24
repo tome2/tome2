@@ -31,8 +31,8 @@ struct corruption_type
 	const char *get_text;
 	const char *lose_text; /* If NULL, the corruption is NOT removable by any means */
 	const char *desc;
-	s16b depends[5];
-	s16b opposes[5];
+	s16b depends[5]; /* terminated by a -1 entry */
+	s16b opposes[5]; /* terminated by a -1 entry */
 	void (*gain_callback)(); /* callback to invoke when gained */
 	s16b power;              /* index of granted power if >= 0, ignored otherwise */
 };
