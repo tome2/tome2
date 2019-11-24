@@ -823,8 +823,7 @@ static bool test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	}
 
 	/* Go through all dependencies */
-	for (i=0; i < sizeof(c_ptr->depends)/sizeof(c_ptr->depends[0])
-			&& c_ptr->depends[i] >= 0; i++)
+	for (i=0; (i < std::size(c_ptr->depends) && c_ptr->depends[i] >= 0; i++)
 	{
 		if (!test_depend_corrupt(c_ptr->depends[i], false))
 		{
@@ -833,8 +832,7 @@ static bool test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	}
 
 	/* Go through all opposers */
-	for (i=0; i < sizeof(c_ptr->depends)/sizeof(c_ptr->depends[0])
-			&& c_ptr->opposes[i] >= 0; i++)
+	for (i=0; i < std::size(c_ptr->depends) && c_ptr->opposes[i] >= 0; i++)
 	{
 		if (test_depend_corrupt(c_ptr->opposes[i], false))
 		{
