@@ -823,7 +823,7 @@ static bool test_depend_corrupt(s16b corrupt_idx, bool can_gain)
 	}
 
 	/* Go through all dependencies */
-	for (i=0; (i < std::size(c_ptr->depends) && c_ptr->depends[i] >= 0; i++)
+	for (i=0; i < std::size(c_ptr->depends) && c_ptr->depends[i] >= 0; i++)
 	{
 		if (!test_depend_corrupt(c_ptr->depends[i], false))
 		{
