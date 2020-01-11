@@ -5024,12 +5024,18 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 		strlower(buf);
 		k_ptr->aware = save_aware;
 
+		if (iequals(buf, name))
+		{
+			/* Don't search any more */
+			return TRUE;
+		}
+
 		if (strstr(name, buf) ||
 		   /* Hack hack hackery */
 		   (o_ptr->tval == TV_ROD_MAIN && strstr(name, "rod of")))
 		{
 			/* try all ego */
-			for (std::size_t j = 0; j < e_info.size(); j++)
+			for (std::size_t j = 1; j < e_info.size(); j++)
 			{
 				auto e_ptr = &e_info[j];
 				bool_ ok = FALSE;
@@ -5058,59 +5064,80 @@ static bool_ test_object_wish(char *name, object_type *o_ptr, object_type *forge
 						continue;
 					}
 				}
-
-				/* try all ego */
-				for (std::size_t jb = 0; jb < e_info.size(); jb++)
-				{
-					auto eb_ptr = &e_info[jb];
-					bool_ ok = FALSE;
-
-					if (jb && eb_ptr->name.empty())
-					{
-						continue;
-					}
-
-					if (j && jb && (e_ptr->before == eb_ptr->before)) continue;
-
-					/* Must have the correct fields */
-					if (jb)
-					{
-						int z;
-
-						for (z = 0; z < 6; z++)
-						{
-							if (eb_ptr->tval[z] == k_ptr->tval)
-							{
-								if ((eb_ptr->min_sval[z] <= k_ptr->sval) &&
-								                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = TRUE;
-							}
-							if (ok) break;
-						}
-						if (!ok)
-						{
-							continue;
-						}
-					}
-
+				do {
 					object_prep(o_ptr, k_entry.first);
 					o_ptr->name1 = 0;
 					o_ptr->name2 = j;
-					o_ptr->name2b = jb;
-					apply_magic(o_ptr, dun_level, FALSE, FALSE, FALSE);
+					o_ptr->name2b = 0;
+					apply_magic(o_ptr, dun_level, FALSE, TRUE, FALSE);
 					object_aware(o_ptr);
 					object_known(o_ptr);
 					object_desc(buf, o_ptr, FALSE, 0);
 					strlower(buf);
+				} while (o_ptr->name2b || !o_ptr->artifact_name.empty()); //If apply magic added a second ego or made an artifact, retry.;
 
-					if (iequals(buf, name))
+				if (iequals(buf, name))
+				{
+					/* Don't search any more */
+					return TRUE;
+				}
+				/* Restore again the aware status */
+				k_ptr->aware = save_aware;
+
+				if (strstr(name, buf))
+				{
+					/* try all ego */
+					for (std::size_t jb = 0; jb < e_info.size(); jb++)
 					{
-						/* Don't search any more */
-						return TRUE;
-					}
-					else
-					{
-						/* Restore again the aware status */
-						k_ptr->aware = save_aware;
+						auto eb_ptr = &e_info[jb];
+						bool_ ok = FALSE;
+
+						if (jb && eb_ptr->name.empty())
+						{
+						continue;
+						}
+
+						/* Must have the correct fields */
+						if (jb)
+						{
+							int z;
+
+							for (z = 0; z < 6; z++)
+							{
+								if (eb_ptr->tval[z] == k_ptr->tval)
+								{
+									if ((eb_ptr->min_sval[z] <= k_ptr->sval) &&
+									                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = TRUE;
+								}
+								if (ok) break;
+							}
+							if (!ok)
+							{
+								continue;
+							}
+						}
+						do {
+							object_prep(o_ptr, k_entry.first);
+							o_ptr->name1 = 0;
+							o_ptr->name2 = j;
+							o_ptr->name2b = jb;
+							apply_magic(o_ptr, dun_level, FALSE, TRUE, TRUE);
+							object_aware(o_ptr);
+							object_known(o_ptr);
+							object_desc(buf, o_ptr, FALSE, 0);
+							strlower(buf);
+						} while (!o_ptr->artifact_name.empty()); //If apply magic turns it into an artifact, retry.
+	
+						if (iequals(buf, name))
+						{
+							/* Don't search any more */
+							return TRUE;
+						}
+						else
+						{
+							/* Restore again the aware status */
+							k_ptr->aware = save_aware;
+						}
 					}
 				}
 			}
