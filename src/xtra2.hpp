@@ -78,7 +78,7 @@ bool_ set_tim_esp(int v);
 bool_ tgp_pt(int *x, int * y);
 bool_ tgt_pt (int *x, int *y);
 void do_poly_self();
-void make_wish();
+bool_ make_wish();
 void create_between_gate(int dist, int y, int x);
 
 extern "C" {

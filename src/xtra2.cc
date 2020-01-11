@@ -5183,7 +5183,7 @@ static void clean_wish_name(char *buf, char *name)
 /*
  * Allow the player to make a wish
  */
-void make_wish()
+bool_ make_wish()
 {
 	auto const &re_info = game->edit_data.re_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -5197,7 +5197,7 @@ void make_wish()
 	buf[0] = 0;
 
 	/* Ask for the wish */
-	if (!get_string("Wish for what? ", buf, 80)) return;
+	if (!get_string("Wish for what? ", buf, 80)) return FALSE;
 
 	clean_wish_name(buf, name);
 
@@ -5205,7 +5205,7 @@ void make_wish()
 	if (strstr(name, "wish"))
 	{
 		msg_print("You can't wish for a wish!");
-		return;
+		return FALSE;
 	}
 
 	if (test_object_wish(name, o_ptr, &forge, "wish"))
@@ -5215,7 +5215,7 @@ void make_wish()
 		/* Give it to the player */
 		drop_near(o_ptr, -1, p_ptr->py, p_ptr->px);
 
-		return;
+		return TRUE;
 	}
 
 	/* try monsters */
@@ -5310,7 +5310,7 @@ void make_wish()
 					}
 
 					/* Don't search any more */
-					return;
+					return TRUE;
 				}
 			}
 		}

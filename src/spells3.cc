@@ -3561,8 +3561,10 @@ const char *device_haste_monster_info()
 
 casting_result device_wish()
 {
-	make_wish();
-	return CAST;
+	if (make_wish()) {
+		return CAST;
+	}
+	return NO_CAST;
 }
 
 casting_result device_summon_monster()
