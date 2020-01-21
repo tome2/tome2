@@ -1879,7 +1879,8 @@ bool is_ok_spell(s32b spell_idx, s32b pval)
 	}
 	// Are we permitted to cast based on item pval? Only music
 	// spells have non-zero minimum PVAL.
-	if (pval < spell_type_minimum_pval(spell))
+	s32b min_pval = spell_type_minimum_pval(spell);
+	if (min_pval > 0 && pval < min_pval)
 	{
 		return false;
 	}
@@ -2031,7 +2032,6 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			{
 				/* Save the spell index */
 				spell = spell_x(sval, pval, i);
-
 				/* Require "okay" spells */
 				if (!is_ok_spell(spell, o_ptr->pval))
 				{
