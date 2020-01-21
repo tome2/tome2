@@ -5315,6 +5315,7 @@ bool_ make_wish()
 			}
 		}
 	}
+	return FALSE;
 }
 
 
