@@ -5023,12 +5023,18 @@ static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge)
 		strlower(buf);
 		k_ptr->aware = save_aware;
 
+		if (iequals(buf, name))
+		{
+			/* Don't search any more */
+			return true;
+		}
+
 		if (strstr(name, buf) ||
 		   /* Hack hack hackery */
 		   (o_ptr->tval == TV_ROD_MAIN && strstr(name, "rod of")))
 		{
 			/* try all ego */
-			for (std::size_t j = 0; j < e_info.size(); j++)
+			for (std::size_t j = 1; j < e_info.size(); j++)
 			{
 				auto e_ptr = &e_info[j];
 				bool ok = false;
@@ -5057,59 +5063,82 @@ static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge)
 						continue;
 					}
 				}
-
-				/* try all ego */
-				for (std::size_t jb = 0; jb < e_info.size(); jb++)
-				{
-					auto eb_ptr = &e_info[jb];
-					bool ok = false;
-
-					if (jb && eb_ptr->name.empty())
-					{
-						continue;
-					}
-
-					if (j && jb && (e_ptr->before == eb_ptr->before)) continue;
-
-					/* Must have the correct fields */
-					if (jb)
-					{
-						int z;
-
-						for (z = 0; z < 6; z++)
-						{
-							if (eb_ptr->tval[z] == k_ptr->tval)
-							{
-								if ((eb_ptr->min_sval[z] <= k_ptr->sval) &&
-								                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = true;
-							}
-							if (ok) break;
-						}
-						if (!ok)
-						{
-							continue;
-						}
-					}
-
+				do {
 					object_prep(o_ptr, k_entry.first);
 					o_ptr->name1 = 0;
 					o_ptr->name2 = j;
-					o_ptr->name2b = jb;
-					apply_magic(o_ptr, dun_level, false, false, false);
+					o_ptr->name2b = 0;
+					apply_magic(o_ptr, dun_level, false, true, false);
 					object_aware(o_ptr);
 					object_known(o_ptr);
 					object_desc(buf, o_ptr, false, 0);
 					strlower(buf);
+				} while (o_ptr->name2b || !o_ptr->artifact_name.empty()); //If apply magic added a second ego or made an artifact, retry.;
 
-					if (iequals(buf, name))
+				if (iequals(buf, name))
+				{
+					/* Don't search any more */
+					return true;
+				}
+
+				/* Restore again the aware status */
+				k_ptr->aware = save_aware;
+
+				if (strstr(name, buf))
+				{
+					/* try all ego */
+					for (std::size_t jb = 0; jb < e_info.size(); jb++)
 					{
-						/* Don't search any more */
-						return true;
-					}
-					else
-					{
-						/* Restore again the aware status */
-						k_ptr->aware = save_aware;
+						auto eb_ptr = &e_info[jb];
+						bool ok = false;
+
+						if (jb && eb_ptr->name.empty())
+						{
+						continue;
+						}
+
+						/* Must have the correct fields */
+						if (jb)
+						{
+							int z;
+
+							for (z = 0; z < 6; z++)
+							{
+								if (eb_ptr->tval[z] == k_ptr->tval)
+								{
+									if ((eb_ptr->min_sval[z] <= k_ptr->sval) &&
+									                (eb_ptr->max_sval[z] >= k_ptr->sval)) ok = true;
+								}
+								if (ok) break;
+							}
+							if (!ok)
+							{
+								continue;
+							}
+						}
+
+						do {
+							object_prep(o_ptr, k_entry.first);
+							o_ptr->name1 = 0;
+							o_ptr->name2 = j;
+							o_ptr->name2b = jb;
+							apply_magic(o_ptr, dun_level, false, true, true);
+							object_aware(o_ptr);
+							object_known(o_ptr);
+							object_desc(buf, o_ptr, false, 0);
+							strlower(buf);
+						} while (!o_ptr->artifact_name.empty()); //If apply magic turns it into an artifact, retry.
+	
+						if (iequals(buf, name))
+						{
+							/* Don't search any more */
+							return true;
+						}
+						else
+						{
+							/* Restore again the aware status */
+							k_ptr->aware = save_aware;
+						}
 					}
 				}
 			}
@@ -5155,7 +5184,7 @@ static void clean_wish_name(char *buf, char *name)
 /*
  * Allow the player to make a wish
  */
-void make_wish()
+bool make_wish()
 {
 	auto const &re_info = game->edit_data.re_info;
 	auto const &r_info = game->edit_data.r_info;
@@ -5169,7 +5198,7 @@ void make_wish()
 	buf[0] = 0;
 
 	/* Ask for the wish */
-	if (!get_string("Wish for what? ", buf, 80)) return;
+	if (!get_string("Wish for what? ", buf, 80)) return false;
 
 	clean_wish_name(buf, name);
 
@@ -5177,7 +5206,7 @@ void make_wish()
 	if (strstr(name, "wish"))
 	{
 		msg_print("You can't wish for a wish!");
-		return;
+		return false;
 	}
 
 	if (test_object_wish(name, o_ptr, &forge))
@@ -5187,7 +5216,7 @@ void make_wish()
 		/* Give it to the player */
 		drop_near(o_ptr, -1, p_ptr->py, p_ptr->px);
 
-		return;
+		return true;
 	}
 
 	/* try monsters */
@@ -5282,11 +5311,12 @@ void make_wish()
 					}
 
 					/* Don't search any more */
-					return;
+					return true;
 				}
 			}
 		}
 	}
+	return false;
 }
 
 

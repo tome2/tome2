@@ -78,7 +78,7 @@ bool set_tim_esp(int v);
 bool tgp_pt(int *x, int * y);
 bool tgt_pt (int *x, int *y);
 void do_poly_self();
-void make_wish();
+bool make_wish();
 void create_between_gate(int dist, int y, int x);
 void resize_map();
 void resize_window();
