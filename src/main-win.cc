@@ -66,8 +66,16 @@
  * and Chris R. Martin (crm7479@tam2000.tamu.edu).
  */
 
+
+#include "config.hpp"
+#include "defines.hpp"
+#include "files.hpp"
 #include "h-basic.hpp"
+#include "util.hpp"
+#include "variable.hpp"
+#include "z-form.hpp"
 #include "z-term.hpp"
+#include "z-util.hpp"
 
 /*
  * Determine if string "t" is a suffix of string "s"
