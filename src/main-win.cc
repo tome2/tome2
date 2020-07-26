@@ -67,7 +67,6 @@
  */
 
 
-#include "angband.h"
 #include "config.h"
 #include "defines.h"
 #include "files.h"
