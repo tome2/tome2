@@ -42,7 +42,7 @@ void show_notes_file()
 	auto caption = fmt::format("Note file {}", p.filename().c_str());
 
 	/* Invoke show_file */
-	show_file(p.c_str(), caption.c_str());
+	show_file(p.string().c_str(), caption.c_str());
 }
 
 /*
@@ -52,7 +52,7 @@ void show_notes_file()
 void output_note(const char *final_note)
 {
 	/* Open notes file */
-	FILE *fff = my_fopen(note_path().c_str(), "a");
+	FILE *fff = my_fopen(note_path().string().c_str(), "a");
 
 	/* Failure */
 	if (!fff) return;
