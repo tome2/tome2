@@ -66,7 +66,6 @@
  * and Chris R. Martin (crm7479@tam2000.tamu.edu).
  */
 
-#include "files.h"
 #include "h-basic.hpp"
 #include "util.h"
 #include "variable.h"
