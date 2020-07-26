@@ -67,7 +67,6 @@
  */
 
 #include "h-basic.hpp"
-#include "util.h"
 #include "variable.h"
 #include "z-form.h"
 #include "z-term.hpp"
