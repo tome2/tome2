@@ -67,9 +67,7 @@
  */
 
 #include "h-basic.hpp"
-#include "z-form.h"
 #include "z-term.hpp"
-#include "z-util.h"
 
 /*
  * Determine if string "t" is a suffix of string "s"
