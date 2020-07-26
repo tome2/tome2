@@ -39,7 +39,7 @@ void show_notes_file()
 	auto p = note_path();
 
 	/* Use a caption, forcing direct access to the note file */
-	auto caption = fmt::format("Note file {}", p.filename().c_str());
+	auto caption = fmt::format("Note file {}", p.filename().string().c_str());
 
 	/* Invoke show_file */
 	show_file(p.string().c_str(), caption.c_str());
