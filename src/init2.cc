@@ -461,7 +461,7 @@ template<typename T> static errr init_x_info() {
 	path /= T::name;
 
 	/* Open the file */
-	FILE *fp = my_fopen(path.c_str(), "r");
+	FILE *fp = my_fopen(path.string().c_str(), "r");
 
 	/* Parse it */
 	if (!fp)

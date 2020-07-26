@@ -4972,7 +4972,7 @@ void wipe_saved()
 			if (auto ext = get_dungeon_save_extension())
 			{
 				/* Remove the dungeon save file */
-				remove(name_file_dungeon_save(*ext));
+				fd_kill(name_file_dungeon_save(*ext).string().c_str());
 			}
 		}
 	}
