@@ -1227,7 +1227,7 @@ namespace { // anonymous
 
 using menu_callback = void(gpointer user_data, guint user_action, GtkWidget *widget);
 
-constexpr auto make_menu_item(const char *path, const char *accel, menu_callback callback, guint action, const char *type)
+auto make_menu_item(const char *path, const char *accel, menu_callback callback, guint action, const char *type)
 {
 	return GtkItemFactoryEntry {
 		(gchar *) path,
@@ -1239,7 +1239,7 @@ constexpr auto make_menu_item(const char *path, const char *accel, menu_callback
 	};
 }
 
-constexpr auto menu_branch(const char *path)
+auto menu_branch(const char *path)
 {
 	return make_menu_item(
 		path,
@@ -1249,7 +1249,7 @@ constexpr auto menu_branch(const char *path)
 		"<Branch>");
 }
 
-constexpr auto menu_terminal(const char *accel, guint terminal_number)
+auto menu_terminal(const char *accel, guint terminal_number)
 {
 	return make_menu_item(
 		nullptr /* Filled in by setup_menu_paths() */,
@@ -1259,7 +1259,7 @@ constexpr auto menu_terminal(const char *accel, guint terminal_number)
 		"<CheckItem>");
 }
 
-constexpr auto menu_font(guint terminal_number)
+auto menu_font(guint terminal_number)
 {
 	return make_menu_item(
 		nullptr /* Filled in by setup_menu_paths() */,
@@ -1269,7 +1269,7 @@ constexpr auto menu_font(guint terminal_number)
 		nullptr);
 }
 
-constexpr auto menu_action(const char *path, const char *accel, menu_callback callback)
+auto menu_action(const char *path, const char *accel, menu_callback callback)
 {
 	return make_menu_item(
 		path,
@@ -1279,7 +1279,7 @@ constexpr auto menu_action(const char *path, const char *accel, menu_callback ca
 		nullptr);
 }
 
-constexpr auto menu_check_item(const char *path, const char *accel, menu_callback callback)
+auto menu_check_item(const char *path, const char *accel, menu_callback callback)
 {
 	return make_menu_item(
 		path,

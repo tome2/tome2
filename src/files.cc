@@ -2531,7 +2531,7 @@ errr file_character(const char *name)
 		fd_close(fd);
 
 		/* Build query */
-		sprintf(out_val, "Replace existing file %s? ", buf);
+		snprintf(out_val, sizeof(out_val), "Replace existing file %s? ", buf);
 
 		/* Ask */
 		if (get_check(out_val)) fd = -1;

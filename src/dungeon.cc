@@ -1222,7 +1222,7 @@ static void process_world()
 			/* Get an object description */
 			object_desc(o_name, o_ptr, true, 0);
 
-			sprintf(ouch, "wielding %s", o_name);
+			snprintf(ouch, sizeof(ouch), "wielding %s", o_name);
 			take_hit(1, ouch);
 		}
 	}

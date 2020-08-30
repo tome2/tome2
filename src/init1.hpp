@@ -2,6 +2,7 @@
 
 #include "h-basic.hpp"
 #include "dungeon_flag_set.hpp"
+#include <cstdio>
 
 int color_char_to_attr(char c);
 extern byte conv_color[16];

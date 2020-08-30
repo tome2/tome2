@@ -89,7 +89,7 @@ void add_note(char *note, char code)
 	else sprintf(depths, "Lev%3d", dun_level);
 
 	/* Make note */
-	sprintf(final_note, "%-20s %s %c: %s", turn_s, depths, code, buf);
+	snprintf(final_note, sizeof(final_note), "%-20s %s %c: %s", turn_s, depths, code, buf);
 
 	/* Output to the notes file */
 	output_note(final_note);
