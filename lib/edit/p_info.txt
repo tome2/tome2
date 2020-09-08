@@ -335,11 +335,11 @@ C:E:0:0:0:0:0:0
 C:k:+1000:+800:Combat
 C:k:+1000:+500:Weaponmastery
 C:k:+1000:+750:Archery
-C:k:+0:+300:Bow-mastery
-C:k:+0:+300:Crossbow-mastery
-C:k:+0:+300:Sling-mastery
-C:k:+0:+300:Boomerang-mastery
-C:k:+0:%150:Boulder-throwing
+C:k:+0:+500:Bow-mastery
+C:k:+0:+500:Crossbow-mastery
+C:k:+0:+500:Sling-mastery
+C:k:+0:+500:Boomerang-mastery
+C:k:+0:%250:Boulder-throwing
 C:k:+0000:+400:Stealth
 C:k:+1000:+300:Magic
 C:k:+0:+100:Magic-Device
