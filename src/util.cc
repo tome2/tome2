@@ -758,7 +758,13 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 	for (i = 0; i < max_macrotrigger; i++)
 	{
 		len = strlen(macro_trigger_name[i]);
-		if (iequals(str, macro_trigger_name[i]) && ']' == str[len])
+		char tstr[34];
+		memset(tstr,'\0',sizeof(tstr));
+		strncpy(tstr,str,32); // assume the keycode isn't longer than 32
+		if(strlen(tstr) > 0) { // assuming we actually copied something, trim of the ] at the end.
+			tstr[strlen(tstr)-1]='\0';
+		}
+		if (iequals(tstr, macro_trigger_name[i]) && ']' == str[len])
 		{
 			/* a trigger name found */
 			break;
