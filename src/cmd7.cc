@@ -112,7 +112,11 @@ void mindcraft_info(char *p, int power)
 void mimic_info(char *p, int power)
 {
 	int plev = get_skill(SKILL_MIMICRY);
+	int cloak_pval2 = 0; /* for base duration without a mimicry cloak */
 	object_type *o_ptr = &p_ptr->inventory[INVEN_OUTER];
+	if (o_ptr && o_ptr->k_ptr) {
+		cloak_pval2 = o_ptr->k_ptr->pval2;
+	}
 
 	/* Clear the buffer */
 	strcpy(p, "");
@@ -121,7 +125,7 @@ void mimic_info(char *p, int power)
 	switch (power)
 	{
 	case 0:
-		strnfmt(p, 80, " dur %d", o_ptr->k_ptr->pval2 + get_skill_scale(SKILL_MIMICRY, 1000));
+		strnfmt(p, 80, " dur %d", cloak_pval2 + get_skill_scale(SKILL_MIMICRY, 1000));
 		break;
 	case 1:
 		strnfmt(p, 80, " dur %d+d20", 10 + plev);
