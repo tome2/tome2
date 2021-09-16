@@ -4,6 +4,10 @@ ToME is a [rogue-like](https://en.wikipedia.org/wiki/Roguelike) game.
 
 ## Getting Started
 
+### Objective of this fork
+
+A few bugs have been corrected for the code to compile in macOS Big Sur (11.2)
+
 ### Prerequisites
 
 See below for specific distribution-specific hints, if needed.
