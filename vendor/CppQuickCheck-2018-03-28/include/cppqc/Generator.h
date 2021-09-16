@@ -38,6 +38,7 @@
 #include <stdexcept>
 #include <random>
 
+
 namespace cppqc {
 
 typedef std::mt19937 RngEngine;
@@ -364,7 +365,11 @@ void sampleShrinkOutput(const Generator<T> &g, std::ostream &out,
             T x = g.unGen(rng, i);
             std::vector<T> shr = g.shrink(x);
             if (randomized)
-                std::random_shuffle(shr.begin(), shr.end());
+            {
+                std::random_device rd;
+                std::mt19937 g(rd());
+                std::shuffle(shr.begin(), shr.end(), g);
+            }
             out << x << " ->";
             for (std::size_t j = 0; j < num && j < shr.size(); ++j)
                 out << ' ' << shr[j];
