@@ -8095,7 +8095,9 @@ static void generate_grid_mana()
 static void clear_dungeon()
 {
 	/* Clear any lasting effects */
-	game->lasting_effects.clear();
+	for (std::size_t i = 0; i < std::size(game->lasting_effects); i++) {
+		game->lasting_effects[i].time = 0;
+	}
 
 	/* Start with a blank cave */
 	for (int y = 0; y < MAX_HGT; y++)

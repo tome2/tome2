@@ -1548,7 +1548,7 @@ static bool do_dungeon(ls_flag_t flag, bool no_companions)
 	do_s16b(&last_teleportation_y, flag);
 
 	/* Spell effects */
-	do_vector(flag, effects,
+	do_array("spell effects", flag, effects, std::size(effects),
 		[](auto effect, auto flag) -> void {
 			do_s16b(&effect->type, flag);
 			do_s16b(&effect->dam, flag);

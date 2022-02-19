@@ -114,7 +114,7 @@ struct Game {
 	/**
 	 * Lasting effects.
 	 */
-	std::vector<effect_type> lasting_effects { };
+	effect_type lasting_effects[128];
 
 	/**
 	 * Generate a special level feeling?
