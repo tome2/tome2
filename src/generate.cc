@@ -3722,6 +3722,9 @@ static void store_height(int x, int y, int x0, int y0, byte val,
 	if (((x == 0) || (y == 0) || (x == xhsize * 2) || (y == yhsize * 2)) &&
 	                (val <= cutoff)) val = cutoff + 1;
 
+	if (val > 216) {
+		val = FEAT_FLOOR;
+	}
 	/* Store the value in height-map format */
 	/* Meant to be temporary, hence no cave_set_feat */
 	cave[y + y0 - yhsize][x + x0 - xhsize].feat = val;
