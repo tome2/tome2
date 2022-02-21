@@ -556,7 +556,7 @@ unsigned int vstrnfmt(char *buf, unsigned int max, const char *fmt, va_list vp)
  */
 static char *vformat(const char *fmt, va_list vp)
 {
-	static char *format_buf = (char *)NULL;
+	static char *format_buf = nullptr;
 	static size_t format_len = 0;
 
 	/* Initial allocation */
