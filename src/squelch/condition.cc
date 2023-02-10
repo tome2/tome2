@@ -1,6 +1,7 @@
 #include "tome/squelch/condition_fwd.hpp"
 #include "tome/squelch/condition.hpp"
 
+#include <map>
 #include <boost/algorithm/string/predicate.hpp>
 
 #include "jsoncons_helpers.hpp"
