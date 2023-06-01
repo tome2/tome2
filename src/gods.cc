@@ -13,12 +13,14 @@
 #include "skill_type.hpp"
 #include "stats.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::equals;
 
 /*
  * Add amt piety is god is god
@@ -54,7 +56,7 @@ void abandon_god(int god)
 /*
  * Check if god may be followed by player
  */
-static bool_ may_follow_god(int god)
+static bool may_follow_god(int god)
 {
 	if (god == GOD_MELKOR)
 	{
@@ -67,18 +69,18 @@ static bool_ may_follow_god(int god)
 			{
 				msg_print("The One Ring has corrupted "
 					  "you, and you are rejected.");
-				return FALSE;
+				return false;
 			}
 		}
 	}
 	/* Default is to allow */
-	return TRUE;
+	return true;
 }
 
 /*
  * Get a religion
  */
-void follow_god(int god, bool_ silent)
+void follow_god(int god, bool silent)
 {
 	auto &s_info = game->s_info;
 
@@ -112,7 +114,7 @@ void follow_god(int god, bool_ silent)
 /*
  * Show religious info.
  */
-bool_ show_god_info()
+bool show_god_info()
 {
 	int pgod = p_ptr->pgod;
 
@@ -122,7 +124,7 @@ bool_ show_god_info()
 	{
 		msg_print("You don't worship anyone.");
 		msg_print(NULL);
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -132,21 +134,19 @@ bool_ show_god_info()
 
 		msg_print(NULL);
 
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 
 		text_out(format("You worship %s. ", d_ptr->name));
-		for (i = 0; (i < 10) && (strcmp(d_ptr->desc[i], "")); i++)
+		for (i = 0; (i < 10) && (!equals(d_ptr->desc[i], "")); i++)
 			text_out(d_ptr->desc[i]);
 		text_out("\n");
 
 		inkey();
 
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 	}
 
-	return TRUE;
+	return true;
 }
 
 /*
@@ -178,7 +178,7 @@ deity_type *god_at(byte god_idx)
 /*
  * Check if god is enabled for the current module
  */
-bool_ god_enabled(struct deity_type *deity)
+bool god_enabled(struct deity_type *deity)
 {
 	int i;
 
@@ -186,11 +186,11 @@ bool_ god_enabled(struct deity_type *deity)
 	{
 		if (deity->modules[i] == game_module_idx)
 		{
-			return TRUE;
+			return true;
 		}
 	}
 	/* Not enabled */
-	return FALSE;
+	return false;
 }
 
 /* Find a god by name */
@@ -203,7 +203,7 @@ int find_god(const char *name)
 		/* The name matches and god is "enabled" for the
 		   current module. */
 		if (god_enabled(&deity_info[i]) &&
-		    streq(deity_info[i].name, name))
+		    equals(deity_info[i].name, name))
 		{
 			return (i);
 		}

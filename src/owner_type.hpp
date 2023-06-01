@@ -1,8 +1,9 @@
 #pragma once
 
+#include <array>
 #include <string>
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /*
  * Store owner descriptor.
@@ -27,15 +28,15 @@ struct owner_type
 	/**
 	 * Liked/hated races.
 	 */
-	u32b races[2][2] { };
+	std::array<std::array<u32b, 2>, 2> races { };
 
 	/**
 	 * Liked/hated classes
 	 */
-	u32b classes[2][2] { };
+	std::array<std::array<u32b, 2>, 2> classes { };
 
 	/**
 	 * Costs for liked people
 	 */
-	s16b costs[3] { };
+	std::array<s16b, 3> costs { };
 };

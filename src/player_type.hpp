@@ -1,8 +1,8 @@
 #pragma once
 
 #include "corrupt.hpp"
-#include "defines.h"
-#include "h-basic.h"
+#include "defines.hpp"
+#include "h-basic.hpp"
 #include "help_info.hpp"
 #include "inventory.hpp"
 #include "object_type.hpp"
@@ -65,8 +65,8 @@ struct player_type
 
 	s32b wilderness_x = 0;                                  /* Coordinates in the wilderness */
 	s32b wilderness_y = 0;
-	bool_ wild_mode = FALSE;                                /* TRUE = Small map, FLASE = Big map */
-	bool_ old_wild_mode = FALSE;                            /* TRUE = Small map, FLASE = Big map */
+	bool wild_mode = false;                                /* true = Small map, FLASE = Big map */
+	bool old_wild_mode = false;                            /* true = Small map, FLASE = Big map */
 
 	s16b mhp = 0;                                           /* Max hit pts */
 	s16b chp = 0;                                           /* Cur hit pts */
@@ -84,13 +84,13 @@ struct player_type
 	s32b grace = 0;                                         /* Your God's appreciation factor. */
 	s32b grace_delay = 0;                                   /* Delay factor for granting piety. */
 	byte pgod = 0;                                          /* Your God. */
-	bool_ praying = FALSE;                                  /* Praying to your god. */
+	bool praying = false;                                   /* Praying to your god. */
 	s16b melkor_sacrifice = 0;                              /* How much hp has been sacrified for damage */
 
 	s16b max_plv = 0;                                       /* Max Player Level */
 
-	s16b stat_max[6] = { 0 };                               /* Current "maximal" stat values */
-	s16b stat_cur[6] = { 0 };                               /* Current "natural" stat values */
+	std::array<s16b, 6> stat_max { };                       /* Current "maximal" stat values */
+	std::array<s16b, 6> stat_cur { };                       /* Current "natural" stat values */
 
 	s16b luck_cur = 0;                                      /* Current "natural" luck value (range -30 <> 30) */
 	s16b luck_max = 0;                                      /* Current "maximal base" luck value (range -30 <> 30) */
@@ -178,23 +178,24 @@ struct player_type
 
 	byte confusing = 0;                                     /* Glowing hands */
 
-	bool_ old_cumber_armor = FALSE;
-	bool_ old_cumber_glove = FALSE;
-	bool_ old_heavy_wield = FALSE;
-	bool_ old_heavy_shoot = FALSE;
-	bool_ old_icky_wield = FALSE;
+	bool old_cumber_armor = false;
+	bool old_cumber_glove = false;
+	bool old_heavy_wield = false;
+	bool old_heavy_shoot = false;
+	bool old_icky_wield = false;
 
 	s16b old_lite = 0;                                      /* Old radius of lite (if any) */
 	s16b old_view = 0;                                      /* Old radius of view (if any) */
 
 	s16b old_food_aux = 0;                                  /* Old value of food */
 
-	bool_ cumber_armor = FALSE;                             /* Mana draining armor */
-	bool_ cumber_glove = FALSE;                             /* Mana draining gloves */
-	bool_ heavy_wield = FALSE;                              /* Heavy weapon */
-	bool_ heavy_shoot = FALSE;                              /* Heavy shooter */
-	bool_ icky_wield = FALSE;                               /* Icky weapon */
-	bool_ immovable = FALSE;                                /* Immovable character */
+	bool cumber_armor = false;                              /* Mana draining armor */
+	bool cumber_glove = false;                              /* Mana draining gloves */
+	bool heavy_wield = false;                               /* Heavy weapon */
+	bool heavy_shoot = false;                               /* Heavy shooter */
+	bool icky_wield = false;                                /* Icky weapon */
+
+	bool immovable = false;                                 /* Immovable character */
 
 	s16b cur_lite = 0;                                      /* Radius of lite (if any) */
 
@@ -203,78 +204,82 @@ struct player_type
 	u32b redraw = 0;                                        /* Normal Redraws (bit flags) */
 	u32b window = 0;                                        /* Window Redraws (bit flags) */
 
-	s16b stat_use[6] = { 0 };                               /* Current modified stats */
-	s16b stat_top[6] = { 0 };                               /* Maximal modified stats */
+	std::array<s16b, 6> stat_use { };                       /* Current modified stats */
+	std::array<s16b, 6> stat_top { };                       /* Maximal modified stats */
 
-	s16b stat_add[6] = { 0 };                               /* Modifiers to stat values */
-	s16b stat_ind[6] = { 0 };                               /* Indexes into stat tables */
-	s16b stat_cnt[6] = { 0 };                               /* Counter for temporary drains */
-	s16b stat_los[6] = { 0 };                               /* Amount of temporary drains */
+	std::array<s16b, 6> stat_add { };                       /* Modifiers to stat values */
+	std::array<s16b, 6> stat_ind { };                       /* Indexes into stat tables */
+	std::array<s16b, 6> stat_cnt { };                       /* Counter for temporary drains */
+	std::array<s16b, 6> stat_los { };                       /* Amount of temporary drains */
 
-	bool_ immune_acid = FALSE;                              /* Immunity to acid */
-	bool_ immune_elec = FALSE;                              /* Immunity to lightning */
-	bool_ immune_fire = FALSE;                              /* Immunity to fire */
-	bool_ immune_cold = FALSE;                              /* Immunity to cold */
-	bool_ immune_neth = FALSE;                              /* Immunity to nether */
+	bool immune_acid = false;                               /* Immunity to acid */
+	bool immune_elec = false;                               /* Immunity to lightning */
+	bool immune_fire = false;                               /* Immunity to fire */
+	bool immune_cold = false;                               /* Immunity to cold */
+	bool immune_neth = false;                               /* Immunity to nether */
 
-	bool_ resist_acid = FALSE;                              /* Resist acid */
-	bool_ resist_elec = FALSE;                              /* Resist lightning */
-	bool_ resist_fire = FALSE;                              /* Resist fire */
-	bool_ resist_cold = FALSE;                              /* Resist cold */
-	bool_ resist_pois = FALSE;                              /* Resist poison */
+	bool resist_acid = false;                               /* Resist acid */
+	bool resist_elec = false;                               /* Resist lightning */
+	bool resist_fire = false;                               /* Resist fire */
+	bool resist_cold = false;                               /* Resist cold */
+	bool resist_pois = false;                               /* Resist poison */
 
-	bool_ resist_conf = FALSE;                              /* Resist confusion */
-	bool_ resist_sound = FALSE;                             /* Resist sound */
-	bool_ resist_lite = FALSE;                              /* Resist light */
-	bool_ resist_dark = FALSE;                              /* Resist darkness */
-	bool_ resist_chaos = FALSE;                             /* Resist chaos */
-	bool_ resist_disen = FALSE;                             /* Resist disenchant */
-	bool_ resist_shard = FALSE;                             /* Resist shards */
-	bool_ resist_nexus = FALSE;                             /* Resist nexus */
-	bool_ resist_blind = FALSE;                             /* Resist blindness */
-	bool_ resist_neth = FALSE;                              /* Resist nether */
-	bool_ resist_fear = FALSE;                              /* Resist fear */
-	bool_ resist_continuum = FALSE;                         /* Resist space-time continuum disruption */
+	bool resist_conf = false;                               /* Resist confusion */
+	bool resist_sound = false;                              /* Resist sound */
+	bool resist_lite = false;                               /* Resist light */
+	bool resist_dark = false;                               /* Resist darkness */
+	bool resist_chaos = false;                              /* Resist chaos */
+	bool resist_disen = false;                              /* Resist disenchant */
+	bool resist_shard = false;                              /* Resist shards */
+	bool resist_nexus = false;                              /* Resist nexus */
+	bool resist_blind = false;                              /* Resist blindness */
+	bool resist_neth = false;                               /* Resist nether */
+	bool resist_fear = false;                               /* Resist fear */
+	bool resist_continuum = false;                          /* Resist space-time continuum disruption */
 
-	bool_ sensible_fire = FALSE;                            /* Fire does more damage on the player */
-	bool_ sensible_lite = FALSE;                            /* Lite does more damage on the player and blinds her/him */
+	bool sensible_fire = false;                             /* Fire does more damage on the player */
+	bool sensible_lite = false;                             /* Lite does more damage on the player and blinds her/him */
 
-	bool_ reflect = FALSE;                                  /* Reflect 'bolt' attacks */
-	bool_ sh_fire = FALSE;                                  /* Fiery 'immolation' effect */
-	bool_ sh_elec = FALSE;                                  /* Electric 'immolation' effect */
-	bool_ wraith_form = FALSE;                              /* wraithform */
+	bool reflect = false;                                   /* Reflect 'bolt' attacks */
 
-	bool_ anti_magic = FALSE;                               /* Anti-magic */
-	bool_ anti_tele = FALSE;                                /* Prevent teleportation */
+	bool sh_fire = false;                                   /* Fiery 'immolation' effect */
+	bool sh_elec = false;                                   /* Electric 'immolation' effect */
 
-	bool_ sustain_str = FALSE;                              /* Keep strength */
-	bool_ sustain_int = FALSE;                              /* Keep intelligence */
-	bool_ sustain_wis = FALSE;                              /* Keep wisdom */
-	bool_ sustain_dex = FALSE;                              /* Keep dexterity */
-	bool_ sustain_con = FALSE;                              /* Keep constitution */
-	bool_ sustain_chr = FALSE;                              /* Keep charisma */
+	bool wraith_form = false;                               /* wraithform */
 
-	bool_ aggravate = FALSE;                                /* Aggravate monsters */
-	bool_ teleport = FALSE;                                 /* Random teleporting */
+	bool anti_magic = false;                                /* Anti-magic */
+	bool anti_tele = false;                                 /* Prevent teleportation */
 
-	bool_ exp_drain = FALSE;                                /* Experience draining */
-	byte drain_mana = FALSE;                                /* mana draining */
-	byte drain_life = FALSE;                                /* hp draining */
+	bool sustain_str = false;                               /* Keep strength */
+	bool sustain_int = false;                               /* Keep intelligence */
+	bool sustain_wis = false;                               /* Keep wisdom */
+	bool sustain_dex = false;                               /* Keep dexterity */
+	bool sustain_con = false;                               /* Keep constitution */
+	bool sustain_chr = false;                               /* Keep charisma */
 
-	bool_ magical_breath = FALSE;                           /* Magical breathing -- can breath anywhere */
-	bool_ water_breath = FALSE;                             /* Water breathing -- can breath underwater */
-	bool_ climb = FALSE;                                    /* Can climb mountains */
-	bool_ fly = FALSE;                                      /* Can fly over some features */
-	bool_ ffall = FALSE;                                    /* No damage falling */
-	bool_ lite = FALSE;                                     /* Permanent light */
-	bool_ free_act = FALSE;                                 /* Never paralyzed */
-	bool_ see_inv = FALSE;                                  /* Can see invisible */
-	bool_ regenerate = FALSE;                               /* Regenerate hit pts */
-	bool_ hold_life = FALSE;                                /* Resist life draining */
-	bool_ slow_digest = FALSE;                              /* Slower digestion */
-	bool_ bless_blade = FALSE;                              /* Blessed blade */
+	bool aggravate = false;                                 /* Aggravate monsters */
+	bool teleport = false;                                  /* Random teleporting */
+
+	bool exp_drain = false;                                 /* Experience draining */
+	byte drain_mana = false;                                /* mana draining */
+	byte drain_life = false;                                /* hp draining */
+
+	bool magical_breath = false;                            /* Magical breathing -- can breath anywhere */
+	bool water_breath = false;                              /* Water breathing -- can breath underwater */
+
+	bool climb = false;                                     /* Can climb mountains */
+	bool fly = false;                                       /* Can fly over some features */
+	bool ffall = false;                                     /* No damage falling */
+
+	bool lite = false;                                      /* Permanent light */
+	bool free_act = false;                                  /* Never paralyzed */
+	bool see_inv = false;                                   /* Can see invisible */
+	bool regenerate = false;                                /* Regenerate hit pts */
+	bool hold_life = false;                                 /* Resist life draining */
+	bool slow_digest = false;                               /* Slower digestion */
+	bool bless_blade = false;                               /* Blessed blade */
 	byte xtra_might = 0;                                    /* Extra might bow */
-	bool_ impact = FALSE;                                   /* Earthquake blows */
+	bool impact = false;                                    /* Earthquake blows */
 
 	s16b invis = 0;                                         /* Invisibility */
 
@@ -339,11 +344,11 @@ struct player_type
 
 	s16b companion_killed = 0;                              /* Number of companion death */
 
-	bool_ no_mortal = FALSE;                                /* Fated to never die by the hand of a mortal being */
+	bool no_mortal = false;                                 /* Fated to never die by the hand of a mortal being */
 
-	bool_ black_breath = FALSE;                             /* The Tolkien's Black Breath */
+	bool black_breath = false;                              /* The Tolkien's Black Breath */
 
-	bool_ precognition = FALSE;                             /* Like the cheat mode */
+	bool precognition = false;                              /* Like the cheat mode */
 
 	/*** Extra flags ***/
 	object_flag_set xtra_flags;
@@ -352,8 +357,8 @@ struct player_type
 	object_flag_set computed_flags;
 
 	/* Corruptions */
-	bool_ corruptions[CORRUPTIONS_MAX] = { FALSE };
-	bool_ corrupt_anti_teleport_stopped = FALSE;
+	std::array<bool, CORRUPTIONS_MAX> corruptions { };
+	bool corrupt_anti_teleport_stopped = false;
 
 	/*** Pet commands ***/
 	byte pet_follow_distance = 0;                           /* Length of the imaginary "leash" for pets */
@@ -365,12 +370,12 @@ struct player_type
 
 	/*** Body changing variables ***/
 	u16b body_monster = 0;                                  /* In which body is the player */
-	bool_ disembodied = FALSE;                              /* Is the player in a body ? */
+	bool disembodied = false;                               /* Is the player in a body ? */
 	std::array<byte, INVEN_TOTAL-INVEN_WIELD> body_parts =  /* Which body parts does he have ? */
 		{ };
 
 	/* Astral */
-	bool_ astral = FALSE;                                   /* We started at the bottom ? */
+	bool astral = false;                                    /* We started at the bottom ? */
 
 	/* Powers; keys of Game::powers */
 	std::unordered_set<int> powers;                 /* Actual powers */
@@ -402,8 +407,8 @@ struct player_type
 
 	/*** Temporary fields ***/
 
-	bool_ did_nothing = FALSE;                              /* True if the last action wasnt a real action */
-	bool_ leaving = FALSE;                                  /* True if player is leaving */
+	bool did_nothing = false;                               /* True if the last action wasnt a real action */
+	bool leaving = false;                                   /* True if player is leaving */
 
 	/**
 	 * Random spells.

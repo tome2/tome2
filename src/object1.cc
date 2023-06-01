@@ -47,11 +47,10 @@
 #include "store_info_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra1.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <boost/algorithm/string/join.hpp>
@@ -240,7 +239,7 @@ static byte object_flavor(
  *
  * XXX XXX XXX Add "EASY_KNOW" flag to "k_info.txt" file
  */
-static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
+static bool object_easy_know(std::shared_ptr<object_kind> k_ptr)
 {
 	/* Analyze the "tval" */
 	switch (k_ptr->tval)
@@ -250,7 +249,7 @@ static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 	case TV_MUSIC_BOOK:
 	case TV_SYMBIOTIC_BOOK:
 		{
-			return (TRUE);
+			return true;
 		}
 
 		/* Simple items */
@@ -263,7 +262,7 @@ static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 	case TV_SPIKE:
 	case TV_JUNK:
 		{
-			return (TRUE);
+			return true;
 		}
 
 		/* All Food, Potions, Scrolls, Rods */
@@ -275,8 +274,8 @@ static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 	case TV_ROD_MAIN:
 		{
 			if (k_ptr->flags & TR_NORM_ART)
-				return ( FALSE );
-			return (TRUE);
+				return ( false );
+			return true;
 		}
 
 		/* Some Rings, Amulets, Lites */
@@ -284,13 +283,13 @@ static bool_ object_easy_know(std::shared_ptr<object_kind> k_ptr)
 	case TV_AMULET:
 	case TV_LITE:
 		{
-			if (k_ptr->flags & TR_EASY_KNOW) return (TRUE);
-			return (FALSE);
+			if (k_ptr->flags & TR_EASY_KNOW) return true;
+			return false;
 		}
 	}
 
 	/* Nope */
-	return (FALSE);
+	return false;
 }
 
 
@@ -359,7 +358,7 @@ void flavor_init()
 		/* No flavor yields aware */
 		if ((!k_ptr->flavor) && (k_ptr->tval != TV_ROD_MAIN))
 		{
-			k_ptr->aware = TRUE;
+			k_ptr->aware = true;
 		}
 
 		/* Check for "easily known" */
@@ -372,7 +371,7 @@ void flavor_init()
  *
  * This involves resetting various things to their "default" state.
  *
- * If the "prefs" flag is TRUE, then we will also load the appropriate
+ * If the "prefs" flag is true, then we will also load the appropriate
  * "user pref file" based on the current setting of the "use_graphics"
  * flag.  This is useful for switching "graphics" on/off.
  *
@@ -440,7 +439,7 @@ void reset_visuals()
 	}
 
 	/* Normal symbols */
-	process_pref_file("font.prf");
+	process_pref_file(name_file_pref("font"));
 }
 
 
@@ -535,7 +534,7 @@ static void object_flags_xtra(object_type const *o_ptr, object_flag_set *f)
 /*
  * Disregard sets when calculating flags?
  */
-bool_ object_flags_no_set = FALSE;
+bool object_flags_no_set = false;
 
 /*
  * Obtain the "flags" for an item
@@ -759,12 +758,12 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const &random_artifacts = game->random_artifacts;
 	static auto const TR_PVAL_MASK = compute_pval_mask();
 
-	bool_ hack_name = FALSE;
+	bool hack_name = false;
 
-	bool_ append_name = FALSE;
+	bool append_name = false;
 
-	bool_ show_weapon = FALSE;
-	bool_ show_armour = FALSE;
+	bool show_weapon = false;
+	bool show_armour = false;
 
 	auto k_ptr = o_ptr->k_ptr;
 
@@ -772,10 +771,10 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	auto const flags = object_flags(o_ptr);
 
 	/* See if the object is "aware" */
-	bool_ aware = object_aware_p(o_ptr);
+	bool aware = object_aware_p(o_ptr);
 
 	/* See if the object is "known" */
-	bool_ known = object_known_p(o_ptr);
+	bool known = object_known_p(o_ptr);
 
 	/* Hack -- Extract the sub-type "indexx" */
 	auto const indexx = o_ptr->sval;
@@ -821,7 +820,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_SWORD:
 	case TV_AXE:
 		{
-			show_weapon = TRUE;
+			show_weapon = true;
 			break;
 		}
 
@@ -835,7 +834,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 	case TV_HARD_ARMOR:
 	case TV_DRAG_ARMOR:
 		{
-			show_armour = TRUE;
+			show_armour = true;
 			break;
 		}
 
@@ -849,7 +848,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Amulets (including a few "Specials") */
 	case TV_AMULET:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Amulet~";
 
@@ -864,7 +863,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Rings (including a few "Specials") */
 	case TV_RING:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Ring~";
 
@@ -884,7 +883,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_STAFF:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Staff~";
 			break;
@@ -892,7 +891,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_WAND:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Wand~";
 			break;
@@ -900,14 +899,14 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_ROD:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Rod Tip~";
 
 			if (o_ptr->sval == SV_ROD_HOME)
 			{
 				basenm = "& Great Rod Tip~ of Home Summoning";
-				hack_name = TRUE;
+				hack_name = true;
 			}
 
 			break;
@@ -921,7 +920,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 	case TV_SCROLL:
 		{
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Scroll~";
 			break;
@@ -932,7 +931,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		{
 			if ((o_ptr->tval != TV_POTION2) || (o_ptr->sval != SV_POTION2_MIMIC) || (!aware))
 			{
-				if (aware) append_name = TRUE;
+				if (aware) append_name = true;
 			}
 			else
 			{
@@ -948,7 +947,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			/* Ordinary food is "boring" */
 			if (o_ptr->sval >= SV_FOOD_MIN_FOOD) break;
 
-			if (aware) append_name = TRUE;
+			if (aware) append_name = true;
 
 			basenm = "& Mushroom~";
 			break;
@@ -958,7 +957,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 		/* Cloak of Mimicry */
 	case TV_CLOAK:
 		{
-			show_armour = TRUE;
+			show_armour = true;
 			if (o_ptr->sval == SV_MIMIC_CLOAK)
 			{
 				modstr = get_mimic_object_name(o_ptr->pval2);
@@ -1043,7 +1042,7 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 			monster_type monster;
 			monster.r_idx = o_ptr->pval;
 			monster.ego = o_ptr->pval2;
-			monster.ml = TRUE;
+			monster.ml = true;
 			monster.status = MSTATUS_ENEMY;
 
 			char name[80];
@@ -1431,13 +1430,13 @@ static std::string object_desc_aux(object_type const *o_ptr, int pref, int mode)
 
 
 	/* Display the item like a weapon */
-	if (flags & TR_SHOW_MODS) show_weapon = TRUE;
+	if (flags & TR_SHOW_MODS) show_weapon = true;
 
 	/* Display the item like a weapon */
-	if (o_ptr->to_h && o_ptr->to_d) show_weapon = TRUE;
+	if (o_ptr->to_h && o_ptr->to_d) show_weapon = true;
 
 	/* Display the item like armour */
-	if (o_ptr->ac) show_armour = TRUE;
+	if (o_ptr->ac) show_armour = true;
 
 	/* Dump base weapon info */
 	switch (o_ptr->tval)
@@ -1728,12 +1727,12 @@ void object_desc(char *buf, object_type const *o_ptr, int pref, int mode)
 void object_desc_store(char *buf, object_type *o_ptr, int pref, int mode)
 {
 	/* Save the identification status */
-	bool_ saved_aware = o_ptr->k_ptr->aware;
+	bool saved_aware = o_ptr->k_ptr->aware;
 	auto saved_identified = o_ptr->identified;
 
 	/* Force full identification for description */
 	o_ptr->identified = true;
-	o_ptr->k_ptr->aware = TRUE;
+	o_ptr->k_ptr->aware = true;
 
 	/* Describe the object */
 	object_desc(buf, o_ptr, pref, mode);
@@ -1787,11 +1786,11 @@ const char *item_activation(object_type *o_ptr)
 		}
 	}
 
-	return activation_aux(o_ptr, FALSE, 0);
+	return activation_aux(o_ptr, false, 0);
 }
 
 /* Grab the tval desc */
-static bool_ grab_tval_desc(int tval)
+static bool grab_tval_desc(int tval)
 {
 	int tv = 0;
 
@@ -1800,18 +1799,18 @@ static bool_ grab_tval_desc(int tval)
 		tv++;
 	}
 
-	if (!tval_descs[tv].tval) return FALSE;
+	if (!tval_descs[tv].tval) return false;
 
 	text_out_c(TERM_L_BLUE, tval_descs[tv].desc);
 	text_out("\n");
 
-	return TRUE;
+	return true;
 }
 
-static void check_first(bool_ *first)
+static void check_first(bool *first)
 {
 	if (*first) {
-		*first = FALSE;
+		*first = false;
 	}
 	else
 	{
@@ -1822,7 +1821,7 @@ static void check_first(bool_ *first)
 /*
  * Display the damage done with a multiplier
  */
-void output_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool_ *first)
+void output_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool *first)
 {
 	int dam;
 
@@ -1866,7 +1865,7 @@ void output_dam(object_type *o_ptr, int mult, int mult2, const char *against, co
 void display_weapon_damage(object_type *o_ptr)
 {
 	object_type forge, *old_ptr = &forge;
-	bool_ first = TRUE;
+	bool first = true;
 
 	/* Extract the flags */
 	auto const flags = object_flags(o_ptr);
@@ -1874,7 +1873,7 @@ void display_weapon_damage(object_type *o_ptr)
 	/* Ok now the hackish stuff, we replace the current weapon with this one */
 	object_copy(old_ptr, &p_ptr->inventory[INVEN_WIELD]);
 	object_copy(&p_ptr->inventory[INVEN_WIELD], o_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	text_out("\nUsing it you would have ");
 	text_out_c(TERM_L_GREEN, format("%d ", p_ptr->num_blow));
@@ -1907,13 +1906,13 @@ void display_weapon_damage(object_type *o_ptr)
 
 	/* get our weapon back */
 	object_copy(&p_ptr->inventory[INVEN_WIELD], old_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 }
 
 /*
  * Display the ammo damage done with a multiplier
  */
-void output_ammo_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool_ *first)
+void output_ammo_dam(object_type *o_ptr, int mult, int mult2, const char *against, const char *against2, bool *first)
 {
 	int dam;
 	object_type *b_ptr = &p_ptr->inventory[INVEN_BOW];
@@ -1966,7 +1965,7 @@ void output_ammo_dam(object_type *o_ptr, int mult, int mult2, const char *agains
  */
 void display_ammo_damage(object_type *o_ptr)
 {
-	bool_ first = TRUE;
+	bool first = true;
 	int i;
 
 	/* Extract the flags */
@@ -2021,8 +2020,6 @@ void display_ammo_damage(object_type *o_ptr)
  */
 static void describe_device(object_type *o_ptr)
 {
-	char buf[128];
-
 	/* Wands/... of shcool spell */
 	if (((o_ptr->tval == TV_WAND) || (o_ptr->tval == TV_STAFF)) && object_known_p(o_ptr))
 	{
@@ -2040,15 +2037,14 @@ static void describe_device(object_type *o_ptr)
 					       });
 
 		text_out("\nSpell level: ");
-		sprintf(buf, FMTs32b, get_level(o_ptr->pval2, 50));
-		text_out_c(TERM_L_BLUE, buf);
+
+		text_out_c(TERM_L_BLUE, fmt::format("{}", get_level(o_ptr->pval2, 50)));
 
 		text_out("\nMinimum Magic Device level to increase spell level: ");
-		text_out_c(TERM_L_BLUE, format("%d", spell_type_skill_level(spell)));
+		text_out_c(TERM_L_BLUE, fmt::format("{}", spell_type_skill_level(spell)));
 
 		text_out("\nSpell fail: ");
-		sprintf(buf, FMTs32b, spell_chance_device(spell));
-		text_out_c(TERM_GREEN, buf);
+		text_out_c(TERM_GREEN, fmt::format("{}", spell_chance_device(spell)));
 
 		text_out("\nSpell info: ");
 		text_out_c(TERM_YELLOW, spell_type_info(spell));
@@ -2101,7 +2097,7 @@ static const char *object_out_desc_where_found(s16b level, s16b dungeon)
 /*
  * Describe an item
  */
-bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait_for_it)
+bool object_out_desc(object_type *o_ptr, FILE *fff, bool trim_down, bool wait_for_it)
 {
 	auto const &set_info = game->edit_data.set_info;
 	auto const &st_info = game->edit_data.st_info;
@@ -2125,8 +2121,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	else
 	{
 		/* Save the screen */
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 
 		/* Set up stuff for text_out */
 		text_out_hook = text_out_to_screen;
@@ -2167,7 +2162,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			else if (count_bits(o_ptr->pval3) > 1) text_out("It is sentient and can have access to the realms of ");
 			else text_out("It is sentient and can have access to the realm of ");
 
-			bool_ first = TRUE;
+			bool first = true;
 			for (std::size_t j = 0; j < flags_groups().size(); j++)
 			{
 				if (BIT(j) & o_ptr->pval3)
@@ -3047,7 +3042,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 			/* Restore the screen */
 			Term_load();
 		}
-		character_icky = FALSE;
+		character_icky = false;
 
 	}
 
@@ -3055,7 +3050,7 @@ bool_ object_out_desc(object_type *o_ptr, FILE *fff, bool_ trim_down, bool_ wait
 	text_out_hook = text_out_to_screen;
 
 	/* Gave knowledge */
-	return (TRUE);
+	return true;
 }
 
 
@@ -3152,9 +3147,9 @@ static int get_slot(int slot)
 
 /*
  * Determine which equipment slot (if any) an item likes, ignoring the player's
- * current body and stuff if ideal == TRUE
+ * current body and stuff if ideal == true
  */
-s16b wield_slot_ideal(object_type const *o_ptr, bool_ ideal)
+s16b wield_slot_ideal(object_type const *o_ptr, bool ideal)
 {
 	/* Slot for equipment */
 	switch (o_ptr->tval)
@@ -3337,7 +3332,7 @@ s16b wield_slot_ideal(object_type const *o_ptr, bool_ ideal)
  */
 s16b wield_slot(object_type const *o_ptr)
 {
-	return wield_slot_ideal(o_ptr, FALSE);
+	return wield_slot_ideal(o_ptr, false);
 }
 
 /*
@@ -3573,15 +3568,15 @@ static bool item_tester_okay(object_type const *o_ptr, object_filter_t const &fi
 
 
 
-static void show_equip_aux(bool_ mirror, object_filter_t const &filter);
-static void show_inven_aux(bool_ mirror, object_filter_t const &filter);
+static void show_equip_aux(bool mirror, object_filter_t const &filter);
+static void show_inven_aux(bool mirror, object_filter_t const &filter);
 
 /*
  * Choice window "shadow" of the "show_inven()" function
  */
 void display_inven()
 {
-	show_inven_aux(TRUE, object_filter::True());
+	show_inven_aux(true, object_filter::True());
 }
 
 
@@ -3591,7 +3586,7 @@ void display_inven()
  */
 void display_equip()
 {
-	show_equip_aux(TRUE, object_filter::True());
+	show_equip_aux(true, object_filter::True());
 }
 
 
@@ -3620,7 +3615,7 @@ byte get_item_letter_color(object_type const *o_ptr)
  *
  * Hack -- do not display "trailing" empty slots
  */
-void show_inven_aux(bool_ mirror, const object_filter_t &filter)
+void show_inven_aux(bool mirror, const object_filter_t &filter)
 {
 	int i, j, k, l, z = 0;
 	int row, col, len, lim;
@@ -3685,7 +3680,7 @@ void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 		out_index[k] = i + 1;
 
 		/* Describe the object */
-		object_desc(o_name, o_ptr, TRUE, 3);
+		object_desc(o_name, o_ptr, true, 3);
 
 		/* Hack -- enforce max length */
 		o_name[lim] = '\0';
@@ -3785,7 +3780,7 @@ void show_inven_aux(bool_ mirror, const object_filter_t &filter)
 
 static void show_inven(object_filter_t const &filter)
 {
-	show_inven_aux(FALSE, filter);
+	show_inven_aux(false, filter);
 }
 
 void show_inven_full()
@@ -3797,7 +3792,7 @@ void show_inven_full()
 
 static void show_equip(object_filter_t const &filter)
 {
-	show_equip_aux(FALSE, filter);
+	show_equip_aux(false, filter);
 }
 
 void show_equip_full()
@@ -3810,7 +3805,7 @@ void show_equip_full()
 /*
  * Display the equipment.
  */
-void show_equip_aux(bool_ mirror, object_filter_t const &filter)
+void show_equip_aux(bool mirror, object_filter_t const &filter)
 {
 	int i, j, k, l;
 	int row, col, len, lim, idx;
@@ -3869,7 +3864,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 			char q_name[80];
 
 			/* Description */
-			object_desc(q_name, q_ptr, TRUE, 3);
+			object_desc(q_name, q_ptr, true, 3);
 
 			/* Get weapon flags */
 			auto const flags = object_flags(q_ptr);
@@ -3915,7 +3910,7 @@ void show_equip_aux(bool_ mirror, object_filter_t const &filter)
 			idx++;
 
 			/* Description */
-			object_desc(o_name, o_ptr, TRUE, 3);
+			object_desc(o_name, o_ptr, true, 3);
 
 			/* Truncate the description */
 			o_name[lim] = 0;
@@ -4082,7 +4077,7 @@ void toggle_inven_equip()
  *
  * The item can be negative to mean "item on floor".
  */
-bool_ verify(const char *prompt, int item)
+bool verify(const char *prompt, int item)
 {
 	char o_name[80];
 
@@ -4094,7 +4089,7 @@ bool_ verify(const char *prompt, int item)
 	o_ptr = get_object(item);
 
 	/* Describe */
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Prompt */
 	sprintf(out_val, "%s %s? ", prompt, o_name);
@@ -4109,7 +4104,7 @@ bool_ verify(const char *prompt, int item)
  *
  * The item can be negative to mean "item on floor".
  */
-static bool_ get_item_allow(int item)
+static bool get_item_allow(int item)
 {
 	/* Get object */
 	auto o_ptr = get_object(item);
@@ -4117,7 +4112,7 @@ static bool_ get_item_allow(int item)
 	/* No inscription */
 	if (o_ptr->inscription.empty())
 	{
-		return TRUE;
+		return true;
 	}
 
 	/* Find a '!' */
@@ -4130,7 +4125,7 @@ static bool_ get_item_allow(int item)
 		if ((s[1] == command_cmd) || (s[1] == '*'))
 		{
 			/* Verify the choice */
-			if (!verify("Really try", item)) return (FALSE);
+			if (!verify("Really try", item)) return false;
 		}
 
 		/* Find another '!' */
@@ -4138,7 +4133,7 @@ static bool_ get_item_allow(int item)
 	}
 
 	/* Allow it */
-	return (TRUE);
+	return true;
 }
 
 
@@ -4151,7 +4146,7 @@ static bool get_item_okay(int i, object_filter_t const &filter)
 	/* Illegal items */
 	if ((i < 0) || (i >= INVEN_TOTAL))
 	{
-		return (FALSE);
+		return false;
 	}
 
 	/* Verify the item */
@@ -4201,7 +4196,7 @@ static int get_tag(int *cp, char tag)
 				*cp = i;
 
 				/* Success */
-				return (TRUE);
+				return true;
 			}
 
 			/* Check the special tags */
@@ -4211,7 +4206,7 @@ static int get_tag(int *cp, char tag)
 				*cp = i;
 
 				/* Success */
-				return (TRUE);
+				return true;
 			}
 
 			/* Find another '@' */
@@ -4220,7 +4215,7 @@ static int get_tag(int *cp, char tag)
 	}
 
 	/* No such tag */
-	return (FALSE);
+	return false;
 }
 
 /*
@@ -4300,7 +4295,7 @@ static void show_floor(int y, int x, object_filter_t const &filter)
 		o_ptr = &o_list[floor_list[i]];
 
 		/* Describe the object */
-		object_desc(o_name, o_ptr, TRUE, 3);
+		object_desc(o_name, o_ptr, true, 3);
 
 		/* Hack -- enforce max length */
 		o_name[lim] = '\0';
@@ -4367,26 +4362,26 @@ static void show_floor(int y, int x, object_filter_t const &filter)
  * This version of get_item() is called by get_item() when
  * the easy_floor is on.
  */
-static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
+static bool get_item_floor(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
 	char n1 = 0, n2 = 0, which = ' ';
 
 	int j, k, i1, i2, e1, e2;
 
-	bool_ done, item;
+	bool done, item;
 
-	bool_ oops = FALSE;
+	bool oops = false;
 
-	bool_ equip = FALSE;
-	bool_ inven = FALSE;
-	bool_ floor = FALSE;
-	bool_ automat = FALSE;
+	bool equip = false;
+	bool inven = false;
+	bool floor = false;
+	bool automat = false;
 
-	bool_ allow_equip = FALSE;
-	bool_ allow_inven = FALSE;
-	bool_ allow_floor = FALSE;
+	bool allow_equip = false;
+	bool allow_inven = false;
+	bool allow_floor = false;
 
-	bool_ toggle = FALSE;
+	bool toggle = false;
 
 	char tmp_val[160];
 	char out_val[160];
@@ -4413,7 +4408,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 			if (item_tester_okay(o_ptr, filter))
 			{
 				/* Success */
-				return (TRUE);
+				return true;
 			}
 		}
 
@@ -4421,16 +4416,16 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 		else if (get_item_okay(*cp, filter))
 		{
 			/* Success */
-			return (TRUE);
+			return true;
 		}
 	}
 
 
 	/* Extract args */
-	if (mode & (USE_EQUIP)) equip = TRUE;
-	if (mode & (USE_INVEN)) inven = TRUE;
-	if (mode & (USE_FLOOR)) floor = TRUE;
-	if (mode & (USE_AUTO)) automat = TRUE;
+	if (mode & (USE_EQUIP)) equip = true;
+	if (mode & (USE_INVEN)) inven = true;
+	if (mode & (USE_FLOOR)) floor = true;
+	if (mode & (USE_AUTO)) automat = true;
 
 
 	/* Paranoia XXX XXX XXX */
@@ -4438,10 +4433,10 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 
 
 	/* Not done */
-	done = FALSE;
+	done = false;
 
 	/* No item selected */
-	item = FALSE;
+	item = false;
 
 
 	/* Full inventory */
@@ -4476,22 +4471,22 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 	int const floor_num = floor_list.size(); // "int" for warning avoidance
 
 	/* Accept inventory */
-	if (i1 <= i2) allow_inven = TRUE;
+	if (i1 <= i2) allow_inven = true;
 
 	/* Accept equipment */
-	if (e1 <= e2) allow_equip = TRUE;
+	if (e1 <= e2) allow_equip = true;
 
 	/* Accept floor */
-	if (!floor_list.empty()) allow_floor = TRUE;
+	if (!floor_list.empty()) allow_floor = true;
 
 	/* Require at least one legal choice */
 	if (!allow_inven && !allow_equip && !allow_floor)
 	{
 		/* Oops */
-		oops = TRUE;
+		oops = true;
 
 		/* Done */
-		done = TRUE;
+		done = true;
 	}
 
 	/* Analyze choices */
@@ -4590,7 +4585,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 		else if (command_wrk == (USE_FLOOR))
 		{
 			j = floor_top;
-			k = MIN(floor_top + 23, floor_num) - 1;
+			k = std::min(floor_top + 23, floor_num) - 1;
 
 			/* Extract the legal requests */
 			n1 = I2A(j - floor_top);
@@ -4695,7 +4690,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 		{
 		case ESCAPE:
 			{
-				done = TRUE;
+				done = true;
 				break;
 			}
 
@@ -4757,7 +4752,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 				 * is only one item, we will always select it.
 				 * If we aren't examining the floor and there is only
 				 * one item, we will select it if floor_query_flag
-				 * is FALSE.
+				 * is false.
 				 */
 				if (floor_num == 1)
 				{
@@ -4769,14 +4764,14 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 						/* Allow player to "refuse" certain actions */
 						if (!get_item_allow(k))
 						{
-							done = TRUE;
+							done = true;
 							break;
 						}
 
 						/* Accept that choice */
 						(*cp) = k;
-						item = TRUE;
-						done = TRUE;
+						item = true;
+						done = true;
 
 						break;
 					}
@@ -4826,14 +4821,14 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 				/* Allow player to "refuse" certain actions */
 				if (!get_item_allow(k))
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
 				/* Accept that choice */
 				(*cp) = k;
-				item = TRUE;
-				done = TRUE;
+				item = true;
+				done = true;
 				break;
 			}
 
@@ -4863,14 +4858,14 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 						/* Allow player to "refuse" certain actions */
 						if (!get_item_allow(k))
 						{
-							done = TRUE;
+							done = true;
 							break;
 						}
 
 						/* Accept that choice */
 						(*cp) = k;
-						item = TRUE;
-						done = TRUE;
+						item = true;
+						done = true;
 					}
 					break;
 				}
@@ -4885,14 +4880,14 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 				/* Allow player to "refuse" certain actions */
 				if (!get_item_allow(k))
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
 				/* Accept that choice */
 				(*cp) = k;
-				item = TRUE;
-				done = TRUE;
+				item = true;
+				done = true;
 				break;
 			}
 
@@ -4907,8 +4902,8 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 				if (auto i = select_by_name(filter))
 				{
 					(*cp) = *i;
-					item = TRUE;
-					done = TRUE;
+					item = true;
+					done = true;
 				}
 				break;
 			}
@@ -4972,21 +4967,21 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 				/* Verify the item */
 				if (ver && !verify("Try", k))
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
 				/* Allow player to "refuse" certain actions */
 				if (!get_item_allow(k))
 				{
-					done = TRUE;
+					done = true;
 					break;
 				}
 
 				/* Accept that choice */
 				(*cp) = k;
-				item = TRUE;
-				done = TRUE;
+				item = true;
+				done = true;
 				break;
 			}
 		}
@@ -5038,7 +5033,7 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
 /*
  * Let the user select an item, save its "index"
  *
- * Return TRUE only if an acceptable item was chosen by the user.
+ * Return true only if an acceptable item was chosen by the user.
  *
  * The selected item must satisfy the "item_tester_hook()" function,
  * if that hook is set, and the "item_tester_tval", if that value is set.
@@ -5062,29 +5057,29 @@ static bool_ get_item_floor(int *cp, const char *pmt, const char *str, int mode,
  * and prompt for its use.
  *
  * If a legal item is selected from the inventory, we save it in "cp"
- * directly (0 to 35), and return TRUE.
+ * directly (0 to 35), and return true.
  *
  * If a legal item is selected from the floor, we save it in "cp" as
- * a negative (-1 to -511), and return TRUE.
+ * a negative (-1 to -511), and return true.
  *
  * If no item is available, we do nothing to "cp", and we display a
- * warning message, using "str" if available, and return FALSE.
+ * warning message, using "str" if available, and return false.
  *
- * If no item is selected, we do nothing to "cp", and return FALSE.
+ * If no item is selected, we do nothing to "cp", and return false.
  *
  * Global "p_ptr->command_new" is used when viewing the inventory or equipment
  * to allow the user to enter a command while viewing those screens, and
  * also to induce "auto-enter" of stores, and other such stuff.
  *
  * Global "p_ptr->command_wrk" is used to choose between equip/inven listings.
- * If it is TRUE then we are viewing inventory, else equipment.
+ * If it is true then we are viewing inventory, else equipment.
  *
  * We always erase the prompt when we are done, leaving a blank line,
  * or a warning message, if appropriate, if no items are available.
  */
-bool_ get_item(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
+bool get_item(int *cp, const char *pmt, const char *str, int mode, object_filter_t const &filter, select_by_name_t const &select_by_name)
 {
-	automatizer_create = FALSE;
+	automatizer_create = false;
 	return get_item_floor(cp, pmt, str, mode, filter, select_by_name);
 }
 
@@ -5093,12 +5088,12 @@ bool_ get_item(int *cp, const char *pmt, const char *str, int mode, object_filte
  */
 static bool item_tester_hook_getable(object_type const *o_ptr)
 {
-	if (!inven_carry_okay(o_ptr)) return (FALSE);
+	if (!inven_carry_okay(o_ptr)) return false;
 
-	if ((o_ptr->tval == TV_HYPNOS) && (!get_skill(SKILL_SYMBIOTIC))) return FALSE;
+	if ((o_ptr->tval == TV_HYPNOS) && (!get_skill(SKILL_SYMBIOTIC))) return false;
 
 	/* Assume yes */
-	return (TRUE);
+	return true;
 }
 
 /*
@@ -5194,7 +5189,7 @@ void pickup_ammo()
 
 				/* Describe the object */
 				char o_name[80];
-				object_desc(o_name, o_ptr, TRUE, 3);
+				object_desc(o_name, o_ptr, true, 3);
 
 				/* Message */
 				msg_format("You have %s (%c).", o_name, index_to_label(slot));
@@ -5249,7 +5244,7 @@ void object_pickup(int this_o_idx)
 	object_known(o_ptr);
 
 	/* Describe the object */
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Note that the pack is too full */
 	if (!inven_carry_okay(o_ptr) && !object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]))
@@ -5279,7 +5274,7 @@ void object_pickup(int this_o_idx)
 		}
 		else
 		{
-			slot = inven_carry(o_ptr, FALSE);
+			slot = inven_carry(o_ptr, false);
 		}
 
 		/* Sanity check */
@@ -5291,7 +5286,7 @@ void object_pickup(int this_o_idx)
 			object_track(o_ptr);
 
 			/* Describe the object */
-			object_desc(o_name, o_ptr, TRUE, 3);
+			object_desc(o_name, o_ptr, true, 3);
 
 			/* Message */
 			msg_format("You have %s (%c).", o_name, index_to_label(slot));
@@ -5321,7 +5316,7 @@ static void absorb_gold(cave_type const *c_ptr)
 		if (o_ptr->tval == TV_GOLD)
 		{
 			char goldname[80];
-			object_desc(goldname, o_ptr, TRUE, 3);
+			object_desc(goldname, o_ptr, true, 3);
 			/* Message */
 			msg_format("You have found %ld gold pieces worth of %s.",
 				   (long)o_ptr->pval, goldname);
@@ -5400,7 +5395,7 @@ void py_pickup_floor(int pickup)
 		{
 			/* Describe */
 			char o_name[80] = "";
-			object_desc(o_name, o_ptr, TRUE, 3);
+			object_desc(o_name, o_ptr, true, 3);
 
 			/* Message */
 			msg_format("You see %s.", o_name);
@@ -5408,13 +5403,13 @@ void py_pickup_floor(int pickup)
 		else
 		{
 			/* Are we actually going to pick up? */
-			bool_ do_pickup = TRUE;
+			bool do_pickup = true;
 
 			/* Hack -- query every item */
 			if (options->carry_query_flag || !can_carry_heavy(&o_list[floor_o_idx]))
 			{
 				char o_name[80] = "";
-				object_desc(o_name, o_ptr, TRUE, 3);
+				object_desc(o_name, o_ptr, true, 3);
 
 				if (!inven_carry_okay(o_ptr) && !object_similar(o_ptr, &p_ptr->inventory[INVEN_AMMO]))
 				{
@@ -5454,12 +5449,12 @@ void py_pickup_floor(int pickup)
 			{
 				s16b this_o_idx = 0 - item;
 
-				bool_ do_pickup = TRUE;
+				bool do_pickup = true;
 				if (!can_carry_heavy(&o_list[this_o_idx]))
 				{
 					/* Describe the object */
 					char o_name[80] = "";
-					object_desc(o_name, &o_list[this_o_idx], TRUE, 3);
+					object_desc(o_name, &o_list[this_o_idx], true, 3);
 
 					/* Prompt */
 					char out_val[160];
@@ -5507,7 +5502,7 @@ static void gain_flag_group(object_type *o_ptr)
 	{
 		char o_name[80];
 
-		object_desc(o_name, o_ptr, FALSE, 0);
+		object_desc(o_name, o_ptr, false, 0);
 		msg_format("%s gains access to the %s realm.", o_name, flags_groups()[grp].name);
 	}
 }
@@ -5580,7 +5575,7 @@ static void gain_flag_group_flag(object_type *o_ptr)
 
 		// Describe what happened
 		char o_name[80];
-		object_desc(o_name, o_ptr, FALSE, 0);
+		object_desc(o_name, o_ptr, false, 0);
 		msg_format("%s gains a new power from the %s realm.", o_name, flags_groups()[grp].name);
 
 		// We're done.
@@ -5649,12 +5644,12 @@ void object_gain_level(object_type *o_ptr)
 /*
  * Item sets fcts
  */
-bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
+bool wield_set(s16b a_idx, s16b set_idx, bool silent)
 {
 	auto &set_info = game->edit_data.set_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	if ( -1 == a_info[a_idx].set) return (FALSE);
+	if ( -1 == a_info[a_idx].set) return false;
 
 	auto s_ptr = &set_info[set_idx];
 
@@ -5670,7 +5665,7 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 	if (!s_ptr->arts[i].present)
 	{
 		s_ptr->num_use++;
-		s_ptr->arts[i].present = TRUE;
+		s_ptr->arts[i].present = true;
 		if (s_ptr->num_use > s_ptr->num)
 		{
 			msg_print("ERROR!! s_ptr->num_use > s_ptr->use");
@@ -5679,18 +5674,18 @@ bool_ wield_set(s16b a_idx, s16b set_idx, bool_ silent)
 		{
 			cmsg_format(TERM_GREEN, "%s item set completed.", s_ptr->name.c_str());
 		}
-		return (TRUE);
+		return true;
 	}
 
-	return (FALSE);
+	return false;
 }
 
-bool_ takeoff_set(s16b a_idx, s16b set_idx)
+bool takeoff_set(s16b a_idx, s16b set_idx)
 {
 	auto &set_info = game->edit_data.set_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	if ( -1 == a_info[a_idx].set) return (FALSE);
+	if ( -1 == a_info[a_idx].set) return false;
 
 	auto s_ptr = &set_info[set_idx];
 
@@ -5705,7 +5700,7 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 
 	if (s_ptr->arts[i].present)
 	{
-		s_ptr->arts[i].present = FALSE;
+		s_ptr->arts[i].present = false;
 
 		assert(s_ptr->num_use > 0);
 		s_ptr->num_use--;
@@ -5715,10 +5710,10 @@ bool_ takeoff_set(s16b a_idx, s16b set_idx)
 			cmsg_format(TERM_GREEN, "%s item set not complete anymore.", s_ptr->name.c_str());
 		}
 
-		return (TRUE);
+		return true;
 	}
 
-	return (FALSE);
+	return false;
 }
 
 void apply_set(s16b a_idx, s16b set_idx)
@@ -5881,7 +5876,7 @@ bool artifact_p(object_type const *o_ptr)
  */
 bool ego_item_p(object_type const *o_ptr)
 {
-	return o_ptr->name2 || (o_ptr->name2b ? TRUE : FALSE);
+	return o_ptr->name2 || (o_ptr->name2b ? true : false);
 }
 
 /*

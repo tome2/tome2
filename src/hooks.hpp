@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 typedef bool (*hook_func_t)(void *, void *, void *);
 

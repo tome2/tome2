@@ -14,7 +14,7 @@ what is able to be wished for. These rules are as follows:
    as it would appear as an item (case insensitive). So, never put a number, "a"
    or "an" in front of the object you are wishing for.
 3. It is not possible to wish for the magical +'s to the object (i.e. you
-   cannot wish for "set of leather gloves of slaying (+10,+10)", but you can wish for 
+   cannot wish for "set of leather gloves of slaying (+10,+10)", but you can wish for
    "set of leather gloves of slaying").
 4. You cannot wish for artifacts, but you *can* wish for excellent (ego)
    items.

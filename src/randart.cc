@@ -18,7 +18,6 @@
 #include "player_type.hpp"
 #include "spells2.hpp"
 #include "util.hpp"
-#include "variable.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
 
@@ -29,13 +28,13 @@
 /*
  * Attempt to add a power to a randart
  */
-static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s16b> &max_times)
+static bool grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s16b> &max_times)
 {
 	auto const &ra_info = game->edit_data.ra_info;
 
 	assert(max_times.size() >= ra_info.size());
 
-	bool_ ret = FALSE;
+	bool ret = false;
 
 	std::vector<size_t> ok_ra;
 
@@ -43,7 +42,7 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 	for (size_t i = 0; i < ra_info.size(); i++)
 	{
 		auto ra_ptr = &ra_info[i];
-		bool_ ok = FALSE;
+		bool ok = false;
 
 		/* Must have the correct fields */
 		for (auto const &filter: ra_ptr->kind_filter)
@@ -52,14 +51,14 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 				(filter.min_sval <= o_ptr->sval) &&
 				(o_ptr->sval <= filter.max_sval))
 			{
-				ok = TRUE;
+				ok = true;
 				break;
 			}
 		}
 
 		if ((0 < ra_ptr->max_pval) && (ra_ptr->max_pval < o_ptr->pval))
 		{
-			ok = FALSE;
+			ok = false;
 		}
 
 		if (!ok)
@@ -112,7 +111,7 @@ static bool_ grab_one_power(int *ra_idx, object_type const *o_ptr, std::vector<s
 		max_times[i]++;
 
 		/* Success */
-		ret = TRUE;
+		ret = true;
 		break;
 	}
 
@@ -139,7 +138,7 @@ void build_prob(const char *learn)
 	int c_prev, c_cur, c_next;
 
 	/* Build raw frequencies */
-	while (1)
+	while (true)
 	{
 		c_prev = c_cur = S_WORD;
 
@@ -189,7 +188,7 @@ startover:
 	cp = word_buf;
 	c_prev = c_cur = S_WORD;
 
-	while (1)
+	while (true)
 	{
 getletter:
 		c_next = 0;
@@ -243,7 +242,7 @@ void get_random_name(char * return_name)
 }
 
 
-bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
+bool create_artifact(object_type *o_ptr, bool a_scroll, bool get_name)
 {
 	auto const &ra_gen = game->edit_data.ra_gen;
 	auto const &ra_info = game->edit_data.ra_info;
@@ -251,13 +250,16 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	char new_name[80];
 	int powers = 0;
 	s32b total_flags, total_power = 0;
-	bool_ a_cursed = FALSE;
+	bool a_cursed = false;
 	s16b pval = 0;
-	bool_ limit_blows = FALSE;
+	bool limit_blows = false;
 
 	strcpy(new_name, "");
 
-	if ((!a_scroll) && (randint(A_CURSED) == 1)) a_cursed = TRUE;
+	if ((!a_scroll) && (randint(A_CURSED) == 1))
+	{
+		a_cursed = true;
+	}
 
 	for (auto const &g: ra_gen)
 	{
@@ -341,7 +343,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 			object_known(o_ptr);
 
 			strcpy(dummy_name, "");
-			object_out_desc(o_ptr, NULL, FALSE, TRUE);
+			object_out_desc(o_ptr, NULL, false, true);
 
 			if (get_string("What do you want to call the artifact? ", dummy_name, 80))
 			{
@@ -372,7 +374,7 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 	/* HACKS for ToME */
 	if (o_ptr->tval == TV_CLOAK && o_ptr->sval == SV_MIMIC_CLOAK)
 	{
-		s32b mimic = find_random_mimic_shape(127, TRUE);
+		s32b mimic = find_random_mimic_shape(127, true);
 		o_ptr->pval2 = mimic;
 	}
 	else if (flags & TR_SPELL_CONTAIN)
@@ -380,14 +382,12 @@ bool_ create_artifact(object_type *o_ptr, bool_ a_scroll, bool_ get_name)
 		o_ptr->pval2 = -1;
 	}
 
-	return TRUE;
+	return true;
 }
 
 
-bool_ artifact_scroll()
+bool artifact_scroll()
 {
-	bool_ okay = FALSE;
-
 	/* Get an item */
 	int item;
 	if (!get_item(&item,
@@ -396,7 +396,7 @@ bool_ artifact_scroll()
 		      (USE_EQUIP | USE_INVEN | USE_FLOOR),
 		      item_tester_hook_artifactable()))
 	{
-		return (FALSE);
+		return false;
 	}
 
 	/* Get the item */
@@ -404,29 +404,27 @@ bool_ artifact_scroll()
 
 	/* Description */
 	char o_name[80];
-	object_desc(o_name, o_ptr, FALSE, 0);
+	object_desc(o_name, o_ptr, false, 0);
 
 	/* Describe */
 	msg_format("%s %s radiate%s a blinding light!",
 	           ((item >= 0) ? "Your" : "The"), o_name,
 	           ((o_ptr->number > 1) ? "" : "s"));
 
+	bool okay = false;
+
 	if (artifact_p(o_ptr))
 	{
 		msg_format("The %s %s already %s!",
 		           o_name, ((o_ptr->number > 1) ? "are" : "is"),
 		           ((o_ptr->number > 1) ? "artifacts" : "an artifact"));
-		okay = FALSE;
 	}
-
 	else if (o_ptr->name2)
 	{
 		msg_format("The %s %s already %s!",
 		           o_name, ((o_ptr->number > 1) ? "are" : "is"),
 		           ((o_ptr->number > 1) ? "ego items" : "an ego item"));
-		okay = FALSE;
 	}
-
 	else
 	{
 		if (o_ptr->number > 1)
@@ -435,7 +433,8 @@ bool_ artifact_scroll()
 			msg_format("%d of your %s %s destroyed!", (o_ptr->number) - 1, o_name, (o_ptr->number > 2 ? "were" : "was"));
 			o_ptr->number = 1;
 		}
-		okay = create_artifact(o_ptr, TRUE, TRUE);
+
+		okay = create_artifact(o_ptr, true, true);
 	}
 
 	/* Failure */
@@ -448,10 +447,12 @@ bool_ artifact_scroll()
 		msg_print("The enchantment failed.");
 	}
 	else
+	{
 		o_ptr->found = OBJ_FOUND_SELFMADE;
+	}
 
 	/* Something happened */
-	return (TRUE);
+	return true;
 }
 
 

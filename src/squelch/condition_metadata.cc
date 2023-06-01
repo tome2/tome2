@@ -7,8 +7,7 @@
 #include "lua_bind.hpp"
 #include "skills.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "z-term.h"
+#include "z-term.hpp"
 
 namespace squelch {
 
@@ -301,16 +300,13 @@ static void display_desc(match_type match_type_)
 		line("Check is true if object symbol is ok");
 		break;
 
-	case match_type::STATE:
-		line("Check is true if object is identified/unidentified");
-		break;
-
 	case match_type::STATUS:
 		line("Check is true if object status is ok");
 		break;
 
 	case match_type::TVAL:
 		line("Check is true if object tval(from k_info.txt) is ok");
+		break;
 
 	case match_type::SVAL:
 		line("Check is true if object sval(from k_info.txt) is between");
@@ -364,7 +360,6 @@ std::shared_ptr<Condition> new_condition_interactive()
 		match_type::INSCRIBED,
 		match_type::DISCOUNT,
 		match_type::SYMBOL,
-		match_type::STATE,
 		match_type::STATUS,
 		match_type::TVAL,
 		match_type::SVAL,
@@ -391,7 +386,7 @@ std::shared_ptr<Condition> new_condition_interactive()
 
 	// Choose
 	int begin = 0, sel = 0;
-	while (1)
+	while (true)
 	{
 		int wid, hgt;
 		Term_clear();

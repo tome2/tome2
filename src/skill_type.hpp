@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "skill_flag_set.hpp"
 #include "skills_defs.hpp"
 #include "skill_descriptor.hpp"

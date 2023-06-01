@@ -22,8 +22,9 @@
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <fmt/format.h>
 
 #define cquest (quest[QUEST_GOD])
@@ -139,7 +140,7 @@ static int MAX_NUM_GOD_QUESTS()
 		return 7;
 	}
 	/* Uh, oh. */
-	assert(FALSE);
+	assert(false);
 	return 0;
 }
 
@@ -169,7 +170,7 @@ static byte get_relic_num()
 	}
 
 	/* Uh, oh. */
-	assert(FALSE);
+	assert(false);
 }
 
 static void get_home_coordinates(int *home1_y, int *home1_x, const char **home1,
@@ -224,7 +225,7 @@ static void get_home_coordinates(int *home1_y, int *home1_x, const char **home1,
 	}
 	else
 	{
-		assert(FALSE); /* Uh, oh */
+		assert(false); /* Uh, oh */
 	}
 }
 
@@ -405,7 +406,7 @@ static void quest_god_generate_relic()
 
 		if (inven_carry_okay(&relic))
 		{
-			inven_carry(&relic, FALSE);
+			inven_carry(&relic, false);
 		}
 		else
 		{
@@ -420,7 +421,7 @@ static void quest_god_generate_relic()
 	}
 
 	/* Only generate once! */
-	cquest_relic_generated = TRUE;
+	cquest_relic_generated = true;
 
 	/* Reset some variables */
 	cquest_relic_gen_tries = 0;
@@ -919,7 +920,7 @@ static bool quest_god_level_end_gen_hook(void *, void *, void *)
 	   therefore the player has caused another level generation in
 	   the temple and hence failed the quest.*/
 
-	else if ((cquest_relic_generated == TRUE) &&
+	else if ((cquest_relic_generated == true) &&
 		 (cquest.status != QUEST_STATUS_FAILED))
 	{
 		/* fail the quest, don't give another one, don't give
@@ -941,7 +942,7 @@ static bool quest_god_level_end_gen_hook(void *, void *, void *)
 	 * unsuccessful. */
 
 	else if ((cquest_relic_gen_tries == 4) &&
-		 (cquest_relic_generated == FALSE))
+		 (cquest_relic_generated == false))
 	{
 		quest_god_generate_relic();
 	}
@@ -978,7 +979,7 @@ static bool quest_god_player_level_hook(void *, void *in_, void *)
 	    (cquest.status == QUEST_STATUS_TAKEN) ||
 	    (cquest.status == QUEST_STATUS_FAILED) ||
 	    (cquest_quests_given >= MAX_NUM_GOD_QUESTS()) ||
-	    (magik(CHANCE_OF_GOD_QUEST) == FALSE) ||
+	    (magik(CHANCE_OF_GOD_QUEST) == false) ||
 	    ((dungeon_type == DUNGEON_GOD) &&
 	     (dun_level > 0)) ||
 	    (p_ptr->lev <= cquest_dun_minplev))
@@ -994,7 +995,7 @@ static bool quest_god_player_level_hook(void *, void *in_, void *)
 	{
 		/* This var will need resetting */
 		cquest.status = QUEST_STATUS_TAKEN;
-		cquest_relic_generated = FALSE;
+		cquest_relic_generated = false;
 		cquest_quests_given = cquest_quests_given + 1;
 		
 		/* actually place the dungeon in a random place */
@@ -1038,7 +1039,7 @@ static bool quest_god_get_hook(void *, void *in_, void *)
 	if ((cquest.status == QUEST_STATUS_TAKEN) &&
 	    (o_ptr->tval == TV_JUNK) &&
 	    (o_ptr->sval == get_relic_num()) &&
-	    (o_ptr->pval != TRUE) &&
+	    (o_ptr->pval != true) &&
 	    (cquest_relics_found < cquest_quests_given))
 	{
 		cmsg_format(TERM_L_BLUE, "%s speaks to you:", deity_info[p_ptr->pgod].name);
@@ -1067,7 +1068,7 @@ static bool quest_god_get_hook(void *, void *in_, void *)
 		inc_stack_size_ex(item, -1, OPTIMIZE, NO_DESCRIBE);
 
 		/* relic piece has been identified */
-		o_ptr->pval = TRUE;
+		o_ptr->pval = true;
 		cquest_relics_found = cquest_relics_found + 1;
 
 		/* Make sure quests can be given again if neccesary */
@@ -1160,7 +1161,7 @@ static void set_god_dungeon_attributes()
 	}
 	else
 	{
-		assert(FALSE);		/* Uh, oh! */
+		assert(false);		/* Uh, oh! */
 	}
 
 	/* W: All dungeons are 5 levels deep, and created at 2/3 of
@@ -1212,7 +1213,7 @@ static bool quest_god_birth_objects_hook(void *, void *, void *)
 	cquest_dun_maxdepth = 4;
 	cquest_dun_minplev = 0;
 	cquest_relic_gen_tries = 0;
-	cquest_relic_generated = FALSE;
+	cquest_relic_generated = false;
 
 	return false;
 }

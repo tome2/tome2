@@ -10,6 +10,7 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_NIRNAETH])
 
@@ -41,7 +42,7 @@ static bool quest_nirnaeth_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("nirnaeth.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("nirnaeth.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	/* Count the number of monsters */
 	cquest.data[0] = 0;
@@ -92,14 +93,14 @@ static bool quest_nirnaeth_finish_hook(void *, void *in_, void *)
 	*(quest[q_idx].plot) = QUEST_NULL;
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_nirnaeth_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
 
 static bool quest_nirnaeth_death_hook(void *, void *, void *)
 {
-	if (p_ptr->inside_quest != QUEST_NIRNAETH) return FALSE;
+	if (p_ptr->inside_quest != QUEST_NIRNAETH) return false;
 
 	cquest.data[1]++;
 
@@ -122,7 +123,7 @@ static bool quest_nirnaeth_stair_hook(void *, void *, void *)
 	cquest.status = QUEST_STATUS_COMPLETED;
 
 	del_hook_new(HOOK_STAIR, quest_nirnaeth_stair_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 	return false;
 }
 

@@ -32,6 +32,7 @@
 #include "xtra1.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 
@@ -97,10 +98,10 @@ static int check_hit(int power, int level)
 	ac = p_ptr->ac + p_ptr->to_a;
 
 	/* Power and Level compete against Armor */
-	if ((i > 0) && (randint(i - luck( -10, 10)) > ((ac * 3) / 4))) return (TRUE);
+	if ((i > 0) && (randint(i - luck( -10, 10)) > ((ac * 3) / 4))) return true;
 
 	/* Assume miss */
-	return (FALSE);
+	return false;
 }
 
 
@@ -222,7 +223,7 @@ int get_attack_power(int effect)
 /*
  * Attack the player via physical attacks.
  */
-bool_ carried_make_attack_normal(int r_idx)
+bool carried_make_attack_normal(int r_idx)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -236,10 +237,10 @@ bool_ carried_make_attack_normal(int r_idx)
 	char ddesc[80] = "your symbiote";
 	auto sym_name = symbiote_name(true);
 
-	bool_ alive = TRUE;
+	bool alive = true;
 
 	/* Not allowed to attack */
-	if (r_ptr->flags & RF_NEVER_BLOW) return (FALSE);
+	if (r_ptr->flags & RF_NEVER_BLOW) return false;
 
 	/* Total armor */
 	ac = p_ptr->ac + p_ptr->to_a;
@@ -480,7 +481,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					damage -= (damage * ((ac < 150) ? ac : 150) / 250);
 
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					break;
@@ -514,7 +515,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_POISON:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Take "poison" effect */
@@ -529,7 +530,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_UN_BONUS:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Allow complete resist */
@@ -545,7 +546,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_UN_POWER:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -553,7 +554,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EAT_GOLD:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -561,7 +562,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EAT_ITEM:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -569,7 +570,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EAT_FOOD:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -577,7 +578,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EAT_LITE:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -588,7 +589,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					msg_print("You are covered in acid!");
 
 					/* Special damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					acid_dam(damage, ddesc);
 
 					break;
@@ -600,7 +601,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					msg_print("You are struck by electricity!");
 
 					/* Special damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					elec_dam(damage, ddesc);
 
 
@@ -613,7 +614,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					msg_print("You are enveloped in flames!");
 
 					/* Special damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					fire_dam(damage, ddesc);
 
 
@@ -626,7 +627,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					msg_print("You are covered with frost!");
 
 					/* Special damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					cold_dam(damage, ddesc);
 
 
@@ -636,7 +637,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_BLIND:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Increase "blind" */
@@ -652,7 +653,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_CONFUSE:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Increase "confused" */
@@ -668,7 +669,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_TERRIFY:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Increase "afraid" */
@@ -695,7 +696,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					if (p_ptr->paralyzed && (damage < 1)) damage = 1;
 
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Increase "paralyzed" */
@@ -719,7 +720,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_STR:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -731,7 +732,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_INT:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -743,7 +744,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_WIS:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -755,7 +756,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_DEX:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -767,7 +768,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_CON:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -779,7 +780,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_CHR:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stat) */
@@ -791,7 +792,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_LOSE_ALL:
 				{
 					/* Damage (physical) */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Damage (stats) */
@@ -811,7 +812,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					damage -= (damage * ((ac < 150) ? ac : 150) / 250);
 
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Radius 8 earthquake centered at the monster */
@@ -828,7 +829,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EXP_10:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					if (p_ptr->hold_life && (rand_int(100) < 95))
@@ -855,7 +856,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EXP_20:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					if (p_ptr->hold_life && (rand_int(100) < 90))
@@ -882,7 +883,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EXP_40:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					if (p_ptr->hold_life && (rand_int(100) < 75))
@@ -909,7 +910,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_EXP_80:
 				{
 					/* Take damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					if (p_ptr->hold_life && (rand_int(100) < 50))
@@ -936,7 +937,7 @@ bool_ carried_make_attack_normal(int r_idx)
 			case RBE_DISEASE:
 				{
 					/* Take some damage */
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 
 					/* Take "poison" effect */
@@ -949,7 +950,7 @@ bool_ carried_make_attack_normal(int r_idx)
 					if (randint(100) < 11)
 					{
 						/* 1% chance for perm. damage */
-						bool_ perm = (randint(10) == 1);
+						bool perm = (randint(10) == 1);
 						dec_stat(A_CON, randint(10), perm);
 					}
 
@@ -1039,7 +1040,7 @@ bool_ carried_make_attack_normal(int r_idx)
 							break;
 						}
 					}
-					carried_monster_hit = TRUE;
+					carried_monster_hit = true;
 					take_hit(damage, ddesc);
 					break;
 				}
@@ -1175,7 +1176,7 @@ bool_ carried_make_attack_normal(int r_idx)
 		}
 	}
 	/* Assume we attacked */
-	return (TRUE);
+	return true;
 }
 
 /*
@@ -1188,14 +1189,14 @@ void black_breath_attack(int chance)
 	{
 		 msg_print("Your foe calls upon your soul!");
 		 msg_print("You feel the Black Breath slowly draining you of life...");
-		 p_ptr->black_breath = TRUE;
+		 p_ptr->black_breath = true;
 	}
 }
 
 /*
  * Attack the player via physical attacks.
  */
-bool_ make_attack_normal(int m_idx, byte divis)
+bool make_attack_normal(int m_idx, byte divis)
 {
 	monster_type *m_ptr = &m_list[m_idx];
 
@@ -1214,25 +1215,25 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 	char ddesc[80];
 
-	bool_ blinked;
-	bool_ touched = FALSE;
+	bool blinked;
+	bool touched = false;
 	bool fear = false;
-	bool_ alive = TRUE;
-	bool_ explode = FALSE;
+	bool alive = true;
+	bool explode = false;
 
 	/* Not allowed to attack? */
 	auto r_ptr = m_ptr->race();
-	if (r_ptr->flags & RF_NEVER_BLOW) return (FALSE);
+	if (r_ptr->flags & RF_NEVER_BLOW) return false;
 
 	/* ...nor if friendly */
 	if (is_friend(m_ptr) >= 0)
 	{
 		if (p_ptr->control == m_idx) swap_position(m_ptr->fy, m_ptr->fx);
-		return FALSE;
+		return false;
 	}
 
 	/* Cannot attack the player if mortal and player fated to never die by the ... */
-	if ((r_ptr->flags & RF_MORTAL) && (p_ptr->no_mortal)) return (FALSE);
+	if ((r_ptr->flags & RF_MORTAL) && (p_ptr->no_mortal)) return false;
 
 	/* Total armor */
 	ac = p_ptr->ac + p_ptr->to_a;
@@ -1249,7 +1250,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 
 
 	/* Assume no blink */
-	blinked = FALSE;
+	blinked = false;
 
 	/* Scan through all four blows */
 	for (ap_cnt = 0; ap_cnt < 4; ap_cnt++)
@@ -1441,21 +1442,21 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "hits you.";
 					do_cut = do_stun = 1;
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_TOUCH:
 				{
 					act = "touches you.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_PUNCH:
 				{
 					act = "punches you.";
-					touched = TRUE;
+					touched = true;
 					do_stun = 1;
 					break;
 				}
@@ -1463,7 +1464,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			case RBM_KICK:
 				{
 					act = "kicks you.";
-					touched = TRUE;
+					touched = true;
 					do_stun = 1;
 					break;
 				}
@@ -1471,7 +1472,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			case RBM_CLAW:
 				{
 					act = "claws you.";
-					touched = TRUE;
+					touched = true;
 					do_cut = 1;
 					break;
 				}
@@ -1480,14 +1481,14 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "bites you.";
 					do_cut = 1;
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_STING:
 				{
 					act = "stings you.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
@@ -1501,7 +1502,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "butts you.";
 					do_stun = 1;
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
@@ -1509,28 +1510,28 @@ bool_ make_attack_normal(int m_idx, byte divis)
 				{
 					act = "crushes you.";
 					do_stun = 1;
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_ENGULF:
 				{
 					act = "engulfs you.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CHARGE:
 				{
 					act = "charges you.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CRAWL:
 				{
 					act = "crawls on you.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
@@ -1549,7 +1550,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			case RBM_EXPLODE:
 				{
 					act = "explodes.";
-					explode = TRUE;
+					explode = true;
 					break;
 				}
 
@@ -1785,7 +1786,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						msg_print("You quickly protect your money pouch!");
 
 						/* Occasional blink anyway */
-						if (rand_int(3)) blinked = TRUE;
+						if (rand_int(3)) blinked = true;
 					}
 
 					/* Eat gold */
@@ -1836,7 +1837,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						p_ptr->window |= (PW_PLAYER);
 
 						/* Blink away */
-						blinked = TRUE;
+						blinked = true;
 					}
 
 					break;
@@ -1856,7 +1857,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						msg_print("You grab hold of your backpack!");
 
 						/* Occasional "blink" anyway */
-						blinked = TRUE;
+						blinked = true;
 
 						/* Done */
 						break;
@@ -1884,7 +1885,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						}
 
 						/* Get a description */
-						object_desc(o_name, o_ptr, FALSE, 3);
+						object_desc(o_name, o_ptr, false, 3);
 
 						/* Message */
 						msg_format("%sour %s (%c) was stolen!",
@@ -1923,7 +1924,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 								}
 
 								/* Forget mark */
-								j_ptr->marked = FALSE;
+								j_ptr->marked = false;
 
 								/* Memorize monster */
 								j_ptr->held_m_idx = m_idx;
@@ -1937,7 +1938,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						inc_stack_size_ex(i, -1, OPTIMIZE, NO_DESCRIBE);
 
 						/* Blink away */
-						blinked = TRUE;
+						blinked = true;
 
 						/* Done */
 						break;
@@ -1970,7 +1971,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						if (o_ptr->tval != TV_FOOD) continue;
 
 						/* Get a description */
-						object_desc(o_name, o_ptr, FALSE, 0);
+						object_desc(o_name, o_ptr, false, 0);
 
 						/* Message */
 						msg_format("%sour %s (%c) was eaten!",
@@ -2378,7 +2379,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					if (randint(100) < 11)
 					{
 						/* 1% chance for perm. damage */
-						bool_ perm = (randint(10) == 1);
+						bool perm = (randint(10) == 1);
 						dec_stat(A_CON, randint(10), perm);
 					}
 
@@ -2580,8 +2581,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 			{
 				if (mon_take_hit(m_idx, m_ptr->hp + 1, &fear, NULL))
 				{
-					blinked = FALSE;
-					alive = FALSE;
+					blinked = false;
+					alive = false;
 				}
 			}
 
@@ -2595,8 +2596,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						if (mon_take_hit(m_idx, damroll(2, 6), &fear,
 						                 " turns into a pile of ash."))
 						{
-							blinked = FALSE;
-							alive = FALSE;
+							blinked = false;
+							alive = false;
 						}
 					}
 				}
@@ -2609,8 +2610,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						if (mon_take_hit(m_idx, damroll(2, 6), &fear,
 						                 " turns into a pile of cinder."))
 						{
-							blinked = FALSE;
-							alive = FALSE;
+							blinked = false;
+							alive = false;
 						}
 					}
 				}
@@ -2621,8 +2622,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					if (mon_take_hit(m_idx, damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2), &fear,
 					                 " is bashed by your mystic shield."))
 					{
-						blinked = FALSE;
-						alive = FALSE;
+						blinked = false;
+						alive = false;
 					}
 				}
 
@@ -2634,8 +2635,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 						if (mon_take_hit(m_idx, damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2), &fear,
 						                 " is burned by your fiery shield."))
 						{
-							blinked = FALSE;
-							alive = FALSE;
+							blinked = false;
+							alive = false;
 						}
 					}
 				}
@@ -2646,8 +2647,8 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					if (mon_take_hit(m_idx, damroll(p_ptr->shield_power_opt, p_ptr->shield_power_opt2), &fear,
 					                 " is burned by your fiery shield."))
 					{
-						blinked = FALSE;
-						alive = FALSE;
+						blinked = false;
+						alive = false;
 					}
 				}
 
@@ -2668,7 +2669,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 					}
 				}
 
-				touched = FALSE;
+				touched = false;
 			}
 		}
 
@@ -2721,7 +2722,7 @@ bool_ make_attack_normal(int m_idx, byte divis)
 	}
 
 	/* Assume we attacked */
-	return (TRUE);
+	return true;
 }
 
 

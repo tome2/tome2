@@ -8,6 +8,7 @@
 #include "hook_init_quest_in.hpp"
 #include "hook_move_in.hpp"
 #include "hook_quest_finish_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
@@ -17,6 +18,7 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_BETWEEN])
 
@@ -75,11 +77,11 @@ static bool quest_between_move_hook(void *, void *in_, void *)
 	}
 
 	/* Mark as entered */
-	cquest.data[0] = TRUE;
+	cquest.data[0] = true;
 
-	p_ptr->wild_mode = FALSE;
+	p_ptr->wild_mode = false;
 	p_ptr->inside_quest = QUEST_BETWEEN;
-	p_ptr->leaving = TRUE;
+	p_ptr->leaving = true;
 
 	cmsg_print(TERM_YELLOW, "Looks like a full wing of thunderlords ambushes you!");
 	cmsg_print(TERM_YELLOW, "Trone steps forth and speaks: 'The secret of the Void Jumpgates");
@@ -88,8 +90,10 @@ static bool quest_between_move_hook(void *, void *in_, void *)
 	return false;
 }
 
-static bool quest_between_gen_hook(void *, void *, void *)
+static bool quest_between_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
+
 	int x, y;
 	int xstart = 2;
 	int ystart = 2;
@@ -116,12 +120,12 @@ static bool quest_between_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("between.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("between.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	/* Otherwise instadeath */
 	energy_use = 0;
 
-	dungeon_flags |= DF_NO_GENO;
+	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	return true;
 }
@@ -146,18 +150,18 @@ static bool quest_between_finish_hook(void *, void *in_, void *)
 
 
 	/* Mega-Hack -- Actually create the Golden Horn of the Thunderlords */
-	get_golden_horn()->allow_special = TRUE;
-	apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-	get_golden_horn()->allow_special = FALSE;
+	get_golden_horn()->allow_special = true;
+	apply_magic(q_ptr, -1, true, true, true);
+	get_golden_horn()->allow_special = false;
 
 	q_ptr->discount = 100;
-	inven_carry(q_ptr, FALSE);
+	inven_carry(q_ptr, false);
 
 	/* Continue the plot */
 	*(quest[q_idx].plot) = QUEST_NULL;
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_between_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -213,7 +217,7 @@ static bool quest_between_forbid_hook(void *, void *in_, void *)
 	hook_init_quest_in *in = static_cast<struct hook_init_quest_in *>(in_);
 	s32b q_idx = in->q_idx;
 
-	if (q_idx != QUEST_BETWEEN) return (FALSE);
+	if (q_idx != QUEST_BETWEEN) return false;
 
 	if (p_ptr->lev < 45)
 	{

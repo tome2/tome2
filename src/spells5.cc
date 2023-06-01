@@ -7,7 +7,10 @@
 #include "variable.hpp"
 #include "z-rand.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
+
+using boost::algorithm::equals;
 
 static s16b school_spells_count = 0;
 static struct spell_type *school_spells[SCHOOL_SPELLS_MAX];
@@ -24,7 +27,7 @@ static spell_type *spell_new(s32b *index, const char *name)
 	return spell;
 }
 
-static const char *no_info()
+static std::string no_info()
 {
 	return "";
 }
@@ -43,7 +46,7 @@ boost::optional<int> find_spell(const char *name)
 
 	for (i = 0; i < school_spells_count; i++)
 	{
-		if (streq(spell_type_name(spell_at(i)), name))
+		if (equals(spell_type_name(spell_at(i)), name))
 		{
 			return boost::make_optional(i);
 		}
@@ -2312,7 +2315,7 @@ void school_spells_init()
 		spells_init_theme();
 		break;
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 
 }

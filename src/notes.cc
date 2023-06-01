@@ -14,34 +14,35 @@
 #include "player_class.hpp"
 #include "player_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
+
+#include <boost/filesystem/path.hpp>
+#include <fmt/format.h>
+
+namespace fs = boost::filesystem;
+
+/**
+ * Get note path name
+ */
+static fs::path note_path()
+{
+	char buf[1024];
+	path_build(buf, sizeof(buf), ANGBAND_DIR_NOTE, name_file_note(game->player_base).c_str());
+	return fs::path(buf);
+}
 
 /*
  * Show the notes file on the screen
  */
 void show_notes_file()
 {
-	char basename[13];
-	char buf[1024];
-	char caption[10 + 13];
-
-	/* Hack -- extract first 8 characters of name and append an extension */
-	strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
-	basename[sizeof(basename) - 1] = '\0';
-
-	/* Build the path */
-	path_build(buf, sizeof(buf), ANGBAND_DIR_NOTE, basename);
+	auto p = note_path();
 
 	/* Use a caption, forcing direct access to the note file */
-	sprintf(caption, "Note file %s", basename);
+	auto caption = fmt::format("Note file {}", p.filename().c_str());
 
 	/* Invoke show_file */
-	show_file(buf, caption);
-
-	/* Done */
-	return;
+	show_file(p.c_str(), caption.c_str());
 }
 
 /*
@@ -50,19 +51,8 @@ void show_notes_file()
  */
 void output_note(const char *final_note)
 {
-	FILE *fff;
-	char basename[13];
-	char buf[1024];
-
-	/* Hack -- extract first 8 characters of name and append an extension */
-	strnfmt(basename, sizeof(basename), "%.8s.nte", game->player_base.c_str());
-	basename[sizeof(basename) - 1] = '\0';
-
-	/* Build the path */
-	path_build(buf, sizeof(buf), ANGBAND_DIR_NOTE, basename);
-
 	/* Open notes file */
-	fff = my_fopen(buf, "a");
+	FILE *fff = my_fopen(note_path().c_str(), "a");
 
 	/* Failure */
 	if (!fff) return;
@@ -72,9 +62,6 @@ void output_note(const char *final_note)
 
 	/* Close the handle */
 	my_fclose(fff);
-
-	/* Done */
-	return;
 }
 
 

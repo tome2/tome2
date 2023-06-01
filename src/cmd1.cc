@@ -16,6 +16,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "hooks.hpp"
@@ -42,13 +43,16 @@
 #include "spells3.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wild.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
+
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
 
 #define MAX_VAMPIRIC_DRAIN 100
 
@@ -57,28 +61,31 @@
  * Determine if the player "hits" a monster (normal combat).
  * Note -- Always miss 5%, always hit 5%, otherwise random.
  */
-bool_ test_hit_fire(int chance, int ac, int vis)
+bool test_hit_fire(int chance, int ac, int vis)
 {
-	int k;
-
-
 	/* Percentile dice */
-	k = rand_int(100);
+	int const k = rand_int(100);
 
 	/* Hack -- Instant miss or hit */
 	if (k < 10) return (k < 5);
 
 	/* Never hit */
-	if (chance <= 0) return (FALSE);
+	if (chance <= 0)
+	{
+		return false;
+	}
 
 	/* Invisible monsters are harder to hit */
 	if (!vis) chance = (chance + 1) / 2;
 
 	/* Power competes against armor */
-	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4)) return (FALSE);
+	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4))
+	{
+		return false;
+	}
 
 	/* Assume hit */
-	return (TRUE);
+	return true;
 }
 
 
@@ -88,28 +95,31 @@ bool_ test_hit_fire(int chance, int ac, int vis)
  *
  * Note -- Always miss 5%, always hit 5%, otherwise random.
  */
-bool_ test_hit_norm(int chance, int ac, int vis)
+bool test_hit_norm(int chance, int ac, int vis)
 {
-	int k;
-
-
 	/* Percentile dice */
-	k = rand_int(100);
+	int const k = rand_int(100);
 
 	/* Hack -- Instant miss or hit */
 	if (k < 10) return (k < 5);
 
 	/* Wimpy attack never hits */
-	if (chance <= 0) return (FALSE);
+	if (chance <= 0)
+	{
+		return false;
+	}
 
 	/* Penalize invisible targets */
 	if (!vis) chance = (chance + 1) / 2;
 
 	/* Power must defeat armor */
-	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4)) return (FALSE);
+	if (rand_int(chance + luck( -10, 10)) < (ac * 3 / 4))
+	{
+		return false;
+	}
 
 	/* Assume hit */
-	return (TRUE);
+	return true;
 }
 
 
@@ -159,11 +169,11 @@ s16b critical_shot(int weight, int plus, int dam, int skill)
  *
  * Factor in weapon weight, total plusses, player level.
  */
-s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool_ *done_crit)
+s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool *done_crit)
 {
 	int i, k, num = randint(5000);
 
-	*done_crit = FALSE;
+	*done_crit = false;
 
 	/* Extract "blow" power */
 	i = (weight + ((p_ptr->to_h + plus) * 5) +
@@ -181,7 +191,7 @@ s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool_ *done_c
 		set_tim_deadly(p_ptr->tim_deadly - 1);
 		msg_print("It was a *GREAT* hit!");
 		dam = 3 * dam + 20;
-		*done_crit = TRUE;
+		*done_crit = true;
 	}
 
 	/* Chance */
@@ -218,7 +228,7 @@ s16b critical_norm(int weight, int plus, int dam, int weapon_tval, bool_ *done_c
 			msg_print("It was a *SUPERB* hit!");
 			dam = ((7 * dam) / 2) + 25;
 		}
-		*done_crit = TRUE;
+		*done_crit = true;
 	}
 
 	return (dam);
@@ -504,7 +514,7 @@ static void touch_zap_player(monster_type *m_ptr)
  * Carried monster can attack too.
  * Based on monst_attack_monst.
  */
-static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
+static void carried_monster_attack(s16b m_idx, int x, int y)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -518,7 +528,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 
 	char temp[80];
 
-	bool_ blinked = FALSE, touched = FALSE;
+	bool blinked = false, touched = false;
 
 	byte y_saver = t_ptr->fy;
 
@@ -547,7 +557,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 	monster_desc(t_name, t_ptr, 0);
 
 	/* Assume no blink */
-	blinked = FALSE;
+	blinked = false;
 
 	if (!t_ptr->ml)
 	{
@@ -595,49 +605,49 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBM_HIT:
 				{
 					act = "hits %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_TOUCH:
 				{
 					act = "touches %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_PUNCH:
 				{
 					act = "punches %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_KICK:
 				{
 					act = "kicks %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CLAW:
 				{
 					act = "claws %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_BITE:
 				{
 					act = "bites %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_STING:
 				{
 					act = "stings %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
@@ -650,84 +660,84 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBM_BUTT:
 				{
 					act = "butts %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CRUSH:
 				{
 					act = "crushes %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_ENGULF:
 				{
 					act = "engulfs %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CHARGE:
 				{
 					act = "charges %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CRAWL:
 				{
 					act = "crawls on %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_DROOL:
 				{
 					act = "drools on %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_SPIT:
 				{
 					act = "spits on %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_GAZE:
 				{
 					act = "gazes at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_WAIL:
 				{
 					act = "wails at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_SPORE:
 				{
 					act = "releases spores at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_XXX4:
 				{
 					act = "projects XXX4's at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_BEG:
 				{
 					act = "begs %s for money.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -735,7 +745,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBM_INSULT:
 				{
 					act = "insults %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -743,7 +753,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBM_MOAN:
 				{
 					act = "moans at %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -751,7 +761,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBM_SHOW:
 				{
 					act = "sings to %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -816,7 +826,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 			case RBE_EAT_GOLD:
 				{
 					pt = damage = 0;
-					if (randint(2) == 1) blinked = TRUE;
+					if (randint(2) == 1) blinked = true;
 					break;
 				}
 
@@ -929,7 +939,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 					{
 						if (t_ptr->ml)
 						{
-							blinked = FALSE;
+							blinked = false;
 							msg_format("You are suddenly very hot!");
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
@@ -944,7 +954,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
 					{
 						if (t_ptr->ml)
 						{
-							blinked = FALSE;
+							blinked = false;
 							msg_format("You get zapped!");
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
@@ -999,8 +1009,7 @@ static void carried_monster_attack(s16b m_idx, bool_ *mdeath, int x, int y)
  * Carried monster can attack too.
  * Based on monst_attack_monst.
  */
-static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
-                                     int x, int y)
+static void incarnate_monster_attack(s16b m_idx, int x, int y)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -1016,7 +1025,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 
 	char temp[80];
 
-	bool_ blinked = FALSE, touched = FALSE;
+	bool blinked = false, touched = false;
 
 	byte y_saver = t_ptr->fy;
 
@@ -1040,7 +1049,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 	monster_desc(t_name, t_ptr, 0);
 
 	/* Assume no blink */
-	blinked = FALSE;
+	blinked = false;
 
 	if (!t_ptr->ml)
 	{
@@ -1048,8 +1057,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 	}
 
 	/* Scan through all four blows */
-	for (ap_cnt = 0; ap_cnt < (p_ptr->num_blow > 4) ? 4 : p_ptr->num_blow;
-	                ap_cnt++)
+	for (ap_cnt = 0; ap_cnt < std::min<int>(p_ptr->num_blow, 4); ap_cnt++)
 	{
 		int power = 0;
 		int damage = 0;
@@ -1089,49 +1097,49 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBM_HIT:
 				{
 					act = "hit %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_TOUCH:
 				{
 					act = "touch %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_PUNCH:
 				{
 					act = "punch %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_KICK:
 				{
 					act = "kick %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CLAW:
 				{
 					act = "claw %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_BITE:
 				{
 					act = "bite %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_STING:
 				{
 					act = "sting %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
@@ -1144,84 +1152,84 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBM_BUTT:
 				{
 					act = "butt %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CRUSH:
 				{
 					act = "crush %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_ENGULF:
 				{
 					act = "engulf %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CHARGE:
 				{
 					act = "charge %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_CRAWL:
 				{
 					act = "crawl on %s.";
-					touched = TRUE;
+					touched = true;
 					break;
 				}
 
 			case RBM_DROOL:
 				{
 					act = "drool on %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_SPIT:
 				{
 					act = "spit on %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_GAZE:
 				{
 					act = "gaze at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_WAIL:
 				{
 					act = "wail at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_SPORE:
 				{
 					act = "release spores at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_XXX4:
 				{
 					act = "project XXX4's at %s.";
-					touched = FALSE;
+					touched = false;
 					break;
 				}
 
 			case RBM_BEG:
 				{
 					act = "beg %s for money.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -1229,7 +1237,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBM_INSULT:
 				{
 					act = "insult %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -1237,7 +1245,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBM_MOAN:
 				{
 					act = "moan at %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -1245,7 +1253,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBM_SHOW:
 				{
 					act = "sing to %s.";
-					touched = FALSE;
+					touched = false;
 					t_ptr->csleep = 0;
 					break;
 				}
@@ -1307,7 +1315,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 			case RBE_EAT_GOLD:
 				{
 					pt = damage = 0;
-					if (randint(2) == 1) blinked = TRUE;
+					if (randint(2) == 1) blinked = true;
 					break;
 				}
 
@@ -1419,7 +1427,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 					{
 						if (t_ptr->ml)
 						{
-							blinked = FALSE;
+							blinked = false;
 							msg_format("You are suddenly very hot!");
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
@@ -1434,7 +1442,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 					{
 						if (t_ptr->ml)
 						{
-							blinked = FALSE;
+							blinked = false;
 							msg_format("You get zapped!");
 						}
 						project(m_idx, 0, p_ptr->py, p_ptr->px,
@@ -1495,7 +1503,7 @@ static void incarnate_monster_attack(s16b m_idx, bool_ *mdeath,
 static void flavored_attack(int percent, char *output)
 {
 	int insanity = (p_ptr->msane - p_ptr->csane) * 100 / p_ptr->msane;
-	bool_ insane = (rand_int(100) < insanity);
+	bool insane = (rand_int(100) < insanity);
 
 	if (percent < 5)
 	{
@@ -1616,7 +1624,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 	martial_arts *blow_table = ma_blows;
 	int resist_stun = 0;
 	int max = MAX_MA;
-	bool_ desc = FALSE;
+	bool desc = false;
 	int plev = p_ptr->lev;
 
 	if ((!p_ptr->body_monster) && (p_ptr->mimic_form == resolve_mimic_name("Bear")) &&
@@ -1688,14 +1696,14 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		}
 		else if (!desc) msg_format(ma_ptr->desc, m_name);
 
-		desc = TRUE;
+		desc = true;
 	}
 	if (ma_ptr->effect & MA_FULL_SLOW)
 	{
 		special_effect = MA_SLOW;
 		if (!desc) msg_format(ma_ptr->desc, m_name);
 
-		desc = TRUE;
+		desc = true;
 	}
 	if (ma_ptr->effect & MA_SLOW)
 	{
@@ -1708,7 +1716,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		}
 		else if (!desc) msg_format(ma_ptr->desc, m_name);
 
-		desc = TRUE;
+		desc = true;
 	}
 	if (ma_ptr->effect & MA_STUN)
 	{
@@ -1718,7 +1726,7 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 		}
 
 		if (!desc) msg_format(ma_ptr->desc, m_name);
-		desc = TRUE;
+		desc = true;
 	}
 	if (ma_ptr->effect & MA_WOUND)
 	{
@@ -1727,10 +1735,10 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 			*special |= SPEC_CUT;
 		}
 		if (!desc) msg_format(ma_ptr->desc, m_name);
-		desc = TRUE;
+		desc = true;
 	}
 
-	bool_ done_crit;
+	bool done_crit;
 	*k = critical_norm(plev * (randint(10)), ma_ptr->min_level, *k, -1, &done_crit);
 
 	if ((special_effect & MA_KNEE) && ((*k + p_ptr->to_d) < m_ptr->hp))
@@ -1771,13 +1779,13 @@ static void py_attack_hand(int *k, monster_type *m_ptr, s32b *special)
 static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<monster_race> r_ptr,
                object_type *o_ptr)
 {
-	bool_ allow_shatter = TRUE;
+	bool allow_shatter = true;
 
 	/* Extract mundane-ness of the current weapon */
 	auto const f = object_flags(o_ptr);
 
 	/* It should be Slay Evil, Slay Undead, or *Slay Undead* */
-	bool_ const mundane =
+	bool const mundane =
 		!(f & TR_SLAY_EVIL) &&
 		!(f & TR_SLAY_UNDEAD) &&
 		!(f & TR_KILL_UNDEAD);
@@ -1785,7 +1793,7 @@ static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<
 	/* Some blades can resist shattering */
 	if (f & TR_RES_MORGUL)
 	{
-		allow_shatter = FALSE;
+		allow_shatter = false;
 	}
 
 	/* Mega Hack -- Hitting Nazgul is REALY dangerous (ideas from Akhronath) */
@@ -1852,7 +1860,7 @@ static void do_nazgul(int *k, int *num, int num_blow, int weap, std::shared_ptr<
 				msg_print("Your foe calls upon your soul!");
 				msg_print
 				("You feel the Black Breath slowly draining you of life...");
-				p_ptr->black_breath = TRUE;
+				p_ptr->black_breath = true;
 			}
 		}
 	}
@@ -1878,21 +1886,21 @@ void py_attack(int y, int x, int max_blow)
 
 	bool fear = false;
 
-	bool_ mdeath = FALSE;
+	bool mdeath = false;
 
-	bool_ backstab = FALSE;
+	bool backstab = false;
 
-	bool_ vorpal_cut = FALSE;
+	bool vorpal_cut = false;
 
 	int chaos_effect = 0;
 
-	bool_ stab_fleeing = FALSE;
+	bool stab_fleeing = false;
 
-	bool_ do_quake = FALSE;
+	bool do_quake = false;
 
-	bool_ done_crit = FALSE;
+	bool done_crit = false;
 
-	bool_ drain_msg = TRUE;
+	bool drain_msg = true;
 
 	int drain_result = 0, drain_heal = 0;
 
@@ -1914,11 +1922,11 @@ void py_attack(int y, int x, int max_blow)
 		if ((m_ptr->csleep) && (m_ptr->ml))
 		{
 			/* Can't backstab creatures that we can't see, right? */
-			backstab = TRUE;
+			backstab = true;
 		}
 		else if ((m_ptr->monfear) && (m_ptr->ml))
 		{
-			stab_fleeing = TRUE;
+			stab_fleeing = true;
 		}
 	}
 
@@ -1981,7 +1989,7 @@ void py_attack(int y, int x, int max_blow)
 	                (!r_info[p_ptr->body_monster].body_parts[BODY_WEAPON]) &&
 	                !(p_ptr->melee_style == SKILL_HAND))
 	{
-		incarnate_monster_attack(c_ptr->m_idx, &mdeath, y, x);
+		incarnate_monster_attack(c_ptr->m_idx, y, x);
 	}
 	/* Otherwise use your weapon(s) */
 	else
@@ -2072,9 +2080,9 @@ void py_attack(int y, int x, int max_blow)
 						}
 
 						if ((flags & TR_VORPAL) && (randint(6) == 1))
-							vorpal_cut = TRUE;
+							vorpal_cut = true;
 						else
-							vorpal_cut = FALSE;
+							vorpal_cut = false;
 
 						/* Should we attack with hands or not ? */
 						if (p_ptr->melee_style != SKILL_MASTERY)
@@ -2102,7 +2110,7 @@ void py_attack(int y, int x, int max_blow)
 							if ((p_ptr->impact && ((k > 50) || randint(7) == 1))
 							                || (chaos_effect == 2))
 							{
-								do_quake = TRUE;
+								do_quake = true;
 							}
 
 							k = critical_norm(o_ptr->weight, o_ptr->to_h, k, o_ptr->tval, &done_crit);
@@ -2161,7 +2169,7 @@ void py_attack(int y, int x, int max_blow)
 								project(0, p_ptr->tim_project_rad, y, x, p_ptr->tim_project_dam, p_ptr->tim_project_gf, p_ptr->tim_project_flag | PROJECT_JUMP);
 								if (!c_ptr->m_idx)
 								{
-									mdeath = TRUE;
+									mdeath = true;
 									break;
 								}
 							}
@@ -2192,7 +2200,7 @@ void py_attack(int y, int x, int max_blow)
 						{
 							msg_format("Oh no! Your weapon clones %^s!",
 							           m_name);
-							multiply_monster(c_ptr->m_idx, FALSE, TRUE);
+							multiply_monster(c_ptr->m_idx, false, true);
 						}
 
 						/* Apply the player damage bonuses */
@@ -2225,7 +2233,7 @@ void py_attack(int y, int x, int max_blow)
 
 							monster_race_desc(buf, m_ptr->r_idx, m_ptr->ego);
 
-							backstab = FALSE;
+							backstab = false;
 
 							msg_format
 							("You cruelly stab the helpless, sleeping %s!",
@@ -2260,7 +2268,7 @@ void py_attack(int y, int x, int max_blow)
 							{
 								energy_use = energy_use * num / num_blow;
 							}
-							mdeath = TRUE;
+							mdeath = true;
 							break;
 						}
 
@@ -2311,7 +2319,7 @@ void py_attack(int y, int x, int max_blow)
 										msg_format
 										("Your weapon drains life from %s!",
 										 m_name);
-										drain_msg = FALSE;
+										drain_msg = false;
 									}
 
 									hp_player(drain_heal);
@@ -2326,7 +2334,7 @@ void py_attack(int y, int x, int max_blow)
 							/* Cancel glowing hands */
 							if (p_ptr->confusing)
 							{
-								p_ptr->confusing = FALSE;
+								p_ptr->confusing = false;
 								msg_print("Your hands stop glowing.");
 							}
 
@@ -2393,7 +2401,7 @@ void py_attack(int y, int x, int max_blow)
 					/* Player misses */
 					else
 					{
-						backstab = FALSE; 	/* Clumsy! */
+						backstab = false; 	/* Clumsy! */
 
 						/* Message */
 						msg_format("You miss %s.", m_name);
@@ -2410,7 +2418,7 @@ void py_attack(int y, int x, int max_blow)
 	/* Carried monster can attack too */
 	if ((!mdeath) && m_list[c_ptr->m_idx].hp)
 	{
-		carried_monster_attack(c_ptr->m_idx, &mdeath, y, x);
+		carried_monster_attack(c_ptr->m_idx, y, x);
 	}
 
 	/* Hack -- delay fear messages */
@@ -2431,27 +2439,16 @@ void py_attack(int y, int x, int max_blow)
 
 
 
-bool_ player_can_enter(byte feature)
+bool player_can_enter(byte feature)
 {
 	auto const &r_info = game->edit_data.r_info;
 	auto const &f_info = game->edit_data.f_info;
 
-	bool_ pass_wall;
-
-	bool_ only_wall = FALSE;
-
-
 	/* Player can not walk through "walls" unless in Shadow Form */
-	if (p_ptr->wraith_form || (race_flags_p(PR_SEMI_WRAITH)))
-		pass_wall = TRUE;
-	else
-		pass_wall = FALSE;
+	auto const pass_wall = (p_ptr->wraith_form || (race_flags_p(PR_SEMI_WRAITH)));
 
 	/* Wall mimicry force the player to stay in walls */
-	if (p_ptr->mimic_extra & CLASS_WALL)
-	{
-		only_wall = TRUE;
-	}
+	auto const only_wall = (p_ptr->mimic_extra & CLASS_WALL);
 
 	/* Don't let the player kill himself with one keystroke */
 	if (p_ptr->wild_mode)
@@ -2461,7 +2458,9 @@ bool_ player_can_enter(byte feature)
 			int wt = weight_limit() / 2;
 
 			if ((calc_total_weight() >= wt) && !(p_ptr->ffall))
-				return (FALSE);
+			{
+				return false;
+			}
 		}
 		else if (feature == FEAT_SHAL_LAVA ||
 		                feature == FEAT_DEEP_LAVA)
@@ -2470,7 +2469,9 @@ bool_ player_can_enter(byte feature)
 			                p_ptr->immune_fire ||
 			                p_ptr->oppose_fire ||
 			                p_ptr->ffall))
-				return (FALSE);
+			{
+				return false;
+			}
 		}
 	}
 
@@ -2481,44 +2482,60 @@ bool_ player_can_enter(byte feature)
 		    p_ptr->has_ability(AB_TREE_WALK) ||
 		    (p_ptr->mimic_form == resolve_mimic_name("Ent")) ||
 		    ((p_ptr->grace >= 9000) && praying_to(GOD_YAVANNA)))
-			return (TRUE);
+		{
+			return true;
+		}
 	}
 
 	if ((p_ptr->climb) && (f_info[feature].flags & FF_CAN_CLIMB))
-		return (TRUE);
+	{
+		return true;
+	}
 	if ((p_ptr->fly) &&
 	                ((f_info[feature].flags & FF_CAN_FLY) ||
 	                 (f_info[feature].flags & FF_CAN_LEVITATE)))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if (only_wall && (f_info[feature].flags & FF_FLOOR))
-		return (FALSE);
+	{
+		return false;
+	}
 	else if ((p_ptr->ffall) &&
 	                (f_info[feature].flags & FF_CAN_LEVITATE))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if ((pass_wall || only_wall) &&
 	                (f_info[feature].flags & FF_CAN_PASS))
-		return (TRUE);
+	{
+		return true;
+	}
 	else if (f_info[feature].flags & FF_NO_WALK)
-		return (FALSE);
+	{
+		return false;
+	}
 	else if ((f_info[feature].flags & FF_WEB) &&
 			((!(r_info[p_ptr->body_monster].flags & RF_SPIDER)) && (p_ptr->mimic_form != resolve_mimic_name("Spider"))))
-		return (FALSE);
+	{
+		return false;
+	}
 
-	return (TRUE);
+	return true;
 }
 
 /*
  * easy_open_door --
  *
  *	If there is a jammed/closed/locked door at the given location,
- *	then attempt to unlock/open it. Return TRUE if an attempt was
- *	made (successful or not), otherwise return FALSE.
+ *	then attempt to unlock/open it. Return true if an attempt was
+ *	made (successful or not), otherwise return false.
  *
  *	The code here should be nearly identical to that in
  *	do_cmd_open_test() and do_cmd_open_aux().
  */
 
-static bool_ easy_open_door(int y, int x)
+static bool easy_open_door(int y, int x)
 {
 	auto const &r_info = game->edit_data.r_info;
 
@@ -2533,14 +2550,14 @@ static bool_ easy_open_door(int y, int x)
 	{
 		msg_print("You cannot open doors.");
 
-		return (FALSE);
+		return false;
 	}
 
 	/* Must be a closed door */
 	if (!((c_ptr->feat >= FEAT_DOOR_HEAD) && (c_ptr->feat <= FEAT_DOOR_TAIL)))
 	{
 		/* Nope */
-		return (FALSE);
+		return false;
 	}
 
 	/* Jammed door */
@@ -2607,7 +2624,7 @@ static bool_ easy_open_door(int y, int x)
 	}
 
 	/* Result */
-	return (TRUE);
+	return true;
 }
 
 /*
@@ -2635,7 +2652,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 
 	char m_name[80];
 
-	bool_ oktomove = TRUE;
+	bool oktomove = true;
 
 
 	/* Hack - random movement */
@@ -2710,7 +2727,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x--;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == 0) && (x == MAX_WID - 1))
@@ -2719,7 +2736,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x++;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == MAX_HGT - 1) && (x == 0))
@@ -2728,7 +2745,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x--;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = cur_wid - 2;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if ((y == MAX_HGT - 1) && (x == MAX_WID - 1))
@@ -2737,7 +2754,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x++;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = 1;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (y == 0)
@@ -2745,7 +2762,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_y--;
 				p_ptr->oldpy = cur_hgt - 2;
 				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (y == cur_hgt - 1)
@@ -2753,7 +2770,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_y++;
 				p_ptr->oldpy = 1;
 				p_ptr->oldpx = x;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (x == 0)
@@ -2761,7 +2778,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x--;
 				p_ptr->oldpx = cur_wid - 2;
 				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
 			else if (x == cur_wid - 1)
@@ -2769,10 +2786,10 @@ void move_player_aux(int dir, int do_pickup, int run)
 				p_ptr->wilderness_x++;
 				p_ptr->oldpx = 1;
 				p_ptr->oldpy = y;
-				ambush_flag = FALSE;
+				ambush_flag = false;
 			}
 
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 
 			return;
 		}
@@ -2788,7 +2805,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 
 	if (p_ptr->dripping_tread > 0)
 	{
-		geomancy_random_floor(y, x, FALSE);
+		geomancy_random_floor(y, x, false);
 		p_ptr->dripping_tread -= 1;
 		if (p_ptr->dripping_tread == 0)
 		{
@@ -2837,13 +2854,13 @@ void move_player_aux(int dir, int do_pickup, int run)
 				m_ptr->fx = p_ptr->px;
 				cave[p_ptr->py][p_ptr->px].m_idx = c_ptr->m_idx;
 				c_ptr->m_idx = 0;
-				update_mon(cave[p_ptr->py][p_ptr->px].m_idx, TRUE);
+				update_mon(cave[p_ptr->py][p_ptr->px].m_idx, true);
 			}
 			else
 			{
 				msg_format("%^s is in your way!", m_name);
 				energy_use = 0;
-				oktomove = FALSE;
+				oktomove = false;
 			}
 
 			/* now continue on to 'movement' */
@@ -2851,7 +2868,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		else
 		{
 			py_attack(y, x, -1);
-			oktomove = FALSE;
+			oktomove = false;
 		}
 	}
 
@@ -2859,20 +2876,20 @@ void move_player_aux(int dir, int do_pickup, int run)
 	{
 		msg_print("You can't cross the chasm.");
 		running = 0;
-		oktomove = FALSE;
+		oktomove = false;
 	}
 
 	/* Player can't enter ? soo bad for him/her ... */
 	else if (!player_can_enter(c_ptr->feat))
 	{
-		oktomove = FALSE;
+		oktomove = false;
 
 		/* Disturb the player */
 		disturb();
 
 		if (p_ptr->prob_travel)
 		{
-			if (passwall(tmp, TRUE)) return;
+			if (passwall(tmp, true)) return;
 		}
 
 		/* Notice things in the dark */
@@ -3022,13 +3039,17 @@ void move_player_aux(int dir, int do_pickup, int run)
 		else if (cave[y][x].feat >= FEAT_ALTAR_HEAD &&
 		                cave[y][x].feat <= FEAT_ALTAR_TAIL)
 		{
-			const char *name = f_info[cave[y][x].feat].name;
-			const char *pref = (is_a_vowel(name[0])) ? "an" : "a";
+			auto msg = fmt::format(
+				"You see {}.",
+				singular_prefix(f_info[cave[y][x].feat].name));
 
-			msg_format("You see %s %s.", pref, name);
+			msg_print(msg);
 
 			/* Flush message while running */
-			if (running) msg_print(NULL);
+			if (running)
+			{
+				msg_print(nullptr);
+			}
 		}
 
 		/* Execute the inscription */
@@ -3055,7 +3076,7 @@ void move_player_aux(int dir, int do_pickup, int run)
 		reveal_wilderness_around_player(p_ptr->py, p_ptr->px, 0, WILDERNESS_SEE_RADIUS);
 
 		/* Walking the wild isnt meaningfull */
-		p_ptr->did_nothing = TRUE;
+		p_ptr->did_nothing = true;
 	}
 }
 
@@ -3080,26 +3101,26 @@ static int see_obstacle_grid(cave_type *c_ptr)
 	case FEAT_DEEP_WATER:
 	case FEAT_ICE:
 		{
-			if (p_ptr->ffall || p_ptr->fly) return (FALSE);
+			if (p_ptr->ffall || p_ptr->fly) return false;
 		}
 
 		/* Require immunity */
 	case FEAT_DEEP_LAVA:
 	case FEAT_SHAL_LAVA:
 		{
-			if (p_ptr->invuln || p_ptr->immune_fire) return (FALSE);
+			if (p_ptr->invuln || p_ptr->immune_fire) return false;
 		}
 	}
 
 
 	/* "Safe" floor grids aren't obstacles */
-	if (f_info[c_ptr->feat].flags & FF_CAN_RUN) return (FALSE);
+	if (f_info[c_ptr->feat].flags & FF_CAN_RUN) return false;
 
 	/* Must be known to the player */
-	if (!(c_ptr->info & (CAVE_MARK))) return (FALSE);
+	if (!(c_ptr->info & (CAVE_MARK))) return false;
 
 	/* Default */
-	return (TRUE);
+	return true;
 }
 
 
@@ -3113,7 +3134,7 @@ static int see_obstacle(int dir, int y, int x)
 	x += ddx[dir];
 
 	/* Illegal grids are not known walls */
-	if (!in_bounds2(y, x)) return (FALSE);
+	if (!in_bounds2(y, x)) return false;
 
 	/* Analyse the grid */
 	return (see_obstacle_grid(&cave[y][x]));
@@ -3130,19 +3151,19 @@ static int see_nothing(int dir, int y, int x)
 	x += ddx[dir];
 
 	/* Illegal grids are unknown */
-	if (!in_bounds2(y, x)) return (TRUE);
+	if (!in_bounds2(y, x)) return true;
 
 	/* Memorized grids are always known */
-	if (cave[y][x].info & (CAVE_MARK)) return (FALSE);
+	if (cave[y][x].info & (CAVE_MARK)) return false;
 
 	/* Non-floor grids are unknown */
-	if (!cave_floor_bold(y, x)) return (TRUE);
+	if (!cave_floor_bold(y, x)) return true;
 
 	/* Viewable door/wall grids are known */
-	if (player_can_see_bold(y, x)) return (FALSE);
+	if (player_can_see_bold(y, x)) return false;
 
 	/* Default */
-	return (TRUE);
+	return true;
 }
 
 
@@ -3303,13 +3324,13 @@ static byte find_prevdir;
 /*
  * We are looking for open area
  */
-static bool_ find_openarea;
+static bool find_openarea;
 
 /*
  * We are looking for a break
  */
-static bool_ find_breakright;
-static bool_ find_breakleft;
+static bool find_breakright;
+static bool find_breakleft;
 
 
 
@@ -3341,14 +3362,14 @@ static void run_init(int dir)
 	find_prevdir = dir;
 
 	/* Assume looking for open area */
-	find_openarea = TRUE;
+	find_openarea = true;
 
 	/* Assume not looking for breaks */
-	find_breakright = find_breakleft = FALSE;
+	find_breakright = find_breakleft = false;
 
 	/* Assume no nearby walls */
-	deepleft = deepright = FALSE;
-	shortright = shortleft = FALSE;
+	deepleft = deepright = false;
+	shortright = shortleft = false;
 
 	/* Find the destination grid */
 	row = p_ptr->py + ddy[dir];
@@ -3360,32 +3381,32 @@ static void run_init(int dir)
 	/* Check for walls */
 	if (see_obstacle(cycle[i + 1], p_ptr->py, p_ptr->px))
 	{
-		find_breakleft = TRUE;
-		shortleft = TRUE;
+		find_breakleft = true;
+		shortleft = true;
 	}
 	else if (see_obstacle(cycle[i + 1], row, col))
 	{
-		find_breakleft = TRUE;
-		deepleft = TRUE;
+		find_breakleft = true;
+		deepleft = true;
 	}
 
 	/* Check for walls */
 	if (see_obstacle(cycle[i - 1], p_ptr->py, p_ptr->px))
 	{
-		find_breakright = TRUE;
-		shortright = TRUE;
+		find_breakright = true;
+		shortright = true;
 	}
 	else if (see_obstacle(cycle[i - 1], row, col))
 	{
-		find_breakright = TRUE;
-		deepright = TRUE;
+		find_breakright = true;
+		deepright = true;
 	}
 
 	/* Looking for a break */
 	if (find_breakleft && find_breakright)
 	{
 		/* Not looking for open area */
-		find_openarea = FALSE;
+		find_openarea = false;
 
 		/* Hack -- allow angled corridor entry */
 		if (dir & 0x01)
@@ -3419,9 +3440,9 @@ static void run_init(int dir)
 /*
  * Update the current "run" path
  *
- * Return TRUE if the running should be stopped
+ * Return true if the running should be stopped
  */
-static bool_ run_test()
+static bool run_test()
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -3461,7 +3482,7 @@ static bool_ run_test()
 			monster_type *m_ptr = &m_list[c_ptr->m_idx];
 
 			/* Visible monster */
-			if (m_ptr->ml) return (TRUE);
+			if (m_ptr->ml) return true;
 		}
 
 		/* Visible objects abort running */
@@ -3471,17 +3492,17 @@ static bool_ run_test()
 			object_type * o_ptr = &o_list[o_idx];
 
 			/* Visible object */
-			if (o_ptr->marked) return (TRUE);
+			if (o_ptr->marked) return true;
 		}
 
 
 		/* Assume unknown */
-		inv = TRUE;
+		inv = true;
 
 		/* Check memorized grids */
 		if (c_ptr->info & (CAVE_MARK))
 		{
-			bool_ notice = TRUE;
+			bool notice = true;
 
 			/*
 			 * Examine the terrain -- conditional disturbance
@@ -3493,7 +3514,7 @@ static bool_ run_test()
 			case FEAT_SHAL_LAVA:
 				{
 					/* Ignore */
-					if (p_ptr->invuln || p_ptr->immune_fire) notice = FALSE;
+					if (p_ptr->invuln || p_ptr->immune_fire) notice = false;
 
 					/* Done */
 					break;
@@ -3503,7 +3524,7 @@ static bool_ run_test()
 			case FEAT_ICE:
 				{
 					/* Ignore */
-					if (p_ptr->ffall || p_ptr->fly) notice = FALSE;
+					if (p_ptr->ffall || p_ptr->fly) notice = false;
 
 					/* Done */
 					break;
@@ -3514,7 +3535,7 @@ static bool_ run_test()
 			case FEAT_BROKEN:
 				{
 					/* Option -- ignore */
-				        if (options->find_ignore_doors) notice = FALSE;
+				        if (options->find_ignore_doors) notice = false;
 
 					/* Done */
 					break;
@@ -3540,7 +3561,7 @@ static bool_ run_test()
 			case FEAT_BETWEEN2:
 				{
 					/* Option -- ignore */
-				        if (options->find_ignore_stairs) notice = FALSE;
+				        if (options->find_ignore_stairs) notice = false;
 
 					/* Done */
 					break;
@@ -3550,14 +3571,14 @@ static bool_ run_test()
 			/* Check the "don't notice running" flag */
 			if (f_info[c_ptr->feat].flags & FF_DONT_NOTICE_RUNNING)
 			{
-				notice = FALSE;
+				notice = false;
 			}
 
 			/* Interesting feature */
-			if (notice) return (TRUE);
+			if (notice) return true;
 
 			/* The grid is "visible" */
-			inv = FALSE;
+			inv = false;
 		}
 
 		/* Analyze unknown grids and floors */
@@ -3578,13 +3599,13 @@ static bool_ run_test()
 			/* Three new directions. Stop running. */
 			else if (option2)
 			{
-				return (TRUE);
+				return true;
 			}
 
 			/* Two non-adjacent new directions.  Stop running. */
 			else if (option != cycle[chome[prev_dir] + i - 1])
 			{
-				return (TRUE);
+				return true;
 			}
 
 			/* Two new (adjacent) directions (case 1) */
@@ -3611,13 +3632,13 @@ static bool_ run_test()
 				if (i < 0)
 				{
 					/* Break to the right */
-					find_breakright = TRUE;
+					find_breakright = true;
 				}
 
 				else if (i > 0)
 				{
 					/* Break to the left */
-					find_breakleft = TRUE;
+					find_breakleft = true;
 				}
 			}
 		}
@@ -3644,7 +3665,7 @@ static bool_ run_test()
 				/* Looking to break right */
 				if (find_breakright)
 				{
-					return (TRUE);
+					return true;
 				}
 			}
 
@@ -3654,7 +3675,7 @@ static bool_ run_test()
 				/* Looking to break left */
 				if (find_breakleft)
 				{
-					return (TRUE);
+					return true;
 				}
 			}
 		}
@@ -3676,7 +3697,7 @@ static bool_ run_test()
 				/* Looking to break left */
 				if (find_breakleft)
 				{
-					return (TRUE);
+					return true;
 				}
 			}
 
@@ -3686,7 +3707,7 @@ static bool_ run_test()
 				/* Looking to break right */
 				if (find_breakright)
 				{
-					return (TRUE);
+					return true;
 				}
 			}
 		}
@@ -3699,7 +3720,7 @@ static bool_ run_test()
 		/* No options */
 		if (!option)
 		{
-			return (TRUE);
+			return true;
 		}
 
 		/* One option */
@@ -3746,7 +3767,7 @@ static bool_ run_test()
 				/* STOP: we are next to an intersection or a room */
 				else
 				{
-					return (TRUE);
+					return true;
 				}
 			}
 
@@ -3771,12 +3792,12 @@ static bool_ run_test()
 	/* About to hit a known wall, stop */
 	if (see_obstacle(find_current, p_ptr->py, p_ptr->px))
 	{
-		return (TRUE);
+		return true;
 	}
 
 
 	/* Failure */
-	return (FALSE);
+	return false;
 }
 
 
@@ -3851,7 +3872,7 @@ void do_cmd_pet()
 
 	char power_desc[36][80];
 
-	bool_ flag;
+	bool flag;
 
 	int ask;
 
@@ -3861,7 +3882,7 @@ void do_cmd_pet()
 
 	int pets = 0, pet_ctr = 0;
 
-	bool_ all_pets = FALSE;
+	bool all_pets = false;
 
 	monster_type *m_ptr;
 
@@ -3928,7 +3949,7 @@ void do_cmd_pet()
 	}
 
 	/* Nothing chosen yet */
-	flag = FALSE;
+	flag = false;
 
 	/* Build a prompt (accept all spells) */
 	if (num <= 26)
@@ -3946,7 +3967,7 @@ void do_cmd_pet()
 	}
 
 	/* Save the screen */
-	character_icky = TRUE;
+	character_icky = true;
 	Term_save();
 
 	/* Show the list */
@@ -3997,7 +4018,7 @@ void do_cmd_pet()
 		}
 		else
 		{
-			ask = FALSE; 		/* Can't uppercase digits */
+			ask = false; 		/* Can't uppercase digits */
 
 			i = choice - '0' + 26;
 		}
@@ -4022,12 +4043,12 @@ void do_cmd_pet()
 		}
 
 		/* Stop the loop */
-		flag = TRUE;
+		flag = true;
 	}
 
 	/* Restore the screen */
 	Term_load();
-	character_icky = FALSE;
+	character_icky = false;
 
 	/* Abort if needed */
 	if (!flag)
@@ -4098,7 +4119,7 @@ void do_cmd_pet()
 		{
 			int Dismissed = 0;
 
-			if (get_check("Dismiss all pets? ")) all_pets = TRUE;
+			if (get_check("Dismiss all pets? ")) all_pets = true;
 
 			/* Process the monsters (backwards) */
 			for (pet_ctr = m_max - 1; pet_ctr >= 1; pet_ctr--)
@@ -4109,13 +4130,13 @@ void do_cmd_pet()
 
 				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_PET) || (m_ptr->status == MSTATUS_FRIEND)))	/* Get rid of it! */
 				{
-					bool_ checked = FALSE;
+					bool checked = false;
 					char command;
-					bool_ delete_this = FALSE;
+					bool delete_this = false;
 
 					if (all_pets)
 					{
-						delete_this = TRUE;
+						delete_this = true;
 					}
 					else
 					{
@@ -4128,19 +4149,19 @@ void do_cmd_pet()
 							if (!get_com(check_friend, &command))
 							{
 								/* get out of loop */
-								checked = TRUE;
+								checked = true;
 								pet_ctr = 0;
 							}
 							else switch (command)
 							{
 							case 'Y':
 							case 'y':
-								delete_this = TRUE;
-								checked = TRUE;
+								delete_this = true;
+								checked = true;
 								break;
 							case 'n':
 							case 'N':
-								checked = TRUE;
+								checked = true;
 								break;
 							default:
 								bell();
@@ -4165,7 +4186,7 @@ void do_cmd_pet()
 		{
 			int Dismissed = 0;
 
-			if (get_check("Dismiss all companions? ")) all_pets = TRUE;
+			if (get_check("Dismiss all companions? ")) all_pets = true;
 
 			/* Process the monsters (backwards) */
 			for (pet_ctr = m_max - 1; pet_ctr >= 1; pet_ctr--)
@@ -4176,10 +4197,10 @@ void do_cmd_pet()
 
 				if ((!(r_ptr->flags & RF_NO_DEATH)) && ((m_ptr->status == MSTATUS_COMPANION)))	/* Get rid of it! */
 				{
-					bool_ delete_this = FALSE;
+					bool delete_this = false;
 
 					if (all_pets)
-						delete_this = TRUE;
+						delete_this = true;
 					else
 					{
 						char friend_name[80], check_friend[80];
@@ -4187,7 +4208,7 @@ void do_cmd_pet()
 						strnfmt(check_friend, 80, "Dismiss %s? ", friend_name);
 
 						if (get_check(check_friend))
-							delete_this = TRUE;
+							delete_this = true;
 					}
 
 					if (delete_this)
@@ -4289,22 +4310,22 @@ void do_cmd_integrate_body()
 	floor_item_optimize(0 - item);
 
 	msg_print("Your spirit is incarnated in your new body.");
-	p_ptr->wraith_form = FALSE;
-	p_ptr->disembodied = FALSE;
+	p_ptr->wraith_form = false;
+	p_ptr->disembodied = false;
 	do_cmd_redraw();
 }
 
 /*
  * Leave a body
  */
-bool_ do_cmd_leave_body(bool_ drop_body)
+void do_cmd_leave_body(bool drop_body)
 {
 	auto const &r_info = game->edit_data.r_info;
 
 	if (p_ptr->disembodied)
 	{
 		msg_print("You are already disembodied.");
-		return FALSE;
+		return;
 	}
 
 	for (int i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -4314,7 +4335,7 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 			cursed_p(&p_ptr->inventory[i]))
 		{
 			msg_print("A cursed object is preventing you from leaving your body.");
-			return FALSE;
+			return;
 		}
 	}
 
@@ -4349,24 +4370,24 @@ bool_ do_cmd_leave_body(bool_ drop_body)
 	}
 
 	msg_print("Your spirit leaves your body.");
-	p_ptr->disembodied = TRUE;
+	p_ptr->disembodied = true;
 
 	/* Turn into a lost soul(just for the picture) */
 	p_ptr->body_monster = test_monster_name("Lost soul");
 	do_cmd_redraw();
-
-	return (TRUE);
 }
 
 
-bool_ execute_inscription(byte i, byte y, byte x)
+bool execute_inscription(byte i, byte y, byte x)
 {
 	cave_type *c_ptr = &cave[y][x];
 
 
 	/* Not enough mana in the current grid */
-	if (c_ptr->mana < inscription_info[i].mana) return (TRUE);
-
+	if (c_ptr->mana < inscription_info[i].mana)
+	{
+		return true;
+	}
 
 	/* Reduce the grid mana -- note: it can't be restored */
 	c_ptr->mana -= inscription_info[i].mana;
@@ -4402,9 +4423,7 @@ bool_ execute_inscription(byte i, byte y, byte x)
 
 	case INSCRIP_PROTECTION:
 		{
-			return (FALSE);
-
-			break;
+			return false;
 		}
 
 	case INSCRIP_DWARF_SUMMON:
@@ -4413,7 +4432,7 @@ bool_ execute_inscription(byte i, byte y, byte x)
 
 			scatter(&yy, &xx, y, x, 3);
 			place_monster_one(yy, xx, test_monster_name("Dwarven Warrior"),
-			                  0, FALSE, MSTATUS_FRIEND);
+			                  0, false, MSTATUS_FRIEND);
 
 			break;
 		}
@@ -4454,19 +4473,19 @@ bool_ execute_inscription(byte i, byte y, byte x)
 				/* Scan all objects in the grid */
 				for (auto const this_o_idx: object_idxs)
 				{
-					bool_ plural = FALSE;
+					bool plural = false;
 
 					char o_name[80];
 
 					/* Acquire object */
 					object_type * o_ptr = &o_list[this_o_idx];
 
-					if (o_ptr->number > 1) plural = TRUE;
+					if (o_ptr->number > 1) plural = true;
 
 					/* Effect "observed" */
 					if (o_ptr->marked)
 					{
-						object_desc(o_name, o_ptr, FALSE, 0);
+						object_desc(o_name, o_ptr, false, 0);
 					}
 
 					/* Artifacts get to resist */
@@ -4506,7 +4525,7 @@ bool_ execute_inscription(byte i, byte y, byte x)
 		}
 	}
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -4528,7 +4547,7 @@ void do_cmd_engrave()
 
 	for (i = 0; i < MAX_INSCRIPTIONS; i++)
 	{
-		if (!strcmp(inscription_info[i].text, buf))
+		if (equals(inscription_info[i].text, buf))
 		{
 			if (p_ptr->inscriptions[i])
 			{

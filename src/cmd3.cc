@@ -33,18 +33,20 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
-#include <cassert>
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
+#include <cassert>
 #include <fmt/format.h>
 #include <memory>
 #include <utility>
+
+using boost::algorithm::equals;
 
 /*
  * Display p_ptr->inventory
@@ -55,11 +57,10 @@ void do_cmd_inven()
 
 
 	/* Note that we are in "p_ptr->inventory" mode */
-	command_wrk = FALSE;
+	command_wrk = false;
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Show the inventory */
 	show_inven_full();
@@ -81,9 +82,7 @@ void do_cmd_inven()
 	command_new = inkey();
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Process "Escape" */
 	if (command_new == ESCAPE)
@@ -96,7 +95,7 @@ void do_cmd_inven()
 	else
 	{
 		/* Mega-Hack -- Don't disable keymaps for this key */
-		request_command_inven_mode = TRUE;
+		request_command_inven_mode = true;
 	}
 }
 
@@ -110,11 +109,10 @@ void do_cmd_equip()
 
 
 	/* Note that we are in "equipment" mode */
-	command_wrk = TRUE;
+	command_wrk = true;
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display the equipment */
 	show_equip_full();
@@ -137,9 +135,7 @@ void do_cmd_equip()
 	command_new = inkey();
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Process "Escape" */
 	if (command_new == ESCAPE)
@@ -152,7 +148,7 @@ void do_cmd_equip()
 	else
 	{
 		/* Mega-Hack -- Don't disable keymaps for this key */
-		request_command_inven_mode = TRUE;
+		request_command_inven_mode = true;
 	}
 }
 
@@ -178,32 +174,25 @@ static bool item_tester_hook_wear(object_type const *o_ptr)
 
 			if (object_flags(q_ptr) & TR_ULTIMATE)
 			{
-				return (FALSE);
+				return false;
 			}
 		}
 	}
 
 	if ((slot < INVEN_WIELD) || ((p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_WIELD) && (p_ptr->melee_style != SKILL_MASTERY)))
-		return (FALSE);
+		return false;
 
 	/* Check for a usable slot */
-	if (slot >= INVEN_WIELD) return (TRUE);
+	if (slot >= INVEN_WIELD) return true;
 
 	/* Assume not wearable */
-	return (FALSE);
+	return false;
 }
 
 
-bool_ is_slot_ok(int slot)
+static bool is_slot_ok(int slot)
 {
-	if ((slot >= INVEN_WIELD) && (slot < INVEN_TOTAL))
-	{
-		return (TRUE);
-	}
-	else
-	{
-		return (FALSE);
-	}
+	return (slot >= INVEN_WIELD) && (slot < INVEN_TOTAL);
 }
 
 
@@ -246,7 +235,7 @@ void do_cmd_wield()
 	if (cursed_p(&p_ptr->inventory[slot]))
 	{
 		/* Describe it */
-		object_desc(o_name, &p_ptr->inventory[slot], FALSE, 0);
+		object_desc(o_name, &p_ptr->inventory[slot], false, 0);
 
 		/* Message */
 		msg_format("The %s you are %s appears to be cursed.",
@@ -262,7 +251,7 @@ void do_cmd_wield()
 		char dummy[512];
 
 		/* Describe it */
-		object_desc(o_name, o_ptr, FALSE, 0);
+		object_desc(o_name, o_ptr, false, 0);
 
 		strnfmt(dummy, 512, "Really use the %s {cursed}? ", o_name);
 		if (!(get_check(dummy)))
@@ -286,7 +275,7 @@ void do_cmd_wield()
 		(flags & TR_MUST2H) &&
 		(p_ptr->inventory[slot - INVEN_WIELD + INVEN_ARM].k_ptr))
 	{
-		object_desc(o_name, o_ptr, FALSE, 0);
+		object_desc(o_name, o_ptr, false, 0);
 		msg_format("You cannot wield your %s with a shield.", o_name);
 		return;
 	}
@@ -303,7 +292,7 @@ void do_cmd_wield()
 			i_ptr->k_ptr &&
 			(p_ptr->body_parts[slot - INVEN_WIELD] == INVEN_ARM))
 		{
-			object_desc(o_name, o_ptr, FALSE, 0);
+			object_desc(o_name, o_ptr, false, 0);
 			msg_format("You cannot wield your %s with a two-handed weapon.", o_name);
 			return;
 		}
@@ -354,7 +343,7 @@ void do_cmd_wield()
 		if (o_ptr->k_ptr)
 		{
 			/* Take off existing item */
-			inven_takeoff(slot, 255, FALSE);
+			inven_takeoff(slot, 255, false);
 		}
 	}
 	else
@@ -364,7 +353,7 @@ void do_cmd_wield()
 			if (!object_similar(o_ptr, q_ptr))
 			{
 				/* Take off existing item */
-				inven_takeoff(slot, 255, FALSE);
+				inven_takeoff(slot, 255, false);
 			}
 			else
 			{
@@ -411,7 +400,7 @@ void do_cmd_wield()
 	}
 
 	/* Describe the result */
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Message */
 	msg_format("%s %s (%c).", act, o_name, index_to_label(slot));
@@ -426,7 +415,7 @@ void do_cmd_wield()
 	/* Take care of item sets */
 	if (o_ptr->name1)
 	{
-		wield_set(o_ptr->name1, a_info[o_ptr->name1].set, FALSE);
+		wield_set(o_ptr->name1, a_info[o_ptr->name1].set, false);
 	}
 
 	/* Recalculate bonuses */
@@ -482,7 +471,7 @@ void do_cmd_takeoff()
 	energy_use = 50;
 
 	/* Take off the item */
-	inven_takeoff(item, 255, FALSE);
+	inven_takeoff(item, 255, false);
 
 	/* Recalculate hitpoint */
 	p_ptr->update |= (PU_HP);
@@ -553,7 +542,7 @@ void do_cmd_drop()
 	energy_use = 50;
 
 	/* Drop (some of) the item */
-	inven_drop(item, amt, p_ptr->py, p_ptr->px, FALSE);
+	inven_drop(item, amt, p_ptr->py, p_ptr->px, false);
 }
 
 
@@ -564,14 +553,14 @@ void do_cmd_destroy()
 {
 	int old_number;
 
-	bool_ force = FALSE;
+	bool force = false;
 
 	char o_name[80];
 
 	char out_val[160];
 
 	/* Hack -- force destruction */
-	if (command_arg > 0) force = TRUE;
+	if (command_arg > 0) force = true;
 
 
 	/* Get an item */
@@ -602,7 +591,7 @@ void do_cmd_destroy()
 	/* Describe the object */
 	old_number = o_ptr->number;
 	o_ptr->number = amt;
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 	o_ptr->number = old_number;
 
 	/* Verify unless quantity given */
@@ -690,13 +679,13 @@ void do_cmd_observe()
 
 	/* Description */
 	char o_name[80];
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Describe */
 	cmsg_format(TERM_L_BLUE, "%s", o_name);
 
 	/* Describe it fully */
-	if (!object_out_desc(o_ptr, NULL, FALSE, TRUE)) msg_print("You see nothing special.");
+	if (!object_out_desc(o_ptr, NULL, false, true)) msg_print("You see nothing special.");
 }
 
 
@@ -761,7 +750,7 @@ void do_cmd_inscribe()
 
 	/* Describe the activity */
 	char o_name[80];
-	object_desc(o_name, o_ptr, TRUE, 3);
+	object_desc(o_name, o_ptr, true, 3);
 
 	/* Message */
 	msg_format("Inscribing %s.", o_name);
@@ -1017,7 +1006,7 @@ void do_cmd_locate()
 	x2 = x1 = panel_col_min;
 
 	/* Show panels until done */
-	while (1)
+	while (true)
 	{
 		/* Describe the location */
 		if ((y2 == y1) && (x2 == x1))
@@ -1335,19 +1324,19 @@ void do_cmd_query_symbol()
 	char buf[128];
 
 
-	bool_ all = FALSE;
+	bool all = false;
 
-	bool_ uniq = FALSE;
+	bool uniq = false;
 
-	bool_ norm = FALSE;
+	bool norm = false;
 
 
-	bool_ name = FALSE;
+	bool name = false;
 
 	char temp[80] = "";
 
 
-	bool_ recall = FALSE;
+	bool recall = false;
 
 	bool (*sort_by)(int,int) = nullptr;
 
@@ -1365,22 +1354,22 @@ void do_cmd_query_symbol()
 	/* Describe */
 	if (sym == KTRL('A'))
 	{
-		all = TRUE;
+		all = true;
 		strcpy(buf, "Full monster list.");
 	}
 	else if (sym == KTRL('U'))
 	{
-		all = uniq = TRUE;
+		all = uniq = true;
 		strcpy(buf, "Unique monster list.");
 	}
 	else if (sym == KTRL('N'))
 	{
-		all = norm = TRUE;
+		all = norm = true;
 		strcpy(buf, "Non-unique monster list.");
 	}
 	else if (sym == KTRL('M'))
 	{
-		all = name = TRUE;
+		all = name = true;
 		if (!get_string("Name:", temp, 70)) return;
 		strnfmt(buf, 128, "Monsters with a name \"%s\"", temp);
 		strlower(temp);
@@ -1476,7 +1465,7 @@ void do_cmd_query_symbol()
 	i = who.size() - 1;
 
 	/* Scan the monster memory */
-	while (1)
+	while (true)
 	{
 		/* Extract a race */
 		auto r_idx = who[i];
@@ -1494,14 +1483,13 @@ void do_cmd_query_symbol()
 		Term_addstr( -1, TERM_WHITE, " [(r)ecall, ESC]");
 
 		/* Interact */
-		while (1)
+		while (true)
 		{
 			/* Recall */
 			if (recall)
 			{
 				/* Save the screen */
-				character_icky = TRUE;
-				Term_save();
+				screen_save_no_flush();
 
 				/* Recall on screen */
 				screen_roff(who[i], 0);
@@ -1517,8 +1505,7 @@ void do_cmd_query_symbol()
 			if (recall)
 			{
 				/* Restore */
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 
 			/* Normal commands */
@@ -1691,9 +1678,9 @@ void cli_add(const char *active, const char *trigger, const char *descr)
 /*
  * Get a string using CLI completion.
  */
-static bool_ get_string_cli(const char *prompt, char *buf, int len)
+static bool get_string_cli(const char *prompt, char *buf, int len)
 {
-	bool_ res;
+	bool res;
 
 
 	/* Paranoia XXX XXX XXX */
@@ -1740,7 +1727,7 @@ void do_cmd_cli()
 	/* Analyse the input */
 	for (cli_ptr = cli_info; cli_ptr->comm; cli_ptr++)
 	{
-		if (!strcmp(buff, cli_ptr->comm))
+		if (equals(buff, cli_ptr->comm))
 		{
 			/* Process the command without keymaps or macros. */
 			command_new = cli_ptr->key;
@@ -1774,20 +1761,14 @@ void do_cmd_cli_help()
 		}
 	}
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display the file contents */
 	show_string(w.c_str(), "Command line help");
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -1797,14 +1778,14 @@ void do_cmd_cli_help()
 void do_cmd_html_dump()
 {
 	char tmp_val[81];
-	bool_ html = TRUE;
+	bool html = true;
 	term_win *save;
 
 	/* Save the screen */
 	save = Term_save_to();
 
 	if (wizard && get_check("WIZARD MODE: Do an help file dump?"))
-		html = FALSE;
+		html = false;
 
 	/* Ask for a file */
 	if (html)

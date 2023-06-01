@@ -4,7 +4,7 @@
 
 #include "z-rand.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <cstdint>
 #include <limits>
 #include <random>
@@ -24,7 +24,7 @@ using rng_t = pcg64_once_insecure;
 /**
  * Reseed the given RNG.
  */
-static void reseed_rng(rng_t *rng, seed_t const &seed)
+static void reseed_rng(rng_t *rng)
 {
 	assert(rng != nullptr);
 	// Create a seed_seq from the seed data.
@@ -43,7 +43,7 @@ static void reseed_rng(rng_t *rng, seed_t const &seed)
 static rng_t *new_seeded_rng(seed_t const &seed)
 {
 	rng_t *rng = new rng_t;
-	reseed_rng(rng, seed);
+	reseed_rng(rng);
 	return rng;
 }
 
@@ -91,7 +91,7 @@ static rng_t *get_current_rng()
 
 void set_quick_rng(seed_t const &seed)
 {
-	reseed_rng(quick_rng(), seed);
+	reseed_rng(quick_rng());
 	current_rng = quick_rng();
 }
 

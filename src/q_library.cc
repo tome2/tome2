@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "game.hpp"
 #include "hooks.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"
 #include "monster_type.hpp"
@@ -13,8 +14,6 @@
 #include "spells4.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
 
@@ -104,7 +103,7 @@ static s16b library_quest_place_random(int minY, int minX, int maxY, int maxX, i
 {
 	int y = randint(maxY - minY + 1) + minY;
 	int x = randint(maxX - minX + 1) + minX;
-	return place_monster_one(y, x, r_idx, 0, TRUE, MSTATUS_ENEMY);
+	return place_monster_one(y, x, r_idx, 0, true, MSTATUS_ENEMY);
 }
 
 static void library_quest_place_nrandom(int minY, int minX, int maxY, int maxX, int r_idx, int n)
@@ -141,17 +140,17 @@ static int library_quest_book_slots_left()
 	}
 }
 
-static bool_ library_quest_book_contains_spell(int spell)
+static bool library_quest_book_contains_spell(int spell)
 {
 	int i;
 	for (i = 1; i <= 3; i++)
 	{
 		if (library_quest_book_get_slot(i) == spell)
 		{
-			return TRUE;
+			return true;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 static void quest_library_finalize_book()
@@ -207,7 +206,7 @@ static void library_quest_print_spells(int first, int current)
 	} else if (slots == 1) {
 		c_prt(TERM_L_BLUE, "The book can hold 1 more spell.", 2, 0);
 	} else {
-		c_prt(TERM_L_BLUE, format("The book can hold %d more spells.", slots), 2, 0);
+		c_prt(TERM_L_BLUE, fmt::format("The book can hold {} more spells.", slots), 2, 0);
 	}
 
 	row = 3;
@@ -237,7 +236,7 @@ static void library_quest_print_spells(int first, int current)
 static void library_quest_fill_book()
 {
 	int width, height, margin, first, current;
-	bool_ done;
+	bool done;
 
 	/* Always start with a cleared book */
 	library_quest_book_set_slot(1, -1);
@@ -252,9 +251,9 @@ static void library_quest_fill_book()
 
 	first = 0;
 	current = 0;
-	done = FALSE;
+	done = false;
 
-	while (done == FALSE)
+	while (done == false)
 	{
 		char ch;
 		int dir, spell_idx;
@@ -271,7 +270,7 @@ static void library_quest_fill_book()
 				flush();
 				done = get_check("Really create the book?");
 			} else {
-				done = TRUE;
+				done = true;
 			}
 		} else if (ch == '\r') {
 			/* TODO: make tree of schools */
@@ -287,7 +286,7 @@ static void library_quest_fill_book()
 		} else if (dir == 8) {
 			current = current - 1;
 		} else if (dir == 6) {
-			if (library_quest_book_contains_spell(spell_idx) == FALSE)
+			if (library_quest_book_contains_spell(spell_idx) == false)
 			{
 				library_quest_add_spell(spell_idx);
 			}
@@ -311,8 +310,10 @@ static void library_quest_fill_book()
 	screen_load();
 }
 
-static bool quest_library_gen_hook(void *, void *, void *)
+static bool quest_library_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
+
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_LIBRARY)
 	{
@@ -323,7 +324,7 @@ static bool quest_library_gen_hook(void *, void *, void *)
 		int y = 2;
 		int x = 2;
 		load_map("library.map", &y, &x);
-		dungeon_flags = DF_NO_GENO;
+		in->dungeon_flags_ref |= DF_NO_GENO;
 	}
 
 	/* Generate monsters */
@@ -418,7 +419,7 @@ static bool quest_library_monster_death_hook(void *, void *, void *)
 	return false;
 }
 
-void quest_library_building(bool_ *paid, bool_ *recreate)
+void quest_library_building(bool *paid, bool *recreate)
 {
 	int status = cquest.status;
 
@@ -432,8 +433,8 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 		msg_print("I need get some stock from my main library, but it is infested with monsters!");
 		msg_print("Please use the side entrance and vanquish the intruders for me.");
 
-		*paid = FALSE;
-		*recreate = TRUE;
+		*paid = false;
+		*recreate = true;
 	}
 
 	/* if quest completed */
@@ -452,7 +453,7 @@ void quest_library_building(bool_ *paid, bool_ *recreate)
 				object_prep(q_ptr, lookup_kind(TV_BOOK, 61));
 				q_ptr->artifact_name = game->player_name;
 				q_ptr->found = OBJ_FOUND_REWARD;
-				inven_carry(q_ptr, FALSE);
+				inven_carry(q_ptr, false);
 			}
 
 			quest_library_finalize_book();

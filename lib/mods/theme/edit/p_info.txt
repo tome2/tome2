@@ -607,7 +607,7 @@ C:a:O:36:6:1d1
 C:a:k:+0:-100:Combat
 C:a:k:+0:-100:Weaponmastery
 C:a:k:+0:-300:Archery
-C:a:k:-1000:-700:Barehand-combat
+C:a:k:+0:-100:Barehand-combat
 C:a:k:+0:-200:Spirituality
 C:a:k:+1000:+300:Possession
 C:a:k:+0:+200:Corpse-preservation

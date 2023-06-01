@@ -17,6 +17,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <cassert>
 
@@ -56,16 +57,16 @@ static bool quest_troll_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("trolls.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("trolls.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	for (x = 3; x < xstart; x++)
 		for (y = 3; y < ystart; y++)
 		{
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				m_allow_special[get_tom()] = TRUE;
-				int m_idx = place_monster_one(y, x, get_tom(), 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[get_tom()] = FALSE;
+				m_allow_special[get_tom()] = true;
+				int m_idx = place_monster_one(y, x, get_tom(), 0, false, MSTATUS_ENEMY);
+				m_allow_special[get_tom()] = false;
 
 				if (m_idx)
 				{
@@ -76,7 +77,7 @@ static bool quest_troll_gen_hook(void *, void *, void *)
 
 					m_list[m_idx].mflag |= MFLAG_QUEST;
 
-					a_allow_special[ART_GLAMDRING] = TRUE;
+					a_allow_special[ART_GLAMDRING] = true;
 
 					/* Mega-Hack -- Prepare to make "Glamdring" */
 					object_prep(q_ptr, lookup_kind(TV_SWORD, SV_BROAD_SWORD));
@@ -85,9 +86,9 @@ static bool quest_troll_gen_hook(void *, void *, void *)
 					q_ptr->name1 = ART_GLAMDRING;
 
 					/* Mega-Hack -- Actually create "Glamdring" */
-					apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
+					apply_magic(q_ptr, -1, true, true, true);
 
-					a_allow_special[ART_GLAMDRING] = FALSE;
+					a_allow_special[ART_GLAMDRING] = false;
 
 					/* Get new object */
 					o_idx = o_pop();
@@ -115,7 +116,7 @@ static bool quest_troll_gen_hook(void *, void *, void *)
 		}
 
 	/* Reinitialize the ambush ... hehehe */
-	cquest.data[0] = FALSE;
+	cquest.data[0] = false;
 	return true;
 }
 
@@ -137,7 +138,7 @@ static bool quest_troll_finish_hook(void *, void *in_, void *)
 	quest[*(quest[q_idx].plot)].init();
 
 	del_hook_new(HOOK_QUEST_FINISH, quest_troll_finish_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -162,19 +163,19 @@ static bool quest_troll_death_hook(void *, void *in_, void *)
 		cmsg_print(TERM_YELLOW, "Without Tom, the trolls won't be able to do much.");
 		cquest.status = QUEST_STATUS_COMPLETED;
 		del_hook_new(HOOK_MONSTER_DEATH, quest_troll_death_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 		return false;
 	}
 
 	init_flags = INIT_GET_SIZE;
-	process_dungeon_file("trolls.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("trolls.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	if (cquest.data[0])
 	{
 		return false;
 	}
 
-	cquest.data[0] = TRUE;
+	cquest.data[0] = true;
 
 	msg_print("Oops, seems like an ambush...");
 
@@ -191,7 +192,7 @@ static bool quest_troll_death_hook(void *, void *in_, void *)
 				c_ptr->info &= ~CAVE_SPEC;
 
 				int r_idx = (rand_int(2) == 0) ? get_forest_troll() : get_stone_troll();
-				place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
+				place_monster_one(y, x, r_idx, 0, false, MSTATUS_ENEMY);
 			}
 		}
 	}

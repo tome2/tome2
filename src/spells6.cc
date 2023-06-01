@@ -164,7 +164,7 @@ long get_provided_levels(school_type *school)
 }
 
 struct get_level_school_callback_data {
-	bool_ allow_spell_power;
+	bool allow_spell_power;
 	long bonus;
 	long lvl;
 	long num;
@@ -204,7 +204,7 @@ static bool get_level_school_callback(struct get_level_school_callback_data *dat
 	 * allow use of Spell Power for it to apply. */
 	if (!school->spell_power)
 	{
-		data->allow_spell_power = FALSE;
+		data->allow_spell_power = false;
 	}
 
 	/* Calculate effects of provided levels */
@@ -256,7 +256,7 @@ void get_level_school(spell_type *spell, s32b max, s32b min, s32b *level, bool *
 
 	/* Set up initial state */
 	get_level_school_callback_data data;
-	data.allow_spell_power = TRUE;
+	data.allow_spell_power = true;
 	data.bonus = 0;
 	data.lvl = 0;
 	data.num = 0;

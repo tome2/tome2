@@ -4,9 +4,10 @@
 
 #include "alloc.hpp"
 #include "birther.hpp"
+#include "effect_type.hpp"
 #include "game_edit_data.hpp"
 #include "grid.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "level_marker.hpp"
 #include "messages.hpp"
 #include "player_defs.hpp"
@@ -104,6 +105,16 @@ struct Game {
 	 * Level markers for 'special' levels.
 	 */
 	boost::multi_array<level_marker, 2> level_markers { };
+
+	/**
+	 * Dungeon flags.
+	 */
+	dungeon_flag_set dungeon_flags { };
+
+	/**
+	 * Lasting effects.
+	 */
+	effect_type lasting_effects[128];
 
 	/**
 	 * Generate a special level feeling?

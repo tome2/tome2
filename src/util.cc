@@ -3,7 +3,6 @@
 /* Purpose: Angband utilities -BEN- */
 
 #include "util.hpp"
-#include "util.h"
 
 #include "cli_comm.hpp"
 #include "cmd3.hpp"
@@ -18,21 +17,139 @@
 #include "player_race.hpp"
 #include "player_race_mod.hpp"
 #include "player_type.hpp"
-#include "tables.h"
 #include "tables.hpp"
 #include "timer_type.hpp"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
+#include "z-form.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <chrono>
+#include <cstdio>
+#include <fcntl.h>
+#include <fmt/format.h>
 #include <sstream>
 #include <thread>
 
+#ifdef SET_UID
+#include <pwd.h>
+#endif
+
 using boost::algorithm::iequals;
+using boost::algorithm::equals;
+using boost::algorithm::starts_with;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
+
+
+enum class display_option_t {
+	IMMEDIATE,
+	DELAY,
+};
+
+/*
+ * Read a number at a specific location on the screen
+ *
+ * Allow numbers of any size and save the last keypress.
+ */
+static std::tuple<u32b, char> get_number(u32b def, u32b max, int y, int x, display_option_t display_option)
+{
+	auto display_number = [x, y](u32b i)
+	{
+		prt(fmt::format("{}", i), y, x);
+	};
+
+	/* Player has not typed anything yet */
+	bool no_keys = true;
+
+	/* Begin the input with default */
+	u32b res = def;
+
+	/* Display? */
+	switch (display_option)
+	{
+		case display_option_t::IMMEDIATE:
+			// Show current value immediately
+			display_number(res);
+			break;
+		case display_option_t::DELAY:
+			// Don't show
+			break;
+	}
+
+	/* Get a command count */
+	while (true)
+	{
+		/* Get a new keypress */
+		char key = inkey();
+
+		/* Simple editing (delete or backspace) */
+		if ((key == 0x7F) || (key == KTRL('H')))
+		{
+			/* Override the default */
+			no_keys = false;
+
+			/* Delete a digit */
+			res = res / 10;
+
+			display_number(res);
+		}
+
+		/* Actual numeric data */
+		else if (key >= '0' && key <= '9')
+		{
+			/* Override the default */
+			if (no_keys)
+			{
+				no_keys = false;
+				res = 0;
+			}
+
+			/* Don't overflow */
+			if (((u32b)(0 - 1) - D2I(key)) / 10 < res)
+			{
+				/* Warn */
+				bell();
+
+				/* Limit */
+				res = (max + 1 == 0) ? (u32b)(0 - 1) : max;
+			}
+
+			/* Stop count at maximum */
+			else if (res * 10 + D2I(key) > max)
+			{
+				/* Warn */
+				bell();
+
+				/* Limit */
+				res = max;
+			}
+
+			/* Increase count */
+			else
+			{
+				/* Incorporate that digit */
+				res = res * 10 + D2I(key);
+			}
+
+			/* Show current count */
+			display_number(res);
+		}
+
+		/* Escape cancels */
+		else if (key == ESCAPE)
+		{
+			return { 0, key };
+		}
+
+		/* Exit on "unusable" input */
+		else
+		{
+			return { res, key };
+		}
+	}
+}
+
 
 /*
 * Find a default user name from the system.
@@ -190,7 +307,7 @@ errr path_build(char *buf, int max, const char *path, const char *file)
 	}
 
 	/* Absolute file, on "normal" systems */
-	else if (prefix(file, PATH_SEP) && !streq(PATH_SEP, ""))
+	else if (starts_with(file, PATH_SEP) && !equals(PATH_SEP, ""))
 	{
 		/* Use the file itself */
 		strnfmt(buf, max, "%s", file);
@@ -259,7 +376,7 @@ errr my_fgets(FILE *fff, char *buf, unsigned long n)
 {
 	unsigned long i = 0;
 
-	while (TRUE)
+	while (true)
 	{
 		int c = fgetc(fff);
 
@@ -567,15 +684,6 @@ errr fd_close(int fd)
 */
 
 
-/*
-* Move the cursor
-*/
-void move_cursor(int row, int col)
-{
-	Term_gotoxy(col, row);
-}
-
-
 
 /*
 * Convert a decimal to a single digit octal number
@@ -619,7 +727,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
 	const char *str = *strptr;
-	bool_ mod_status[MAX_MACRO_MOD];
+	bool mod_status[MAX_MACRO_MOD];
 
 	int i, len = 0;
 	int shiftstatus = 0;
@@ -629,11 +737,11 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 		return;
 
 	for (i = 0; macro_modifier_chr[i]; i++)
-		mod_status[i] = FALSE;
+		mod_status[i] = false;
 	str++;
 
 	/* Examine modifier keys */
-	while (1)
+	while (true)
 	{
 		for (i = 0; macro_modifier_chr[i]; i++)
 		{
@@ -643,14 +751,20 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 		}
 		if (!macro_modifier_chr[i]) break;
 		str += len;
-		mod_status[i] = TRUE;
+		mod_status[i] = true;
 		if ('S' == macro_modifier_chr[i])
 			shiftstatus = 1;
 	}
 	for (i = 0; i < max_macrotrigger; i++)
 	{
 		len = strlen(macro_trigger_name[i]);
-		if (iequals(str, macro_trigger_name[i]) && ']' == str[len])
+		char tstr[34];
+		memset(tstr,'\0',sizeof(tstr));
+		strncpy(tstr,str,32); // assume the keycode isn't longer than 32
+		if(strlen(tstr) > 0) { // assuming we actually copied something, trim of the ] at the end.
+			tstr[strlen(tstr)-1]='\0';
+		}
+		if (iequals(tstr, macro_trigger_name[i]) && ']' == str[len])
 		{
 			/* a trigger name found */
 			break;
@@ -701,8 +815,7 @@ static void trigger_text_to_ascii(char **bufptr, const char **strptr)
 	*s++ = (char)13;
 
 	*bufptr = s;
-	*strptr = str;  /* where **strptr == ']' */
-	return;
+	*strptr = str;
 }
 
 
@@ -838,7 +951,7 @@ void text_to_ascii(char *buf, const char *str)
 }
 
 
-static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
+static bool trigger_ascii_to_text(char **bufptr, const char **strptr)
 {
 	char *s = *bufptr;
 	const char *str = *strptr;
@@ -847,7 +960,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 	const char *tmp;
 
 	if (macro_template == NULL)
-		return FALSE;
+		return false;
 
 	*s++ = '\\';
 	*s++ = '[';
@@ -874,11 +987,11 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 			key_code[j] = '\0';
 			break;
 		default:
-			if (ch != *str) return FALSE;
+			if (ch != *str) return false;
 			str++;
 		}
 	}
-	if (*str++ != (char)13) return FALSE;
+	if (*str++ != (char)13) return false;
 
 	for (i = 0; i < max_macrotrigger; i++)
 	{
@@ -887,7 +1000,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 			break;
 	}
 	if (i == max_macrotrigger)
-		return FALSE;
+		return false;
 
 	tmp = macro_trigger_name[i];
 	while (*tmp) *s++ = *tmp++;
@@ -896,7 +1009,7 @@ static bool_ trigger_ascii_to_text(char **bufptr, const char **strptr)
 
 	*bufptr = s;
 	*strptr = str;
-	return TRUE;
+	return true;
 }
 
 
@@ -1005,7 +1118,7 @@ void ascii_to_text(char *buf, const char *str)
 /*
 * Determine if any macros have ever started with a given character.
 */
-static bool_ macro__use[256];
+static bool macro__use[256];
 
 
 /*
@@ -1025,7 +1138,7 @@ int macro_find_exact(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not match the pattern */
-		if (!streq(macro__pat[i], pat)) continue;
+		if (!equals(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1053,7 +1166,7 @@ static int macro_find_check(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not contain the pattern */
-		if (!prefix(macro__pat[i], pat)) continue;
+		if (!starts_with(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1081,10 +1194,10 @@ static int macro_find_maybe(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which do not contain the pattern */
-		if (!prefix(macro__pat[i], pat)) continue;
+		if (!starts_with(macro__pat[i], pat)) continue;
 
 		/* Skip macros which exactly match the pattern XXX XXX */
-		if (streq(macro__pat[i], pat)) continue;
+		if (equals(macro__pat[i], pat)) continue;
 
 		/* Found one */
 		return (i);
@@ -1112,7 +1225,7 @@ static int macro_find_ready(const char *pat)
 	for (i = 0; i < macro__num; ++i)
 	{
 		/* Skip macros which are not contained by the pattern */
-		if (!prefix(pat, macro__pat[i])) continue;
+		if (!starts_with(pat, macro__pat[i])) continue;
 
 		/* Obtain the length of this macro */
 		t = strlen(macro__pat[i]);
@@ -1177,7 +1290,7 @@ errr macro_add(const char *pat, const char *act)
 	macro__act[n] = strdup(act);
 
 	/* Efficiency */
-	macro__use[(byte)(pat[0])] = TRUE;
+	macro__use[(byte)(pat[0])] = true;
 
 	/* Success */
 	return (0);
@@ -1188,7 +1301,7 @@ errr macro_add(const char *pat, const char *act)
 /*
 * Local "need flush" variable
 */
-static bool_ flush_later = FALSE;
+static bool flush_later = false;
 
 
 /*
@@ -1196,14 +1309,14 @@ static bool_ flush_later = FALSE;
 *
 * Do not match any macros until "ascii 30" is found.
 */
-static bool_ parse_macro = FALSE;
+static bool parse_macro = false;
 
 /*
 * Local variable -- we are inside a "macro trigger"
 *
 * Strip all keypresses until a low ascii value is found.
 */
-static bool_ parse_under = FALSE;
+static bool parse_under = false;
 
 
 /*
@@ -1216,7 +1329,7 @@ static bool_ parse_under = FALSE;
 void flush()
 {
 	/* Do it later */
-	flush_later = TRUE;
+	flush_later = true;
 }
 
 
@@ -1282,11 +1395,11 @@ static char inkey_aux()
 
 
 	/* Wait for a keypress */
-	(Term_inkey(&ch, TRUE, TRUE));
+	Term_inkey(&ch, true, true);
 
 
 	/* End "macro action" */
-	if (ch == 30) parse_macro = FALSE;
+	if (ch == 30) parse_macro = false;
 
 	/* Inside "macro action" */
 	if (ch == 30) return (ch);
@@ -1311,7 +1424,7 @@ static char inkey_aux()
 
 
 	/* Wait for a macro, or a timeout */
-	while (TRUE)
+	while (true)
 	{
 		/* Check for pending macro */
 		k = macro_find_maybe(buf);
@@ -1320,7 +1433,7 @@ static char inkey_aux()
 		if (k < 0) break;
 
 		/* Check for (and remove) a pending key */
-		if (0 == Term_inkey(&ch, FALSE, TRUE))
+		if (0 == Term_inkey(&ch, false, true))
 		{
 			/* Append the key */
 			buf[p++] = ch;
@@ -1359,7 +1472,7 @@ static char inkey_aux()
 		}
 
 		/* Wait for (and remove) a pending key */
-		Term_inkey(&ch, TRUE, TRUE);
+		Term_inkey(&ch, true, true);
 
 		/* Return the key */
 		return (ch);
@@ -1381,7 +1494,7 @@ static char inkey_aux()
 
 
 	/* Begin "macro action" */
-	parse_macro = TRUE;
+	parse_macro = true;
 
 	/* Push the "end of macro action" key */
 	if (Term_key_push(30)) return (0);
@@ -1416,32 +1529,32 @@ static char inkey_aux()
 */
 static const char *inkey_next = NULL;
 
-bool_ inkey_flag = FALSE;
+bool inkey_flag = false;
 
 
 /*
 * Get a keypress from the user.
 *
 * This function recognizes a few "global parameters".  These are variables
-* which, if set to TRUE before calling this function, will have an effect
-* on this function, and which are always reset to FALSE by this function
+* which, if set to true before calling this function, will have an effect
+* on this function, and which are always reset to false by this function
 * before this function returns.  Thus they function just like normal
 * parameters, except that most calls to this function can ignore them.
 *
-* If "inkey_scan" is TRUE, then we will immediately return "zero" if no
+* If "inkey_scan" is true, then we will immediately return "zero" if no
 * keypress is available, instead of waiting for a keypress.
 *
-* If "inkey_base" is TRUE, then all macro processing will be bypassed.
-* If "inkey_base" and "inkey_scan" are both TRUE, then this function will
+* If "inkey_base" is true, then all macro processing will be bypassed.
+* If "inkey_base" and "inkey_scan" are both true, then this function will
 * not return immediately, but will wait for a keypress for as long as the
 * normal macro matching code would, allowing the direct entry of macro
 * triggers.  The "inkey_base" flag is extremely dangerous!
 *
-* If "inkey_flag" is TRUE, then we will assume that we are waiting for a
+* If "inkey_flag" is true, then we will assume that we are waiting for a
 * normal command, and we will only show the cursor if "hilite_player" is
-* TRUE (or if the player is in a store), instead of always showing the
+* true (or if the player is in a store), instead of always showing the
 * cursor.  The various "main-xxx.c" files should avoid saving the game
-* in response to a "menu item" request unless "inkey_flag" is TRUE, to
+* in response to a "menu item" request unless "inkey_flag" is true, to
 * prevent savefile corruption.
 *
 * If we are waiting for a keypress, and no keypress is ready, then we will
@@ -1473,30 +1586,20 @@ bool_ inkey_flag = FALSE;
 *
 * Hack -- Note the use of "inkey_next" to allow "keymaps" to be processed.
 */
-static char inkey_real(bool_ inkey_scan)
+static char inkey_real(bool inkey_scan)
 {
-	int v;
-
-	char kk;
-
-	char ch = 0;
-
-	bool_ done = FALSE;
-
-	term *old = Term;
-
 	/* Hack -- Use the "inkey_next" pointer */
 	if (inkey_next && *inkey_next)
 	{
 		/* Get next character, and advance */
-		ch = *inkey_next++;
+		char ch = *inkey_next++;
 
 		/* Cancel the various "global parameters" */
-		inkey_base = inkey_flag = inkey_scan = FALSE;
+		inkey_base = inkey_flag = inkey_scan = false;
 
 		/* Accept result */
 		macro_recorder_add(ch);
-		return (ch);
+		return ch;
 	}
 
 	/* Forget pointer */
@@ -1504,166 +1607,158 @@ static char inkey_real(bool_ inkey_scan)
 
 
 	/* Access cursor state */
-	Term_get_cursor(&v);
+	char ch = '\0';
+	Term_with_saved_cursor_visbility([&ch, &inkey_scan]() {
 
-	/* Show the cursor if waiting, except sometimes in "command" mode */
-	if (!inkey_scan && (!inkey_flag || options->hilite_player || character_icky))
-	{
-		/* Show the cursor */
-		Term_set_cursor(1);
-	}
-
-
-	/* Hack -- Activate main screen */
-	Term_activate(angband_term[0]);
-
-
-	/* Get a key */
-	while (!ch)
-	{
-		/* Hack -- Handle "inkey_scan" */
-		if (!inkey_base && inkey_scan &&
-		                (0 != Term_inkey(&kk, FALSE, FALSE)))
+		/* Show the cursor if waiting, except sometimes in "command" mode */
+		if (!inkey_scan && (!inkey_flag || options->hilite_player || character_icky))
 		{
-			break;
+			Term_show_cursor();
 		}
 
-
-		/* Hack -- Flush output once when no key ready */
-		if (!done && (0 != Term_inkey(&kk, FALSE, FALSE)))
-		{
-			/* Hack -- activate proper term */
-			Term_activate(old);
-
-			/* Flush output */
-			Term_fresh();
-
-			/* Hack -- activate main screen */
-			Term_activate(angband_term[0]);
-
-			/* Only once */
-			done = TRUE;
-		}
-
-
-		/* Hack -- Handle "inkey_base" */
-		if (inkey_base)
-		{
-			int w = 0;
-
-			/* Wait forever */
-			if (!inkey_scan)
+		/* Hack -- Activate main screen */
+		auto old = Term;
+		Term_with_active(angband_term[0], [&ch, &old, &inkey_scan]() {
+			/* Have with flushed the output? */
+			bool flushed = false;
+			/* Get a key */
+			while (!ch)
 			{
-				/* Wait for (and remove) a pending key */
-				if (0 == Term_inkey(&ch, TRUE, TRUE))
+				char kk;
+
+				/* Hack -- Handle "inkey_scan" */
+				if (!inkey_base && inkey_scan &&
+						(0 != Term_inkey(&kk, false, false)))
 				{
+					break;
+				}
+
+
+				/* Hack -- Flush output once when no key ready */
+				if (!flushed && (0 != Term_inkey(&kk, false, false)))
+				{
+					/* Hack -- activate proper term */
+					Term_with_active(old, []() {
+						Term_fresh();
+					});
+
+					/* Only once */
+					flushed = true;
+				}
+
+
+				/* Hack -- Handle "inkey_base" */
+				if (inkey_base)
+				{
+					int w = 0;
+
+					/* Wait forever */
+					if (!inkey_scan)
+					{
+						/* Wait for (and remove) a pending key */
+						if (0 == Term_inkey(&ch, true, true))
+						{
+							/* Done */
+							break;
+						}
+
+						/* Oops */
+						break;
+					}
+
+					/* Wait */
+					while (true)
+					{
+						/* Check for (and remove) a pending key */
+						if (0 == Term_inkey(&ch, false, true))
+						{
+							/* Done */
+							break;
+						}
+
+						/* No key ready */
+						else
+						{
+							/* Increase "wait" */
+							w += 10;
+
+							/* Excessive delay */
+							if (w >= 100) break;
+
+							/* Delay */
+							sleep_for(milliseconds(w));
+						}
+					}
+
 					/* Done */
 					break;
 				}
 
-				/* Oops */
-				break;
-			}
 
-			/* Wait */
-			while (TRUE)
-			{
-				/* Check for (and remove) a pending key */
-				if (0 == Term_inkey(&ch, FALSE, TRUE))
+				/* Get a key (see above) */
+				ch = inkey_aux();
+
+
+				/* Handle "control-right-bracket" */
+				if ((ch == 29) || ((!options->rogue_like_commands) && (ch == KTRL('D'))))
 				{
-					/* Done */
-					break;
+					/* Strip this key */
+					ch = 0;
+
+					/* Do an html dump */
+					do_cmd_html_dump();
+
+					/* Continue */
+					continue;
 				}
 
-				/* No key ready */
-				else
+
+				/* Treat back-quote as escape */
+				if (ch == '`') ch = ESCAPE;
+
+
+				/* End "macro trigger" */
+				if (parse_under && (ch <= 32))
 				{
-					/* Increase "wait" */
-					w += 10;
+					/* Strip this key */
+					ch = 0;
 
-					/* Excessive delay */
-					if (w >= 100) break;
+					/* End "macro trigger" */
+					parse_under = false;
+				}
 
-					/* Delay */
-					sleep_for(milliseconds(w));
+
+				/* Handle "control-caret" */
+				if (ch == 30)
+				{
+					/* Strip this key */
+					ch = 0;
+				}
+
+				/* Handle "control-underscore" */
+				else if (ch == 31)
+				{
+					/* Strip this key */
+					ch = 0;
+
+					/* Begin "macro trigger" */
+					parse_under = true;
+				}
+
+				/* Inside "macro trigger" */
+				else if (parse_under)
+				{
+					/* Strip this key */
+					ch = 0;
 				}
 			}
 
-			/* Done */
-			break;
-		}
+		});
 
-
-		/* Get a key (see above) */
-		ch = inkey_aux();
-
-
-		/* Handle "control-right-bracket" */
-		if ((ch == 29) || ((!options->rogue_like_commands) && (ch == KTRL('D'))))
-		{
-			/* Strip this key */
-			ch = 0;
-
-			/* Do an html dump */
-			do_cmd_html_dump();
-
-			/* Continue */
-			continue;
-		}
-
-
-		/* Treat back-quote as escape */
-		if (ch == '`') ch = ESCAPE;
-
-
-		/* End "macro trigger" */
-		if (parse_under && (ch <= 32))
-		{
-			/* Strip this key */
-			ch = 0;
-
-			/* End "macro trigger" */
-			parse_under = FALSE;
-		}
-
-
-		/* Handle "control-caret" */
-		if (ch == 30)
-		{
-			/* Strip this key */
-			ch = 0;
-		}
-
-		/* Handle "control-underscore" */
-		else if (ch == 31)
-		{
-			/* Strip this key */
-			ch = 0;
-
-			/* Begin "macro trigger" */
-			parse_under = TRUE;
-		}
-
-		/* Inside "macro trigger" */
-		else if (parse_under)
-		{
-			/* Strip this key */
-			ch = 0;
-		}
-	}
-
-
-	/* Hack -- restore the term */
-	Term_activate(old);
-
-
-	/* Restore the cursor */
-	Term_set_cursor(v);
-
+	});
 
 	/* Cancel the various "global parameters" */
-	inkey_base = inkey_flag = FALSE;
-
+	inkey_base = inkey_flag = false;
 
 	/* Return the keypress */
 	macro_recorder_add(ch);
@@ -1671,11 +1766,11 @@ static char inkey_real(bool_ inkey_scan)
 }
 
 char inkey() {
-	return inkey_real(FALSE);
+	return inkey_real(false);
 }
 
 char inkey_scan() {
-	return inkey_real(TRUE);
+	return inkey_real(true);
 }
 
 /*
@@ -1689,7 +1784,7 @@ static void msg_flush(int x)
 	Term_putstr(x, 0, -1, a, "-more-");
 
 	/* Get an acceptable keypress */
-	while (1)
+	while (true)
 	{
 		int cmd = inkey();
 		if (options->quick_messages) break;
@@ -1784,7 +1879,7 @@ void cmsg_print(byte color, const char *msg)
 		msg_flush(p);
 
 		/* Forget it */
-		msg_flag = FALSE;
+		msg_flag = false;
 
 		/* Reset */
 		p = 0;
@@ -1878,7 +1973,7 @@ void cmsg_print(byte color, const char *msg)
 	}
 
 	/* Remember the message */
-	msg_flag = TRUE;
+	msg_flag = true;
 
 	/* Remember the position */
 	p += n + 1;
@@ -1923,10 +2018,18 @@ void screen_save()
 	/* Save the screen (if legal) */
 	if (screen_depth++ == 0) Term_save();
 
-	/* Increase "icky" depth */
-	character_icky++;
+	/* Enter "icky" mode */
+	character_icky = true;
 }
 
+void screen_save_no_flush()
+{
+	/* Enter "icky" mode */
+	character_icky = true;
+
+	/* Save the screen */
+	Term_save();
+}
 
 /*
  * Load the screen, and decrease the "icky" depth.
@@ -1941,8 +2044,17 @@ void screen_load()
 	/* Load the screen (if legal) */
 	if (--screen_depth == 0) Term_load();
 
-	/* Decrease "icky" depth */
-	character_icky--;
+	/* Leave "icky" mode */
+	character_icky = false;
+}
+
+void screen_load_no_flush()
+{
+	/* Restore the screen */
+	Term_load();
+
+	/* Leave "icky" mode */
+	character_icky = false;
 }
 
 
@@ -2264,9 +2376,6 @@ void text_out_to_file(byte a, const char *str)
 		/* Skip whitespace */
 		while (*s == ' ') s++;
 	}
-
-	/* We are done */
-	return;
 }
 
 
@@ -2330,7 +2439,7 @@ static char complete_buf[100];
 static int complete_command(char *buf, int clen, int mlen)
 {
 	int i, j = 1, max = clen;
-	bool_ gotone = FALSE;
+	bool gotone = false;
 
 	/* Forget the characters after the end of the string. */
 	complete_buf[clen] = '\0';
@@ -2348,7 +2457,7 @@ static int complete_command(char *buf, int clen, int mlen)
 			if (!gotone)
 			{
 				sprintf(buf, "%.*s", mlen, cli_ptr->comm);
-				gotone = TRUE;
+				gotone = true;
 			}
 			/* For later matches, simply notice how much of buf it
 			 * matches. */
@@ -2393,12 +2502,12 @@ bool askfor_aux(std::string *buf, std::size_t max_len)
 * Pressing RETURN right away accepts the default entry.
 * Normal chars clear the default and append the char.
 * Backspace clears the default or deletes the final char.
-* ESCAPE clears the buffer and the window and returns FALSE.
-* RETURN accepts the current buffer contents and returns TRUE.
+* ESCAPE clears the buffer and the window and returns false.
+* RETURN accepts the current buffer contents and returns true.
 */
-static bool_ askfor_aux_complete = FALSE;
+static bool askfor_aux_complete = false;
 
-bool_ askfor_aux(char *buf, int len)
+bool askfor_aux(char *buf, int len)
 {
 	int y, x;
 
@@ -2408,7 +2517,7 @@ bool_ askfor_aux(char *buf, int len)
 
         int wid, hgt;
 
-	bool_ done = FALSE;
+	bool done = false;
 
 
 	/* Locate the cursor */
@@ -2453,13 +2562,13 @@ bool_ askfor_aux(char *buf, int len)
 		{
 		case ESCAPE:
 			k = 0;
-			done = TRUE;
+			done = true;
 			break;
 
 		case '\n':
 		case '\r':
 			k = strlen(buf);
-			done = TRUE;
+			done = true;
 			break;
 
 		case '\t':
@@ -2507,17 +2616,17 @@ bool_ askfor_aux(char *buf, int len)
 	}
 
 	/* Aborted */
-	if (i == ESCAPE) return (FALSE);
+	if (i == ESCAPE) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
-bool_ askfor_aux_with_completion(char *buf, int len)
+bool askfor_aux_with_completion(char *buf, int len)
 {
-	askfor_aux_complete = TRUE;
-	bool_ res = askfor_aux(buf, len);
-	askfor_aux_complete = FALSE;
+	askfor_aux_complete = true;
+	bool res = askfor_aux(buf, len);
+	askfor_aux_complete = false;
 	return res;
 }
 
@@ -2529,11 +2638,11 @@ bool_ askfor_aux_with_completion(char *buf, int len)
 * Note that the initial contents of the string is used as
 * the default response, so be sure to "clear" it if needed.
 *
-* We clear the input, and return FALSE, on "ESCAPE".
+* We clear the input, and return false, on "ESCAPE".
 */
-bool_ get_string(const char *prompt, char *buf, int len)
+bool get_string(const char *prompt, char *buf, int len)
 {
-	bool_ res;
+	bool res;
 
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -2559,7 +2668,7 @@ bool_ get_string(const char *prompt, char *buf, int len)
 *
 * Note that "[y/n]" is appended to the prompt.
 */
-bool_ get_check(const char *prompt)
+bool get_check(const char *prompt)
 {
 	int i;
 
@@ -2575,7 +2684,7 @@ bool_ get_check(const char *prompt)
 	prt(buf, 0, 0);
 
 	/* Get an acceptable answer */
-	while (TRUE)
+	while (true)
 	{
 		i = inkey();
 		if (options->quick_messages) break;
@@ -2588,10 +2697,16 @@ bool_ get_check(const char *prompt)
 	prt("", 0, 0);
 
 	/* Normal negation */
-	if ((i != 'Y') && (i != 'y')) return (FALSE);
+	if ((i != 'Y') && (i != 'y')) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
+}
+
+
+bool get_check(std::string const &prompt)
+{
+	return get_check(prompt.c_str());
 }
 
 
@@ -2600,9 +2715,9 @@ bool_ get_check(const char *prompt)
 *
 * The "prompt" should take the form "Command: "
 *
-* Returns TRUE unless the character is "Escape"
+* Returns true unless the character is "Escape"
 */
-bool_ get_com(const char *prompt, char *command)
+bool get_com(const char *prompt, char *command)
 {
 	/* Paranoia XXX XXX XXX */
 	msg_print(NULL);
@@ -2617,10 +2732,10 @@ bool_ get_com(const char *prompt, char *command)
 	prt("", 0, 0);
 
 	/* Handle "cancel" */
-	if (*command == ESCAPE) return (FALSE);
+	if (*command == ESCAPE) return false;
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
 
@@ -2738,7 +2853,7 @@ char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
 * Mega-Hack -- flag set by do_cmd_{inven,equip}() to allow keymaps in
 * auto-command mode.
 */
-bool_ request_command_inven_mode = FALSE;
+bool request_command_inven_mode = false;
 
 
 /*
@@ -2786,7 +2901,7 @@ void request_command(int shopping)
 
 
 	/* Get command */
-	while (1)
+	while (true)
 	{
 		/* Hack -- auto-commands */
 		if (command_new)
@@ -2807,17 +2922,17 @@ void request_command(int shopping)
 			}
 
 			/* Mega-Hack -- turn off this flag immediately */
-			request_command_inven_mode = FALSE;
+			request_command_inven_mode = false;
 		}
 
 		/* Get a keypress in "command" mode */
 		else
 		{
 			/* Hack -- no flush needed */
-			msg_flag = FALSE;
+			msg_flag = false;
 
 			/* Activate "command mode" */
-			inkey_flag = TRUE;
+			inkey_flag = true;
 
 			/* Get a command */
 			cmd = inkey();
@@ -2832,58 +2947,9 @@ void request_command(int shopping)
 		{
 			int old_arg = command_arg;
 
-			/* Reset */
-			command_arg = 0;
-
-			/* Begin the input */
 			prt("Count: ", 0, 0);
-
-			/* Get a command count */
-			while (1)
-			{
-				/* Get a new keypress */
-				cmd = inkey();
-
-				/* Simple editing (delete or backspace) */
-				if ((cmd == 0x7F) || (cmd == KTRL('H')))
-				{
-					/* Delete a digit */
-					command_arg = command_arg / 10;
-
-					/* Show current count */
-					prt(format("Count: %d", command_arg), 0, 0);
-				}
-
-				/* Actual numeric data */
-				else if (cmd >= '0' && cmd <= '9')
-				{
-					/* Stop count at 9999 */
-					if (command_arg >= 1000)
-					{
-						/* Warn */
-						bell();
-
-						/* Limit */
-						command_arg = 9999;
-					}
-
-					/* Increase count */
-					else
-					{
-						/* Incorporate that digit */
-						command_arg = command_arg * 10 + D2I(cmd);
-					}
-
-					/* Show current count */
-					prt(format("Count: %d", command_arg), 0, 0);
-				}
-
-				/* Exit on "unusable" input */
-				else
-				{
-					break;
-				}
-			}
+			std::tie(command_arg, cmd) =
+				get_number(0, 9999, 0, 7, display_option_t::DELAY);
 
 			/* Hack -- Handle "zero" */
 			if (command_arg == 0)
@@ -2892,7 +2958,7 @@ void request_command(int shopping)
 				command_arg = 99;
 
 				/* Show current count */
-				prt(format("Count: %d", command_arg), 0, 0);
+				prt(fmt::format("Count: {}", command_arg), 0, 0);
 			}
 
 			/* Hack -- Handle "old_arg" */
@@ -2902,14 +2968,14 @@ void request_command(int shopping)
 				command_arg = old_arg;
 
 				/* Show current count */
-				prt(format("Count: %d", command_arg), 0, 0);
+				prt(fmt::format("Count: {}", command_arg), 0, 0);
 			}
 
 			/* Hack -- white-space means "enter command now" */
 			if ((cmd == ' ') || (cmd == '\n') || (cmd == '\r'))
 			{
 				/* Get a real command */
-				bool_ temp = get_com("Command: ", &cmd_char);
+				bool temp = get_com("Command: ", &cmd_char);
 				cmd = cmd_char;
 
 				if (!temp)
@@ -3049,7 +3115,7 @@ void request_command(int shopping)
 /*
  * Check a char for "vowel-hood"
  */
-bool_ is_a_vowel(int ch)
+bool is_a_vowel(int ch)
 {
 	switch (ch)
 	{
@@ -3063,10 +3129,10 @@ bool_ is_a_vowel(int ch)
 	case 'I':
 	case 'O':
 	case 'U':
-		return (TRUE);
+		return true;
 	}
 
-	return (FALSE);
+	return false;
 }
 
 
@@ -3147,21 +3213,22 @@ void repeat_push(int what)
 }
 
 
-bool_ repeat_pull(int *what)
+bool repeat_pull(int *what)
 {
 	/* All out of keys */
-	if (repeat__idx == repeat__cnt) return (FALSE);
+	if (repeat__idx == repeat__cnt) return false;
 
 	/* Grab the next key, advance */
 	*what = repeat__key[repeat__idx++];
 
 	/* Success */
-	return (TRUE);
+	return true;
 }
 
-void repeat_check()
+void repeat_check(s16b *command_ptr)
 {
-	int what;
+	assert(command_ptr);
+	auto &command_cmd = *command_ptr;
 
 	/* Ignore some commands */
 	if (command_cmd == ESCAPE) return;
@@ -3176,6 +3243,7 @@ void repeat_check()
 		repeat__idx = 0;
 
 		/* Get the command */
+		int what;
 		if (repeat_pull(&what))
 		{
 			/* Save the command */
@@ -3190,115 +3258,16 @@ void repeat_check()
 		repeat__cnt = 0;
 		repeat__idx = 0;
 
-		what = command_cmd;
-
 		/* Save this command */
-		repeat_push(what);
+		repeat_push(command_cmd);
 	}
-}
-
-
-/*
- * Read a number at a specific location on the screen
- *
- * Allow numbers of any size and save the last keypress.
- */
-static u32b get_number(u32b def, u32b max, int y, int x, char *cmd)
-{
-	u32b res = def;
-
-	/* Player has not typed anything yet */
-	bool_ no_keys = TRUE;
-
-	/* Begin the input with default */
-	prt(format("%lu", def), y, x);
-
-	/* Get a command count */
-	while (1)
-	{
-		/* Get a new keypress */
-		*cmd = inkey();
-
-		/* Simple editing (delete or backspace) */
-		if ((*cmd == 0x7F) || (*cmd == KTRL('H')))
-		{
-			/* Override the default */
-			no_keys = FALSE;
-
-			/* Delete a digit */
-			res = res / 10;
-
-			prt(format("%lu", res), y, x);
-		}
-
-		/* Actual numeric data */
-		else if (*cmd >= '0' && *cmd <= '9')
-		{
-			/* Override the default */
-			if (no_keys)
-			{
-				no_keys = FALSE;
-				res = 0;
-			}
-
-			/* Don't overflow */
-			if (((u32b)(0 - 1) - D2I(*cmd)) / 10 < res)
-			{
-				/* Warn */
-				bell();
-
-				/* Limit */
-				res = (max + 1 == 0) ? (u32b)(0 - 1) : max;
-			}
-
-			/* Stop count at maximum */
-			else if (res * 10 + D2I(*cmd) > max)
-			{
-				/* Warn */
-				bell();
-
-				/* Limit */
-				res = max;
-			}
-
-			/* Increase count */
-			else
-			{
-				/* Incorporate that digit */
-				res = res * 10 + D2I(*cmd);
-			}
-
-			/* Show current count */
-			prt(format("%lu", res), y, x);
-		}
-
-		/* Escape cancels */
-		else if (*cmd == ESCAPE)
-		{
-			res = 0;
-			break;
-		}
-
-		/* Exit on "unusable" input */
-		else
-		{
-			break;
-		}
-	}
-
-	return res;
 }
 
 /*
  * Allow the user to select multiple items without pressing '0'
  */
-void get_count(int number, int max)
+s16b get_count(int number, int max)
 {
-	char cmd;
-
-	/* Use the default */
-	command_arg = number;
-
 	/* Hack -- Optional flush */
 	if (options->flush_command)
 	{
@@ -3312,9 +3281,11 @@ void get_count(int number, int max)
 	prt("How many?", 0, 0);
 
 	/* Actually get a number */
-	command_arg = get_number(command_arg, max, 0, 10, &cmd);
+	auto [res, cmd] = get_number(number, max, 0, 10, display_option_t::IMMEDIATE);
 
 	prt("", 0, 0);
+
+	return res;
 }
 
 byte count_bits(u32b array)
@@ -3475,17 +3446,15 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 	char c;
 	int size = static_cast<int>(items.size()); // Convert to int to avoid warnings
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
-	while (TRUE)
+	while (true)
 	{
 		/* Display list */
-		Term_load();
-		Term_save();
+		screen_load_no_flush();
+		screen_save_no_flush();
+
 		prt(ask, 0, 0);
 		for (i = start; (i < size) && (i < start + 20); i++)
 		{
@@ -3534,35 +3503,9 @@ int ask_menu(const char *ask, const std::vector<std::string> &items)
 		}
 	}
 
-	/* Load the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	return ret;
-}
-
-/*
- * Determine if string "t" is a prefix of string "s"
- */
-bool_ prefix(const char *s, const char *t)
-{
-	/* Paranoia */
-	if (!s || !t)
-	{
-		return FALSE;
-	}
-
-	/* Scan "t" */
-	while (*t)
-	{
-		/* Compare content and length */
-		if (*t++ != *s++) return (FALSE);
-	}
-
-	/* Matched, we have a prefix */
-	return (TRUE);
 }
 
 /*

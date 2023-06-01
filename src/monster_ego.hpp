@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_blow.hpp"
 #include "monster_race_flag_set.hpp"
 #include "monster_spell_flag_set.hpp"
@@ -13,7 +13,7 @@
 struct monster_ego
 {
 	const char *name = nullptr;              /* Name */
-	bool_ before = false;                    /* Display ego before or after */
+	bool before = false;                    /* Display ego before or after */
 
 	std::array<monster_blow, 4> blow { };    /* Up to four blows per round */
 	byte blowm[4][2] = {

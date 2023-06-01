@@ -1,7 +1,7 @@
 #pragma once
 
 #include "body.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "object_flag_set.hpp"
 #include "object_proto.hpp"
 #include "player_defs.hpp"
@@ -21,7 +21,7 @@ struct player_race_mod
 	std::string title;
 	std::string description;
 
-	bool_ place = FALSE;                                    /* TRUE = race race modifier, FALSE = Race modifier race */
+	bool place = false;                                    /* true = race race modifier, false = Race modifier race */
 
 	char luck = '\0';                                       /* Luck */
 	s16b mana = 0;                                          /* Mana % */
@@ -30,12 +30,12 @@ struct player_race_mod
 
 	char infra = '\0';                                      /* (+) Infra-vision range */
 
-	u32b choice[2] { };                                     /* Legal race choices */
+	std::array<u32b, 2> choice { };                         /* Legal race choices */
 
-	u32b pclass[2] { };                                     /* Classes allowed */
-	u32b mclass[2] { };                                     /* Classes restricted */
+	std::array<u32b, 2> pclass { };                         /* Classes allowed */
+	std::array<u32b, 2> mclass { };                         /* Classes restricted */
 
-	char body_parts[BODY_MAX] { };                          /* To help to decide what to use when body changing */
+	std::array<char, BODY_MAX> body_parts { };              /* To help to decide what to use when body changing */
 
 	player_race_flag_set flags;
 

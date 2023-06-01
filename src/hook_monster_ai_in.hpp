@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_type_fwd.hpp"
 
 struct hook_monster_ai_in {

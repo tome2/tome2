@@ -1,10 +1,10 @@
 #include "tome/squelch/rule_fwd.hpp"
 #include "tome/squelch/rule.hpp"
 
+#include "jsoncons_helpers.hpp"
 #include "tome/squelch/cursor.hpp"
 #include "tome/squelch/condition.hpp"
 #include "tome/squelch/tree_printer.hpp"
-#include "../angband.h"
 #include "../modules.hpp"
 #include "../object1.hpp"
 #include "../object2.hpp"
@@ -13,6 +13,7 @@
 #include "../tables.hpp"
 #include "../util.hpp"
 #include "../variable.hpp"
+#include "../z-term.hpp"
 
 namespace squelch {
 
@@ -140,41 +141,44 @@ std::shared_ptr<Rule> Rule::parse_rule(jsoncons::json const &rule_json)
 	}
 
 	// Retrieve the attributes
-	char const *rule_name_s = rule_json.get("name").as<char const *>();
-	char const *rule_action_s = rule_json.get("action").as<char const *>();
-	char const *rule_module_s = rule_json.get("module").as<char const *>();
-	if ((!rule_name_s) || (!rule_action_s) || (!rule_module_s))
+	auto maybe_rule_name_s = get_optional<std::string>(rule_json, "name");
+	auto maybe_rule_action_s = get_optional<std::string>(rule_json, "action");
+	auto maybe_rule_module_s = get_optional<std::string>(rule_json, "module");
+	if ((!maybe_rule_name_s) || (!maybe_rule_action_s) || (!maybe_rule_module_s))
 	{
 		msg_print("Rule missing required field(s)");
 		return nullptr;
 	}
+	auto rule_name_s = *maybe_rule_name_s;
+	auto rule_action_s = *maybe_rule_action_s;
+	auto rule_module_s = *maybe_rule_module_s;
 
 	// Convert attributes
 	action_type action;
 	if (!action_mapping().parse(rule_action_s, &action))
 	{
-		msg_format("Invalid rule action '%s'", rule_action_s);
+		msg_format("Invalid rule action '%s'", rule_action_s.c_str());
 		return nullptr;
 	}
 
-	int module_idx = find_module(rule_module_s);
+	int module_idx = find_module(rule_module_s.c_str());
 	if (module_idx < 0)
 	{
 		msg_format("Skipping rule for unrecognized module '%s'",
-			   rule_module_s);
+			   rule_module_s.c_str());
 		return nullptr;
 	}
 
 	// Parse condition
 	std::shared_ptr<Condition> condition =
-		Condition::parse_condition(rule_json.get("condition"));
+		Condition::parse_condition(rule_json.get_with_default<jsoncons::json>("condition", jsoncons::null_type()));
 
 	// Parse rule
 	switch (action)
 	{
 	case action_type::AUTO_INSCRIBE:
 	{
-		auto rule_inscription_j = rule_json.get("inscription");
+		auto rule_inscription_j = rule_json.get_with_default<jsoncons::json>("inscription", jsoncons::null_type());
 
 		if (rule_inscription_j.is_null())
 		{
@@ -221,7 +225,7 @@ void DestroyRule::do_write_tree(TreePrinter *p) const
 bool DestroyRule::do_apply_rule(object_type *o_ptr, int item_idx) const
 {
 	// Must be identified
-	if (object_aware_p(o_ptr) == FALSE)
+	if (object_aware_p(o_ptr) == false)
 	{
 		return false;
 	}

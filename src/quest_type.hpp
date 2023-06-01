@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 #include <string>
 
@@ -9,7 +9,7 @@
  */
 struct quest_type
 {
-	bool_ silent;
+	bool silent;
 
 	char name[40];          /* Quest name */
 

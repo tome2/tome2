@@ -19,6 +19,7 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_ULTRA_GOOD])
 
@@ -136,7 +137,7 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 	if ((dir == STAIRS_DOWN) && (dun_level == 149))
 	{
 		int i;
-		bool_ ultimate = FALSE;
+		bool ultimate = false;
 
 		/* Now look for an ULTIMATE artifact, that is, one imbued with the flame */
 		for (i = INVEN_WIELD; i < INVEN_TOTAL; i++)
@@ -152,7 +153,7 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 
 			if (flags & TR_ULTIMATE)
 			{
-				ultimate = TRUE;
+				ultimate = true;
 				break;
 			}
 		}
@@ -162,7 +163,7 @@ static bool quest_ultra_good_stair_hook(void *, void *in_, void *)
 			cmsg_print(TERM_YELLOW, "It seems the level is protected by an impassable barrier of pure magic.");
 			cmsg_print(TERM_YELLOW, "Only the most powerful magic could remove it. You will need to use");
 			cmsg_print(TERM_YELLOW, "the Flame Imperishable to pass. The source of Eru Iluvatar's own power.");
-			return TRUE;
+			return true;
 		}
 		else
 		{
@@ -218,7 +219,7 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 
 		/* Remove now used hook */
 		del_hook_new(HOOK_MONSTER_DEATH, quest_ultra_good_death_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		/* End plot */
 		*(quest[QUEST_ULTRA_GOOD].plot) = QUEST_NULL;
@@ -236,9 +237,9 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 		object_prep(q_ptr, lookup_kind(TV_JUNK, 255));
 
 		/* Mega-Hack -- Actually create the Flame Imperishable */
-		get_flame_imperishable()->allow_special = TRUE;
-		apply_magic(q_ptr, -1, TRUE, TRUE, TRUE);
-		get_flame_imperishable()->allow_special = FALSE;
+		get_flame_imperishable()->allow_special = true;
+		apply_magic(q_ptr, -1, true, true, true);
+		get_flame_imperishable()->allow_special = false;
 
 		/* Identify it fully */
 		object_aware(q_ptr);
@@ -258,17 +259,17 @@ static bool quest_ultra_good_death_hook(void *, void *in_, void *)
 		{
 			char o_name[200];
 
-			object_desc(o_name, &p_ptr->inventory[INVEN_PACK - 1], FALSE, 0);
+			object_desc(o_name, &p_ptr->inventory[INVEN_PACK - 1], false, 0);
 
 			/* Drop the item */
-			inven_drop(INVEN_PACK - 1, 99, p_ptr->py, p_ptr->px, FALSE);
+			inven_drop(INVEN_PACK - 1, 99, p_ptr->py, p_ptr->px, false);
 
 			cmsg_format(TERM_VIOLET, "You feel the urge to drop your %s to make room in your inventory.", o_name);
 		}
 
 		/* Carry it */
 		cmsg_format(TERM_VIOLET, "You feel the urge to pick up the Flame Imperishable.");
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 	}
 
 	return false;

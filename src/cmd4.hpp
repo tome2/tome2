@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 void macro_recorder_start();
 void macro_recorder_add(char c);
@@ -25,4 +25,4 @@ void do_cmd_checkquest();
 void do_cmd_change_tactic(int i);
 void do_cmd_change_movement(int i);
 void do_cmd_time();
-void do_cmd_options_aux(int page, const char *info, bool_ read_only);
+void do_cmd_options_aux(int page, const char *info, bool read_only);

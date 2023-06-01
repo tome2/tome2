@@ -18,8 +18,10 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <cassert>
+#include <fmt/format.h>
 
 #define cquest (quest[QUEST_HOBBIT])
 
@@ -28,11 +30,10 @@ GENERATE_MONSTER_LOOKUP_FN(get_merton_proudfoot, "Merton Proudfoot, the lost hob
 
 static bool quest_hobbit_town_gen_hook(void *, void *in_, void *)
 {
-	struct hook_wild_gen_in *in = static_cast<struct hook_wild_gen_in *>(in_);
+	auto in = static_cast<struct hook_wild_gen_in const *>(in_);
 	int x = 1, y = 1, tries = 10000;
-	bool_ small = in->small;
 
-	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || (small) || (p_ptr->town_num != 1))
+	if ((turn < (cquest.data[1] + (DAY * 10L))) || (cquest.status > QUEST_STATUS_COMPLETED) || in->small || (p_ptr->town_num != 1))
 	{
 		return false;
 	}
@@ -55,9 +56,9 @@ static bool quest_hobbit_town_gen_hook(void *, void *in_, void *)
 
 	/* Place Melinda */
 	int r_idx = get_melinda_proudfoot();
-	m_allow_special[r_idx] = TRUE;
-	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_ENEMY);
-	m_allow_special[r_idx] = FALSE;
+	m_allow_special[r_idx] = true;
+	place_monster_one(y, x, r_idx, 0, false, MSTATUS_ENEMY);
+	m_allow_special[r_idx] = false;
 
 	return false;
 }
@@ -87,9 +88,9 @@ static bool quest_hobbit_gen_hook(void *, void *, void *)
 
 	/* Place the hobbit */
 	int r_idx = get_merton_proudfoot();
-	m_allow_special[r_idx] = TRUE;
-	place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_FRIEND);
-	m_allow_special[r_idx] = FALSE;
+	m_allow_special[r_idx] = true;
+	place_monster_one(y, x, r_idx, 0, false, MSTATUS_FRIEND);
+	m_allow_special[r_idx] = false;
 
 	return false;
 }
@@ -119,7 +120,7 @@ static bool quest_hobbit_give_hook(void *, void *in_, void *)
 	cquest.status = QUEST_STATUS_COMPLETED;
 
 	del_hook_new(HOOK_GIVE, quest_hobbit_give_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -175,12 +176,12 @@ static bool quest_hobbit_chat_hook(void *, void *in_, void *)
 		object_prep(q_ptr, lookup_kind(TV_ROD, SV_ROD_RECALL));
 		q_ptr->number = 1;
 		q_ptr->found = OBJ_FOUND_REWARD;
-		inven_carry(q_ptr, FALSE);
+		inven_carry(q_ptr, false);
 
 		cquest.status = QUEST_STATUS_FINISHED;
 
 		del_hook_new(HOOK_MON_SPEAK, quest_hobbit_speak_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 		delete_monster_idx(m_idx);
 
 		return true;
@@ -216,7 +217,7 @@ void quest_hobbit_init_hook()
 		cquest.data[1] = turn;
 		if (wizard)
 		{
-			messages.add(format("Hobbit level %d", cquest.data[0]), TERM_BLUE);
+			messages.add(fmt::format("Hobbit level {}", cquest.data[0]), TERM_BLUE);
 		}
 	}
 

@@ -16,6 +16,7 @@
 #include "town_type.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_INVASION])
 
@@ -47,7 +48,7 @@ static bool quest_invasion_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("maeglin.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file("maeglin.map", &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	for (x = 3; x < xstart; x++)
 	{
@@ -89,7 +90,7 @@ static bool quest_invasion_ai_hook(void *, void *in_, void *out_)
 
 			cmsg_print(TERM_YELLOW, "Maeglin found the way to Gondolin! All hope is lost now!");
 			cquest.status = QUEST_STATUS_FAILED;
-			town_info[2].destroyed = TRUE;
+			town_info[2].destroyed = true;
 			return false;
 		}
 
@@ -111,14 +112,14 @@ static bool quest_invasion_ai_hook(void *, void *in_, void *out_)
 
 static bool quest_invasion_turn_hook(void *, void *, void *)
 {
-	if (cquest.status != QUEST_STATUS_UNTAKEN) return (FALSE);
-	if (p_ptr->lev < 45) return (FALSE);
+	if (cquest.status != QUEST_STATUS_UNTAKEN) return false;
+	if (p_ptr->lev < 45) return false;
 
 	/* Wait until the end of the current quest */
-	if (p_ptr->inside_quest) return ( FALSE);
+	if (p_ptr->inside_quest) return ( false);
 
 	/* Wait until the end of the astral mode */
-	if (p_ptr->astral) return ( FALSE);
+	if (p_ptr->astral) return ( false);
 
 	/* Ok give the quest */
 	cmsg_print(TERM_YELLOW, "A Thunderlord appears in front of you and says:");
@@ -130,7 +131,7 @@ static bool quest_invasion_turn_hook(void *, void *, void *)
 
 	quest_invasion_init_hook();
 	del_hook_new(HOOK_END_TURN, quest_invasion_turn_hook);
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return false;
 }
@@ -168,7 +169,7 @@ static bool quest_invasion_death_hook(void *, void *in_, void *)
 		cquest.status = QUEST_STATUS_COMPLETED;
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_invasion_death_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		return false;
 	}
@@ -180,9 +181,9 @@ static bool quest_invasion_stair_hook(void *, void *in_, void *)
 {
 	struct hook_stair_in *in = static_cast<struct hook_stair_in *>(in_);
 
-	if (p_ptr->inside_quest != QUEST_INVASION) return FALSE;
+	if (p_ptr->inside_quest != QUEST_INVASION) return false;
 
-	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS) return TRUE;
+	if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS) return true;
 
 	if (in->direction == STAIRS_UP)
 	{
@@ -205,13 +206,13 @@ static bool quest_invasion_stair_hook(void *, void *in_, void *)
 			/* Flush input */
 			flush();
 
-			if (!get_check("Really abandon the quest?")) return TRUE;
+			if (!get_check("Really abandon the quest?")) return true;
 			cmsg_print(TERM_YELLOW, "You flee away from Maeglin and his army...");
 			cquest.status = QUEST_STATUS_FAILED;
-			town_info[2].destroyed = TRUE;
+			town_info[2].destroyed = true;
 		}
 		del_hook_new(HOOK_STAIR, quest_invasion_stair_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 		return false;
 	}
 

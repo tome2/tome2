@@ -10,6 +10,7 @@
 #include "help.hpp"
 
 #include "cave_type.hpp"
+#include "defines.hpp"
 #include "files.hpp"
 #include "hook_get_in.hpp"
 #include "hook_identify_in.hpp"
@@ -22,6 +23,11 @@
 #include "skills.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
+
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
 
 #define DESC_MAX 14
 #define TRIGGERED_HELP_MAX 16
@@ -656,7 +662,7 @@ static context_help_type *find_context_help(context_help_type table[], const cha
 			return NULL; /* End of list */
 		}
 
-		if (streq(key, context_help->key))
+		if (equals(key, context_help->key))
 		{
 			return context_help;
 		}

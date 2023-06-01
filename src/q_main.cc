@@ -12,6 +12,7 @@
 #include "tables.hpp"
 #include "util.hpp"
 #include "variable.hpp"
+#include "z-term.hpp"
 
 #include <cassert>
 
@@ -97,7 +98,7 @@ static bool quest_morgoth_hook(void *, void *, void *)
 
 		/* Continue the plot(maybe) */
 		del_hook_new(HOOK_MONSTER_DEATH, quest_morgoth_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		/* Either ultra good if the one Ring is destroyed, or ultra evil if used */
 		if (quest[QUEST_ONE].status == QUEST_STATUS_FINISHED)
@@ -158,7 +159,7 @@ static bool quest_sauron_hook(void *, void *, void *)
 		*(quest[QUEST_SAURON].plot) = QUEST_MORGOTH;
 		quest_morgoth_init_hook();
 
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 	}
 
 	return false;
@@ -215,7 +216,7 @@ static bool quest_necro_hook(void *, void *, void *)
 		quest[*(quest[QUEST_NECRO].plot)].init();
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_necro_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 	}
 
 	return false;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "spell_type_fwd.hpp"
 #include "timer_type_fwd.hpp"
 

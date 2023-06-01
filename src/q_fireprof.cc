@@ -5,6 +5,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "hook_get_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "lua_bind.hpp"
 #include "object1.hpp"
@@ -16,6 +17,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <cassert>
 #include <fmt/format.h>
@@ -88,7 +90,7 @@ static object_filter_t const &item_tester_hook_proofable()
 /*
  * This function makes sure the player has enough 'points' left to fireproof stuff.
  */
-static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
+static bool fireproof_enough_points(object_type *o_ptr, int *stack)
 {
 	int item_value;
 
@@ -117,14 +119,14 @@ static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
 		item_value = FIREPROOF_SCROLL_POINTS * (*stack);
 		break;
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 
 	/* do we have enough points? */
 	if (item_value > get_item_points_remaining())
 	{
 		msg_print("I do not have enough fireproofing material for that.");
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -138,10 +140,10 @@ static bool_ fireproof_enough_points(object_type *o_ptr, int *stack)
 		cquest.status = QUEST_STATUS_REWARDED;
 	}
 
-	return TRUE;
+	return true;
 }
 
-static bool_ fireproof()
+static bool fireproof()
 {
 	int item;
 	if (!get_item(&item,
@@ -150,7 +152,7 @@ static bool_ fireproof()
 		      USE_INVEN,
 		      item_tester_hook_proofable()))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* get the object type from the number */
@@ -160,12 +162,12 @@ static bool_ fireproof()
 	int stack = 0;
 	if (!fireproof_enough_points(obj2, &stack))
 	{
-		return FALSE;
+		return false;
 	}
 
 	/* Do the actual fireproofing */
 	{
-		bool_ carry_it;
+		bool carry_it;
 		object_type *obj3;
 		object_type obj_forge;
 		s32b oldpval, oldpval2, oldpval3;
@@ -184,7 +186,7 @@ static bool_ fireproof()
 			obj3 = &obj_forge;
 
 			/* we'll need to add this to the inventory after fireproofing */
-			carry_it = TRUE;
+			carry_it = true;
 		}
 		else
 		{
@@ -192,7 +194,7 @@ static bool_ fireproof()
 			obj3 = obj2;
 
 			/* we'll be dealing this while it's still in the inventory */
-			carry_it = FALSE;
+			carry_it = false;
 		}
 
 		/* make it fireproof */
@@ -203,27 +205,27 @@ static bool_ fireproof()
 		oldpval = obj3->pval;
 		oldpval2 = obj3->pval2;
 		oldpval3 = obj3->pval3;
-		apply_magic(obj3, -1, FALSE, FALSE, FALSE);
+		apply_magic(obj3, -1, false, false, false);
 		obj3->pval = oldpval;
 		obj3->pval2 = oldpval2;
 		obj3->pval3 = oldpval3;
 
 		/* put it in the inventory if it's only part of a stack */
-		if (carry_it == TRUE)
+		if (carry_it == true)
 		{
-			inven_carry(obj3, TRUE);
+			inven_carry(obj3, true);
 		}
 
 		/* id and notice it */
 		object_aware(obj3);
 		object_known(obj3);
 
-		return TRUE;
+		return true;
 	}
 }
 
 
-void quest_fireproof_building(bool_ *paid, bool_ *recreate)
+void quest_fireproof_building(bool *paid, bool *recreate)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
 	int num_books, num_staff, num_scroll;
@@ -244,8 +246,8 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 		msg_print("fetch it myself. Please bring it back to me. You can find it north of here.");
 		msg_print("Be careful with it, it's fragile and might be destroyed easily.");
 
-		*paid = FALSE;
-		*recreate = TRUE;
+		*paid = false;
+		*recreate = true;
 	}
 
 	/* if quest completed (item was retrieved) */
@@ -277,8 +279,8 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 			/* take item */
 			inc_stack_size_ex(item_idx, -1, OPTIMIZE, NO_DESCRIBE);
 
-			msg_print(format("Great! Let me fireproof some of your items in thanks. I can do %d books, ", num_books));
-			msg_print(format("%d staves, or %d scrolls.", num_staff, num_scroll));
+			msg_print(fmt::format("Great! Let me fireproof some of your items in thanks. I can do {} books, ", num_books));
+			msg_print(fmt::format("{} staves, or {} scrolls.", num_staff, num_scroll));
 
 			/* how many items to proof? */
 			items = get_item_points_remaining();
@@ -289,7 +291,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 				ret = fireproof();
 
 				/* don't loop the fireproof if there's nothing to fireproof */
-				if (ret == FALSE)
+				if (ret == false)
 				{
 					break;
 				}
@@ -332,7 +334,7 @@ void quest_fireproof_building(bool_ *paid, bool_ *recreate)
 			int ret = fireproof();
 
 			/* don't loop the fireproof if there's nothing to fireproof */
-			if (ret == FALSE)
+			if (ret == false)
 			{
 				break;
 			}
@@ -390,7 +392,7 @@ static bool fireproof_stair_hook(void *, void *, void *)
 	}
 	else
 	{
-		bool_ ret;
+		bool ret;
 
 		if (cave[p_ptr->py][p_ptr->px].feat != FEAT_LESS)
 		{
@@ -404,7 +406,7 @@ static bool fireproof_stair_hook(void *, void *, void *)
 		ret = get_check("Really abandon the quest?");
 
 		/* if yes, then */
-		if  (ret == TRUE)
+		if  (ret == true)
 		{
 			/* fail the quest */
 			cquest.status = QUEST_STATUS_FAILED;
@@ -458,9 +460,10 @@ std::string quest_fireproof_describe()
 	return w.str();
 }
 
-static bool fireproof_gen_hook(void *, void *, void *)
+static bool fireproof_gen_hook(void *, void *in_, void *)
 {
 	fireproof_settings const *settings = fireproof_get_settings();
+	auto in = static_cast<hook_quest_gen_in *>(in_);
 
 	/* Only if player doing this quest */
 	if (p_ptr->inside_quest != QUEST_FIREPROOF)
@@ -478,7 +481,7 @@ static bool fireproof_gen_hook(void *, void *, void *)
 		}
 
 		/* no teleport */
-		dungeon_flags = DF_NO_TELEPORT;
+		in->dungeon_flags_ref |= DF_NO_TELEPORT;
 
 		/* create quest item */
 		{

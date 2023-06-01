@@ -48,12 +48,11 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wilderness_map.hpp"
 #include "wilderness_type_info.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <cassert>
@@ -296,7 +295,7 @@ static void prt_stat(int stat)
  */
 static void prt_title()
 {
-	const char *p = "";
+	std::string p;
 
 	/* Mimic shape */
 	if (p_ptr->mimic_form)
@@ -329,7 +328,7 @@ static void prt_title()
 
 	}
 
-	prt_field(p, ROW_TITLE, COL_TITLE);
+	prt_field(p.c_str(), ROW_TITLE, COL_TITLE);
 }
 
 
@@ -541,6 +540,7 @@ static void prt_depth(int row, int col)
 {
 	auto const &d_info = game->edit_data.d_info;
 	auto const &wf_info = game->edit_data.wf_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	char depths[32];
 	auto d_ptr = &d_info[dungeon_type];
@@ -1090,25 +1090,17 @@ static void fixup_display(u32b mask, F callback)
 {
 	for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
-		term *old = Term;
-
 		/* No window */
 		if (!angband_term[j]) continue;
 
 		/* No relevant flags */
 		if (!(window_flag[j] & mask)) continue;
 
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Apply fixup callback */
-		callback();
-
-		/* Fresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		/* Apply callback */
+		Term_with_active(angband_term[j], [&callback]() {
+			callback();
+			Term_fresh();
+		});
 	}
 }
 
@@ -1217,7 +1209,7 @@ static void fix_object()
 
 		/* Display object info */
 		if (tracked_object &&
-			!object_out_desc(tracked_object, NULL, FALSE, FALSE))
+			!object_out_desc(tracked_object, NULL, false, false))
 		{
 			text_out("You see nothing special.");
 		}
@@ -1377,7 +1369,7 @@ static void calc_powers_corruption()
 
 
 /* Ugly hack */
-bool_ calc_powers_silent = FALSE;
+bool calc_powers_silent = false;
 
 /* Add in powers */
 static void add_powers(std::vector<s16b> const &powers)
@@ -1489,7 +1481,7 @@ static void calc_powers()
 		}
 	}
 
-	calc_powers_silent = FALSE;
+	calc_powers_silent = false;
 }
 
 
@@ -1586,7 +1578,7 @@ static void calc_mana()
 	if (forbid_gloves())
 	{
 		/* Assume player is not encumbered by gloves */
-		p_ptr->cumber_glove = FALSE;
+		p_ptr->cumber_glove = false;
 
 		/* Get the gloves */
 		object_type *o_ptr = &p_ptr->inventory[INVEN_HANDS];
@@ -1601,7 +1593,7 @@ static void calc_mana()
 			!(flags & TR_SPELL_CONTAIN))
 		{
 			/* Encumbered */
-			p_ptr->cumber_glove = TRUE;
+			p_ptr->cumber_glove = true;
 
 			/* Reduce mana */
 			msp = (3 * msp) / 4;
@@ -1615,7 +1607,7 @@ static void calc_mana()
 	}
 
 	/* Assume player not encumbered by armor */
-	p_ptr->cumber_armor = FALSE;
+	p_ptr->cumber_armor = false;
 
 	/* Weigh the armor */
 	cur_wgt = 0;
@@ -1633,7 +1625,7 @@ static void calc_mana()
 	if (((cur_wgt - max_wgt) / 10) > 0)
 	{
 		/* Encumbered */
-		p_ptr->cumber_armor = TRUE;
+		p_ptr->cumber_armor = true;
 
 		/* Reduce mana */
 		msp -= ((cur_wgt - max_wgt) / 10);
@@ -1946,13 +1938,24 @@ void calc_wield_monster()
 		auto r_ptr = &r_info[o_ptr->pval];
 
 		if (r_ptr->flags & RF_INVISIBLE)
+		{
 			p_ptr->invis += 20;
+		}
+
 		if (r_ptr->flags & RF_REFLECTING)
-			p_ptr->reflect = TRUE;
+		{
+			p_ptr->reflect = true;
+		}
+
 		if (r_ptr->flags & RF_CAN_FLY)
-			p_ptr->ffall = TRUE;
+		{
+			p_ptr->ffall = true;
+		}
+
 		if (r_ptr->flags & RF_AQUATIC)
-			p_ptr->water_breath = TRUE;
+		{
+			p_ptr->water_breath = true;
+		}
 	}
 }
 
@@ -2077,7 +2080,7 @@ void calc_body()
 		if ((!p_ptr->body_parts[i]) && p_ptr->inventory[i + INVEN_WIELD].k_ptr)
 		{
 			/* Drop it NOW ! */
-			inven_takeoff(i + INVEN_WIELD, 255, TRUE);
+			inven_takeoff(i + INVEN_WIELD, 255, true);
 		}
 	}
 }
@@ -2097,36 +2100,36 @@ void calc_body_bonus()
 
 	if (p_ptr->disembodied)
 	{
-		p_ptr->wraith_form = TRUE;
+		p_ptr->wraith_form = true;
 		return;
 	}
 
 	p_ptr->ac += r_ptr->ac;
 	p_ptr->pspeed = r_ptr->speed;
 
-	if (r_ptr->flags & RF_NEVER_MOVE) p_ptr->immovable = TRUE;
+	if (r_ptr->flags & RF_NEVER_MOVE) p_ptr->immovable = true;
 	if (r_ptr->flags & RF_STUPID) p_ptr->stat_add[A_INT] -= 1;
 	if (r_ptr->flags & RF_SMART) p_ptr->stat_add[A_INT] += 1;
-	if (r_ptr->flags & RF_REFLECTING) p_ptr->reflect = TRUE;
+	if (r_ptr->flags & RF_REFLECTING) p_ptr->reflect = true;
 	if (r_ptr->flags & RF_INVISIBLE) p_ptr->invis += 20;
-	if (r_ptr->flags & RF_REGENERATE) p_ptr->regenerate = TRUE;
-	if (r_ptr->flags & RF_AURA_FIRE) p_ptr->sh_fire = TRUE;
-	if (r_ptr->flags & RF_AURA_ELEC) p_ptr->sh_elec = TRUE;
-	if (r_ptr->flags & RF_PASS_WALL) p_ptr->wraith_form = TRUE;
-	if (r_ptr->flags & RF_SUSCEP_FIRE) p_ptr->sensible_fire = TRUE;
-	if (r_ptr->flags & RF_IM_ACID) p_ptr->resist_acid = TRUE;
-	if (r_ptr->flags & RF_IM_ELEC) p_ptr->resist_elec = TRUE;
-	if (r_ptr->flags & RF_IM_FIRE) p_ptr->resist_fire = TRUE;
-	if (r_ptr->flags & RF_IM_POIS) p_ptr->resist_pois = TRUE;
-	if (r_ptr->flags & RF_IM_COLD) p_ptr->resist_cold = TRUE;
-	if (r_ptr->flags & RF_RES_NETH) p_ptr->resist_neth = TRUE;
-	if (r_ptr->flags & RF_RES_NEXU) p_ptr->resist_nexus = TRUE;
-	if (r_ptr->flags & RF_RES_DISE) p_ptr->resist_disen = TRUE;
-	if (r_ptr->flags & RF_NO_FEAR) p_ptr->resist_fear = TRUE;
-	if (r_ptr->flags & RF_NO_SLEEP) p_ptr->free_act = TRUE;
-	if (r_ptr->flags & RF_NO_CONF) p_ptr->resist_conf = TRUE;
-	if (r_ptr->flags & RF_CAN_FLY) p_ptr->ffall = TRUE;
-	if (r_ptr->flags & RF_AQUATIC) p_ptr->water_breath = TRUE;
+	if (r_ptr->flags & RF_REGENERATE) p_ptr->regenerate = true;
+	if (r_ptr->flags & RF_AURA_FIRE) p_ptr->sh_fire = true;
+	if (r_ptr->flags & RF_AURA_ELEC) p_ptr->sh_elec = true;
+	if (r_ptr->flags & RF_PASS_WALL) p_ptr->wraith_form = true;
+	if (r_ptr->flags & RF_SUSCEP_FIRE) p_ptr->sensible_fire = true;
+	if (r_ptr->flags & RF_IM_ACID) p_ptr->resist_acid = true;
+	if (r_ptr->flags & RF_IM_ELEC) p_ptr->resist_elec = true;
+	if (r_ptr->flags & RF_IM_FIRE) p_ptr->resist_fire = true;
+	if (r_ptr->flags & RF_IM_POIS) p_ptr->resist_pois = true;
+	if (r_ptr->flags & RF_IM_COLD) p_ptr->resist_cold = true;
+	if (r_ptr->flags & RF_RES_NETH) p_ptr->resist_neth = true;
+	if (r_ptr->flags & RF_RES_NEXU) p_ptr->resist_nexus = true;
+	if (r_ptr->flags & RF_RES_DISE) p_ptr->resist_disen = true;
+	if (r_ptr->flags & RF_NO_FEAR) p_ptr->resist_fear = true;
+	if (r_ptr->flags & RF_NO_SLEEP) p_ptr->free_act = true;
+	if (r_ptr->flags & RF_NO_CONF) p_ptr->resist_conf = true;
+	if (r_ptr->flags & RF_CAN_FLY) p_ptr->ffall = true;
+	if (r_ptr->flags & RF_AQUATIC) p_ptr->water_breath = true;
 }
 
 
@@ -2271,9 +2274,9 @@ static void calc_gods()
 		if (praying_to(GOD_MELKOR))
 		{
 			if (p_ptr->grace > 5000) p_ptr->invis += 30;
-			if (p_ptr->grace > 15000) p_ptr->immune_fire = TRUE;
+			if (p_ptr->grace > 15000) p_ptr->immune_fire = true;
 		}
-		p_ptr->resist_fire = TRUE;
+		p_ptr->resist_fire = true;
 	}
 
 	/* Gifts of Manwe if the player is praying to Manwe */
@@ -2287,14 +2290,14 @@ static void calc_gods()
 		p_ptr->pspeed += add;
 
 		/* Provides fly & FA */
-		if (p_ptr->grace >= 7000) p_ptr->free_act = TRUE;
-		if (p_ptr->grace >= 15000) p_ptr->fly = TRUE;
+		if (p_ptr->grace >= 7000) p_ptr->free_act = true;
+		if (p_ptr->grace >= 15000) p_ptr->fly = true;
 	}
 
 	/* Manwe bonus not requiring the praying status */
 	if (p_ptr->pgod == GOD_MANWE)
 	{
-		if (p_ptr->grace >= 2000) p_ptr->ffall = TRUE;
+		if (p_ptr->grace >= 2000) p_ptr->ffall = true;
 	}
 
 	/* Boost Str and Con if the player is following Tulkas */
@@ -2318,7 +2321,7 @@ static void calc_gods()
 			/* Resist fire*/
 			if (p_ptr->grace > 5000)
 			{
-				p_ptr->resist_fire = TRUE;
+				p_ptr->resist_fire = true;
 			}
 
 			bonus = p_ptr->grace / 5000;
@@ -2338,18 +2341,16 @@ static void calc_gods()
 	   nether immunity and prevents teleportation. */
 	if (p_ptr->pgod == GOD_MANDOS)
 	{
-		p_ptr->resist_neth = TRUE;
+		p_ptr->resist_neth = true;
 
-		if ((p_ptr->grace > 10000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 10000))
 		{
-			p_ptr->resist_continuum = TRUE;
+			p_ptr->resist_continuum = true;
 		}
 
-		if ((p_ptr->grace > 20000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 20000))
 		{
-			p_ptr->immune_neth = TRUE;
+			p_ptr->immune_neth = true;
 		}
 	}
 
@@ -2357,18 +2358,16 @@ static void calc_gods()
 	   provide poison resistance and magic breath. */
 	if (p_ptr->pgod == GOD_ULMO)
 	{
-		p_ptr->water_breath = TRUE;
+		p_ptr->water_breath = true;
 
-		if ((p_ptr->grace > 1000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 1000))
 		{
-			p_ptr->resist_pois = TRUE;
+			p_ptr->resist_pois = true;
 		}
 
-		if ((p_ptr->grace > 15000) &&
-		    (p_ptr->praying == TRUE))
+		if (p_ptr->praying && (p_ptr->grace > 15000))
 		{
-			p_ptr->magical_breath = TRUE;
+			p_ptr->magical_breath = true;
 		}
 	}
 }
@@ -2378,12 +2377,12 @@ static void calc_schools()
 {
 	if (get_skill(SKILL_AIR) >= 50)
 	{
-		p_ptr->magical_breath = TRUE;
+		p_ptr->magical_breath = true;
 	}
 
 	if (get_skill(SKILL_WATER) >= 30)
 	{
-		p_ptr->water_breath = TRUE;
+		p_ptr->water_breath = true;
 	}
 }
 
@@ -2448,9 +2447,9 @@ static void calc_corruptions()
 
 	if (player_has_corruption(CORRUPT_ANTI_TELEPORT))
 	{
-		if (p_ptr->corrupt_anti_teleport_stopped == FALSE)
+		if (!p_ptr->corrupt_anti_teleport_stopped)
 		{
-			p_ptr->resist_continuum = TRUE;
+			p_ptr->resist_continuum = true;
 		}
 	}
 
@@ -2505,10 +2504,10 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 	if (f & TR_CRIT) p_ptr->xtra_crit += pval;
 
 	/* Hack -- Sensible fire */
-	if (f & TR_SENS_FIRE) p_ptr->sensible_fire = TRUE;
+	if (f & TR_SENS_FIRE) p_ptr->sensible_fire = true;
 
 	/* Hack -- cause earthquakes */
-	if (f & TR_IMPACT) p_ptr->impact = TRUE;
+	if (f & TR_IMPACT) p_ptr->impact = true;
 
 	/* Affect invisibility */
 	if (f & TR_INVIS) p_ptr->invis += (pval * 10);
@@ -2517,66 +2516,66 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 	if (f & TR_XTRA_SHOTS) extra_shots++;
 
 	/* Various flags */
-	if (f & TR_AGGRAVATE) p_ptr->aggravate = TRUE;
-	if (f & TR_TELEPORT) p_ptr->teleport = TRUE;
+	if (f & TR_AGGRAVATE) p_ptr->aggravate = true;
+	if (f & TR_TELEPORT) p_ptr->teleport = true;
 	if (f & TR_DRAIN_MANA) p_ptr->drain_mana++;
 	if (f & TR_DRAIN_HP) p_ptr->drain_life++;
-	if (f & TR_DRAIN_EXP) p_ptr->exp_drain = TRUE;
-	if (f & TR_BLESSED) p_ptr->bless_blade = TRUE;
+	if (f & TR_DRAIN_EXP) p_ptr->exp_drain = true;
+	if (f & TR_BLESSED) p_ptr->bless_blade = true;
 	if (f & TR_XTRA_MIGHT) p_ptr->xtra_might += pval;
-	if (f & TR_SLOW_DIGEST) p_ptr->slow_digest = TRUE;
-	if (f & TR_REGEN) p_ptr->regenerate = TRUE;
-	if ((tval != TV_LITE) && (f & TR_LITE1)) p_ptr->lite = TRUE;
-	if ((tval != TV_LITE) && (f & TR_LITE2)) p_ptr->lite = TRUE;
-	if ((tval != TV_LITE) && (f & TR_LITE3)) p_ptr->lite = TRUE;
-	if (f & TR_SEE_INVIS) p_ptr->see_inv = TRUE;
-	if (f & TR_FREE_ACT) p_ptr->free_act = TRUE;
-	if (f & TR_HOLD_LIFE) p_ptr->hold_life = TRUE;
-	if (f & TR_WRAITH) p_ptr->wraith_form = TRUE;
-	if (f & TR_FEATHER) p_ptr->ffall = TRUE;
-	if (f & TR_FLY) p_ptr->fly = TRUE;
-	if (f & TR_CLIMB) p_ptr->climb = TRUE;
+	if (f & TR_SLOW_DIGEST) p_ptr->slow_digest = true;
+	if (f & TR_REGEN) p_ptr->regenerate = true;
+	if ((tval != TV_LITE) && (f & TR_LITE1)) p_ptr->lite = true;
+	if ((tval != TV_LITE) && (f & TR_LITE2)) p_ptr->lite = true;
+	if ((tval != TV_LITE) && (f & TR_LITE3)) p_ptr->lite = true;
+	if (f & TR_SEE_INVIS) p_ptr->see_inv = true;
+	if (f & TR_FREE_ACT) p_ptr->free_act = true;
+	if (f & TR_HOLD_LIFE) p_ptr->hold_life = true;
+	if (f & TR_WRAITH) p_ptr->wraith_form = true;
+	if (f & TR_FEATHER) p_ptr->ffall = true;
+	if (f & TR_FLY) p_ptr->fly = true;
+	if (f & TR_CLIMB) p_ptr->climb = true;
 
 	/* Immunity flags */
-	if (f & TR_IM_FIRE) p_ptr->immune_fire = TRUE;
-	if (f & TR_IM_ACID) p_ptr->immune_acid = TRUE;
-	if (f & TR_IM_COLD) p_ptr->immune_cold = TRUE;
-	if (f & TR_IM_ELEC) p_ptr->immune_elec = TRUE;
+	if (f & TR_IM_FIRE) p_ptr->immune_fire = true;
+	if (f & TR_IM_ACID) p_ptr->immune_acid = true;
+	if (f & TR_IM_COLD) p_ptr->immune_cold = true;
+	if (f & TR_IM_ELEC) p_ptr->immune_elec = true;
+	if (f & TR_IM_NETHER) p_ptr->immune_neth = true;
 
 	/* Resistance flags */
-	if (f & TR_RES_ACID) p_ptr->resist_acid = TRUE;
-	if (f & TR_RES_ELEC) p_ptr->resist_elec = TRUE;
-	if (f & TR_RES_FIRE) p_ptr->resist_fire = TRUE;
-	if (f & TR_RES_COLD) p_ptr->resist_cold = TRUE;
-	if (f & TR_RES_POIS) p_ptr->resist_pois = TRUE;
-	if (f & TR_RES_FEAR) p_ptr->resist_fear = TRUE;
-	if (f & TR_RES_CONF) p_ptr->resist_conf = TRUE;
-	if (f & TR_RES_SOUND) p_ptr->resist_sound = TRUE;
-	if (f & TR_RES_LITE) p_ptr->resist_lite = TRUE;
-	if (f & TR_RES_DARK) p_ptr->resist_dark = TRUE;
-	if (f & TR_RES_CHAOS) p_ptr->resist_chaos = TRUE;
-	if (f & TR_RES_DISEN) p_ptr->resist_disen = TRUE;
-	if (f & TR_RES_SHARDS) p_ptr->resist_shard = TRUE;
-	if (f & TR_RES_NEXUS) p_ptr->resist_nexus = TRUE;
-	if (f & TR_RES_BLIND) p_ptr->resist_blind = TRUE;
-	if (f & TR_RES_NETHER) p_ptr->resist_neth = TRUE;
-	if (f & TR_IM_NETHER) p_ptr->immune_neth = TRUE;
+	if (f & TR_RES_ACID) p_ptr->resist_acid = true;
+	if (f & TR_RES_ELEC) p_ptr->resist_elec = true;
+	if (f & TR_RES_FIRE) p_ptr->resist_fire = true;
+	if (f & TR_RES_COLD) p_ptr->resist_cold = true;
+	if (f & TR_RES_POIS) p_ptr->resist_pois = true;
+	if (f & TR_RES_FEAR) p_ptr->resist_fear = true;
+	if (f & TR_RES_CONF) p_ptr->resist_conf = true;
+	if (f & TR_RES_SOUND) p_ptr->resist_sound = true;
+	if (f & TR_RES_LITE) p_ptr->resist_lite = true;
+	if (f & TR_RES_DARK) p_ptr->resist_dark = true;
+	if (f & TR_RES_CHAOS) p_ptr->resist_chaos = true;
+	if (f & TR_RES_DISEN) p_ptr->resist_disen = true;
+	if (f & TR_RES_SHARDS) p_ptr->resist_shard = true;
+	if (f & TR_RES_NEXUS) p_ptr->resist_nexus = true;
+	if (f & TR_RES_BLIND) p_ptr->resist_blind = true;
+	if (f & TR_RES_NETHER) p_ptr->resist_neth = true;
 
-	if (f & TR_REFLECT) p_ptr->reflect = TRUE;
-	if (f & TR_SH_FIRE) p_ptr->sh_fire = TRUE;
-	if (f & TR_SH_ELEC) p_ptr->sh_elec = TRUE;
-	if (f & TR_NO_MAGIC) p_ptr->anti_magic = TRUE;
-	if (f & TR_NO_TELE) p_ptr->anti_tele = TRUE;
+	if (f & TR_REFLECT) p_ptr->reflect = true;
+	if (f & TR_SH_FIRE) p_ptr->sh_fire = true;
+	if (f & TR_SH_ELEC) p_ptr->sh_elec = true;
+	if (f & TR_NO_MAGIC) p_ptr->anti_magic = true;
+	if (f & TR_NO_TELE) p_ptr->anti_tele = true;
 
 	/* Sustain flags */
-	if (f & TR_SUST_STR) p_ptr->sustain_str = TRUE;
-	if (f & TR_SUST_INT) p_ptr->sustain_int = TRUE;
-	if (f & TR_SUST_WIS) p_ptr->sustain_wis = TRUE;
-	if (f & TR_SUST_DEX) p_ptr->sustain_dex = TRUE;
-	if (f & TR_SUST_CON) p_ptr->sustain_con = TRUE;
-	if (f & TR_SUST_CHR) p_ptr->sustain_chr = TRUE;
+	if (f & TR_SUST_STR) p_ptr->sustain_str = true;
+	if (f & TR_SUST_INT) p_ptr->sustain_int = true;
+	if (f & TR_SUST_WIS) p_ptr->sustain_wis = true;
+	if (f & TR_SUST_DEX) p_ptr->sustain_dex = true;
+	if (f & TR_SUST_CON) p_ptr->sustain_con = true;
+	if (f & TR_SUST_CHR) p_ptr->sustain_chr = true;
 
-	if (f & TR_PRECOGNITION) p_ptr->precognition = TRUE;
+	if (f & TR_PRECOGNITION) p_ptr->precognition = true;
 
         antimagic_mod = to_h + to_d + to_a;
 
@@ -2596,20 +2595,20 @@ void apply_flags(object_flag_set const &f, s16b pval, s16b tval, s16b to_h, s16b
 	 * "black_breath". This flag can also be set by a unlucky blow from
 	 * an undead.  -LM-
 	 */
-	if (f & TR_BLACK_BREATH) p_ptr->black_breath = TRUE;
+	if (f & TR_BLACK_BREATH) p_ptr->black_breath = true;
 
-	if (f & TR_IMMOVABLE) p_ptr->immovable = TRUE;
+	if (f & TR_IMMOVABLE) p_ptr->immovable = true;
 
 	/* Breaths */
 	if (f & TR_WATER_BREATH)
 	{
-		p_ptr->water_breath = TRUE;
+		p_ptr->water_breath = true;
 	}
 
 	if (f & TR_MAGIC_BREATH)
 	{
-		p_ptr->magical_breath = TRUE;
-		p_ptr->water_breath = TRUE;
+		p_ptr->magical_breath = true;
+		p_ptr->water_breath = true;
 	}
 }
 
@@ -2630,11 +2629,11 @@ static void apply_lflags(LF const &lflags)
 /**
  * Are barehand fighter's hands empty?
  */
-static bool_ monk_empty_hands()
+static bool monk_empty_hands()
 {
 	if (p_ptr->melee_style != SKILL_HAND)
 	{
-		return FALSE;
+		return false;
 	}
 
 	for (int i = 0; p_ptr->body_parts[i] == INVEN_WIELD; i++)
@@ -2643,11 +2642,11 @@ static bool_ monk_empty_hands()
 
 		if (o_ptr->k_ptr)
 		{
-			return FALSE;
+			return false;
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 
@@ -2671,23 +2670,23 @@ static bool_ monk_empty_hands()
  * are actually added in later, at the appropriate place.
  *
  * This function induces various "status" messages, unless silent is
- * TRUE.
+ * true.
  */
-void calc_bonuses(bool_ silent)
+void calc_bonuses(bool silent)
 {
 	auto const &s_descriptors = game->edit_data.s_descriptors;
 	auto const &r_info = game->edit_data.r_info;
 	auto &s_info = game->s_info;
 	auto const &a_info = game->edit_data.a_info;
 
-	static bool_ monk_notify_aux = FALSE;
+	static bool monk_notify_aux = false;
 	int i, j, hold;
 	int old_speed;
-	int old_see_inv;
+	bool old_see_inv;
 	int old_dis_ac;
 	int old_dis_to_a;
 	object_type *o_ptr;
-	bool_ monk_armour_aux;
+	bool monk_armour_aux;
 
 
 	/* Save the old computed_flags */
@@ -2746,68 +2745,69 @@ void calc_bonuses(bool_ silent)
 
 	/* Clear all the flags */
 	p_ptr->invis = 0;
-	p_ptr->immovable = FALSE;
-	p_ptr->aggravate = FALSE;
-	p_ptr->teleport = FALSE;
-	p_ptr->exp_drain = FALSE;
+	p_ptr->immovable = false;
+	p_ptr->aggravate = false;
+	p_ptr->teleport = false;
+	p_ptr->exp_drain = false;
 	p_ptr->drain_mana = 0;
 	p_ptr->drain_life = 0;
-	p_ptr->bless_blade = FALSE;
+	p_ptr->bless_blade = false;
 	p_ptr->xtra_might = 0;
-	p_ptr->impact = FALSE;
-	p_ptr->see_inv = FALSE;
-	p_ptr->free_act = FALSE;
-	p_ptr->slow_digest = FALSE;
-	p_ptr->regenerate = FALSE;
-	p_ptr->fly = FALSE;
-	p_ptr->climb = FALSE;
-	p_ptr->ffall = FALSE;
-	p_ptr->hold_life = FALSE;
+	p_ptr->impact = false;
+	p_ptr->see_inv = false;
+	p_ptr->free_act = false;
+	p_ptr->slow_digest = false;
+	p_ptr->regenerate = false;
+	p_ptr->fly = false;
+	p_ptr->climb = false;
+	p_ptr->ffall = false;
+	p_ptr->hold_life = false;
 	p_ptr->computed_flags = object_flag_set();
-	p_ptr->lite = FALSE;
-	p_ptr->sustain_str = FALSE;
-	p_ptr->sustain_int = FALSE;
-	p_ptr->sustain_wis = FALSE;
-	p_ptr->sustain_con = FALSE;
-	p_ptr->sustain_dex = FALSE;
-	p_ptr->sustain_chr = FALSE;
-	p_ptr->resist_acid = FALSE;
-	p_ptr->resist_elec = FALSE;
-	p_ptr->resist_fire = FALSE;
-	p_ptr->resist_cold = FALSE;
-	p_ptr->resist_pois = FALSE;
-	p_ptr->resist_conf = FALSE;
-	p_ptr->resist_sound = FALSE;
-	p_ptr->resist_lite = FALSE;
-	p_ptr->resist_dark = FALSE;
-	p_ptr->resist_chaos = FALSE;
-	p_ptr->resist_disen = FALSE;
-	p_ptr->resist_shard = FALSE;
-	p_ptr->resist_nexus = FALSE;
-	p_ptr->resist_blind = FALSE;
-	p_ptr->resist_neth = FALSE;
-	p_ptr->immune_neth = FALSE;
-	p_ptr->resist_fear = FALSE;
-	p_ptr->resist_continuum = FALSE;
-	p_ptr->reflect = FALSE;
-	p_ptr->sh_fire = FALSE;
-	p_ptr->sh_elec = FALSE;
-	p_ptr->anti_magic = FALSE;
-	p_ptr->anti_tele = FALSE;
-	p_ptr->water_breath = FALSE;
-	p_ptr->magical_breath = FALSE;
+	p_ptr->lite = false;
+	p_ptr->sustain_str = false;
+	p_ptr->sustain_int = false;
+	p_ptr->sustain_wis = false;
+	p_ptr->sustain_con = false;
+	p_ptr->sustain_dex = false;
+	p_ptr->sustain_chr = false;
+	p_ptr->resist_acid = false;
+	p_ptr->resist_elec = false;
+	p_ptr->resist_fire = false;
+	p_ptr->resist_cold = false;
+	p_ptr->resist_pois = false;
+	p_ptr->resist_conf = false;
+	p_ptr->resist_sound = false;
+	p_ptr->resist_lite = false;
+	p_ptr->resist_dark = false;
+	p_ptr->resist_chaos = false;
+	p_ptr->resist_disen = false;
+	p_ptr->resist_shard = false;
+	p_ptr->resist_nexus = false;
+	p_ptr->resist_blind = false;
+	p_ptr->resist_neth = false;
+	p_ptr->resist_fear = false;
+	p_ptr->resist_continuum = false;
+	p_ptr->reflect = false;
+	p_ptr->sh_fire = false;
+	p_ptr->sh_elec = false;
+	p_ptr->anti_magic = false;
+	p_ptr->anti_tele = false;
 
-	p_ptr->sensible_fire = FALSE;
-	p_ptr->sensible_lite = FALSE;
+	p_ptr->water_breath = false;
+	p_ptr->magical_breath = false;
 
-	p_ptr->immune_acid = FALSE;
-	p_ptr->immune_elec = FALSE;
-	p_ptr->immune_fire = FALSE;
-	p_ptr->immune_cold = FALSE;
+	p_ptr->sensible_fire = false;
+	p_ptr->sensible_lite = false;
 
-	p_ptr->precognition = FALSE;
+	p_ptr->immune_acid = false;
+	p_ptr->immune_elec = false;
+	p_ptr->immune_fire = false;
+	p_ptr->immune_cold = false;
+	p_ptr->immune_neth = false;
 
-	p_ptr->wraith_form = FALSE;
+	p_ptr->precognition = false;
+
+	p_ptr->wraith_form = false;
 
 	/* The anti magic field surrounding the player */
 	p_ptr->antimagic = 0;
@@ -2884,7 +2884,7 @@ void calc_bonuses(bool_ silent)
 
 		/* Free action if unencumbered at level 25 */
 		if ((get_skill(SKILL_HAND) > 24) && !(monk_heavy_armor()))
-			p_ptr->free_act = TRUE;
+			p_ptr->free_act = true;
 	}
 
 	if (get_skill(SKILL_ANTIMAGIC))
@@ -2894,13 +2894,13 @@ void calc_bonuses(bool_ silent)
 
 		if (p_ptr->antimagic_extra & CLASS_ANTIMAGIC)
 		{
-			p_ptr->anti_tele = TRUE;
-			p_ptr->resist_continuum = TRUE;
+			p_ptr->anti_tele = true;
+			p_ptr->resist_continuum = true;
 		}
 	}
 
-	if (get_skill(SKILL_DAEMON) > 20) p_ptr->resist_conf = TRUE;
-	if (get_skill(SKILL_DAEMON) > 30) p_ptr->resist_fear = TRUE;
+	if (get_skill(SKILL_DAEMON) > 20) p_ptr->resist_conf = true;
+	if (get_skill(SKILL_DAEMON) > 30) p_ptr->resist_fear = true;
 
 	if ( get_skill(SKILL_MINDCRAFT) >= 40 )
 	{
@@ -2909,7 +2909,7 @@ void calc_bonuses(bool_ silent)
 
 	if (p_ptr->astral)
 	{
-		p_ptr->wraith_form = TRUE;
+		p_ptr->wraith_form = true;
 	}
 
 	/***** Races ****/
@@ -2921,7 +2921,9 @@ void calc_bonuses(bool_ silent)
 
 		/* Is the player's race hurt by light? */
 		if (race_flags_p(PR_HURT_LITE))
-			p_ptr->sensible_lite = TRUE;
+		{
+			p_ptr->sensible_lite = true;
+		}
 	}
 
 	/* The extra flags */
@@ -2947,14 +2949,14 @@ void calc_bonuses(bool_ silent)
 		}
 
 		/* Extract the item flags */
-		object_flags_no_set = TRUE;
+		object_flags_no_set = true;
 		auto flags = object_flags(o_ptr);
-		object_flags_no_set = FALSE;
+		object_flags_no_set = false;
 
 		/* MEGA ugly hack -- set spacetime distortion resistance */
 		if (o_ptr->name1 == ART_ANCHOR)
 		{
-			p_ptr->resist_continuum = TRUE;
+			p_ptr->resist_continuum = true;
 		}
 
 		/* Hack - don't give the Black Breath when merely inspecting a weapon */
@@ -3039,7 +3041,10 @@ void calc_bonuses(bool_ silent)
 	}
 
 	/* Hack -- aura of fire also provides light */
-	if (p_ptr->sh_fire) p_ptr->lite = TRUE;
+	if (p_ptr->sh_fire)
+	{
+		p_ptr->lite = true;
+	}
 
 	if (race_flags_p(PR_AC_LEVEL))
 	{
@@ -3184,11 +3189,11 @@ void calc_bonuses(bool_ silent)
 	/* Breath */
 	if (p_ptr->tim_water_breath)
 	{
-		p_ptr->water_breath = TRUE;
+		p_ptr->water_breath = true;
 	}
 	if (p_ptr->tim_magic_breath)
 	{
-		p_ptr->magical_breath = TRUE;
+		p_ptr->magical_breath = true;
 	}
 
 	/* wraith_form */
@@ -3203,15 +3208,15 @@ void calc_bonuses(bool_ silent)
 		{
 			p_ptr->to_a += 50;
 			p_ptr->dis_to_a += 50;
-			p_ptr->reflect = TRUE;
+			p_ptr->reflect = true;
 		}
-		p_ptr->wraith_form = TRUE;
+		p_ptr->wraith_form = true;
 	}
 
 	/* Temporary holy aura */
 	if (p_ptr->holy)
 	{
-		p_ptr->hold_life = TRUE;
+		p_ptr->hold_life = true;
 		p_ptr->luck_cur += 5;
 	}
 
@@ -3274,24 +3279,24 @@ void calc_bonuses(bool_ silent)
 	/* Temporary "Reflection" */
 	if (p_ptr->tim_reflect)
 	{
-		p_ptr->reflect = TRUE;
+		p_ptr->reflect = true;
 	}
 
 	/* Temporary "Levitation" and "Flying" */
 	if (p_ptr->tim_ffall)
 	{
-		p_ptr->ffall = TRUE;
+		p_ptr->ffall = true;
 	}
 	if (p_ptr->tim_fly)
 	{
-		p_ptr->fly = TRUE;
+		p_ptr->fly = true;
 	}
 
 	/* Oppose Chaos & Confusion */
 	if (p_ptr->oppose_cc)
 	{
-		p_ptr->resist_chaos = TRUE;
-		p_ptr->resist_conf = TRUE;
+		p_ptr->resist_chaos = true;
+		p_ptr->resist_conf = true;
 	}
 
 	/* Temporary "fast" */
@@ -3320,7 +3325,7 @@ void calc_bonuses(bool_ silent)
 	/* Temporary see invisible */
 	if (p_ptr->tim_invis)
 	{
-		p_ptr->see_inv = TRUE;
+		p_ptr->see_inv = true;
 	}
 
 	/* Temporary infravision boost */
@@ -3332,25 +3337,25 @@ void calc_bonuses(bool_ silent)
 	/* Hack -- Magic breath -> Water breath */
 	if (p_ptr->magical_breath)
 	{
-		p_ptr->water_breath = TRUE;
+		p_ptr->water_breath = true;
 	}
 
 	/* Hack -- Can Fly -> Can Levitate */
 	if (p_ptr->fly)
 	{
-		p_ptr->ffall = TRUE;
+		p_ptr->ffall = true;
 	}
 
 	/* Hack -- Res Chaos -> Res Conf */
 	if (p_ptr->resist_chaos)
 	{
-		p_ptr->resist_conf = TRUE;
+		p_ptr->resist_conf = true;
 	}
 
 	/* Hack -- Hero/Shero -> Res fear */
 	if (p_ptr->hero || p_ptr->shero)
 	{
-		p_ptr->resist_fear = TRUE;
+		p_ptr->resist_fear = true;
 	}
 
 
@@ -3418,7 +3423,7 @@ void calc_bonuses(bool_ silent)
 
 
 	/* Assume not heavy */
-	p_ptr->heavy_shoot = FALSE;
+	p_ptr->heavy_shoot = false;
 
 	/* It is hard to carholdry a heavy bow */
 	if (hold < o_ptr->weight / 10)
@@ -3428,7 +3433,7 @@ void calc_bonuses(bool_ silent)
 		p_ptr->dis_to_h += 2 * (hold - o_ptr->weight / 10);
 
 		/* Heavy Bow */
-		p_ptr->heavy_shoot = TRUE;
+		p_ptr->heavy_shoot = true;
 	}
 
 	/* Take note of required "tval" for missiles */
@@ -3508,7 +3513,7 @@ void calc_bonuses(bool_ silent)
 	o_ptr = &p_ptr->inventory[INVEN_WIELD];
 
 	/* Assume not heavy */
-	p_ptr->heavy_wield = FALSE;
+	p_ptr->heavy_wield = false;
 
 	/* Normal weapons */
 	if (o_ptr->k_ptr && !p_ptr->heavy_wield)
@@ -3642,8 +3647,8 @@ void calc_bonuses(bool_ silent)
 	}
 
 	/* Assume okay */
-	p_ptr->icky_wield = FALSE;
-	monk_armour_aux = FALSE;
+	p_ptr->icky_wield = false;
+	monk_armour_aux = false;
 
 	if (get_weaponmastery_skill() != -1)
 	{
@@ -3731,7 +3736,7 @@ void calc_bonuses(bool_ silent)
 			p_ptr->dis_to_d -= 15;
 
 			/* Icky weapon */
-			p_ptr->icky_wield = TRUE;
+			p_ptr->icky_wield = true;
 		}
 
 		/* Sorcerer can't wield a weapon unless it's a mage staff */
@@ -3751,7 +3756,7 @@ void calc_bonuses(bool_ silent)
 				p_ptr->dis_to_d -= malus;
 
 				/* Icky weapon */
-				p_ptr->icky_wield = TRUE;
+				p_ptr->icky_wield = true;
 			}
 			else
 			{
@@ -3771,7 +3776,7 @@ void calc_bonuses(bool_ silent)
 
 	if (monk_heavy_armor())
 	{
-		monk_armour_aux = TRUE;
+		monk_armour_aux = true;
 	}
 
 	/* Affect Skill -- stealth (bonus one) */
@@ -3907,12 +3912,12 @@ void calc_bonuses(bool_ silent)
 	/* Resist lite & senseible lite negates one an other */
 	if (p_ptr->resist_lite && p_ptr->sensible_lite)
 	{
-		p_ptr->resist_lite = p_ptr->sensible_lite = FALSE;
+		p_ptr->resist_lite = p_ptr->sensible_lite = false;
 	}
 
 	/* resistance to fire cancel sensibility to fire */
 	if (p_ptr->resist_fire || p_ptr->oppose_fire || p_ptr->immune_fire)
-		p_ptr->sensible_fire = FALSE;
+		p_ptr->sensible_fire = false;
 
 	/* Minimum saving throw */
 	if(p_ptr->skill_sav <= 10)
@@ -3970,7 +3975,7 @@ void update_stuff()
 		calc_powers();
 
 		p_ptr->update &= ~(PU_BONUS);
-		calc_bonuses(FALSE);
+		calc_bonuses(false);
 	}
 
 	if (p_ptr->update & (PU_TORCH))
@@ -4038,13 +4043,13 @@ void update_stuff()
 	{
 		p_ptr->update &= ~(PU_DISTANCE);
 		p_ptr->update &= ~(PU_MONSTERS);
-		update_monsters(TRUE);
+		update_monsters(true);
 	}
 
 	if (p_ptr->update & (PU_MONSTERS))
 	{
 		p_ptr->update &= ~(PU_MONSTERS);
-		update_monsters(FALSE);
+		update_monsters(false);
 	}
 
 	if (p_ptr->update & (PU_MON_LITE))
@@ -4197,11 +4202,14 @@ void handle_stuff()
 }
 
 
-bool_ monk_heavy_armor()
+bool monk_heavy_armor()
 {
 	u16b monk_arm_wgt = 0;
 
-	if (p_ptr->melee_style != SKILL_HAND) return FALSE;
+	if (p_ptr->melee_style != SKILL_HAND)
+	{
+		return false;
+	}
 
 	/* Weight the armor */
 	monk_arm_wgt += p_ptr->inventory[INVEN_BODY].weight;
@@ -4211,7 +4219,7 @@ bool_ monk_heavy_armor()
 	monk_arm_wgt += p_ptr->inventory[INVEN_HANDS].weight;
 	monk_arm_wgt += p_ptr->inventory[INVEN_FEET].weight;
 
-	return (monk_arm_wgt > (100 + (get_skill(SKILL_HAND) * 4))) ;
+	return monk_arm_wgt > (100 + (get_skill(SKILL_HAND) * 4));
 }
 
 static int get_artifact_idx(int level)
@@ -4320,7 +4328,7 @@ void gain_fate(byte fate)
 			{
 			case FATE_FIND_O:
 				{
-					while (TRUE)
+					while (true)
 					{
 						obj_theme theme;
 
@@ -4332,7 +4340,7 @@ void gain_fate(byte fate)
 						init_match_theme(theme);
 
 						/* Apply restriction */
-						get_obj_num_hook = kind_is_legal;
+						get_object_hook = kind_is_legal;
 
 						/* Rebuild allocation table */
 						get_obj_num_prep();
@@ -4353,7 +4361,7 @@ void gain_fate(byte fate)
 					level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 					fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
 					fates[i].serious = rand_int(2);
-					fates[i].know = FALSE;
+					fates[i].know = false;
 					if (wizard) msg_format("New fate : Find object %d on level %d", fates[i].o_idx, fates[i].level);
 					break;
 				}
@@ -4365,7 +4373,7 @@ void gain_fate(byte fate)
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
 				fates[i].serious = rand_int(2);
-				fates[i].know = FALSE;
+				fates[i].know = false;
 				if (wizard) msg_format("New fate : Meet monster %d on level %d", fates[i].r_idx, fates[i].level);
 				break;
 
@@ -4373,22 +4381,22 @@ void gain_fate(byte fate)
 				fates[i].a_idx = get_artifact_idx(max_dlv[dungeon_type] + randint(10));
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
-				fates[i].serious = TRUE;
-				fates[i].know = FALSE;
+				fates[i].serious = true;
+				fates[i].know = false;
 				if (wizard) msg_format("New fate : Find artifact %d on level %d", fates[i].a_idx, fates[i].level);
 				break;
 
 			case FATE_DIE:
 				level = rand_range(max_dlv[dungeon_type] - 20, max_dlv[dungeon_type] + 20);
 				fates[i].level = (level < 1) ? 1 : (level > 98) ? 98 : level;
-				fates[i].serious = TRUE;
-				fates[i].know = FALSE;
+				fates[i].serious = true;
+				fates[i].know = false;
 				if ((wizard) || (p_ptr->precognition)) msg_format("New fate : Death on level %d", fates[i].level);
 				break;
 
 			case FATE_NO_DIE_MORTAL:
-				fates[i].serious = TRUE;
-				p_ptr->no_mortal = TRUE;
+				fates[i].serious = true;
+				p_ptr->no_mortal = true;
 				if ((wizard) || (p_ptr->precognition)) msg_format("New fate : Never to die by the hand of a mortal being.");
 				break;
 			}
@@ -4507,7 +4515,7 @@ std::string fate_desc(int fate)
 
 std::string dump_fates()
 {
-	bool_ pending = FALSE;
+	bool pending = false;
 
 	fmt::MemoryWriter w;
 

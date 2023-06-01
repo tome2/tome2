@@ -36,8 +36,6 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra2.hpp"
 #include "z-rand.hpp"
@@ -47,7 +45,7 @@
 static bool power_chance(power_activation const &x_ref)
 {
 	auto x_ptr = &x_ref;
-	bool use_hp = FALSE;
+	bool use_hp = false;
 	int diff = x_ptr->diff;
 
 	/* Always true ? */
@@ -138,6 +136,7 @@ static bool power_chance(power_activation const &x_ref)
 static void power_activate(int power)
 {
 	auto const &f_info = game->edit_data.f_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	s16b plev = p_ptr->lev;
 	char ch = 0;
@@ -219,7 +218,7 @@ static void power_activate(int power)
 		{
 			if (!get_aim_dir(&dir))
 				break;
-			if (passwall(dir, TRUE))
+			if (passwall(dir, true))
 				msg_print("A passage opens, and you step through.");
 			else
 				msg_print("There is no wall there!");
@@ -274,7 +273,7 @@ static void power_activate(int power)
 
 	case PWR_ROHAN:
 		/* Select power to use */
-		while (TRUE)
+		while (true)
 		{
 			if (!get_com("Use [F]lash aura or [L]ight speed jump? ", &ch))
 			{
@@ -354,7 +353,7 @@ static void power_activate(int power)
 
 	case PWR_THUNDER:
 		/* Select power to use */
-		while (TRUE)
+		while (true)
 		{
 			if (!get_com("Use [T]hunder strike, [R]ide the straight road, go [B]ack in town? ", &ch))
 			{
@@ -502,7 +501,7 @@ static void power_activate(int power)
 
 		autosave_checkpoint();
 		/* Leaving */
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 		break;
 
 	case PWR_VAMPIRISM:
@@ -520,7 +519,7 @@ static void power_activate(int power)
 			}
 
 			msg_print("You grin and bare your fangs...");
-			dummy = plev + randint(plev) * MAX(1, plev / 10);    /* Dmg */
+			dummy = plev + randint(plev) * std::max(1, plev / 10);    /* Dmg */
 			if (drain_life(dir, dummy))
 			{
 				if (p_ptr->food < PY_FOOD_FULL)
@@ -532,7 +531,7 @@ static void power_activate(int power)
 				/* A Food ration gives 5000 food points (by contrast) */
 				/* Don't ever get more than "Full" this way */
 				/* But if we ARE Gorged,  it won't cure us */
-				dummy = p_ptr->food + MIN(5000, 100 * dummy);
+				dummy = p_ptr->food + std::min(5000, 100 * dummy);
 				if (p_ptr->food < PY_FOOD_MAX)   /* Not gorged already */
 					set_food(dummy >= PY_FOOD_MAX ? PY_FOOD_MAX - 1 : dummy);
 			}
@@ -625,7 +624,7 @@ static void power_activate(int power)
 
 			if (d >= 100) return;
 
-			if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, FALSE, MSTATUS_PET)) == 0) return;
+			if ((m_idx = place_monster_one(y, x, o_ptr->pval, 0, false, MSTATUS_PET)) == 0) return;
 
 			m_ptr = &m_list[m_idx];
 			m_ptr->hp = o_ptr->pval2;
@@ -675,7 +674,7 @@ static void power_activate(int power)
 		{
 			msg_print("You concentrate...");
 			if (get_aim_dir(&dir))
-				fetch(dir, p_ptr->lev * 10, TRUE);
+				fetch(dir, p_ptr->lev * 10, true);
 		}
 		break;
 
@@ -827,7 +826,7 @@ static void power_activate(int power)
 			int i;
 			for (i = 0; i < 8; i++)
 			{
-				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, FALSE);
+				summon_specific_friendly(p_ptr->py, p_ptr->px, p_ptr->lev, SUMMON_BIZARRE1, false);
 			}
 		}
 		break;
@@ -1052,13 +1051,13 @@ static void power_activate(int power)
 	case POWER_COR_SPACE_TIME:
 		if (p_ptr->corrupt_anti_teleport_stopped)
 		{
-			p_ptr->corrupt_anti_teleport_stopped = FALSE;
+			p_ptr->corrupt_anti_teleport_stopped = false;
 			msg_print("You stop controlling your corruption.");
 			p_ptr->update |= PU_BONUS;
 		}
 		else
 		{
-			p_ptr->corrupt_anti_teleport_stopped = TRUE;
+			p_ptr->corrupt_anti_teleport_stopped = true;
 			msg_print("You start controlling your corruption, teleportation works once more.");
 			p_ptr->update |= PU_BONUS;
 		}
@@ -1138,11 +1137,10 @@ static boost::optional<int> select_power()
 		int start = 0;
 		int const max = power_idxs.size();
 		// Save
-		character_icky = TRUE;
-		Term_save();
+		screen_save_no_flush();
 		// Loop until we get a result.
 		boost::optional<int> result;
-		while (1)
+		while (true)
 		{
 			print_power_batch(power_idxs, start, max);
 			char which = inkey();
@@ -1155,15 +1153,13 @@ static boost::optional<int> select_power()
 			{
 				start += 20;
 				if (start >= max) start -= 20;
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 			else if (which == '-')
 			{
 				start -= 20;
 				if (start < 0) start += 20;
-				Term_load();
-				character_icky = FALSE;
+				screen_load_no_flush();
 			}
 			else
 			{
@@ -1184,8 +1180,7 @@ static boost::optional<int> select_power()
 			}
 		}
 
-		Term_load();
-		character_icky = FALSE;
+		screen_load_no_flush();
 
 		return result;
 	}

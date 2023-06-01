@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 
 /**
  * Fate descritpor.
@@ -17,6 +17,6 @@ struct fate
 	s16b r_idx;     /* Monster to find */
 	s16b count;     /* Number of things */
 	s16b time;      /* Turn before */
-	bool_ know;      /* Has it been predicted? */
-	bool_ icky;	/* Hackish runtime-only flag */
+	bool know;      /* Has it been predicted? */
+	bool icky;	/* Hackish runtime-only flag */
 };

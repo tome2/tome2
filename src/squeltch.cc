@@ -27,9 +27,8 @@
 #include "tome/squelch/object_status.hpp"
 #include "tome/squelch/automatizer.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
+#include "z-form.hpp"
 
 #include <algorithm>
 #include <deque>
@@ -57,6 +56,8 @@ using squelch::NameCondition;
 using squelch::StatusCondition;
 
 static squelch::Automatizer *automatizer = nullptr;
+
+bool automatizer_create = false;
 
 void squeltch_grid()
 {
@@ -205,10 +206,6 @@ static void automatizer_save_rules()
 		}
 	}
 
-	// Pretty-printing options
-	jsoncons::output_format format;
-	format.indent(2);
-
 	// Convert to a JSON document
 	auto rules_document = automatizer->to_json();
 
@@ -221,7 +218,9 @@ static void automatizer_save_rules()
 	}
 
 	// Write JSON to output
-	of << jsoncons::pretty_print(rules_document, format);
+	jsoncons::serialization_options serialization_options;
+	serialization_options.indent(2);
+	of << jsoncons::pretty_print(rules_document, serialization_options);
 	if (of.fail())
 	{
 		error();
@@ -258,7 +257,7 @@ void do_cmd_automatizer()
 	{
 		if (msg_box_auto("Automatizer is currently disabled, enable it? (y/n)") == 'y')
 		{
-			automatizer_enabled = TRUE;
+			automatizer_enabled = true;
 		}
 		else
 			return;
@@ -268,7 +267,7 @@ void do_cmd_automatizer()
 
 	automatizer->reset_view();
 
-	while (1)
+	while (true)
 	{
 		Term_clear();
 
@@ -365,7 +364,7 @@ void do_cmd_automatizer()
 			}
 			else if (c == 'k')
 			{
-				automatizer_enabled = FALSE;
+				automatizer_enabled = false;
 				break;
 			}
 			else if (c == '\t')
@@ -585,11 +584,22 @@ bool automatizer_load(boost::filesystem::path const &path)
 	jsoncons::json rules_json;
 	try
 	{
-		rules_json = jsoncons::json::parse_file(path.string());
+		// Open
+		std::ifstream ifs(
+			path.string(),
+			std::ifstream::in | std::ifstream::binary);
+		// Parse
+		ifs >> rules_json;
 	}
 	catch (jsoncons::json_exception const &exc)
 	{
 		msg_format("Error parsing automatizer rules from '%s'.", path.c_str());
+		msg_print(exc.what());
+		return false;
+	}
+	catch (const std::ifstream::failure &exc)
+	{
+		msg_format("I/O error reading automatizer rules from '%s'.", path.c_str());
 		msg_print(exc.what());
 		return false;
 	}

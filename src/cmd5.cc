@@ -37,12 +37,11 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "wizard2.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <boost/noncopyable.hpp>
@@ -171,8 +170,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 		I2A(0), I2A(num - 1));
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Display a list of spells */
 	print_book(book, spell_idx, o_ptr);
@@ -209,8 +207,7 @@ static void browse_school_spell(int book, int spell_idx, object_type *o_ptr)
 
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Show choices */
 	window_stuff();
@@ -268,7 +265,7 @@ static void do_poly_wounds()
 
 	s16b change = damroll(p_ptr->lev, 5);
 
-	bool_ Nasty_effect = (randint(5) == 1);
+	bool Nasty_effect = (randint(5) == 1);
 
 
 	if (!(wounds || hit_p || Nasty_effect)) return;
@@ -322,7 +319,7 @@ void do_poly_self()
 			}
 
 			/* Deformities are discriminated against! */
-			dec_stat(A_CHR, randint(6), TRUE);
+			dec_stat(A_CHR, randint(6), true);
 
 			if (effect_msg[0])
 			{
@@ -359,7 +356,7 @@ void do_poly_self()
 		goalexpfact = 100 + 3 * rand_int(poly_power);
 
 		/* Roll until an appropriate selection is made */
-		while (1)
+		while (true)
 		{
 			new_race = rand_int(race_info.size());
 			expfact = race_info[new_race].ps.exp;
@@ -493,7 +490,7 @@ void fetch(int dir, int wgt, bool require_los)
 		int ty = p_ptr->py;  /* Where to drop the item */
 		int tx = p_ptr->px;
 
-		while (1)
+		while (true)
 		{
 			ty += ddy[dir];
 			tx += ddx[dir];
@@ -530,7 +527,7 @@ void fetch(int dir, int wgt, bool require_los)
 
 	/* Feedback */
 	char o_name[80];
-	object_desc(o_name, o_ptr, TRUE, 0);
+	object_desc(o_name, o_ptr, true, 0);
 	msg_format("%^s flies through the air to your feet.", o_name);
 
 	note_spot(p_ptr->py, p_ptr->px);
@@ -668,12 +665,11 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 		label, (symbiosis ? "symbiote" : "body"));
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Get a spell from the user */
 	monster_power const *power = nullptr;
-	bool_ flag = FALSE; // Nothing chosen yet
+	bool flag = false; // Nothing chosen yet
 	while (!flag)
 	{
 		/* Show the list */
@@ -733,7 +729,7 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 		char choice;
 		if (!get_com(out_val, &choice))
 		{
-			flag = FALSE;
+			flag = false;
 			break;
 		}
 
@@ -758,7 +754,7 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 		else
 		{
 			/* Can't uppercase digits XXX XXX XXX */
-			ask = FALSE;
+			ask = false;
 
 			i = choice - '0' + 26;
 		}
@@ -796,12 +792,11 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
 		}
 
 		/* Stop the loop */
-		flag = TRUE;
+		flag = true;
 	}
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
+	screen_load_no_flush();
 
 	/* Abort if needed */
 	if (!flag || (power == nullptr))
@@ -818,6 +813,8 @@ static std::tuple<int, int> choose_monster_power(monster_race const *r_ptr, bool
  */
 static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_spell_idx)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	assert(monster_spell_idx < monster_spell_flag_set::nbits);
 
 	/* Shorthand */
@@ -843,14 +840,14 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 
 	case SF_MULTIPLY_IDX:
 		{
-			do_cmd_wiz_named_friendly(p_ptr->body_monster, FALSE);
+			do_cmd_wiz_named_friendly(p_ptr->body_monster, false);
 
 			break;
 		}
 
 	case SF_S_ANIMAL_IDX:
 		{
-			summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, TRUE);
+			summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, true);
 
 			break;
 		}
@@ -1470,7 +1467,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 4; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_ANIMAL, true);
 			}
 
 			break;
@@ -1575,7 +1572,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_THUNDERLORD, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_THUNDERLORD, true);
 			}
 
 			break;
@@ -1588,7 +1585,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_KIN, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_KIN, true);
 			}
 
 			break;
@@ -1598,7 +1595,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_HI_DEMON, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_HI_DEMON, true);
 			}
 
 			break;
@@ -1608,7 +1605,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, 0, TRUE);
+				summon_specific_friendly(y, x, rlev, 0, true);
 			}
 
 			break;
@@ -1618,7 +1615,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, 0, TRUE);
+				summon_specific_friendly(y, x, rlev, 0, true);
 			}
 
 			break;
@@ -1628,7 +1625,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_ANT, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_ANT, true);
 			}
 
 			break;
@@ -1638,7 +1635,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_SPIDER, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_SPIDER, true);
 			}
 
 			break;
@@ -1648,7 +1645,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_HOUND, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_HOUND, true);
 			}
 
 			break;
@@ -1658,7 +1655,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 6; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_HYDRA, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_HYDRA, true);
 			}
 
 			break;
@@ -1668,7 +1665,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_ANGEL, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_ANGEL, true);
 			}
 
 			break;
@@ -1678,7 +1675,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_DEMON, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_DEMON, true);
 			}
 
 			break;
@@ -1688,7 +1685,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_UNDEAD, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_UNDEAD, true);
 			}
 
 			break;
@@ -1698,7 +1695,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 1; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_DRAGON, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_DRAGON, true);
 			}
 
 			break;
@@ -1708,7 +1705,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 8; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_HI_UNDEAD_NO_UNIQUES, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_HI_UNDEAD_NO_UNIQUES, true);
 			}
 
 			break;
@@ -1718,7 +1715,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 8; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_HI_DRAGON_NO_UNIQUES, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_HI_DRAGON_NO_UNIQUES, true);
 			}
 
 			break;
@@ -1728,7 +1725,7 @@ static void apply_monster_power(monster_race const *r_ptr, std::size_t monster_s
 		{
 			for (int k = 0; k < 8; k++)
 			{
-				summon_specific_friendly(y, x, rlev, SUMMON_WRAITH, TRUE);
+				summon_specific_friendly(y, x, rlev, SUMMON_WRAITH, true);
 			}
 
 			break;
@@ -1902,7 +1899,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 	int num = 0;
 	s32b where = 1;
 	int ask;
-	bool_ flag;
+	bool flag;
 	char out_val[160];
 	object_type *o_ptr, forge;
 	int tmp;
@@ -1955,7 +1952,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 	}
 
 	/* Nothing chosen yet */
-	flag = FALSE;
+	flag = false;
 
 	/* Show choices */
 	window_stuff();
@@ -1976,8 +1973,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 	}
 
 	/* Save the screen */
-	character_icky = TRUE;
-	Term_save();
+	screen_save_no_flush();
 
 	/* Go */
 	if (hack_force_spell == -1)
@@ -1996,8 +1992,8 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			/* Restore and save screen; this prevents
 			   subprompt from leaving garbage when going
 			   around the loop multiple times. */
-			Term_load();
-			Term_save();
+			screen_load_no_flush();
+			screen_save_no_flush();
 
 			/* Display a list of spells */
 			where = print_book(sval, pval, o_ptr);
@@ -2005,7 +2001,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			/* Input */
 			if (!get_com(out_val, &choice))
 			{
-				flag = FALSE;
+				flag = false;
 				break;
 			}
 
@@ -2046,7 +2042,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 				}
 
 				/* Stop the loop */
-				flag = TRUE;
+				flag = true;
 			}
 		}
 	}
@@ -2055,7 +2051,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 		/* Require "okay" spells */
 		if (is_ok_spell(hack_force_spell, hack_force_spell_pval))
 		{
-			flag = TRUE;
+			flag = true;
 			spell = hack_force_spell;
 		}
 		else
@@ -2068,9 +2064,7 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 
 
 	/* Restore the screen */
-	Term_load();
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Show choices */
 	window_stuff();
@@ -2107,7 +2101,7 @@ void cast_school_spell()
 	/* Actualy cast the choice */
 	if (spell != -1)
 	{
-		lua_cast_school_spell(spell, FALSE);
+		lua_cast_school_spell(spell, false);
 	}
 }
 

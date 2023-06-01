@@ -11,6 +11,7 @@
 #include "birth.hpp"
 #include "cave.hpp"
 #include "cave_type.hpp"
+#include "config.hpp"
 #include "corrupt.hpp"
 #include "files.hpp"
 #include "hook_eat_in.hpp"
@@ -33,54 +34,37 @@
 #include "stats.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
 #include <cassert>
 #include <chrono>
 #include <thread>
 
+using boost::algorithm::equals;
 using std::this_thread::sleep_for;
 using std::chrono::milliseconds;
+
+namespace fs = boost::filesystem;
 
 /*
  * Check and create if needed the directory dirpath
  */
-bool_ private_check_user_directory(const char *dirpath)
+bool private_check_user_directory(const char *dirpath)
 {
-	/* Is this used anywhere else in *bands? */
-	struct stat stat_buf;
-
-	int ret;
-
-	/* See if it already exists */
-	ret = stat(dirpath, &stat_buf);
-
-	/* It does */
-	if (ret == 0)
+	if (fs::exists(dirpath))
 	{
-		/* Now we see if it's a directory */
-		if ((stat_buf.st_mode & S_IFMT) == S_IFDIR) return (TRUE);
-
-		/*
-		 * Something prevents us from create a directory with
-		 * the same pathname
-		 */
-		return (FALSE);
+		/* Must be directory, otherwise there'll be trouble. */
+		return fs::is_directory(dirpath);
 	}
-
-	/* No - this maybe the first time. Try to create a directory */
 	else
 	{
-		/* Create the ~/.ToME directory */
-		ret = mkdir(dirpath, 0700);
-
-		/* An error occured */
-		if (ret == -1) return (FALSE);
-
-		/* Success */
-		return (TRUE);
+		boost::system::error_code ec;
+		fs::create_directory(dirpath, ec);
+		return !ec;
 	}
 }
 
@@ -104,19 +88,17 @@ static void module_reset_dir(const char *dir, const char *new_path)
 	char **d = 0;
 	char buf[1025];
 
-	if (!strcmp(dir, "data")) d = &ANGBAND_DIR_DATA;
-	if (!strcmp(dir, "edit")) d = &ANGBAND_DIR_EDIT;
-	if (!strcmp(dir, "file")) d = &ANGBAND_DIR_FILE;
-	if (!strcmp(dir, "help")) d = &ANGBAND_DIR_HELP;
-	if (!strcmp(dir, "info")) d = &ANGBAND_DIR_INFO;
-	if (!strcmp(dir, "pref")) d = &ANGBAND_DIR_PREF;
-	if (!strcmp(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
-	if (!strcmp(dir, "user")) d = &ANGBAND_DIR_USER;
-	if (!strcmp(dir, "note")) d = &ANGBAND_DIR_NOTE;
+	if (equals(dir, "data")) d = &ANGBAND_DIR_DATA;
+	if (equals(dir, "edit")) d = &ANGBAND_DIR_EDIT;
+	if (equals(dir, "file")) d = &ANGBAND_DIR_FILE;
+	if (equals(dir, "help")) d = &ANGBAND_DIR_HELP;
+	if (equals(dir, "info")) d = &ANGBAND_DIR_INFO;
+	if (equals(dir, "pref")) d = &ANGBAND_DIR_PREF;
+	if (equals(dir, "xtra")) d = &ANGBAND_DIR_XTRA;
+	if (equals(dir, "user")) d = &ANGBAND_DIR_USER;
+	if (equals(dir, "note")) d = &ANGBAND_DIR_NOTE;
 
-	if (
-	    !strcmp(dir, "user") ||
-	    !strcmp(dir, "note"))
+	if (equals(dir, "user") || equals(dir, "note"))
 	{
 		char user_path[1024];
 		/* copied from init_file_paths */
@@ -133,7 +115,7 @@ static void module_reset_dir(const char *dir, const char *new_path)
 			quit(format("Unable to create module dir %s\n", *d));
 		}
 	}
-	else if (!strcmp(dir, "save"))
+	else if (equals(dir, "save"))
 	{
 		module_reset_dir_aux(&ANGBAND_DIR_SAVE, new_path);
 	}
@@ -202,14 +184,11 @@ static void activate_module(int module_idx)
 	VERSION_PATCH = module_ptr->meta.version.patch;
 
 	/* Change window name if needed */
-	if (strcmp(game_module, "ToME"))
+	if (equals(game_module, "ToME"))
 	{
 		strnfmt(angband_term_name[0], 79, "T-Engine: %s", game_module);
-		Term_xtra(TERM_XTRA_RENAME_MAIN_WIN, 0);
+		Term_rename_main_win(angband_term_name[0]);
 	}
-
-	/* Reprocess the player name, just in case */
-	process_player_base();
 }
 
 static void init_module(module_type *module_ptr)
@@ -233,9 +212,6 @@ bool module_savefile_loadable(std::string const &tag)
 	return tag == modules[game_module_idx].meta.save_file_tag;
 }
 
-/* Did the player force a module on command line */
-const char *force_module = NULL;
-
 /* Find module index by name. Returns -1 if matching module not found */
 int find_module(const char *name)
 {
@@ -243,7 +219,7 @@ int find_module(const char *name)
 
 	for (i=0; i<MAX_MODULES; i++)
 	{
-		if (streq(name, modules[i].meta.name))
+		if (equals(name, modules[i].meta.name))
 		{
 			return i;
 		}
@@ -252,23 +228,16 @@ int find_module(const char *name)
 	return -1;
 }
 
-/* Display possible modules and select one */
-bool_ select_module()
+bool select_module(program_args const &args)
 {
-	s32b k, sel, max;
-
 	/* How many modules? */
-	max = MAX_MODULES;
+	s32b max = MAX_MODULES;
 
 	/* No need to bother the player if there is only one module */
-	sel = -1;
-	if (force_module) {
-		/* Find module by name */
-		sel = find_module(force_module);
-	}
-	/* Only a single choice */
-	if (max == 1) {
-		sel = 0;
+	s32b sel = -1;
+	if (args.module)
+	{
+		sel = find_module(args.module);
 	}
 	/* No module selected */
 	if (sel != -1)
@@ -280,15 +249,15 @@ bool_ select_module()
 
 		activate_module(sel);
 
-		return FALSE;
+		return false;
 	}
 
 	sel = 0;
 
 	/* Preprocess the basic prefs, we need them to have movement keys */
-	process_pref_file("pref.prf");
+	process_pref_file(name_file_pref("pref"));
 
-	while (TRUE)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -300,7 +269,7 @@ bool_ select_module()
 
 		dump_modules(sel, max);
 
-		k = inkey();
+		s32b k = inkey();
 
 		if (k == ESCAPE)
 		{
@@ -336,6 +305,7 @@ bool_ select_module()
 			else k = toupper(I2A(sel));
 		}
 
+		// Process
 		{
 			int x;
 
@@ -351,15 +321,14 @@ bool_ select_module()
 
 			activate_module(x);
 
-			return (FALSE);
+			return false;
 		}
 	}
 
-	/* Shouldnt happen */
-	return (FALSE);
+	abort();
 }
 
-static bool_ dleft(byte c, const char *str, int y, int o)
+static bool dleft(byte c, const char *str, int y, int o)
 {
 	int i = strlen(str);
 	int x = 39 - (strlen(str) / 2) + o;
@@ -384,17 +353,17 @@ static bool_ dleft(byte c, const char *str, int y, int o)
 				a = a + 1;
 
 				if (inkey_scan()) {
-					return TRUE;
+					return true;
 				}
 			}
 		}
 
 		i = i - 1;
 	}
-	return FALSE;
+	return false;
 }
 
-static bool_ dright(byte c, const char *str, int y, int o)
+static bool dright(byte c, const char *str, int y, int o)
 {
 	int n = strlen(str); // Conversion to int to avoid warnings
 	int x = 39 - (n / 2) + o;
@@ -417,25 +386,25 @@ static bool_ dright(byte c, const char *str, int y, int o)
 				a = a - 1;
 
 				if (inkey_scan()) {
-					return TRUE;
+					return true;
 				}
 			}
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 typedef struct intro_text intro_text;
 struct intro_text
 {
-	bool_ (*drop_func)(byte, const char *, int, int);
+	bool (*drop_func)(byte, const char *, int, int);
 	byte color;
 	const char *text;
 	int y0;
 	int x0;
 };
 
-static bool_ show_intro(intro_text intro_texts[])
+static bool show_intro(intro_text intro_texts[])
 {
 	int i = 0;
 
@@ -450,7 +419,7 @@ static bool_ show_intro(intro_text intro_texts[])
 		else if (it->drop_func(it->color, it->text, it->y0, it->x0))
 		{
 			/* Abort */
-			return TRUE;
+			return true;
 		}
 	}
 
@@ -459,7 +428,7 @@ static bool_ show_intro(intro_text intro_texts[])
 	inkey();
 
 	/* Continue */
-	return FALSE;
+	return false;
 }
 
 void tome_intro()
@@ -591,12 +560,12 @@ static bool drunk_takes_wine(void *, void *in_, void *)
 			object_type forge;
 			object_prep(&forge, lookup_kind(TV_BOTTLE,1));
 			drop_near(&forge, 50, p_ptr->py, p_ptr->px);
-			return TRUE;
+			return true;
 		}
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 
@@ -668,7 +637,7 @@ static bool food_vessel(void *, void *in_, void *ut)
 
 		object_prep(&forge, lookup_kind(TV_JUNK, 3));
 
-		inven_carry(&forge, FALSE);
+		inven_carry(&forge, false);
 
 		return true;
 	}
@@ -704,13 +673,13 @@ static bool erebor_stair(void *, void *in_, void *out_)
 		{
 			msg_print("The moon-letters on the map show you "
 				  "the keyhole! You use the key to enter.");
-			out->allow = TRUE;
+			out->allow = true;
 		}
 		else
 		{
 			msg_print("You have found a door, but you cannot "
 				  "find a way to enter. Ask in Dale, perhaps?");
-			out->allow = FALSE;
+			out->allow = false;
 		}
 	}
 
@@ -743,12 +712,12 @@ static bool orthanc_stair(void *, void *in_, void *out_)
 		if (keys >= 1)
 		{
 			msg_print("#BYou have the key to the tower of Orthanc! You may proceed.#w");
-			out->allow = TRUE;
+			out->allow = true;
 		}
 		else
 		{
 			msg_print("#yYou may not enter Orthanc without the key to the gates!#w Rumours say the key was lost in the Mines of Moria...");
-			out->allow = FALSE;
+			out->allow = false;
 		}
 	}
 
@@ -1262,6 +1231,6 @@ void init_hooks_module()
 	}
 
 	default:
-		assert(FALSE);
+		assert(false);
 	}
 }

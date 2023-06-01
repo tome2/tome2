@@ -7,6 +7,7 @@
 #include "feature_type.hpp"
 #include "game.hpp"
 #include "hook_quest_finish_in.hpp"
+#include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
 #include "monster2.hpp"
@@ -16,11 +17,13 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #define cquest (quest[QUEST_HAUNTED])
 
-static bool quest_haunted_gen_hook(void *, void *, void *)
+static bool quest_haunted_gen_hook(void *, void *in_, void *)
 {
+	auto in = static_cast<hook_quest_gen_in *>(in_);
 	auto const &f_info = game->edit_data.f_info;
 
 	int x, y, i, m_idx;
@@ -54,8 +57,8 @@ static bool quest_haunted_gen_hook(void *, void *, void *)
 	get_mon_num_prep();
 
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file("haunted.map", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
-	dungeon_flags |= DF_NO_GENO;
+	process_dungeon_file("haunted.map", &ystart, &xstart, cur_hgt, cur_wid, true, false);
+	in->dungeon_flags_ref |= DF_NO_GENO;
 
 	/* Place some ghosts */
 	for (i = 12; i > 0; )
@@ -65,7 +68,7 @@ static bool quest_haunted_gen_hook(void *, void *, void *)
 		auto const flags = f_info[cave[y][x].feat].flags;
 		if (!(flags & FF_PERMANENT) && (flags & FF_FLOOR))
 		{
-			m_idx = place_monster_one(y, x, 477, 0, FALSE, MSTATUS_ENEMY);
+			m_idx = place_monster_one(y, x, 477, 0, false, MSTATUS_ENEMY);
 			if (m_idx) m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
@@ -82,13 +85,13 @@ static bool quest_haunted_gen_hook(void *, void *, void *)
 			int monsters[22] = { 65, 100, 124, 125, 133, 231, 273, 327, 365, 416, 418,
 			                     507, 508, 533, 534, 553, 554, 555, 577, 607, 622, 665};
 			int monster = monsters[rand_int(22)];
-			m_idx = place_monster_one(y, x, monster, 0, FALSE, MSTATUS_ENEMY);
+			m_idx = place_monster_one(y, x, monster, 0, false, MSTATUS_ENEMY);
 			m_list[m_idx].mflag |= MFLAG_QUEST;
 			--i;
 		}
 	}
 
-	process_hooks_restart = TRUE;
+	process_hooks_restart = true;
 
 	return true;
 }
@@ -127,7 +130,7 @@ static bool quest_haunted_death_hook(void *, void *, void *)
 
 		del_hook_new(HOOK_MONSTER_DEATH, quest_haunted_death_hook);
 		del_hook_new(HOOK_GEN_QUEST,     quest_haunted_gen_hook);
-		process_hooks_restart = TRUE;
+		process_hooks_restart = true;
 
 		cmsg_print(TERM_YELLOW, "Minas Anor is safer now.");
 		return false;

@@ -154,7 +154,7 @@ static void plasma_recursive(int x1, int y1, int x2, int y2,
  *
  * Return the number of floor grids
  */
-static int generate_area(int y, int x, bool_ border, bool_ corner)
+static int generate_area(int y, int x, bool corner)
 {
 	auto const &wilderness = game->wilderness;
 	auto const &wf_info = game->edit_data.wf_info;
@@ -245,7 +245,7 @@ static int generate_area(int y, int x, bool_ border, bool_ corner)
 
 		/* Initialize the town */
 		init_flags = INIT_CREATE_DUNGEON;
-		process_dungeon_file("t_info.txt", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+		process_dungeon_file("t_info.txt", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 	}
 	else
 	{
@@ -379,13 +379,13 @@ void wilderness_gen()
 	auto const &f_info = game->edit_data.f_info;
 
 	int i, y, x, hack_floor;
-	bool_ daytime;
+	bool daytime;
 	int xstart = 0;
 	int ystart = 0;
 	cave_type *c_ptr;
 
 	/* Init the wilderness */
-	process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 
 	x = p_ptr->wilderness_x;
 	y = p_ptr->wilderness_y;
@@ -397,7 +397,7 @@ void wilderness_gen()
 	get_mon_num_prep();
 
 	/* North border */
-	generate_area(y - 1, x, TRUE, FALSE);
+	generate_area(y - 1, x, false);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -405,7 +405,7 @@ void wilderness_gen()
 	}
 
 	/* South border */
-	generate_area(y + 1, x, TRUE, FALSE);
+	generate_area(y + 1, x, false);
 
 	for (i = 1; i < MAX_WID - 1; i++)
 	{
@@ -413,7 +413,7 @@ void wilderness_gen()
 	}
 
 	/* West border */
-	generate_area(y, x - 1, TRUE, FALSE);
+	generate_area(y, x - 1, false);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -421,7 +421,7 @@ void wilderness_gen()
 	}
 
 	/* East border */
-	generate_area(y, x + 1, TRUE, FALSE);
+	generate_area(y, x + 1, false);
 
 	for (i = 1; i < MAX_HGT - 1; i++)
 	{
@@ -429,24 +429,24 @@ void wilderness_gen()
 	}
 
 	/* North west corner */
-	generate_area(y - 1, x - 1, FALSE, TRUE);
+	generate_area(y - 1, x - 1, true);
 	border.north_west = cave[MAX_HGT - 2][MAX_WID - 2].feat;
 
 	/* North east corner */
-	generate_area(y - 1, x + 1, FALSE, TRUE);
+	generate_area(y - 1, x + 1, true);
 	border.north_east = cave[MAX_HGT - 2][1].feat;
 
 	/* South west corner */
-	generate_area(y + 1, x - 1, FALSE, TRUE);
+	generate_area(y + 1, x - 1, true);
 	border.south_west = cave[1][MAX_WID - 2].feat;
 
 	/* South east corner */
-	generate_area(y + 1, x + 1, FALSE, TRUE);
+	generate_area(y + 1, x + 1, true);
 	border.south_east = cave[1][1].feat;
 
 
 	/* Create terrain of the current area */
-	hack_floor = generate_area(y, x, FALSE, FALSE);
+	hack_floor = generate_area(y, x, false);
 
 
 	/* Special boundary walls -- North */
@@ -504,9 +504,9 @@ void wilderness_gen()
 
 	/* Day time */
 	if ((turn % (10L * DAY)) < ((10L * DAY) / 2))
-		daytime = TRUE;
+		daytime = true;
 	else
-		daytime = FALSE;
+		daytime = false;
 
 	/* Light up or darken the area */
 	for (y = 0; y < cur_hgt; y++)
@@ -542,7 +542,7 @@ void wilderness_gen()
 	player_place(p_ptr->oldpy, p_ptr->oldpx);
 
 	{
-		int lim = (generate_encounter == TRUE) ? 60 : MIN_M_ALLOC_TN;
+		int lim = (generate_encounter == true) ? 60 : MIN_M_ALLOC_TN;
 
 		/*
 		 * Can't have more monsters than floor grids -1(for the player,
@@ -554,11 +554,11 @@ void wilderness_gen()
 		for (i = 0; i < lim; i++)
 		{
 			/* Make a resident */
-			alloc_monster((generate_encounter == TRUE) ? 0 : 3, (generate_encounter == TRUE) ? FALSE : TRUE);
+			alloc_monster((generate_encounter == true) ? 0 : 3, (generate_encounter == true) ? false : true);
 		}
 
-		if (generate_encounter) ambush_flag = TRUE;
-		generate_encounter = FALSE;
+		if (generate_encounter) ambush_flag = true;
+		generate_encounter = false;
 	}
 
 	/* Set rewarded quests to finished */
@@ -570,7 +570,7 @@ void wilderness_gen()
 		}
 	}
 
-	struct hook_wild_gen_in in = { FALSE };
+	struct hook_wild_gen_in in = { false };
 	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 
@@ -596,7 +596,7 @@ void wilderness_gen_small()
 	}
 
 	/* Init the wilderness */
-	process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid, TRUE, FALSE);
+	process_dungeon_file("w_info.txt", &ystart, &xstart, cur_hgt, cur_wid, true, false);
 
 	/* Fill the map */
 	for (std::size_t x = 0; x < wilderness.width(); x++)
@@ -645,7 +645,7 @@ void wilderness_gen_small()
 		}
 	}
 
-	struct hook_wild_gen_in in = { TRUE };
+	struct hook_wild_gen_in in = { true };
 	process_hooks_new(HOOK_WILD_GEN, &in, NULL);
 }
 
@@ -675,7 +675,7 @@ void reveal_wilderness_around_player(int y, int x, int h, int w)
 				if (distance(y, x, j, i) >= w) continue;
 
 				/* New we know here */
-				wilderness(i, j).known = TRUE;
+				wilderness(i, j).known = true;
 
 				/* Only if we are in overview */
 				if (p_ptr->wild_mode)
@@ -698,7 +698,7 @@ void reveal_wilderness_around_player(int y, int x, int h, int w)
 				if (!in_bounds(j, i)) continue;
 
 				/* New we know here */
-				wilderness(i, j).known = TRUE;
+				wilderness(i, j).known = true;
 
 				/* Only if we are in overview */
 				if (p_ptr->wild_mode)
@@ -1039,9 +1039,9 @@ static void place_townspeople(int qy, int qx)
 			if (rand_int(100)) continue;
 
 			r_idx = get_mon_num(0);
-			m_allow_special[r_idx] = TRUE;
-			m_idx = place_monster_one(y, x, r_idx, 0, TRUE, MSTATUS_ENEMY);
-			m_allow_special[r_idx] = FALSE;
+			m_allow_special[r_idx] = true;
+			m_idx = place_monster_one(y, x, r_idx, 0, true, MSTATUS_ENEMY);
+			m_allow_special[r_idx] = false;
 
 			if (m_idx)
 			{
@@ -1221,7 +1221,7 @@ static void town_gen_hidden()
 		/* Find a good spot */
 		int x;
 		int y;
-		while (TRUE)
+		while (true)
 		{
 			y = rand_range(1, cur_hgt - 2);
 			x = rand_range(1, cur_wid - 2);

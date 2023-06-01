@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "timer_type_fwd.hpp"
 
 #include <vector>
@@ -29,7 +29,6 @@ errr fd_write(int fd, const char *buf, unsigned long n);
 errr fd_close(int fd);
 void flush();
 void flush_on_failure();
-void move_cursor(int row, int col);
 void text_to_ascii(char *buf, const char *str);
 void ascii_to_text(char *buf, const char *str);
 char inkey_scan();
@@ -41,7 +40,9 @@ void msg_print(std::string const &msg);
 void cmsg_format(byte color, const char *fmt, ...);
 void msg_format(const char *fmt, ...);
 void screen_save();
+void screen_save_no_flush();
 void screen_load();
+void screen_load_no_flush();
 void c_put_str(byte attr, const char *str, int row, int col);
 void c_put_str(byte attr, std::string const &str, int row, int col);
 void put_str(const char *str, int row, int col);
@@ -58,16 +59,17 @@ void text_out_c(byte a, std::string const &str);
 void clear_from(int row);
 int ask_menu(const char *ask, const std::vector<std::string> &items);
 bool askfor_aux(std::string *buf, std::size_t max_len);
-bool_ askfor_aux(char *buf, int len);
-bool_ askfor_aux_with_completion(char *buf, int len);
-bool_ get_string(const char *prompt, char *buf, int len);
-bool_ get_check(const char *prompt);
-bool_ get_com(const char *prompt, char *command);
+bool askfor_aux(char *buf, int len);
+bool askfor_aux_with_completion(char *buf, int len);
+bool get_string(const char *prompt, char *buf, int len);
+bool get_check(const char *prompt);
+bool get_check(std::string const &prompt);
+bool get_com(const char *prompt, char *command);
 s32b get_quantity(const char *prompt, s32b max);
 extern char request_command_ignore_keymaps[MAX_IGNORE_KEYMAPS];
-extern bool_ request_command_inven_mode;
+extern bool request_command_inven_mode;
 void request_command(int shopping);
-bool_ is_a_vowel(int ch);
+bool is_a_vowel(int ch);
 int get_keymap_dir(char ch);
 byte count_bits(u32b array);
 void strlower(char *buf);
@@ -78,12 +80,18 @@ char msg_box_auto(std::string const &title);
 timer_type *new_timer(void (*callback)(), s32b delay);
 int get_keymap_mode();
 void repeat_push(int what);
-bool_ repeat_pull(int *what);
-void repeat_check();
-void get_count(int number, int max);
+bool repeat_pull(int *what);
+void repeat_check(s16b *command_cmd);
+s16b get_count(int number, int max);
 bool in_bounds(int y, int x);
 bool in_bounds2(int y, int x);
 bool panel_contains(int y, int x);
 errr path_parse(char *buf, int max, const char *file);
 void pause_line(int row);
 std::string user_name();
+errr path_build(char *buf, int max, const char *path, const char *file);
+void bell();
+errr macro_add(const char *pat, const char *act);
+int macro_find_exact(const char *pat);
+char inkey();
+void prt(const char *str, int row, int col);

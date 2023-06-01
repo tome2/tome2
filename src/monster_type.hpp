@@ -1,6 +1,6 @@
 #pragma once
 
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_blow.hpp"
 #include "monster_race_fwd.hpp"
 
@@ -52,7 +52,7 @@ struct monster_type
 
 	s32b mflag = 0;                     /* Extra monster flags */
 
-	bool_ ml = FALSE;                   /* Monster is "visible" */
+	bool ml = false;                   /* Monster is "visible" */
 
 	std::vector<s16b> hold_o_idxs { };  /* Objects being held */
 

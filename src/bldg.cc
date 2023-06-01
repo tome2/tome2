@@ -13,6 +13,8 @@
  * Heavily modified for ToME by DarkGod
  */
 
+#include "bldg.hpp"
+
 #include "cave_type.hpp"
 #include "cmd3.hpp"
 #include "files.hpp"
@@ -39,11 +41,12 @@
 #include "store_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
 #include "xtra2.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 /* remember building location */
 static int building_loc = 0;
@@ -52,7 +55,7 @@ static int building_loc = 0;
 /*
  * A helper function for is_state
  */
-static bool_ is_state_aux(store_type const *s_ptr, int state)
+static bool is_state_aux(store_type const *s_ptr, int state)
 {
 	auto const &ow_info = game->edit_data.ow_info;
 
@@ -61,30 +64,30 @@ static bool_ is_state_aux(store_type const *s_ptr, int state)
 	/* Check race */
 	if (ow_ptr->races[state][p_ptr->prace / 32] & (1 << p_ptr->prace))
 	{
-		return (TRUE);
+		return true;
 	}
 
 	/* Check class */
 	if (ow_ptr->classes[state][p_ptr->prace / 32] & (1 << p_ptr->pclass))
 	{
-		return (TRUE);
+		return true;
 	}
 
 	/* All failed */
-	return (FALSE);
+	return false;
 }
 
 
 /*
  * Test if the state accords with the player
  */
-bool_ is_state(store_type const *s_ptr, int state)
+bool is_state(store_type const *s_ptr, int state)
 {
 	if (state == STORE_NORMAL)
 	{
-		if (is_state_aux(s_ptr, STORE_LIKED)) return (FALSE);
-		if (is_state_aux(s_ptr, STORE_HATED)) return (FALSE);
-		return (TRUE);
+		if (is_state_aux(s_ptr, STORE_LIKED)) return false;
+		if (is_state_aux(s_ptr, STORE_HATED)) return false;
+		return true;
 	}
 
 	else
@@ -308,7 +311,7 @@ static void display_fruit(int row, int col, int fruit)
 /*
  * gamble_comm
  */
-static bool_ gamble_comm(int cmd)
+static void gamble_comm(int cmd)
 {
 	int roll1, roll2, roll3, choice, odds, win;
 
@@ -358,8 +361,9 @@ static bool_ gamble_comm(int cmd)
 		{
 			msg_print("Hey! You don't have the gold - get out of here!");
 			msg_print(NULL);
+
 			screen_load();
-			return (FALSE);
+			return;
 		}
 		else if (wager > maxbet)
 		{
@@ -373,7 +377,7 @@ static bool_ gamble_comm(int cmd)
 			wager = 1;
 		}
 		msg_print(NULL);
-		win = FALSE;
+		win = false;
 		odds = 0;
 		oldgold = p_ptr->au;
 
@@ -391,7 +395,7 @@ static bool_ gamble_comm(int cmd)
 				{
 					c_put_str(TERM_GREEN, "In Between", 5, 2);
 					odds = 3;
-					win = FALSE;
+					win = false;
 					roll1 = randint(10);
 					roll2 = randint(10);
 					choice = randint(10);
@@ -402,7 +406,7 @@ static bool_ gamble_comm(int cmd)
 					prt(tmp_str, 11, 14);
 					if (((choice > roll1) && (choice < roll2)) ||
 					                ((choice < roll1) && (choice > roll2)))
-						win = TRUE;
+						win = true;
 
 					break;
 				}
@@ -419,9 +423,9 @@ static bool_ gamble_comm(int cmd)
 					        roll2, roll3);
 					prt(tmp_str, 7, 5);
 					if ((roll3 == 7) || (roll3 == 11))
-						win = TRUE;
+						win = true;
 					else if ((roll3 == 2) || (roll3 == 3) || (roll3 == 12))
-						win = FALSE;
+						win = false;
 					else
 					{
 						do
@@ -436,11 +440,11 @@ static bool_ gamble_comm(int cmd)
 							        roll1, roll2, roll3);
 							prt(tmp_str, 8, 5);
 							if (roll3 == choice)
-								win = TRUE;
+								win = true;
 							else if (roll3 == 7)
-								win = FALSE;
+								win = false;
 						}
-						while ((win != TRUE) && (win != FALSE));
+						while ((win != true) && (win != false));
 					}
 
 					break;
@@ -449,7 +453,7 @@ static bool_ gamble_comm(int cmd)
 			case BACT_DICE_SLOTS:  /* The Dice Slots */
 				{
 					c_put_str(TERM_GREEN, "Dice Slots", 5, 2);
-					win = FALSE;
+					win = false;
 					roll1 = randint(6);
 					roll2 = randint(6);
 					choice = randint(6);
@@ -464,7 +468,7 @@ static bool_ gamble_comm(int cmd)
 					display_fruit(8, 21, choice - 1);
 					if ((roll1 == roll2) && (roll2 == choice))
 					{
-						win = TRUE;
+						win = true;
 						if (roll1 == 1)
 							odds = 4;
 						else if (roll1 == 2)
@@ -474,7 +478,7 @@ static bool_ gamble_comm(int cmd)
 					}
 					else if ((roll1 == 6) && (roll2 == 6))
 					{
-						win = TRUE;
+						win = true;
 						odds = choice + 1;
 					}
 
@@ -498,16 +502,14 @@ static bool_ gamble_comm(int cmd)
 			strnfmt(tmp_str, 80, "Current Gold:     %9ld", p_ptr->au);
 			prt(tmp_str, 22, 2);
 			prt("Again(Y/N)?", 18, 37);
-			move_cursor(18, 49);
+			Term_gotoxy(49, 18);
 			again = inkey();
 			if (wager > p_ptr->au)
 			{
 				msg_print("Hey! You don't have the gold - get out of here!");
 				msg_print(NULL);
 				screen_load();
-				return (FALSE);
-				/*				strnfmt(tmp_str, 80, "Current Wager:    %9ld",wager);
-								prt(tmp_str, 17, 2); */
+				return;
 			}
 		}
 		while ((again == 'y') || (again == 'Y'));
@@ -521,8 +523,6 @@ static bool_ gamble_comm(int cmd)
 	}
 
 	screen_load();
-
-	return (TRUE);
 }
 
 
@@ -535,13 +535,10 @@ static bool_ gamble_comm(int cmd)
  * ghost code does become a reality again. Does help to avoid filthy urchins.
  * Resting at night is also a quick way to restock stores -KMW- 
  */
-static bool_ inn_comm(int cmd)
+static bool inn_comm(int cmd)
 {
-	bool_ vampire;
-
-
-	/* Extract race info */
-	vampire = ((race_flags_p(PR_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
+	/* Is the player a vampire? */
+	auto const vampire = ((race_flags_p(PR_VAMPIRE)) || (p_ptr->mimic_form == resolve_mimic_name("Vampire")));
 
 	switch (cmd)
 	{
@@ -565,17 +562,15 @@ static bool_ inn_comm(int cmd)
 		 */
 	case BACT_REST:  /* Rest for the night */
 		{
-			bool_ nighttime;
-
 			/* Extract the current time */
-			nighttime = ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18));
+			bool const nighttime = ((bst(HOUR, turn) < 6) || (bst(HOUR, turn) >= 18));
 
 			/* Normal races rest at night */
 			if (!vampire && !nighttime)
 			{
 				msg_print("The rooms are available only at night.");
 				msg_print(NULL);
-				return (FALSE);
+				return false;
 			}
 
 			/* Vampires rest during daytime */
@@ -583,7 +578,7 @@ static bool_ inn_comm(int cmd)
 			{
 				msg_print("The rooms are available only during daylight for your kind.");
 				msg_print(NULL);
-				return (FALSE);
+				return false;
 			}
 
 			/* Must cure HP draining status first */
@@ -592,7 +587,7 @@ static bool_ inn_comm(int cmd)
 				msg_print("You need a healer, not a room.");
 				msg_print(NULL);
 				msg_print("Sorry, but I don't want anyone dying in here.");
-				return (FALSE);
+				return false;
 			}
 
 			/* Let the time pass XXX XXX XXX */
@@ -627,7 +622,7 @@ static bool_ inn_comm(int cmd)
 			else msg_print("You awake refreshed for the new day.");
 
 			/* Dungeon stuff */
-			p_ptr->leaving = TRUE;
+			p_ptr->leaving = true;
 			p_ptr->oldpx = p_ptr->px;
 			p_ptr->oldpy = p_ptr->py;
 
@@ -646,7 +641,7 @@ static bool_ inn_comm(int cmd)
 		}
 	}
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -675,7 +670,7 @@ static void get_questinfo(int questnum)
 /*
  * Request a quest from the Lord.
  */
-static bool_ castle_quest(int y, int x)
+static bool castle_quest(int y, int x)
 {
 	int plot = 0;
 
@@ -691,7 +686,7 @@ static bool_ castle_quest(int y, int x)
 	if ((!plot) || (plots[plot] == QUEST_NULL))
 	{
 		put_str("I don't have a quest for you at the moment.", 8, 0);
-		return FALSE;
+		return false;
 	}
 
 	q_ptr = &quest[plots[plot]];
@@ -705,7 +700,7 @@ static bool_ castle_quest(int y, int x)
 		struct hook_quest_finish_in in = { plots[plot] };
 		process_hooks_new(HOOK_QUEST_FINISH, &in, NULL);
 
-		return (TRUE);
+		return true;
 	}
 
 	/* Quest is still unfinished */
@@ -715,7 +710,7 @@ static bool_ castle_quest(int y, int x)
 		put_str("Use CTRL-Q to check the status of your quest.", 9, 0);
 		put_str("Return when you have completed your quest.", 12, 0);
 
-		return (FALSE);
+		return false;
 	}
 	/* Failed quest */
 	else if (q_ptr->status == QUEST_STATUS_FAILED)
@@ -726,7 +721,7 @@ static bool_ castle_quest(int y, int x)
 		hook_quest_fail_in in = { plots[plot] };
 		process_hooks_new(HOOK_QUEST_FAIL, &in, NULL);
 
-		return (FALSE);
+		return false;
 	}
 	/* No quest yet */
 	else if (q_ptr->status == QUEST_STATUS_UNTAKEN)
@@ -734,7 +729,7 @@ static bool_ castle_quest(int y, int x)
 		struct hook_init_quest_in in = { plots[plot] };
 		if (process_hooks_new(HOOK_INIT_QUEST, &in, NULL))
 		{
-			return (FALSE);
+			return false;
 		}
 
 		q_ptr->status = QUEST_STATUS_TAKEN;
@@ -745,10 +740,10 @@ static bool_ castle_quest(int y, int x)
 		/* Add the hooks */
 		quest[plots[plot]].init();
 
-		return (TRUE);
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /*
@@ -873,7 +868,7 @@ static void list_weapon(object_type *o_ptr, int row, int col)
 	char tmp_str[80];
 
 
-	object_desc(o_name, o_ptr, TRUE, 0);
+	object_desc(o_name, o_ptr, true, 0);
 	c_put_str(TERM_YELLOW, o_name, row, col);
 	strnfmt(tmp_str, 80, "To Hit: %d   To Damage: %d", o_ptr->to_h, o_ptr->to_d);
 	put_str(tmp_str, row + 1, col);
@@ -902,7 +897,7 @@ static bool item_tester_hook_melee_weapon(object_type const *o_ptr)
 /*
  * compare_weapons -KMW-
  */
-static bool_ compare_weapons()
+static bool compare_weapons()
 {
 	int item, i;
 
@@ -928,7 +923,7 @@ static bool_ compare_weapons()
 		      item_tester_hook_melee_weapon))
 	{
 		object_wipe(orig_ptr);
-		return (FALSE);
+		return false;
 	}
 
 	/* Get the item (in the pack) */
@@ -944,7 +939,7 @@ static bool_ compare_weapons()
 		      item_tester_hook_melee_weapon))
 	{
 		object_wipe(orig_ptr);
-		return (FALSE);
+		return false;
 	}
 
 	/* Get the item (in the pack) */
@@ -954,7 +949,7 @@ static bool_ compare_weapons()
 
 	i_ptr = &p_ptr->inventory[INVEN_WIELD];
 	object_copy(i_ptr, o1_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	list_weapon(o1_ptr, i, 2);
 	compare_weapon_aux1(o1_ptr, 2, i + 8);
@@ -964,20 +959,20 @@ static bool_ compare_weapons()
 		object_copy(i_ptr, orig_ptr);
 	else
 		object_copy(i_ptr, o2_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	list_weapon(o2_ptr, i, 40);
 	compare_weapon_aux1(o2_ptr, 40, i + 8);
 
 	i_ptr = &p_ptr->inventory[INVEN_WIELD];
 	object_copy(i_ptr, orig_ptr);
-	calc_bonuses(TRUE);
+	calc_bonuses(true);
 
 	object_wipe(orig_ptr);
 
 	put_str("(Only highest damage applies per monster. Special damage not cumulative)", 20, 0);
 
-	return (TRUE);
+	return true;
 }
 
 
@@ -986,7 +981,7 @@ static bool_ compare_weapons()
  * sharpen arrows, repair armor, repair weapon
  * -KMW-
  */
-static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
+static bool fix_item(int istart, int iend, int ispecific, bool iac)
 {
 	int i;
 
@@ -998,7 +993,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 
 	char out_val[80], tmp_str[80];
 
-	bool_ repaired = FALSE;
+	bool repaired = false;
 
 	clear_bldg(5, 18);
 	strnfmt(tmp_str, 80, "  Based on your skill, we can improve up to +%d", maxenchant);
@@ -1016,7 +1011,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 
 		if (o_ptr->tval)
 		{
-			object_desc(tmp_str, o_ptr, FALSE, 1);
+			object_desc(tmp_str, o_ptr, false, 1);
 
 			if (o_ptr->name1 && o_ptr->identified)
 				strnfmt(out_val, 80, "%-40s: beyond our skills!", tmp_str);
@@ -1032,7 +1027,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 				{
 					o_ptr->to_a++;
 					strnfmt(out_val, 80, "%-40s: polished -> (%d)", tmp_str, o_ptr->to_a);
-					repaired = TRUE;
+					repaired = true;
 				}
 				else if ((!iac) && ((o_ptr->to_h <= -3) || (o_ptr->to_d <= -3)))
 				{
@@ -1048,7 +1043,7 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 						o_ptr->to_d++;
 					strnfmt(out_val, 80, "%-40s: sharpened -> (%d,%d)", tmp_str,
 					        o_ptr->to_h, o_ptr->to_d);
-					repaired = TRUE;
+					repaired = true;
 				}
 				else
 					strnfmt(out_val, 80, "%-40s: in fine condition", tmp_str);
@@ -1073,22 +1068,22 @@ static bool_ fix_item(int istart, int iend, int ispecific, bool_ iac)
 	}
 	clear_bldg(5, 18);
 
-	return (repaired);
+	return repaired;
 }
 
 
 /*
  * Execute a building command
  */
-bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_ptr)
+bool bldg_process_command(const store_type *s_ptr, store_action_type const *ba_ptr)
 {
 	int bact = ba_ptr->action;
 
 	int bcost;
 
-	bool_ paid = FALSE;
+	bool paid = false;
 
-	bool_ recreate = FALSE;
+	bool recreate = false;
 
 
 	if (is_state(s_ptr, STORE_LIKED))
@@ -1110,7 +1105,7 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 	{
 		msg_print("You have no right to choose that!");
 		msg_print(NULL);
-		return FALSE;
+		return false;
 	}
 
 	/* check gold */
@@ -1118,7 +1113,7 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 	{
 		msg_print("You do not have the gold!");
 		msg_print(NULL);
-		return FALSE;
+		return false;
 	}
 
 	switch (bact)
@@ -1137,8 +1132,9 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	case BACT_QUEST1:
 		{
-			int y = 1, x = 1;
-			bool_ ok = FALSE;
+			int y = 1;
+			int x = 1;
+			bool ok = false;
 
 			while ((x < cur_wid - 1) && !ok)
 			{
@@ -1149,7 +1145,7 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 					if (bact - BACT_QUEST1 + FEAT_QUEST1 == cave[y][x].feat)
 					{
 						/* Stop the loop */
-						ok = TRUE;
+						ok = true;
 					}
 					y++;
 				}
@@ -1159,7 +1155,6 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 			if (ok)
 			{
 				recreate = castle_quest(y - 1, x - 1);
-				;
 			}
 			else
 			{
@@ -1199,20 +1194,23 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 
 	case BACT_ENCHANT_WEAPON:
 		{
-		        paid = fix_item(INVEN_WIELD, INVEN_WIELD, 0, FALSE);
+			paid = fix_item(INVEN_WIELD, INVEN_WIELD, 0, false);
 			break;
 		}
 
 	case BACT_ENCHANT_ARMOR:
 		{
-		        paid = fix_item(INVEN_BODY, INVEN_FEET, 0, TRUE);
+			paid = fix_item(INVEN_BODY, INVEN_FEET, 0, true);
 			break;
 		}
 
 		/* needs work */
 	case BACT_RECHARGE:
 		{
-			if (recharge(80)) paid = TRUE;
+			if (recharge(80))
+			{
+				paid = true;
+			}
 			break;
 		}
 
@@ -1228,9 +1226,10 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 			if (p_ptr->black_breath)
 			{
 				msg_print("The hold of the Black Breath on you is broken!");
-				p_ptr->black_breath = FALSE;
+				p_ptr->black_breath = false;
 			}
-			paid = TRUE;
+
+			paid = true;
 			break;
 		}
 
@@ -1243,31 +1242,32 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 			set_confused(0);
 			set_cut(0);
 			set_stun(0);
-			paid = TRUE;
+
+			paid = true;
 			break;
 		}
 
 		/* needs work */
 	case BACT_RESTORE:
 		{
-			if (do_res_stat(A_STR, TRUE)) paid = TRUE;
-			if (do_res_stat(A_INT, TRUE)) paid = TRUE;
-			if (do_res_stat(A_WIS, TRUE)) paid = TRUE;
-			if (do_res_stat(A_DEX, TRUE)) paid = TRUE;
-			if (do_res_stat(A_CON, TRUE)) paid = TRUE;
-			if (do_res_stat(A_CHR, TRUE)) paid = TRUE;
+			if (do_res_stat(A_STR, true)) paid = true;
+			if (do_res_stat(A_INT, true)) paid = true;
+			if (do_res_stat(A_WIS, true)) paid = true;
+			if (do_res_stat(A_DEX, true)) paid = true;
+			if (do_res_stat(A_CON, true)) paid = true;
+			if (do_res_stat(A_CHR, true)) paid = true;
 			break;
 		}
 
 	case BACT_ENCHANT_ARROWS:
 		{
-		        paid = fix_item(0, INVEN_WIELD, TV_ARROW, FALSE);
+			paid = fix_item(0, INVEN_WIELD, TV_ARROW, false);
 			break;
 		}
 
 	case BACT_ENCHANT_BOW:
 		{
-		        paid = fix_item(INVEN_BOW, INVEN_BOW, TV_BOW, FALSE);
+			paid = fix_item(INVEN_BOW, INVEN_BOW, TV_BOW, false);
 			break;
 		}
 
@@ -1275,17 +1275,19 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 		{
 			p_ptr->word_recall = 1;
 			msg_print("The air about you becomes charged...");
-			paid = TRUE;
+
+			paid = true;
 			break;
 		}
 
 	case BACT_TELEPORT_LEVEL:
 		{
-			if (reset_recall(FALSE))
+			if (reset_recall(false))
 			{
 				p_ptr->word_recall = 1;
 				msg_print("The air about you becomes charged...");
-				paid = TRUE;
+
+				paid = true;
 			}
 			break;
 		}
@@ -1293,31 +1295,33 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 	case BACT_MIMIC_NORMAL:
 		{
 			set_mimic(0, 0, 0);
-			paid = TRUE;
+			paid = true;
 			break;
 		}
 
 	case BACT_DIVINATION:
 		{
-			int i, count = 0;
-			bool_ something = FALSE;
+			bool found = false;
 
-			while (count < 1000)
+			for (int count = 0; count < 1000; count++)
 			{
-				count++;
-				i = rand_int(MAX_FATES);
+				int i = rand_int(MAX_FATES);
 				if (!fates[i].fate) continue;
 				if (fates[i].know) continue;
 				msg_print("You know a little more of your fate.");
 
-				fates[i].know = TRUE;
-				something = TRUE;
+				fates[i].know = true;
+
+				found = true;
 				break;
 			}
 
-			if (!something) msg_print("Well, you have no fate, but I'll keep your money anyway!");
+			if (!found)
+			{
+				msg_print("Well, you have no fate, but I'll keep your money anyway!");
+			}
 
-			paid = TRUE;
+			paid = true;
 			break;
 
 		}
@@ -1391,7 +1395,7 @@ bool_ bldg_process_command(const store_type *s_ptr, store_action_type const *ba_
 		store_prt_gold();
 	}
 
-	return (recreate);
+	return recreate;
 }
 
 
@@ -1415,7 +1419,7 @@ void enter_quest()
 
 		p_ptr->inside_quest = cave[p_ptr->py][p_ptr->px].special;
 		dun_level = 1;
-		p_ptr->leaving = TRUE;
+		p_ptr->leaving = true;
 		p_ptr->oldpx = p_ptr->px;
 		p_ptr->oldpy = p_ptr->py;
 	}

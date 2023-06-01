@@ -1,7 +1,7 @@
 #pragma once
 
 #include "body.hpp"
-#include "h-basic.h"
+#include "h-basic.hpp"
 #include "monster_blow.hpp"
 #include "monster_race_flag_set.hpp"
 #include "monster_spell_flag_set.hpp"
@@ -75,7 +75,7 @@ struct monster_race
 
 	s16b r_pkills = 0;                       /* Count monsters killed in this life */
 
-	bool_ on_saved = 0;                      /* Is the (unique) on a saved level ? */
+	bool on_saved = 0;                      /* Is the (unique) on a saved level ? */
 
 	obj_theme drops;                         /* The drops type */
 

@@ -1,6 +1,7 @@
 #include "cave.hpp"
 
 #include "cave_type.hpp"
+#include "config.hpp"
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
@@ -21,10 +22,10 @@
 #include "store_info_type.hpp"
 #include "tables.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
+#include "z-util.hpp"
 
 #include <cassert>
 #include <vector>
@@ -64,10 +65,10 @@ int distance(int y1, int x1, int y2, int x2)
 
 
 /*
- * Returns TRUE if a grid is considered to be a wall for the purpose
+ * Returns true if a grid is considered to be a wall for the purpose
  * of magic mapping / clairvoyance
  */
-static bool_ is_wall(cave_type *c_ptr)
+static bool is_wall(cave_type *c_ptr)
 {
 	auto const &f_info = game->edit_data.f_info;
 
@@ -77,22 +78,37 @@ static bool_ is_wall(cave_type *c_ptr)
 		: c_ptr->feat;
 
 	/* Paranoia */
-	if (feat >= f_info.size()) return FALSE;
+	if (feat >= f_info.size())
+	{
+		return false;
+	}
 
 	/* Vanilla floors and doors aren't considered to be walls */
-	if (feat < FEAT_SECRET) return FALSE;
+	if (feat < FEAT_SECRET)
+	{
+		return false;
+	}
 
 	/* Exception #1: a glass wall is a wall but doesn't prevent LOS */
-	if (feat == FEAT_GLASS_WALL) return FALSE;
+	if (feat == FEAT_GLASS_WALL)
+	{
+		return false;
+	}
 
 	/* Exception #2: an illusion wall is not a wall but obstructs view */
-	if (feat == FEAT_ILLUS_WALL) return TRUE;
+	if (feat == FEAT_ILLUS_WALL)
+	{
+		return true;
+	}
 
 	/* Exception #3: a small tree is a floor but obstructs view */
-	if (feat == FEAT_SMALL_TREES) return TRUE;
+	if (feat == FEAT_SMALL_TREES)
+	{
+		return true;
+	}
 
 	/* Normal cases: use the WALL flag in f_info.txt */
-	return (f_info[feat].flags & FF_WALL) ? TRUE : FALSE;
+	return !!(f_info[feat].flags & FF_WALL);
 }
 
 
@@ -100,10 +116,10 @@ static bool_ is_wall(cave_type *c_ptr)
  * A simple, fast, integer-based line-of-sight algorithm.  By Joseph Hall,
  * 4116 Brewster Drive, Raleigh NC 27606.  Email to jnh@ecemwl.ncsu.edu.
  *
- * Returns TRUE if a line of sight can be traced from (x1,y1) to (x2,y2).
+ * Returns true if a line of sight can be traced from (x1,y1) to (x2,y2).
  *
  * The LOS begins at the center of the tile (x1,y1) and ends at the center of
- * the tile (x2,y2).  If los() is to return TRUE, all of the tiles this line
+ * the tile (x2,y2).  If los() is to return true, all of the tiles this line
  * passes through must be floor tiles, except for (x1,y1) and (x2,y2).
  *
  * We assume that the "mathematical corner" of a non-floor tile does not
@@ -131,7 +147,7 @@ static bool_ is_wall(cave_type *c_ptr)
  *
  * Use the "update_view()" function to determine player line-of-sight.
  */
-bool_ los(int y1, int x1, int y2, int x2)
+bool los(int y1, int x1, int y2, int x2)
 {
 	/* Delta */
 	int dx, dy;
@@ -165,11 +181,14 @@ bool_ los(int y1, int x1, int y2, int x2)
 
 
 	/* Handle adjacent (or identical) grids */
-	if ((ax < 2) && (ay < 2)) return (TRUE);
+	if ((ax < 2) && (ay < 2))
+	{
+		return true;
+	}
 
 
 	/* Paranoia -- require "safe" origin */
-	/* if (!in_bounds(y1, x1)) return (FALSE); */
+	/* if (!in_bounds(y1, x1)) return false; */
 
 
 	/* Directly South/North */
@@ -180,7 +199,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (ty = y1 + 1; ty < y2; ty++)
 			{
-				if (!cave_sight_bold(ty, x1)) return (FALSE);
+				if (!cave_sight_bold(ty, x1))
+				{
+					return false;
+				}
 			}
 		}
 
@@ -189,12 +211,15 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (ty = y1 - 1; ty > y2; ty--)
 			{
-				if (!cave_sight_bold(ty, x1)) return (FALSE);
+				if (!cave_sight_bold(ty, x1))
+				{
+					return false;
+				}
 			}
 		}
 
 		/* Assume los */
-		return (TRUE);
+		return true;
 	}
 
 	/* Directly East/West */
@@ -205,7 +230,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (tx = x1 + 1; tx < x2; tx++)
 			{
-				if (!cave_sight_bold(y1, tx)) return (FALSE);
+				if (!cave_sight_bold(y1, tx))
+				{
+					return false;
+				}
 			}
 		}
 
@@ -214,12 +242,15 @@ bool_ los(int y1, int x1, int y2, int x2)
 		{
 			for (tx = x1 - 1; tx > x2; tx--)
 			{
-				if (!cave_sight_bold(y1, tx)) return (FALSE);
+				if (!cave_sight_bold(y1, tx))
+				{
+					return false;
+				}
 			}
 		}
 
 		/* Assume los */
-		return (TRUE);
+		return true;
 	}
 
 
@@ -228,21 +259,25 @@ bool_ los(int y1, int x1, int y2, int x2)
 	sy = (dy < 0) ? -1 : 1;
 
 
-	/* Vertical "knights" */
+	/* Knight's moves */
 	if (ax == 1)
 	{
 		if (ay == 2)
 		{
-			if (cave_sight_bold(y1 + sy, x1)) return (TRUE);
+			if (cave_sight_bold(y1 + sy, x1))
+			{
+				return true;
+			}
 		}
 	}
-
-	/* Horizontal "knights" */
 	else if (ay == 1)
 	{
 		if (ax == 2)
 		{
-			if (cave_sight_bold(y1, x1 + sx)) return (TRUE);
+			if (cave_sight_bold(y1, x1 + sx))
+			{
+				return true;
+			}
 		}
 	}
 
@@ -278,7 +313,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		/* the LOS exactly meets the corner of a tile. */
 		while (x2 - tx)
 		{
-			if (!cave_sight_bold(ty, tx)) return (FALSE);
+			if (!cave_sight_bold(ty, tx))
+			{
+				return false;
+			}
 
 			qy += m;
 
@@ -289,7 +327,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 			else if (qy > f2)
 			{
 				ty += sy;
-				if (!cave_sight_bold(ty, tx)) return (FALSE);
+				if (!cave_sight_bold(ty, tx))
+				{
+					return false;
+				}
 				qy -= f1;
 				tx += sx;
 			}
@@ -325,7 +366,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 		/* the LOS exactly meets the corner of a tile. */
 		while (y2 - ty)
 		{
-			if (!cave_sight_bold(ty, tx)) return (FALSE);
+			if (!cave_sight_bold(ty, tx))
+			{
+				return false;
+			}
 
 			qx += m;
 
@@ -336,7 +380,10 @@ bool_ los(int y1, int x1, int y2, int x2)
 			else if (qx > f2)
 			{
 				tx += sx;
-				if (!cave_sight_bold(ty, tx)) return (FALSE);
+				if (!cave_sight_bold(ty, tx))
+				{
+					return false;
+				}
 				qx -= f1;
 				ty += sy;
 			}
@@ -350,7 +397,7 @@ bool_ los(int y1, int x1, int y2, int x2)
 	}
 
 	/* Assume los */
-	return (TRUE);
+	return true;
 }
 
 
@@ -358,7 +405,7 @@ bool_ los(int y1, int x1, int y2, int x2)
 /*
  * Returns true if the player's grid is dark
  */
-bool_ no_lite()
+bool no_lite()
 {
 	return (!player_can_see_bold(p_ptr->py, p_ptr->px));
 }
@@ -370,12 +417,15 @@ bool_ no_lite()
  *
  * Used by destruction spells, and for placing stairs, etc.
  */
-bool_ cave_valid_bold(int y, int x)
+bool cave_valid_bold(int y, int x)
 {
 	cave_type const *c_ptr = &cave[y][x];
 
 	/* Forbid perma-grids */
-	if (cave_perma_grid(c_ptr)) return (FALSE);
+	if (cave_perma_grid(c_ptr))
+	{
+		return false;
+	}
 
 	/* Check objects */
 	for (auto const o_idx: c_ptr->o_idxs)
@@ -386,12 +436,12 @@ bool_ cave_valid_bold(int y, int x)
 		/* Forbid artifact grids */
 		if (artifact_p(o_ptr))
 		{
-			return (FALSE);
+			return false;
 		}
 	}
 
 	/* Accept */
-	return (TRUE);
+	return true;
 }
 
 
@@ -571,7 +621,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 	/* Check breaths */
 	for (std::size_t i = 0; i < monster_spell_flag_set::nbits; i++)
 	{
-		bool_ stored = FALSE;
+		bool stored = false;
 
 		/* Don't have that breath */
 		if (!(r_ptr->spells.bit(i))) continue;
@@ -601,7 +651,7 @@ static byte multi_hued_attr(std::shared_ptr<monster_race> r_ptr)
 		for (std::size_t j = 0; j < stored_colors; j++)
 		{
 			/* Already stored */
-			if (allowed_attrs[j] == first_color) stored = TRUE;
+			if (allowed_attrs[j] == first_color) stored = true;
 		}
 		if (!stored)
 		{
@@ -836,6 +886,7 @@ static void map_info_layer1(
 {
 	auto const &st_info = game->edit_data.st_info;
 	auto const &f_info = game->edit_data.f_info;
+	auto const &lasting_effects = game->lasting_effects;
 
 	char c;
 	byte a;
@@ -880,9 +931,9 @@ static void map_info_layer1(
 		if (apply_effects)
 		{
 			/* Special terrain effect */
-			if (c_ptr->effect)
+			if (auto effect_idx = c_ptr->maybe_effect)
 			{
-				a = spell_color(effects[c_ptr->effect].type);
+				a = spell_color(lasting_effects[*effect_idx].type);
 			}
 
 			/* Multi-hued attr */
@@ -1420,7 +1471,7 @@ void note_spot(int y, int x)
 		object_type *o_ptr = &o_list[this_o_idx];
 
 		/* Memorize objects */
-		o_ptr->marked = TRUE;
+		o_ptr->marked = true;
 	}
 
 	if (c_ptr->m_idx)
@@ -1431,7 +1482,7 @@ void note_spot(int y, int x)
 		if (r_ptr->flags & RF_MIMIC)
 		{
 			object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
-			o_ptr->marked = TRUE;
+			o_ptr->marked = true;
 		}
 	}
 
@@ -1494,38 +1545,30 @@ void lite_spot(int y, int x)
  */
 void prt_map()
 {
-	int x, y;
-
-	int v;
-
 	/* Access the cursor state */
-	Term_get_cursor(&v);
+	Term_with_saved_cursor_visbility([] {
+		/* Hide the cursor */
+		Term_hide_cursor();
 
-	/* Hide the cursor */
-	Term_set_cursor(0);
-
-	/* Dump the map */
-	for (y = panel_row_min; y <= panel_row_max; y++)
-	{
-		/* Scan the columns of row "y" */
-		for (x = panel_col_min; x <= panel_col_max; x++)
+		/* Dump the map */
+		for (int y = panel_row_min; y <= panel_row_max; y++)
 		{
-			byte a;
-			char c;
+			for (int x = panel_col_min; x <= panel_col_max; x++)
+			{
+				byte a;
+				char c;
 
-			/* Determine what is there */
-			map_info(y, x, &a, &c);
+				/* Determine what is there */
+				map_info(y, x, &a, &c);
 
-			/* Efficiency -- Redraw that grid of the map */
-			Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
+				/* Efficiency -- Redraw that grid of the map */
+				Term_queue_char(panel_col_of(x), y - panel_row_prt, a, c);
+			}
 		}
-	}
 
-	/* Display player */
-	lite_spot(p_ptr->py, p_ptr->px);
-
-	/* Restore the cursor */
-	Term_set_cursor(v);
+		/* Display player */
+		lite_spot(p_ptr->py, p_ptr->px);
+	});
 }
 
 
@@ -1628,7 +1671,7 @@ static byte priority(byte a, char c)
 	int i, p0, p1;
 
 	/* Scan the table */
-	for (i = 0; TRUE; i++)
+	for (i = 0; true; i++)
 	{
 		/* Priority level */
 		p1 = priority_table[i][1];
@@ -1817,11 +1860,8 @@ void do_cmd_view_map()
 	/* Retrive current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Note */
 	prt("Please wait...", 0, 0);
@@ -1839,16 +1879,13 @@ void do_cmd_view_map()
 	put_str("Hit any key to continue", hgt - 1, (wid - COL_MAP) / 2);
 
 	/* Hilite the player */
-	move_cursor(cy, cx);
+	Term_gotoxy(cx, cy);
 
 	/* Get any key */
 	inkey();
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -3196,7 +3233,7 @@ void update_mon_lite()
 	cave_type *c_ptr;
 	u16b info;
 
-	bool_ invis;
+	bool invis;
 
 	s16b fast_lite_n = lite_n;
 	s16b fast_temp_n;
@@ -3360,7 +3397,7 @@ void update_mon_lite()
 			if (player_has_los_bold(y, x) && c_ptr->m_idx)
 			{
 				/* Hide the monster */
-				update_mon(c_ptr->m_idx, FALSE);
+				update_mon(c_ptr->m_idx, false);
 			}
 			else
 			{
@@ -3398,7 +3435,7 @@ void update_mon_lite()
 			if (c_ptr->m_idx)
 			{
 				/* Show it */
-				update_mon(c_ptr->m_idx, FALSE);
+				update_mon(c_ptr->m_idx, false);
 			}
 			else
 			{
@@ -3647,7 +3684,7 @@ void wiz_lite()
 		if (o_ptr->held_m_idx) continue;
 
 		/* Memorize */
-		o_ptr->marked = TRUE;
+		o_ptr->marked = true;
 	}
 
 	/* Scan all normal grids */
@@ -3666,7 +3703,7 @@ void wiz_lite()
 				if (r_ptr->flags & RF_MIMIC)
 				{
 					object_type *o_ptr = &o_list[m_ptr->mimic_o_idx()];
-					o_ptr->marked = TRUE;
+					o_ptr->marked = true;
 				}
 			}
 
@@ -3758,7 +3795,7 @@ void wiz_dark()
 		if (o_ptr->held_m_idx) continue;
 
 		/* Forget the object */
-		o_ptr->marked = FALSE;
+		o_ptr->marked = false;
 	}
 
 	/* Fully update the visuals */
@@ -3913,15 +3950,14 @@ void mmove2(int *y, int *x, int y1, int x1, int y2, int x2)
  *
  * This is slightly (but significantly) different from "los(y1,x1,y2,x2)".
  */
-bool_ projectable(int y1, int x1, int y2, int x2)
+bool projectable(int y1, int x1, int y2, int x2)
 {
-	int dist, y, x;
-
 	/* Start at the initial location */
-	y = y1, x = x1;
+	int y = y1;
+	int x = x1;
 
 	/* See "project()" */
-	for (dist = 0; dist <= MAX_RANGE; dist++)
+	for (int dist = 0; dist <= MAX_RANGE; dist++)
 	{
 		/* Check for arrival at "final target" */
 		/*
@@ -3930,18 +3966,23 @@ bool_ projectable(int y1, int x1, int y2, int x2)
 		 * lets monsters shoot a the player if s/he is
 		 * visible but in a wall
 		 */
-		if ((x == x2) && (y == y2)) return (TRUE);
+		if ((x == x2) && (y == y2))
+		{
+			return true;
+		}
 
 		/* Never pass through walls */
-		if (dist && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x))) break;
+		if (dist && (!cave_sight_bold(y, x) || !cave_floor_bold(y, x)))
+		{
+			break;
+		}
 
 		/* Calculate the new location */
 		mmove2(&y, &x, y1, x1, y2, x2);
 	}
 
-
 	/* Assume obstruction */
-	return (FALSE);
+	return false;
 }
 
 
@@ -4117,6 +4158,8 @@ void disturb_on_other()
  */
 static int random_quest_number()
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if ((dun_level >= 1) && (dun_level < MAX_RANDOM_QUEST) &&
 			(dungeon_flags & DF_PRINCIPAL) &&
 			(random_quests[dun_level].type) &&
@@ -4150,33 +4193,36 @@ int is_quest(int level)
 }
 
 
-/*
- * handle spell effects
+/**
+ * Create a new lasting effect.
  */
-int effect_pop()
+boost::optional<s16b> new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
 {
-	int i;
+	auto &lasting_effects = game->lasting_effects;
+	size_t max_lasting_effects = std::size(game->lasting_effects);
 
-	for (i = 1; i < MAX_EFFECTS; i++)
-		if (!effects[i].time)
-			return i;
-	return -1;
-}
+	std::size_t ei;
+	for (ei = 0; ei < max_lasting_effects; ei++)
+	{
+		if (lasting_effects[ei].time == 0)
+		{
+			break;
+		}
+	}
+	if (ei == max_lasting_effects)
+	{
+		return boost::none;
+	}
 
-int new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
-{
-	int i;
+	lasting_effects[ei].type = type;
+	lasting_effects[ei].dam = dam;
+	lasting_effects[ei].time = time;
+	lasting_effects[ei].flags = flags;
+	lasting_effects[ei].cx = cx;
+	lasting_effects[ei].cy = cy;
+	lasting_effects[ei].rad = rad;
 
-	if ((i = effect_pop()) == -1) return -1;
-
-	effects[i].type = type;
-	effects[i].dam = dam;
-	effects[i].time = time;
-	effects[i].flags = flags;
-	effects[i].cx = cx;
-	effects[i].cy = cy;
-	effects[i].rad = rad;
-	return i;
+	return ei;
 }
 
 /**

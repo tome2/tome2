@@ -6,19 +6,25 @@
  * are included in all such copies.
  */
 
-#include "main.h"
+#include "main.hpp"
 
 #include "birth.hpp"
-#include "dungeon.h"
+#include "config.hpp"
+#include "dungeon.hpp"
 #include "files.hpp"
 #include "game.hpp"
-#include "init2.h"
+#include "init2.hpp"
 #include "modules.hpp"
-#include "util.h"
+#include "program_args.hpp"
 #include "util.hpp"
-#include "variable.h"
 #include "variable.hpp"
+#include "z-form.hpp"
+#include "z-util.hpp"
 
+#include <boost/algorithm/string/predicate.hpp>
+
+using boost::algorithm::equals;
+using boost::algorithm::ends_with;
 
 /*
  * A hook for "quit()".
@@ -27,10 +33,8 @@
  */
 static void quit_hook(const char *s)
 {
-	int j;
-
 	/* Scan windows */
-	for (j = 8 - 1; j >= 0; j--)
+	for (int j = ANGBAND_TERM_MAX - 1; j >= 0; j--)
 	{
 		/* Unused */
 		if (!angband_term[j]) continue;
@@ -45,7 +49,7 @@ static void quit_hook(const char *s)
 /*
  * Check existence of ".ToME/" directory in the user's
  * home directory or try to create it if it doesn't exist.
- * Returns FALSE if all the attempts fail.
+ * Returns false if all the attempts fail.
  */
 static void init_save_dir()
 {
@@ -102,7 +106,7 @@ static void init_file_paths_with_env()
 	strcpy(path, tail ? tail : DEFAULT_PATH);
 
 	/* Hack -- Add a path separator (only if needed) */
-	if (!suffix(path, PATH_SEP)) strcat(path, PATH_SEP);
+	if (!ends_with(path, PATH_SEP)) strcat(path, PATH_SEP);
 
 	/* Initialize */
 	init_file_paths(path);
@@ -120,8 +124,6 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 {
 	int i;
 
-	bool_ args = TRUE;
-
 	// Initialize game structure
 	game = new Game();
 
@@ -134,12 +136,18 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 	/* Make sure save directory exists */
 	init_save_dir();
 
+	/* Program arguments */
+	program_args program_args;
 
 	/* Process the command line arguments */
+	bool args = true;
 	for (i = 1; args && (i < argc); i++)
 	{
 		/* Require proper options */
-		if (argv[i][0] != '-') goto usage;
+		if (argv[i][0] != '-')
+		{
+			goto usage;
+		}
 
 		/* Analyze option */
 		switch (argv[i][1])
@@ -147,38 +155,42 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 		case 'W':
 		case 'w':
 			{
-				arg_wizard = TRUE;
+				program_args.wizard = true;
 				break;
 			}
 
 		case 'R':
 		case 'r':
 			{
-				arg_force_roguelike = TRUE;
+				program_args.force_key_set = 'r';
 				break;
 			}
 
 		case 'O':
 		case 'o':
 			{
-				arg_force_original = TRUE;
+				program_args.force_key_set = 'o';
 				break;
 			}
 
 		case 'u':
 		case 'U':
 			{
-				if (!argv[i][2]) goto usage;
-				game->player_name = &argv[i][2];
-				game->player_base = &argv[i][2];
-				no_begin_screen = true;
+				if (!argv[i][2])
+				{
+					goto usage;
+				}
+				program_args.player_name = &argv[i][2];
 				break;
 			}
 
 		case 'M':
 			{
-				if (!argv[i][2]) goto usage;
-				force_module = &argv[i][2];
+				if (!argv[i][2])
+				{
+					goto usage;
+				}
+				program_args.module = &argv[i][2];
 				break;
 			}
 
@@ -189,7 +201,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 
 		case '-':
 			{
-				if (argv[i][2] == 'h' && !strcmp((argv[i] + 2), "help"))
+				if (argv[i][2] == 'h' && equals(argv[i] + 2, "help"))
 				{
 					goto usage;
 				}
@@ -198,7 +210,7 @@ int main_real(int argc, char *argv[], char const *platform_sys, int (*init_platf
 					argv[i] = argv[0];
 					argc = argc - i;
 					argv = argv + i;
-					args = FALSE;
+					args = false;
 					break;
 				}
 			}
@@ -235,9 +247,15 @@ usage:
 		argv[1] = NULL;
 	}
 
+	/* If player name specified... */
+	if (!program_args.player_name.empty())
+	{
+		game->player_name = program_args.player_name;
+		no_begin_screen = true;
+	}
 
 	/* Process the player name */
-	process_player_name(true);
+	set_player_base(game->player_name);
 
 
 	/* Install "quit" hook */
@@ -253,13 +271,13 @@ usage:
 		ANGBAND_SYS = platform_sys;
 
 		/* Initialize */
-		init_angband();
+		init_angband(program_args);
 
 		/* Wait for response */
 		pause_line(23);
 
 		/* Play the game */
-		play_game();
+		play_game(program_args);
 
 		/* Quit */
 		quit(NULL);

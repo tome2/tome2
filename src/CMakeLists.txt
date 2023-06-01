@@ -4,6 +4,7 @@ INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/bandit)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/fmt)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/pcg-cpp/include)
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/jsoncons)
+INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/CppQuickCheck/include)
 
 # Add subdirectories
 ADD_SUBDIRECTORY (squelch)
@@ -25,6 +26,8 @@ SET(SRCS_COMMON
   dice.cc
   dungeon.cc
   files.cc
+  frontend.cc
+  format_ext.cc
   game.cc
   game_edit_data.cc
   gen_evol.cc
@@ -37,6 +40,7 @@ SET(SRCS_COMMON
   init1.cc
   init2.cc
   joke.cc
+  key_queue.cc
   level_data.cc
   level_marker.cc
   levels.cc
@@ -61,6 +65,7 @@ SET(SRCS_COMMON
   options.cc
   player_type.cc
   powers.cc
+  program_args.cc
   q_betwen.cc
   q_bounty.cc
   q_dragons.cc
@@ -110,14 +115,18 @@ SET(SRCS_COMMON
   seed.cc
   xtra1.cc
   xtra2.cc
-  z-form.c
+  z-form.cc
   z-rand.cc
-  z-term.c
-  z-util.c
+  z-term.cc
+  z-util.cc
 )
 
 # Sources (TEST)
 SET(SRCS_TESTS
+  # CppQuickCheck
+  ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/CppQuickCheck/src/Arbitrary.cpp
+  # Own code
+  ../tests/arbitrary/boost_optional.cc
   ../tests/get_level_device.cc
   ../tests/harness.cc
   ../tests/lua_get_level.cc
@@ -134,7 +143,6 @@ ADD_LIBRARY(game_main
 
 # Need a few additional source files for Windows.
 IF(WIN32)
-  SET(SRCS ${SRCS} main-win.c)
   # Resource files require a little workaround.
   IF(MINGW)
     # Workaround for resource compilation for mingw on CMake.
@@ -148,7 +156,7 @@ IF(WIN32)
     SET(SRCS ${SRCS} angband.rc)
   ENDIF(MINGW)
   # Executable for Win32
-  ADD_EXECUTABLE(tome-win WIN32 main-win.c)
+  ADD_EXECUTABLE(tome-win WIN32 main-win.cc)
   TARGET_LINK_LIBRARIES(tome-win game squelch ${LIBS} winmm wsock32)
   INSTALL(TARGETS tome-win RUNTIME DESTINATION bin)
 ENDIF(WIN32)
@@ -156,28 +164,21 @@ ENDIF(WIN32)
 # tome executables
 IF(X11_FOUND)
   INCLUDE_DIRECTORIES(${X11_INCLUDE_DIR})
-  ADD_EXECUTABLE(tome-x11 main-x11.c)
+  ADD_EXECUTABLE(tome-x11 main-x11.cc)
   TARGET_LINK_LIBRARIES(tome-x11 game_main game squelch ${LIBS} ${X11_LIBRARIES})
   INSTALL(TARGETS tome-x11 RUNTIME DESTINATION bin)
 ENDIF()
 
-IF(SDL_FOUND AND SDLIMAGE_FOUND AND SDLTTF_FOUND)
-  INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
-  ADD_EXECUTABLE(tome-sdl main-sdl.c)
-  TARGET_LINK_LIBRARIES(tome-sdl game_main game squelch ${LIBS} ${SDLIMAGE_LIBRARY} ${SDLTTF_LIBRARY} ${SDL_LIBRARY} m)
-  INSTALL(TARGETS tome-sdl RUNTIME DESTINATION bin)
-ENDIF()
-
 IF(CURSES_FOUND)
   INCLUDE_DIRECTORIES(${CURSES_INCLUDE_DIR})
-  ADD_EXECUTABLE(tome-gcu main-gcu.c)
+  ADD_EXECUTABLE(tome-gcu main-gcu.cc)
   TARGET_LINK_LIBRARIES(tome-gcu game_main game squelch ${LIBS} ${CURSES_LIBRARIES})
   INSTALL(TARGETS tome-gcu RUNTIME DESTINATION bin)
 ENDIF()
 
 IF(GTK2_FOUND)
   INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
-  ADD_EXECUTABLE(tome-gtk2 main-gtk2.c)
+  ADD_EXECUTABLE(tome-gtk2 main-gtk2.cc)
   TARGET_LINK_LIBRARIES(tome-gtk2 game_main game squelch ${LIBS} ${GTK2_LIBRARIES})
   INSTALL(TARGETS tome-gtk2 RUNTIME DESTINATION bin)
 ENDIF()

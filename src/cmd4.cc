@@ -35,13 +35,13 @@
 #include "tables.hpp"
 #include "town_type.hpp"
 #include "util.hpp"
-#include "util.h"
-#include "variable.h"
 #include "variable.hpp"
 #include "xtra1.hpp"
+#include "z-form.hpp"
 #include "z-rand.hpp"
 
 #include <algorithm>
+#include <boost/algorithm/string/predicate.hpp>
 #include <cassert>
 #include <fmt/format.h>
 #include <memory>
@@ -49,6 +49,8 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+
+using boost::algorithm::equals;
 
 /*
  * Hack -- redraw the screen
@@ -63,13 +65,8 @@
  */
 void do_cmd_redraw()
 {
-	int j;
-
-	term *old = Term;
-
-
 	/* Hack -- react to changes */
-	Term_xtra(TERM_XTRA_REACT, 0);
+	Term_xtra_react();
 
 
 	/* Combine and Reorder the pack (later) */
@@ -109,22 +106,16 @@ void do_cmd_redraw()
 
 
 	/* Redraw every window */
-	for (j = 0; j < 8; j++)
+	for (int j = 0; j < 8; j++)
 	{
 		/* Dead window */
 		if (!angband_term[j]) continue;
 
-		/* Activate */
-		Term_activate(angband_term[j]);
-
 		/* Redraw */
-		Term_redraw();
-
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		Term_with_active(angband_term[j], []() {
+			Term_redraw();
+			Term_fresh();
+		});
 	}
 }
 
@@ -141,14 +132,11 @@ void do_cmd_change_name()
 	char	tmp[160];
 
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Forever */
-	while (1)
+	while (true)
 	{
 		/* keep mode below 5 */
 		mode = (mode + 5) % 5;
@@ -238,11 +226,7 @@ void do_cmd_change_name()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
-
+	screen_load_no_flush();
 
 	/* Redraw everything */
 	p_ptr->redraw |= (PR_WIPE | PR_FRAME | PR_MAP);
@@ -301,14 +285,11 @@ void do_cmd_messages()
 	/* Start at leftmost edge */
 	u32b q = 0;
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Process requests until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -484,10 +465,7 @@ void do_cmd_messages()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 // File-local
@@ -515,7 +493,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 
 	/* Interact with the player */
 	size_t k = 0; /* Currently selected option index */
-	while (TRUE)
+	while (true)
 	{
 		/* Prompt XXX XXX XXX */
 		char buf[80];
@@ -541,7 +519,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 		}
 
 		/* Hilite current option */
-		move_cursor(k + 2, 50);
+		Term_gotoxy(50, k + 2);
 
 		/* Get a key */
 		int ch = inkey();
@@ -592,7 +570,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 				{
 					break;
 				}
-				*(options[k].o_var) = TRUE;
+				*(options[k].o_var) = true;
 				k = (k + 1) % n;
 				break;
 			}
@@ -606,7 +584,7 @@ static void interact_with_options(std::vector<option_type> const &options, char 
 					break;
 				}
 
-				*(options[k].o_var) = FALSE;
+				*(options[k].o_var) = false;
 				k = (k + 1) % n;
 				break;
 			}
@@ -633,7 +611,7 @@ static void do_cmd_options_cheat(const char *info)
 	// Interact
 	interact_with_options(options->cheat_options, info, interaction_mode_t::READ_WRITE);
 
-	// If user toggled any of the options to TRUE, then we add those cheats
+	// If user toggled any of the options to true, then we add those cheats
 	// to the player's "noscore" flags. Note that it doesn't matter what the
 	// previous value was -- we don't "unset" noscore flags anyway.
 	for (auto const &option: options->cheat_options)
@@ -682,7 +660,7 @@ static void do_cmd_options_autosave(const char *info)
 	Term_clear();
 
 	/* Interact with the player */
-	while (TRUE)
+	while (true)
 	{
 		/* Prompt XXX XXX XXX */
 		strnfmt(buf, 80,
@@ -713,7 +691,7 @@ static void do_cmd_options_autosave(const char *info)
 
 
 		/* Hilite current option */
-		move_cursor(k + 2, 50);
+		Term_gotoxy(50, k + 2);
 
 		/* Get a key */
 		ch = inkey();
@@ -755,7 +733,7 @@ static void do_cmd_options_autosave(const char *info)
 		case 'Y':
 		case '6':
 			{
-			        (*options->autosave_options[k].o_var) = TRUE;
+			        (*options->autosave_options[k].o_var) = true;
 				k = (k + 1) % n;
 
 				break;
@@ -765,7 +743,7 @@ static void do_cmd_options_autosave(const char *info)
 		case 'N':
 		case '4':
 			{
-			        (*options->autosave_options[k].o_var) = FALSE;
+			        (*options->autosave_options[k].o_var) = false;
 				k = (k + 1) % n;
 
 				break;
@@ -794,7 +772,7 @@ static void do_cmd_options_autosave(const char *info)
 /*
  * Interact with some options
  */
-void do_cmd_options_aux(int page, const char *info, bool_ read_only)
+void do_cmd_options_aux(int page, const char *info, bool read_only)
 {
 	// Scrape together all the options from the relevant page.
 	std::vector<option_type> page_options;
@@ -821,38 +799,20 @@ void do_cmd_options_aux(int page, const char *info, bool_ read_only)
  */
 static void do_cmd_options_win()
 {
-	int i, j, d;
-
-	int y = 0;
-
 	int x = 0;
-
-	char ch;
-
-	bool_ go = TRUE;
-
-	u32b old_flag[8];
-
-
-	/* Memorize old flags */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
-	{
-		/* Acquire current flags */
-		old_flag[j] = window_flag[j];
-	}
-
+	int y = 0;
 
 	/* Clear screen */
 	Term_clear();
 
 	/* Interact */
-	while (go)
+	while (bool go = true)
 	{
 		/* Prompt XXX XXX XXX */
 		prt("Window Flags (<dir>, t, y, n, ESC) ", 0, 0);
 
 		/* Display the windows */
-		for (j = 0; j < ANGBAND_TERM_MAX; j++)
+		for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 		{
 			byte a = TERM_WHITE;
 
@@ -866,7 +826,7 @@ static void do_cmd_options_win()
 		}
 
 		/* Display the options */
-		for (i = 0; i < 16; i++)
+		for (int i = 0; i < 16; i++)
 		{
 			byte a = TERM_WHITE;
 
@@ -882,7 +842,7 @@ static void do_cmd_options_win()
 			Term_putstr(0, i + 5, -1, a, str);
 
 			/* Display the windows */
-			for (j = 0; j < ANGBAND_TERM_MAX; j++)
+			for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 			{
 				byte a = TERM_WHITE;
 
@@ -903,14 +863,14 @@ static void do_cmd_options_win()
 		Term_gotoxy(35 + x * 5, y + 5);
 
 		/* Get key */
-		ch = inkey();
+		char ch = inkey();
 
 		/* Analyze */
 		switch (ch)
 		{
 		case ESCAPE:
 			{
-				go = FALSE;
+				go = false;
 
 				break;
 			}
@@ -919,13 +879,13 @@ static void do_cmd_options_win()
 		case 't':
 			{
 				/* Clear windows */
-				for (j = 0; j < ANGBAND_TERM_MAX; j++)
+				for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 				{
 					window_flag[j] &= ~(1L << y);
 				}
 
 				/* Clear flags */
-				for (i = 0; i < 16; i++)
+				for (int i = 0; i < 16; i++)
 				{
 					window_flag[x] &= ~(1L << i);
 				}
@@ -956,7 +916,7 @@ static void do_cmd_options_win()
 
 		default:
 			{
-				d = get_keymap_dir(ch);
+				int d = get_keymap_dir(ch);
 
 				x = (x + ddx[d] + 8) % 8;
 				y = (y + ddy[d] + 16) % 16;
@@ -968,28 +928,17 @@ static void do_cmd_options_win()
 		}
 	}
 
-	/* Notice changes */
-	for (j = 0; j < ANGBAND_TERM_MAX; j++)
+	/* Refresh all the terms */
+	for (int j = 0; j < ANGBAND_TERM_MAX; j++)
 	{
-		term *old = Term;
-
 		/* Dead window */
 		if (!angband_term[j]) continue;
 
-		/* Ignore non-changes */
-		if (window_flag[j] == old_flag[j]) continue;
-
-		/* Activate */
-		Term_activate(angband_term[j]);
-
-		/* Erase */
-		Term_clear();
-
-		/* Refresh */
-		Term_fresh();
-
-		/* Restore */
-		Term_activate(old);
+		/* Redraw */
+		Term_with_active(angband_term[j], [] {
+			Term_clear();
+			Term_fresh();
+		});
 	}
 }
 
@@ -1105,7 +1054,7 @@ static void do_cmd_pref_file_hack(int row)
 	prt("File: ", row + 2, 0);
 
 	/* Default filename */
-	std::string ftmp = fmt::format("{}.prf", game->player_base);
+	auto ftmp = name_file_pref(game->player_base);
 
 	/* Ask for a file (or cancel) */
 	if (!askfor_aux(&ftmp, 80))
@@ -1114,7 +1063,7 @@ static void do_cmd_pref_file_hack(int row)
 	}
 
 	/* Process the given filename */
-	if (process_pref_file(ftmp.c_str()))
+	if (process_pref_file(ftmp))
 	{
 		/* Mention failure */
 		msg_format("Failed to load '%s'!", ftmp.c_str());
@@ -1142,7 +1091,7 @@ void do_cmd_options()
 	screen_save();
 
 	/* Interact */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -1210,7 +1159,7 @@ void do_cmd_options()
 				prt("File: ", 21, 0);
 
 				/* Default filename */
-				auto ftmp = fmt::format("{}.prf", game->player_base);
+				auto ftmp = name_file_pref(game->player_base);
 
 				/* Ask for a file */
 				if (!askfor_aux(&ftmp, 80)) continue;
@@ -1234,7 +1183,7 @@ void do_cmd_options()
 		case '1':
 			{
 				/* Process the general options */
-				do_cmd_options_aux(1, "User Interface Options", FALSE);
+				do_cmd_options_aux(1, "User Interface Options", false);
 
 				break;
 			}
@@ -1243,7 +1192,7 @@ void do_cmd_options()
 		case '2':
 			{
 				/* Spawn */
-				do_cmd_options_aux(2, "Disturbance Options", FALSE);
+				do_cmd_options_aux(2, "Disturbance Options", false);
 
 				break;
 			}
@@ -1252,7 +1201,7 @@ void do_cmd_options()
 		case '3':
 			{
 				/* Spawn */
-				do_cmd_options_aux(3, "Game-Play Options", FALSE);
+				do_cmd_options_aux(3, "Game-Play Options", false);
 
 				break;
 			}
@@ -1261,7 +1210,7 @@ void do_cmd_options()
 		case '4':
 			{
 				/* Spawn */
-				do_cmd_options_aux(4, "Efficiency Options", FALSE);
+				do_cmd_options_aux(4, "Efficiency Options", false);
 
 				break;
 			}
@@ -1269,7 +1218,7 @@ void do_cmd_options()
 			/* ToME Options */
 		case '5':
 			{
-				do_cmd_options_aux(5, "ToME Options", FALSE);
+				do_cmd_options_aux(5, "ToME Options", false);
 
 				break;
 			}
@@ -1277,7 +1226,7 @@ void do_cmd_options()
 			/* Birth Options - read only */
 		case '6':
 			{
-				do_cmd_options_aux(6, "Birth Options(read only)", TRUE);
+				do_cmd_options_aux(6, "Birth Options(read only)", true);
 
 				break;
 			}
@@ -1323,7 +1272,7 @@ void do_cmd_options()
 				prt("Command: Base Delay Factor", 21, 0);
 
 				/* Get a new value */
-				while (1)
+				while (true)
 				{
 					auto const msec = options->delay_factor_ms();
 
@@ -1358,7 +1307,7 @@ void do_cmd_options()
 				prt("Command: Hitpoint Warning", 18, 0);
 
 				/* Get a new value */
-				while (1)
+				while (true)
 				{
 					prt(fmt::format("Current hitpoint warning: {:d}0%",
 					           options->hitpoint_warn), 22, 0);
@@ -1494,7 +1443,7 @@ static errr macro_dump(const char *fname)
  *
  * Note that both "flush()" calls are extremely important.
  */
-static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
+static void do_cmd_macro_aux(char *buf, bool macro_screen)
 {
 	int i, n = 0;
 
@@ -1505,7 +1454,7 @@ static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 	flush();
 
 	/* Do not process macros */
-	inkey_base = TRUE;
+	inkey_base = true;
 
 	/* First key */
 	i = inkey();
@@ -1517,7 +1466,7 @@ static void do_cmd_macro_aux(char *buf, bool_ macro_screen)
 		buf[n++] = i;
 
 		/* Do not process macros */
-		inkey_base = TRUE;
+		inkey_base = true;
 
 		/* Attempt to read a key */
 		i = inkey_scan();
@@ -1655,16 +1604,11 @@ void do_cmd_macros()
 	/* Keymap mode */
 	int mode = get_keymap_mode();
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Process requests until done */
-	while (1)
+	while (true)
 	{
 		char buf[1024];
 
@@ -1716,7 +1660,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -1725,7 +1669,7 @@ void do_cmd_macros()
 			}
 
 			/* Process the given filename */
-			if (0 != process_pref_file(tmp.c_str()))
+			if (0 != process_pref_file(tmp))
 			{
 				/* Prompt */
 				msg_print("Could not load file!");
@@ -1742,7 +1686,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -1769,7 +1713,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Acquire action */
 			k = macro_find_exact(buf);
@@ -1810,7 +1754,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Clear */
 			clear_from(20);
@@ -1845,7 +1789,7 @@ void do_cmd_macros()
 			prt("Trigger: ", 18, 0);
 
 			/* Get a macro trigger */
-			do_cmd_macro_aux(buf, TRUE);
+			do_cmd_macro_aux(buf, true);
 
 			/* Link the macro */
 			macro_add(buf, buf);
@@ -1864,7 +1808,7 @@ void do_cmd_macros()
 			prt("File: ", 18, 0);
 
 			/* Default filename */
-			auto tmp = fmt::format("{}.prf", game->player_name);
+			auto tmp = name_file_pref(game->player_name);
 
 			/* Ask for a file */
 			if (!askfor_aux(&tmp, 80))
@@ -1981,8 +1925,6 @@ void do_cmd_macros()
 		/* Enter a new action */
 		else if (i == '0')
 		{
-			char tmp[1024];
-
 			/* Prompt */
 			prt("Command: Enter a new action", 16, 0);
 
@@ -1990,7 +1932,7 @@ void do_cmd_macros()
 			Term_gotoxy(0, 22);
 
 			/* Hack -- limit the value */
-			tmp[80] = '\0';
+			buf[80] = '\0';
 
 			/* Get an encoded action */
 			if (!askfor_aux(buf, 80)) continue;
@@ -2011,10 +1953,7 @@ void do_cmd_macros()
 	}
 
 	/* Load screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2027,18 +1966,13 @@ void do_cmd_visuals()
 	auto &f_info = game->edit_data.f_info;
 	auto &k_info = game->edit_data.k_info;
 
-	char tmp[160];
 	char buf[1024];
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -2077,10 +2011,10 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Query */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Process the given filename */
 			process_pref_file(tmp);
@@ -2096,13 +2030,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2151,13 +2085,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2202,13 +2136,13 @@ void do_cmd_visuals()
 			prt("File: ", 17, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			FILE *fff = my_fopen(buf, "a");
@@ -2226,10 +2160,13 @@ void do_cmd_visuals()
 				auto f_ptr = &f_info[f_idx];
 
 				/* Skip non-entries */
-				if (!f_ptr->name) continue;
+				if (f_ptr->name.empty())
+				{
+					continue;
+				}
 
 				/* Dump a comment */
-				fprintf(fff, "# %s\n", f_ptr->name);
+				fprintf(fff, "# %s\n", f_ptr->name.c_str());
 
 				/* Dump the feature attr/char info */
 				fprintf(fff, "F:%zu:0x%02X:0x%02X\n\n", f_idx,
@@ -2255,7 +2192,7 @@ void do_cmd_visuals()
 			prt("Command: Change monster attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto r_ptr = &r_info[r];
 
@@ -2313,7 +2250,7 @@ void do_cmd_visuals()
 			prt("Command: Change object attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto k_ptr = k_info.at(k_info_keys[k_idx]);
 
@@ -2368,7 +2305,7 @@ void do_cmd_visuals()
 			prt("Command: Change feature attr/chars", 15, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				auto f_ptr = &f_info[f];
 
@@ -2380,7 +2317,7 @@ void do_cmd_visuals()
 				/* Label the object */
 				Term_putstr(5, 17, -1, TERM_WHITE,
 				            format("Terrain = %d, Name = %-40.40s",
-						   f, f_ptr->name));
+						   f, f_ptr->name.c_str()));
 
 				/* Label the Default values */
 				Term_putstr(10, 19, -1, TERM_WHITE,
@@ -2441,10 +2378,7 @@ void do_cmd_visuals()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2457,20 +2391,13 @@ void do_cmd_colors()
 
 	FILE *fff;
 
-	char tmp[160];
-
 	char buf[1024];
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -2502,16 +2429,16 @@ void do_cmd_colors()
 			prt("File: ", 10, 0);
 
 			/* Default file */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Query */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Process the given filename */
 			process_pref_file(tmp);
 
 			/* Mega-Hack -- react to changes */
-			Term_xtra(TERM_XTRA_REACT, 0);
+			Term_xtra_react();
 
 			/* Mega-Hack -- redraw */
 			Term_redraw();
@@ -2527,13 +2454,13 @@ void do_cmd_colors()
 			prt("File: ", 10, 0);
 
 			/* Default filename */
-			strnfmt(tmp, 160, "user-%s.prf", ANGBAND_SYS);
+			auto tmp = name_file_pref(fmt::format("user-{}", ANGBAND_SYS));
 
 			/* Get a filename */
-			if (!askfor_aux(tmp, 70)) continue;
+			if (!askfor_aux(&tmp, 70)) continue;
 
 			/* Build the filename */
-			path_build(buf, 1024, ANGBAND_DIR_USER, tmp);
+			path_build(buf, 1024, ANGBAND_DIR_USER, tmp.c_str());
 
 			/* Append to the file */
 			fff = my_fopen(buf, "a");
@@ -2588,7 +2515,7 @@ void do_cmd_colors()
 			prt("Command: Modify colors", 8, 0);
 
 			/* Hack -- query until done */
-			while (1)
+			while (true)
 			{
 				const char *name;
 
@@ -2643,7 +2570,7 @@ void do_cmd_colors()
 				if (i == 'B') angband_color_table[a][3] = (angband_color_table[a][3] - 1);
 
 				/* Hack -- react to changes */
-				Term_xtra(TERM_XTRA_REACT, 0);
+				Term_xtra_react();
 
 				/* Hack -- redraw */
 				Term_redraw();
@@ -2662,10 +2589,7 @@ void do_cmd_colors()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2731,6 +2655,7 @@ static const char *do_cmd_feeling_text[11] =
 void do_cmd_feeling()
 {
 	auto const &d_info = game->edit_data.d_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	/* Verify the feeling */
 	if (feeling < 0) feeling = 0;
@@ -2780,7 +2705,6 @@ void do_cmd_feeling()
 		else
 			msg_print(do_cmd_feeling_text[feeling]);
 	}
-	return;
 }
 
 
@@ -2804,7 +2728,7 @@ void do_cmd_load_screen()
 	byte a = 0;
 	char c = ' ';
 
-	bool_ okay = TRUE;
+	bool okay = true;
 
 	FILE *fff;
 
@@ -2824,11 +2748,8 @@ void do_cmd_load_screen()
 	/* Retrieve the current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Clear the screen */
 	Term_clear();
@@ -2838,7 +2759,7 @@ void do_cmd_load_screen()
 	for (y = 0; okay; y++)
 	{
 		/* Get a line of data */
-		if (my_fgets(fff, buf, 1024)) okay = FALSE;
+		if (my_fgets(fff, buf, 1024)) okay = false;
 
 		/* Stop on blank line */
 		if (!buf[0]) break;
@@ -2864,7 +2785,7 @@ void do_cmd_load_screen()
 	for (y = 0; okay; y++)
 	{
 		/* Get a line of data */
-		if (my_fgets(fff, buf, 1024)) okay = FALSE;
+		if (my_fgets(fff, buf, 1024)) okay = false;
 
 		/* Stop on blank line */
 		if (!buf[0]) break;
@@ -2882,7 +2803,7 @@ void do_cmd_load_screen()
 		for (x = 0; x < len; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Look up the attr */
 			for (i = 0; i < 16; i++)
@@ -2907,10 +2828,7 @@ void do_cmd_load_screen()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -2944,12 +2862,8 @@ void do_cmd_save_screen()
 	/* Retrieve the current screen size */
 	Term_get_size(&wid, &hgt);
 
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
-
+	screen_save_no_flush();
 
 	/* Dump the screen */
 	for (y = 0; y < hgt; y++)
@@ -2958,7 +2872,7 @@ void do_cmd_save_screen()
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = c;
@@ -2982,7 +2896,7 @@ void do_cmd_save_screen()
 		for (x = 0; x < wid; x++)
 		{
 			/* Get the attr/char */
-			(Term_what(x, y, &a, &c));
+			Term_what(x, y, &a, &c);
 
 			/* Dump it */
 			buf[x] = hack[a & 0x0F];
@@ -3009,10 +2923,7 @@ void do_cmd_save_screen()
 
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -3031,7 +2942,7 @@ void do_cmd_knowledge_artifacts()
 	char base_name[80];
 
 	/* Scan the artifacts */
-	std::vector<bool_> okay(a_info.size(), FALSE);
+	std::vector<bool> okay(a_info.size(), false);
 
 	for (std::size_t k = 0; k < a_info.size(); k++)
 	{
@@ -3044,7 +2955,7 @@ void do_cmd_knowledge_artifacts()
 		if (!a_ptr->cur_num) continue;
 
 		/* Assume okay */
-		okay[k] = TRUE;
+		okay[k] = true;
 	}
 
 	std::unordered_set<int> okayk;
@@ -3091,7 +3002,7 @@ void do_cmd_knowledge_artifacts()
 				}
 				else
 				{
-					okay[o_ptr->name1] = FALSE;
+					okay[o_ptr->name1] = false;
 				}
 			}
 		}
@@ -3122,7 +3033,7 @@ void do_cmd_knowledge_artifacts()
 			}
 			else
 			{
-				okay[o_ptr->name1] = FALSE;
+				okay[o_ptr->name1] = false;
 			}
 		}
 	}
@@ -3151,7 +3062,7 @@ void do_cmd_knowledge_artifacts()
 		}
 		else
 		{
-			okay[o_ptr->name1] = FALSE;
+			okay[o_ptr->name1] = false;
 		}
 	}
 
@@ -3195,7 +3106,7 @@ void do_cmd_knowledge_artifacts()
 			}
 
 			/* Describe the artifact */
-			object_desc_store(base_name, q_ptr, FALSE, 0);
+			object_desc_store(base_name, q_ptr, false, 0);
 		}
 
 		/* Hack -- Build the artifact name */
@@ -3223,7 +3134,7 @@ void do_cmd_knowledge_artifacts()
 		object_prep(q_ptr, k);
 
 		/* Describe the artifact */
-		object_desc_store(base_name, q_ptr, FALSE, 0);
+		object_desc_store(base_name, q_ptr, false, 0);
 
 		/* Hack -- Build the artifact name */
 		w.write("     The {}\n", base_name);
@@ -3259,13 +3170,26 @@ static void do_cmd_knowledge_uniques()
 	{
 		auto r_ptr = &r_info[k];
 
-		/* Only print Uniques */
-		if ((r_ptr->flags & RF_UNIQUE) &&
-		    !(r_ptr->flags & RF_PET) &&
-		    !(r_ptr->flags & RF_NEUTRAL))
+		// Ignore non-uniques
+		if (!(r_ptr->flags & RF_UNIQUE))
 		{
-			unique_r_idxs.push_back(k);
+			continue;
 		}
+
+		// Exclude PET/NEUTRAL monsters
+		if ((r_ptr->flags & RF_PET) || (r_ptr->flags & RF_NEUTRAL))
+		{
+			continue;
+		}
+
+		// Exclude JOKE monsters if we're playing without joke monsters
+		if (!options->joke_monsters && (r_ptr->flags & RF_JOKEANGBAND))
+		{
+			continue;
+		}
+
+		// Keep
+		unique_r_idxs.push_back(k);
 	}
 
 	// Sort races by level.
@@ -3284,7 +3208,7 @@ static void do_cmd_knowledge_uniques()
 		/* Only print Uniques */
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			bool_ dead = (r_ptr->max_num == 0);
+			bool dead = (r_ptr->max_num == 0);
 
 			/* Print a message */
 			if (dead)
@@ -3369,25 +3293,25 @@ static void plural_aux(char *name)
 	{
 		strcpy(&name[name_len - 1], "ies");
 	}
-	else if (name_len >= 4 && streq(&name[name_len - 4], "ouse"))
+	else if (name_len >= 4 && equals(&name[name_len - 4], "ouse"))
 	{
 		strcpy(&name[name_len - 4], "ice");
 	}
-	else if (name_len >= 6 && streq(&name[name_len - 6], "kelman"))
+	else if (name_len >= 6 && equals(&name[name_len - 6], "kelman"))
 	{
 		strcpy(&name[name_len - 6], "kelmen");
 	}
-	else if (name_len >= 2 && streq(&name[name_len - 2], "ex"))
+	else if (name_len >= 2 && equals(&name[name_len - 2], "ex"))
 	{
 		strcpy(&name[name_len - 2], "ices");
 	}
-	else if (name_len >= 3 && streq(&name[name_len - 3], "olf"))
+	else if (name_len >= 3 && equals(&name[name_len - 3], "olf"))
 	{
 		strcpy(&name[name_len - 3], "olves");
 	}
 
 	/* Now begins sane cases */
-	else if ((name_len >= 2 && streq(&name[name_len - 2], "ch")) || (name_len >= 1 && name[name_len - 1] == 's'))
+	else if ((name_len >= 2 && equals(&name[name_len - 2], "ch")) || (name_len >= 1 && name[name_len - 1] == 's'))
 	{
 		strcpy(&name[name_len], "es");
 	}
@@ -3514,7 +3438,7 @@ static void do_cmd_knowledge_kill_count()
 
 		if (r_ptr->flags & RF_UNIQUE)
 		{
-			bool_ dead = (r_ptr->max_num == 0);
+			bool dead = (r_ptr->max_num == 0);
 
 			if (dead)
 			{
@@ -3708,9 +3632,6 @@ void do_cmd_knowledge_notes()
 {
 	/* Spawn */
 	show_notes_file();
-
-	/* Done */
-	return;
 }
 
 
@@ -3721,15 +3642,11 @@ void do_cmd_knowledge()
 {
 	int i;
 
-
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Interact until done */
-	while (1)
+	while (true)
 	{
 		/* Clear screen */
 		Term_clear();
@@ -3854,10 +3771,7 @@ void do_cmd_knowledge()
 	}
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -3867,20 +3781,14 @@ void do_cmd_knowledge()
  */
 void do_cmd_checkquest()
 {
-	/* Enter "icky" mode */
-	character_icky = TRUE;
-
 	/* Save the screen */
-	Term_save();
+	screen_save_no_flush();
 
 	/* Quest info */
 	do_cmd_knowledge_quests();
 
 	/* Restore the screen */
-	Term_load();
-
-	/* Leave "icky" mode */
-	character_icky = FALSE;
+	screen_load_no_flush();
 }
 
 
@@ -4069,7 +3977,7 @@ void macro_recorder_stop()
 		prt("Trigger: ", 0, 0);
 
 		/* Get a macro trigger */
-		do_cmd_macro_aux(buf, FALSE);
+		do_cmd_macro_aux(buf, false);
 
 		/* Link the macro */
 		macro_add(buf, macro.c_str());

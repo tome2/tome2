@@ -12,9 +12,9 @@
 #include "spells5.hpp"
 #include "spells6.hpp"
 #include "util.hpp"
-#include "util.h"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <algorithm>
 #include <array>
@@ -418,7 +418,7 @@ int print_spell(const char *label_, byte color, int y, s32b s)
 	s32b level;
 	bool na;
 	spell_type *spell = spell_at(s);
-	const char *spell_info = spell_type_info(spell);
+	auto spell_info = spell_type_info(spell);
 	const char *label = (label_ == NULL) ? "" : label_;
 	char level_str[8] = "n/a";
 	char buf[128];
@@ -439,15 +439,15 @@ int print_spell(const char *label_, byte color, int y, s32b s)
 		level_str,
 		get_mana(s),
 		(int) spell_chance_book(s),
-		spell_info);
+		spell_info.c_str());
 	c_prt(color, buf, y, 0);
 
 	return y + 1;
 }
 
-void lua_cast_school_spell(s32b s, bool_ no_cost)
+void lua_cast_school_spell(s32b s, bool no_cost)
 {
-	bool_ use = FALSE;
+	bool use = false;
 	spell_type *spell = spell_at(s);
 
 	/* No magic? */
@@ -504,7 +504,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 		}
 		else
 		{
-			use  = TRUE;
+			use  = true;
 
 			/* failures are dangerous; we'll flush the input buffer
 			   so it isn't missed. */
@@ -519,7 +519,7 @@ void lua_cast_school_spell(s32b s, bool_ no_cost)
 	}
 
 	/* Use the mana/piety */
-	if (use == TRUE)
+	if (use == true)
 	{
 		/* Reduce mana */
 		adjust_power(s, -get_mana(s));

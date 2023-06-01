@@ -31,6 +31,7 @@
 #include "util.hpp"
 #include "variable.hpp"
 #include "z-rand.hpp"
+#include "z-term.hpp"
 
 #include <cassert>
 #include <fmt/format.h>
@@ -105,7 +106,7 @@ void initialize_random_quests(int n)
 		/* XXX XXX XXX Try until valid choice is found */
 		while (tries)
 		{
-			bool_ ok;
+			bool ok;
 
 			tries--;
 
@@ -146,12 +147,12 @@ void initialize_random_quests(int n)
 			}
 
 			/* Assume no explosion attacks */
-			ok = TRUE;
+			ok = true;
 
 			/* Reject monsters with exploding attacks */
 			for (k = 0; k < 4; k++)
 			{
-				if (r_ptr->blow[k].method == RBM_EXPLODE) ok = FALSE;
+				if (r_ptr->blow[k].method == RBM_EXPLODE) ok = false;
 			}
 			if (!ok) continue;
 
@@ -174,7 +175,7 @@ void initialize_random_quests(int n)
 		{
 			if (wizard)
 			{
-				messages.add(format("Could not find quest monster on lvl %d", rl), TERM_RED);
+				messages.add(fmt::format("Could not find quest monster on lvl {}", rl), TERM_RED);
 			}
 			q_ptr->type = 0;
 		}
@@ -189,7 +190,7 @@ void initialize_random_quests(int n)
 
 			if (wizard)
 			{
-				messages.add(format("Quest for %d on lvl %d", q_ptr->r_idx, rl), TERM_RED);
+				messages.add(fmt::format("Quest for {} on lvl {}", q_ptr->r_idx, rl), TERM_RED);
 			}
 		}
 
@@ -199,16 +200,16 @@ void initialize_random_quests(int n)
 	dungeon_type = old_type;
 }
 
-bool_ is_randhero(int level)
+bool is_randhero(int level)
 {
 	int i;
-	bool_ result = FALSE;
+	bool result = false;
 
 	for (i = 0; randquest_hero[i] != -1; i++)
 	{
 		if (random_quests[level].type == randquest_hero[i])
 		{
-			result = TRUE;
+			result = true;
 			break;
 		}
 	}
@@ -234,7 +235,7 @@ static void do_get_new_obj(int y, int x)
 		object_wipe(q_ptr[i]);
 
 		/* Make a great object */
-		make_object(q_ptr[i], TRUE, TRUE, obj_theme::no_theme());
+		make_object(q_ptr[i], true, true, obj_theme::no_theme());
 		q_ptr[i]->found = OBJ_FOUND_REWARD;
 
 		char buf[100];
@@ -243,7 +244,7 @@ static void do_get_new_obj(int y, int x)
 	}
 
 
-	while (TRUE)
+	while (true)
 	{
 		res = ask_menu("Choose a reward to get(a-c to choose, ESC to cancel)?", items);
 
@@ -269,11 +270,11 @@ static void do_get_new_obj(int y, int x)
 			/* Mega-Hack -- Preserve the artifact */
 			if (o_ptr->tval == TV_RANDART)
 			{
-				game->random_artifacts[o_ptr->sval].generated = FALSE;
+				game->random_artifacts[o_ptr->sval].generated = false;
 			}
 			else if (o_ptr->k_ptr->flags & TR_NORM_ART)
 			{
-				o_ptr->k_ptr->artifact = FALSE;
+				o_ptr->k_ptr->artifact = false;
 			}
 			else if (o_ptr->name1)
 			{
@@ -368,11 +369,6 @@ static void hero_death(s32b m_idx, s32b r_idx)
 			/* Nor on the between */
 			if (cave[y][x].feat == FEAT_BETWEEN) continue;
 
-			/* ... nor on the Pattern */
-			if ((cave[y][x].feat >= FEAT_PATTERN_START) &&
-			                (cave[y][x].feat <= FEAT_PATTERN_XTRA2))
-				continue;
-
 			/* Okay */
 			break;
 		}
@@ -381,15 +377,15 @@ static void hero_death(s32b m_idx, s32b r_idx)
 		{
 			int r_idx = get_adventurer();
 
-			m_allow_special[r_idx] = TRUE;
-			int m_idx = place_monster_one(y, x, r_idx, 0, FALSE, MSTATUS_COMPANION);
-			m_allow_special[r_idx] = FALSE;
+			m_allow_special[r_idx] = true;
+			int m_idx = place_monster_one(y, x, r_idx, 0, false, MSTATUS_COMPANION);
+			m_allow_special[r_idx] = false;
 
 			if (m_idx)
 			{
 				m_list[m_idx].exp = monster_exp(1 + (dun_level * 3 / 2));
 				m_list[m_idx].status = MSTATUS_COMPANION;
-				monster_check_experience(m_idx, TRUE);
+				monster_check_experience(m_idx, true);
 			}
 		}
 		else
@@ -408,6 +404,7 @@ static bool quest_random_death_hook(void *, void *in_, void *)
 	struct hook_monster_death_in *in = static_cast<struct hook_monster_death_in *>(in_);
 	s32b m_idx = in->m_idx;
 	int r_idx = m_list[m_idx].r_idx;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
 	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
@@ -446,6 +443,7 @@ static bool quest_random_turn_hook(void *, void *, void *)
 
 static bool quest_random_feeling_hook(void *, void *, void *)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
 	auto const &r_info = game->edit_data.r_info;
 
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
@@ -472,6 +470,8 @@ static bool quest_random_feeling_hook(void *, void *, void *)
 
 static bool quest_random_gen_hero_hook(void *, void *, void *)
 {
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	if ((!(dungeon_flags & DF_PRINCIPAL)) ||
 	    ((dun_level < 1) || (dun_level >= MAX_RANDOM_QUEST)) ||
 	    (!random_quests[dun_level].type) ||
@@ -484,12 +484,12 @@ static bool quest_random_gen_hero_hook(void *, void *, void *)
 
 	int i = random_quests[dun_level].type;
 
-	m_allow_special[random_quests[dun_level].r_idx] = TRUE;
+	m_allow_special[random_quests[dun_level].r_idx] = true;
 	while (i)
 	{
 		int m_idx, y = rand_range(1, cur_hgt - 2), x = rand_range(1, cur_wid - 2);
 
-		m_idx = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, FALSE, MSTATUS_ENEMY);
+		m_idx = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, false, MSTATUS_ENEMY);
 		if (m_idx)
 		{
 			monster_type *m_ptr = &m_list[m_idx];
@@ -497,7 +497,7 @@ static bool quest_random_gen_hero_hook(void *, void *, void *)
 			i--;
 		}
 	}
-	m_allow_special[random_quests[dun_level].r_idx] = FALSE;
+	m_allow_special[random_quests[dun_level].r_idx] = false;
 
 	return false;
 }
@@ -505,6 +505,8 @@ static bool quest_random_gen_hero_hook(void *, void *, void *)
 static bool quest_random_gen_hook(void *, void *in_, void *)
 {
 	struct hook_build_room1_in *in = static_cast<struct hook_build_room1_in *>(in_);
+	auto const &dungeon_flags = game->dungeon_flags;
+
 	s32b bx0 = in->x;
 	s32b by0 = in->y;
 	s32b x, y;
@@ -525,10 +527,10 @@ static bool quest_random_gen_hook(void *, void *in_, void *)
 	}
 
 	/* Pick a room size */
-	get_map_size(format("qrand%d.map", random_quests[dun_level].type), &ysize, &xsize);
+	get_map_size(fmt::format("qrand{}.map", random_quests[dun_level].type).c_str(), &ysize, &xsize);
 
 	/* Try to allocate space for room.  If fails, exit */
-	if (!room_alloc(xsize + 2, ysize + 2, FALSE, by0, bx0, &xval, &yval))
+	if (!room_alloc(xsize + 2, ysize + 2, false, by0, bx0, &xval, &yval))
 	{
 		return false;
 	}
@@ -560,7 +562,7 @@ static bool quest_random_gen_hook(void *, void *in_, void *)
 	xstart = x1;
 	ystart = y1;
 	init_flags = INIT_CREATE_DUNGEON;
-	process_dungeon_file(format("qrand%d.map", random_quests[dun_level].type), &ystart, &xstart, cur_hgt, cur_wid, TRUE, TRUE);
+	process_dungeon_file(fmt::format("qrand{}.map", random_quests[dun_level].type).c_str(), &ystart, &xstart, cur_hgt, cur_wid, true, true);
 
 	for (x = x1; x < xstart; x++)
 	{
@@ -569,9 +571,9 @@ static bool quest_random_gen_hook(void *, void *in_, void *)
 			cave[y][x].info |= CAVE_ICKY | CAVE_ROOM;
 			if (cave[y][x].feat == FEAT_MARKER)
 			{
-				m_allow_special[random_quests[dun_level].r_idx] = TRUE;
-				int i = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, FALSE, MSTATUS_ENEMY);
-				m_allow_special[random_quests[dun_level].r_idx] = FALSE;
+				m_allow_special[random_quests[dun_level].r_idx] = true;
+				int i = place_monster_one(y, x, random_quests[dun_level].r_idx, 0, false, MSTATUS_ENEMY);
+				m_allow_special[random_quests[dun_level].r_idx] = false;
 				if (i)
 				{
 					auto m_ptr = &m_list[i];
@@ -639,6 +641,7 @@ static bool quest_random_dump_hook(void *, void *in_, void *)
 std::string quest_random_describe()
 {
 	auto const &r_info = game->edit_data.r_info;
+	auto const &dungeon_flags = game->dungeon_flags;
 
 	// Only emit description if we're actually on a
 	// random quest level.
