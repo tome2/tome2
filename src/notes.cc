@@ -39,10 +39,10 @@ void show_notes_file()
 	auto p = note_path();
 
 	/* Use a caption, forcing direct access to the note file */
-	auto caption = fmt::format("Note file {}", p.filename().c_str());
+	auto caption = fmt::format("Note file {}", p.filename().string().c_str());
 
 	/* Invoke show_file */
-	show_file(p.c_str(), caption.c_str());
+	show_file(p.string().c_str(), caption.c_str());
 }
 
 /*
@@ -52,7 +52,7 @@ void show_notes_file()
 void output_note(const char *final_note)
 {
 	/* Open notes file */
-	FILE *fff = my_fopen(note_path().c_str(), "a");
+	FILE *fff = my_fopen(note_path().string().c_str(), "a");
 
 	/* Failure */
 	if (!fff) return;
@@ -89,7 +89,7 @@ void add_note(char *note, char code)
 	else sprintf(depths, "Lev%3d", dun_level);
 
 	/* Make note */
-	sprintf(final_note, "%-20s %s %c: %s", turn_s, depths, code, buf);
+	snprintf(final_note, sizeof(final_note), "%-20s %s %c: %s", turn_s, depths, code, buf);
 
 	/* Output to the notes file */
 	output_note(final_note);

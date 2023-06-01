@@ -4338,7 +4338,8 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
  */
 bool target_set(int mode)
 {
-	int i, d, m;
+	int i, d;
+	unsigned int m;
 	int y = p_ptr->py;
 	int x = p_ptr->px;
 
