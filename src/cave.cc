@@ -4199,24 +4199,30 @@ int is_quest(int level)
 boost::optional<s16b> new_effect(int type, int dam, int time, int cy, int cx, int rad, s32b flags)
 {
 	auto &lasting_effects = game->lasting_effects;
+	size_t max_lasting_effects = std::size(game->lasting_effects);
 
-	// Limit to 128 effects at most.
-	if (lasting_effects.size() >= 128)
+	std::size_t ei;
+	for (ei = 0; ei < max_lasting_effects; ei++)
+	{
+		if (lasting_effects[ei].time == 0)
+		{
+			break;
+		}
+	}
+	if (ei == max_lasting_effects)
 	{
 		return boost::none;
 	}
 
-	effect_type effect;
-	effect.type = type;
-	effect.dam = dam;
-	effect.time = time;
-	effect.flags = flags;
-	effect.cx = cx;
-	effect.cy = cy;
-	effect.rad = rad;
+	lasting_effects[ei].type = type;
+	lasting_effects[ei].dam = dam;
+	lasting_effects[ei].time = time;
+	lasting_effects[ei].flags = flags;
+	lasting_effects[ei].cx = cx;
+	lasting_effects[ei].cy = cy;
+	lasting_effects[ei].rad = rad;
 
-	lasting_effects.push_back(effect);
-	return lasting_effects.size() - 1;
+	return ei;
 }
 
 /**

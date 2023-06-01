@@ -5497,6 +5497,7 @@ s16b inven_carry(object_type *o_ptr, bool final)
 {
 	// Auto-identify the item before we put it in the pack.
 	object_aware(o_ptr);
+	object_known(o_ptr);
 
 	// Index of last item
 	int n = -1;

@@ -3722,6 +3722,9 @@ static void store_height(int x, int y, int x0, int y0, byte val,
 	if (((x == 0) || (y == 0) || (x == xhsize * 2) || (y == yhsize * 2)) &&
 	                (val <= cutoff)) val = cutoff + 1;
 
+	if (val > 216) {
+		val = FEAT_FLOOR;
+	}
 	/* Store the value in height-map format */
 	/* Meant to be temporary, hence no cave_set_feat */
 	cave[y + y0 - yhsize][x + x0 - xhsize].feat = val;
@@ -8095,7 +8098,9 @@ static void generate_grid_mana()
 static void clear_dungeon()
 {
 	/* Clear any lasting effects */
-	game->lasting_effects.clear();
+	for (std::size_t i = 0; i < std::size(game->lasting_effects); i++) {
+		game->lasting_effects[i].time = 0;
+	}
 
 	/* Start with a blank cave */
 	for (int y = 0; y < MAX_HGT; y++)
