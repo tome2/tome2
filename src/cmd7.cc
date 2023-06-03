@@ -1780,9 +1780,11 @@ static object_filter_t const &item_tester_hook_convertible()
 {
 	using namespace object_filter;
 	static auto instance =
-		Or(
+		Or(	And(TVal(TV_CORPSE), SVal(SV_CORPSE_SKELETON)),
+			And(TVal(TV_CORPSE), SVal(SV_CORPSE_SKULL)),
 			TVal(TV_JUNK),
-			TVal(TV_SKELETON));
+			TVal(TV_SKELETON),
+			And(TVal(TV_RANDART)));
 	return instance;
 }
 
@@ -1872,13 +1874,15 @@ void do_cmd_archer()
 
 			/* Hack -- Give the player some shots */
 			object_prep(q_ptr, lookup_kind(TV_SHOT, m_bonus(2, dun_level)));
+			apply_magic(q_ptr, get_skill(SKILL_ARCHERY) * 2, true, true, magik(20));
 			if (!artifact_p(q_ptr))
 				q_ptr->number = (byte)rand_range(15, 30);
 			else
 				q_ptr->number = 1;
 
-			apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 			q_ptr->discount = 90;
+			object_aware(q_ptr);
+			object_known(q_ptr);
 			q_ptr->found = OBJ_FOUND_SELFMADE;
 
 			inven_carry(q_ptr, false);
@@ -1903,19 +1907,31 @@ void do_cmd_archer()
 			      (USE_INVEN | USE_FLOOR),
 			      item_tester_hook_convertible())) return;
 
+		auto selected = p_ptr->inventory[item];
+		bool artifact = selected.tval == TV_RANDART || selected.name1 != 0;
+		if (artifact) {
+			/* Make a verification */
+			char o_name[80];
+			char out_val[160];
+			object_desc(o_name, &selected, true, 3);
+			strnfmt(out_val, 160, "Really destroy %s? ", o_name);
+			if (!get_check(out_val)) return;
+		}
 		/* Get local object */
 		q_ptr = &forge;
 
 		/* Hack -- Give the player some arrows */
 		object_prep(q_ptr, lookup_kind(TV_ARROW, m_bonus(1, dun_level) + 1));
-		q_ptr->number = (byte)rand_range(15, 25);
+		q_ptr->name1 = selected.name1; // If it's a artifact, preserve the name.
+		apply_magic(q_ptr, get_skill(SKILL_ARCHERY) * 2, true, true, artifact || magik(20));
 		if (!artifact_p(q_ptr))
 			q_ptr->number = (byte)rand_range(15, 30);
 		else
 			q_ptr->number = 1;
 
-		apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 		q_ptr->discount = 90;
+		object_aware(q_ptr);
+		object_known(q_ptr);
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
 		msg_print("You make some ammo.");
@@ -1937,19 +1953,32 @@ void do_cmd_archer()
 			      (USE_INVEN | USE_FLOOR),
 			      item_tester_hook_convertible())) return;
 
+		auto selected = p_ptr->inventory[item];
+		bool artifact = selected.tval == TV_RANDART || selected.name1 != 0;
+		if (artifact) {
+			/* Make a verification */
+			char o_name[80];
+			char out_val[160];
+			object_desc(o_name, &selected, true, 3);
+			strnfmt(out_val, 160, "Really destroy %s? ", o_name);
+			if (!get_check(out_val)) return;
+		}
+
 		/* Get local object */
 		q_ptr = &forge;
 
 		/* Hack -- Give the player some bolts */
 		object_prep(q_ptr, lookup_kind(TV_BOLT, m_bonus(1, dun_level) + 1));
-		q_ptr->number = (byte)rand_range(15, 25);
+		q_ptr->name1 = selected.name1; // If it's a artifact, preserve the name.
+		apply_magic(q_ptr, get_skill(SKILL_ARCHERY) * 2, true, true, artifact || magik(20));
 		if (!artifact_p(q_ptr))
 			q_ptr->number = (byte)rand_range(15, 30);
 		else
 			q_ptr->number = 1;
 
-		apply_magic(q_ptr, dun_level, true, true, (magik(20)) ? true : false);
 		q_ptr->discount = 90;
+		object_aware(q_ptr);
+		object_known(q_ptr);
 		q_ptr->found = OBJ_FOUND_SELFMADE;
 
 		msg_print("You make some ammo.");

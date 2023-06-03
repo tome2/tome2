@@ -2531,7 +2531,7 @@ errr file_character(const char *name)
 		fd_close(fd);
 
 		/* Build query */
-		sprintf(out_val, "Replace existing file %s? ", buf);
+		snprintf(out_val, sizeof(out_val), "Replace existing file %s? ", buf);
 
 		/* Ask */
 		if (get_check(out_val)) fd = -1;
@@ -4972,7 +4972,7 @@ void wipe_saved()
 			if (auto ext = get_dungeon_save_extension())
 			{
 				/* Remove the dungeon save file */
-				fd_kill(name_file_dungeon_save(*ext).c_str());
+				fd_kill(name_file_dungeon_save(*ext).string().c_str());
 			}
 		}
 	}
