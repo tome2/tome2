@@ -1407,14 +1407,44 @@ public:
 };
 
 
+static void loadFont(infofnt *fnt, int i)
+{
+	char buf[80];
+	const char *font;
+
+	/* Window specific font name */
+	sprintf(buf, "ANGBAND_X11_FONT_%d", i);
+
+	/* Check environment for that font */
+	font = getenv(buf);
+
+	/* Check environment for "base" font */
+	if (!font) font = getenv("ANGBAND_X11_FONT");
+
+	/* No environment variables, use default font */
+	if (!font) font = DEFAULT_X11_FONT;
+
+	fprintf(stderr, "Loading font %s\n", font);
+	if (Infofnt_init_data(fnt, font) < 0)
+		fprintf(stderr, "Could not load font: \"%s\"\nFalling back to \"fixed\".\nTo choose a better font, use xlsfonts to find a font you like, then set it via the ANGBAND_X11_FONT environment variable.\n", font);
+	else
+		return;
+
+	fprintf(stderr, "Loading font \"fixed\"");
+	if (Infofnt_init_data(fnt, "fixed") < 0)
+	{
+		fprintf(stderr, "Could not load font: \"fixed\". Bailing out.\n");
+		exit(1);
+	}
+}
+
+
 /*
  * Initialize a term_data
  */
 static term *term_data_init(term_data *td, int i)
 {
 	const char *name = angband_term_name[i];
-
-	const char *font;
 
 	int x = 0;
 	int y = 0;
@@ -1440,67 +1470,6 @@ static term *term_data_init(term_data *td, int i)
 
 	XSizeHints *sh;
 
-
-	/* Window specific font name */
-	sprintf(buf, "ANGBAND_X11_FONT_%d", i);
-
-	/* Check environment for that font */
-	font = getenv(buf);
-
-	/* Check environment for "base" font */
-	if (!font) font = getenv("ANGBAND_X11_FONT");
-
-	/* No environment variables, use default font */
-	if (!font)
-	{
-		switch (i)
-		{
-		case 0:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 1:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 2:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 3:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 4:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 5:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 6:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		case 7:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-			break;
-		default:
-			{
-				font = DEFAULT_X11_FONT;
-			}
-		}
-	}
 
 	/* Window specific location (x) */
 	sprintf(buf, "ANGBAND_X11_AT_X_%d", i);
@@ -1545,7 +1514,8 @@ static term *term_data_init(term_data *td, int i)
 	{
 		abort();
 	}
-	Infofnt_init_data(td->fnt, font);
+
+	loadFont(td->fnt, i);
 
 	/* Hack -- key buffer size */
 	num = (i == 0 ? 1024 : 16);
