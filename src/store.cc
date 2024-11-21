@@ -1352,7 +1352,9 @@ static void store_create()
 		else
 		{
 			/* Hack -- Pick an item to sell */
-			auto const &item = *uniform_element(st_info[st_ptr->st_idx].items);
+			auto items = st_info[st_ptr->st_idx].items;
+			if (items.empty()) continue;
+			auto const &item = *uniform_element(items);
 			auto filter = item.filter;
 			auto chance = item.chance;
 

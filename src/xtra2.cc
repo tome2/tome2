@@ -4338,7 +4338,8 @@ static int target_set_aux(int y, int x, int mode, const char *info_)
  */
 bool target_set(int mode)
 {
-	int i, d, m;
+	int i, d;
+	unsigned int m;
 	int y = p_ptr->py;
 	int x = p_ptr->px;
 
@@ -5080,7 +5081,6 @@ static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge)
 					/* Don't search any more */
 					return true;
 				}
-
 				/* Restore again the aware status */
 				k_ptr->aware = save_aware;
 
@@ -5116,7 +5116,6 @@ static bool test_object_wish(char *name, object_type *o_ptr, object_type *forge)
 								continue;
 							}
 						}
-
 						do {
 							object_prep(o_ptr, k_entry.first);
 							o_ptr->name1 = 0;

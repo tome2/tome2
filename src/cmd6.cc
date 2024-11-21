@@ -1160,7 +1160,7 @@ void do_cmd_eat_food()
 
 		case SV_FOOD_CURE_SERIOUS:
 			{
-				hp_player(damroll(4, 8));
+				hp_player((p_ptr->mhp * 8) / 100 + damroll(8, 8));
 
 				break;
 			}
@@ -1260,7 +1260,7 @@ void do_cmd_eat_food()
 			{
 				msg_print("That tastes very good.");
 				set_poisoned(0);
-				hp_player(damroll(4, 8));
+				hp_player((p_ptr->mhp * 8) / 100 + damroll(8, 8));
 				set_food(PY_FOOD_MAX - 1);
 
 				break;
@@ -1926,7 +1926,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 			{
 				set_afraid(0);
 				set_hero(p_ptr->hero + randint(25) + 25);
-				hp_player(10);
+				hp_player((p_ptr->mhp * 2) / 100 + 10);
 				break;
 			}
 
@@ -1934,13 +1934,13 @@ static void quaff_potion(int tval, int sval, int pval2)
 			{
 				set_afraid(0);
 				set_shero(p_ptr->shero + randint(25) + 25);
-				hp_player(30);
+				hp_player((p_ptr->mhp * 4) / 100 + 30);
 				break;
 			}
 
 		case SV_POTION_CURE_LIGHT:
 			{
-				hp_player(damroll(2, 8));
+				hp_player((p_ptr->mhp * 4) / 100 + damroll(4, 8));
 				set_blind(0);
 				set_cut(p_ptr->cut - 10);
 				break;
@@ -1948,7 +1948,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 
 		case SV_POTION_CURE_SERIOUS:
 			{
-				hp_player(damroll(4, 8));
+				hp_player((p_ptr->mhp * 8) / 100 + damroll(8, 8));
 				set_blind(0);
 				set_confused(0);
 				set_cut((p_ptr->cut / 2) - 50);
@@ -1957,7 +1957,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 
 		case SV_POTION_CURE_CRITICAL:
 			{
-				hp_player(damroll(6, 8));
+				hp_player((p_ptr->mhp * 12) / 100 + damroll(12, 8));
 				set_blind(0);
 				set_confused(0);
 				set_poisoned(0);
@@ -1968,7 +1968,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 
 		case SV_POTION_HEALING:
 			{
-				hp_player(300);
+				hp_player((p_ptr->mhp * 30) / 100 + 100);
 				set_blind(0);
 				set_confused(0);
 				set_poisoned(0);
@@ -1979,7 +1979,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 
 		case SV_POTION_STAR_HEALING:
 			{
-				hp_player(1200);
+				hp_player((p_ptr->mhp * 55) / 100 + 300);
 				set_blind(0);
 				set_confused(0);
 				set_poisoned(0);
@@ -1992,7 +1992,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 			{
 				msg_print("You feel life flow through your body!");
 				restore_level();
-				hp_player(5000);
+				hp_player(p_ptr->mhp);
 				set_poisoned(0);
 				set_blind(0);
 				set_confused(0);
@@ -2161,7 +2161,7 @@ static void quaff_potion(int tval, int sval, int pval2)
 
 		case SV_POTION_CURING:
 			{
-				hp_player(50);
+				hp_player((p_ptr->mhp * 5) / 100 + 50);
 				set_blind(0);
 				set_poisoned(0);
 				set_confused(0);
@@ -4587,7 +4587,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 			if (!doit) return "berserk strength every 50+d50 turns";
 			set_afraid(0);
 			set_shero(p_ptr->shero + randint(25) + 25);
-			hp_player(30);
+			hp_player((p_ptr->mhp * 4) / 100 + 30);
 
 			o_ptr->timeout = rand_int(50) + 50;
 
@@ -4778,7 +4778,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 			msg_print("Your armor glows many colours...");
 			set_afraid(0);
 			set_shero(p_ptr->shero + randint(50) + 50);
-			hp_player(30);
+			hp_player((p_ptr->mhp * 4) / 100 + 30);
 			set_blessed(p_ptr->blessed + randint(50) + 50);
 			set_oppose_acid(p_ptr->oppose_acid + randint(50) + 50);
 			set_oppose_elec(p_ptr->oppose_elec + randint(50) + 50);
@@ -5076,7 +5076,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 			set_afraid(0);
 			set_hero(p_ptr->hero + damroll(5, 10) + 30);
 			set_fast(p_ptr->fast + damroll(5, 10) + 30, 10);
-			hp_player(30);
+			hp_player((p_ptr->mhp * 4) / 100 + 30);
 
 			o_ptr->timeout = 250;
 
@@ -5120,7 +5120,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 			{
 				set_fast(p_ptr->fast + 5, 10);
 			}
-			hp_player(30);
+			hp_player((p_ptr->mhp * 4) / 100 + 30);
 			set_afraid(0);
 			set_shero(p_ptr->shero + randint(50) + 50);
 
@@ -5777,7 +5777,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 		{
 			if (!doit) return format("cure light wounds every %d turns", (is_junkart ? 50 : 10));
 			set_afraid(0);
-			hp_player(30);
+			hp_player((p_ptr->mhp * 4) / 100 + 30);
 
 			o_ptr->timeout = 10;
 
@@ -5788,7 +5788,7 @@ const char *activation_aux(object_type * o_ptr, bool doit, int item)
 		{
 			if (!doit) return format("cure serious wounds every %s turns", (is_junkart? "75" : "3+d3"));
 			msg_print("It radiates deep purple...");
-			hp_player(damroll(4, 8));
+			hp_player((p_ptr->mhp * 8) / 100 + damroll(8, 8));
 			set_cut((p_ptr->cut / 2) - 50);
 
 			o_ptr->timeout = rand_int(3) + 3;
