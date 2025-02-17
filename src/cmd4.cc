@@ -806,7 +806,8 @@ static void do_cmd_options_win()
 	Term_clear();
 
 	/* Interact */
-	while (bool go = true)
+	bool go = true;
+	while (go)
 	{
 		/* Prompt XXX XXX XXX */
 		prt("Window Flags (<dir>, t, y, n, ESC) ", 0, 0);
