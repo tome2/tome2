@@ -39,7 +39,7 @@ if (NOT CMAKE_SCRIPT_MODE_FILE)
 endif()
 # we need the CMake variables CMAKE_SCRIPT_MODE_FILE and CMAKE_ARGV available since 2.8.5
 # we need APPEND_STRING option for set_property available since 2.8.6
-cmake_minimum_required(VERSION 2.8.6)
+cmake_minimum_required(VERSION 2.8.6...3.15)
 if (NOT CMAKE_SCRIPT_MODE_FILE)
 	cmake_policy(POP)
 endif()
