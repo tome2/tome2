@@ -1,6 +1,6 @@
 # Project definition.
+CMAKE_MINIMUM_REQUIRED (VERSION 3.5...4.0)
 PROJECT (tome2)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.5)
 
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)

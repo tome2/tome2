@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.6...3.15)
 project(CppQuickCheck)
 set(CMAKE_CXX_FLAGS "-O3 -g -Wall -std=c++11")
 
