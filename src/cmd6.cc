@@ -18,6 +18,7 @@
 #include "dungeon_info_type.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "hook_eat_in.hpp"
 #include "hooks.hpp"

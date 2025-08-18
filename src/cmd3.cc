@@ -12,6 +12,7 @@
 #include "cave_type.hpp"
 #include "cli_comm.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "hook_drop_in.hpp"
@@ -1744,12 +1745,12 @@ void do_cmd_cli()
  */
 void do_cmd_cli_help()
 {
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 	for (int i = 0, j = -1; i < cli_total; i++)
 	{
 		if (j < i - 1)
 		{
-			w << "/";
+			w.write("/");
 		}
 
 		w.write("[[[[[G{}]", cli_info[i].comm);
