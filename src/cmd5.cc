@@ -2032,7 +2032,6 @@ s32b get_school_spell(const char *do_what, s16b force_book)
 			{
 				/* Save the spell index */
 				spell = spell_x(sval, pval, i);
-
 				/* Require "okay" spells */
 				if (!is_ok_spell(spell, o_ptr->pval))
 				{

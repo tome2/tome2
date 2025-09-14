@@ -67,16 +67,15 @@
  */
 
 
-#include "angband.h"
-#include "config.h"
-#include "defines.h"
-#include "files.h"
+#include "config.hpp"
+#include "defines.hpp"
+#include "files.hpp"
 #include "h-basic.hpp"
-#include "util.h"
-#include "variable.h"
-#include "z-form.h"
+#include "util.hpp"
+#include "variable.hpp"
+#include "z-form.hpp"
 #include "z-term.hpp"
-#include "z-util.h"
+#include "z-util.hpp"
 
 /*
  * Determine if string "t" is a suffix of string "s"
@@ -1121,7 +1120,7 @@ static errr term_force_font(term_data *td, const char *path)
 		if (!used) RemoveFontResource(td->font_file);
 
 		/* Free the old name */
-		free(td->font_file);
+		free(reinterpret_cast<void*>(td->font_file));
 		td->font_file = NULL;
 	}
 
@@ -1161,7 +1160,7 @@ static errr term_force_font(term_data *td, const char *path)
 	if (!wid || !hgt)
 	{
 		HDC hdcDesktop;
-		HFONT hfOld;
+		HGDIOBJ hfOld;
 		TEXTMETRIC tm;
 
 		/* all this trouble to get the cell size */
@@ -1330,13 +1329,13 @@ static void Term_xtra_win_react(void)
 
 		int wid;
 		int hgt;
-		term_get_size(td->term_ptr, &wid, &hgt);
+		term_getsize(td->term_ptr, &wid, &hgt);
 
 		/* Update resized windows */
 		if ((td->cols != wid) || (td->rows != hgt))
 		{
 			/* Activate */
-			Term_activate(&td->term_ptr);
+			Term_activate(td->term_ptr);
 
 			/* Hack -- Resize the term */
 			Term_resize(td->cols, td->rows);
@@ -1403,7 +1402,7 @@ static void Term_xtra_win_flush(void)
  *
  * Make this more efficient XXX XXX XXX
  */
-static void Term_xtra_win_clear(term_data *td, void)
+static void Term_xtra_win_clear(term_data *td)
 {
 	HDC hdc;
 	RECT rc;
@@ -1676,8 +1675,8 @@ static void term_data_link(term_data *td)
 	};
 
 	/* Initialize the term */
-	td->term_ptr = term_init(td, td->cols, td->rows, td->keys);
-	term_init_soft_cursor(td->term_ptr);
+	td->term_ptr = term_init(td->cols, td->rows, td->keys, td);
+	soft_cursor(td->term_ptr);
 	term_init_ui_hooks(td->term_ptr, ui_hooks);
 }
 
