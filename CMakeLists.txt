@@ -1,6 +1,6 @@
 # Project definition.
-PROJECT (tome2)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.5)
+PROJECT (tome2)
 
 # We want a readable feature summary.
 INCLUDE(FeatureSummary)
@@ -52,10 +52,17 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Nothing for now
 ENDIF()
 
-#
-# fmt
-#
-ADD_DEFINITIONS(-DFMT_HEADER_ONLY)
+FIND_PACKAGE(fmt REQUIRED)
+SET(LIBS ${LIBS} fmt::fmt)
+
+FIND_PACKAGE(jsoncons REQUIRED)
+IF(TARGET jsoncons::jsoncons)
+	SET(LIBS ${LIBS} jsoncons::jsoncons)
+ELSE()
+	# Compatibility with older jsoncons
+	# https://github.com/danielaparker/jsoncons/commit/84b904cb87bfc6ed5144e014e4f9d1573e6151a2
+	SET(LIBS ${LIBS} jsoncons)
+ENDIF()
 
 # Add standard math library
 SET(LIBS ${LIBS} m)
@@ -63,8 +70,7 @@ SET(LIBS ${LIBS} m)
 #
 # BOOST
 #
-FIND_PACKAGE(Boost 1.54.0 COMPONENTS system filesystem)
-SET_PACKAGE_PROPERTIES(Boost PROPERTIES TYPE REQUIRED)
+FIND_PACKAGE(Boost 1.54.0 COMPONENTS system filesystem REQUIRED)
 
 IF(Boost_FOUND)
   ADD_DEFINITIONS(-DBOOST_FILESYSTEM_NO_DEPRECATED)
