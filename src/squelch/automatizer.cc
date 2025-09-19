@@ -22,9 +22,7 @@ static std::vector< std::shared_ptr < Rule > > parse_rules(jsoncons::json const 
 		return rules;
 	}
 
-	auto rules_array = rules_json.array_value();
-
-	for (auto const &rule_value : rules_array)
+	for (auto const &rule_value : rules_json.array_range())
 	{
 		auto rule = Rule::parse_rule(rule_value);
 		if (rule)

@@ -171,14 +171,14 @@ std::shared_ptr<Rule> Rule::parse_rule(jsoncons::json const &rule_json)
 
 	// Parse condition
 	std::shared_ptr<Condition> condition =
-		Condition::parse_condition(rule_json.get_with_default<jsoncons::json>("condition", jsoncons::null_type()));
+		Condition::parse_condition(rule_json.get_value_or<jsoncons::json>("condition", jsoncons::null_type()));
 
 	// Parse rule
 	switch (action)
 	{
 	case action_type::AUTO_INSCRIBE:
 	{
-		auto rule_inscription_j = rule_json.get_with_default<jsoncons::json>("inscription", jsoncons::null_type());
+		auto rule_inscription_j = rule_json.get_value_or<jsoncons::json>("inscription", jsoncons::null_type());
 
 		if (rule_inscription_j.is_null())
 		{

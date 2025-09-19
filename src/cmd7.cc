@@ -16,6 +16,7 @@
 #include "dungeon_flag.hpp"
 #include "ego_item_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "hooks.hpp"
 #include "mimic.hpp"

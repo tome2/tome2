@@ -219,8 +219,8 @@ static void automatizer_save_rules()
 	}
 
 	// Write JSON to output
-	jsoncons::serialization_options serialization_options;
-	serialization_options.indent(2);
+	jsoncons::json_options serialization_options;
+	serialization_options.indent_size(2);
 	of << jsoncons::pretty_print(rules_document, serialization_options);
 	if (of.fail())
 	{

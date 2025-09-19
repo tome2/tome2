@@ -9,7 +9,7 @@ namespace squelch {
 template <class T>
 boost::optional<T> get_optional(jsoncons::json const &json, std::string const &key)
 {
-	if (!json.has_key(key))
+	if (!json.contains(key))
 	{
 		return boost::none;
 	}

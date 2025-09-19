@@ -376,7 +376,7 @@ std::shared_ptr<Condition> GroupingCondition::next_child(Condition *current)
 
 std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(jsoncons::json const &j)
 {
-	auto conditions_j = j.get_with_default<jsoncons::json>("conditions", jsoncons::null_type());
+	auto conditions_j = j.get_value_or<jsoncons::json>("conditions", jsoncons::null_type());
 
 	if (conditions_j.is_null())
 	{
@@ -390,7 +390,7 @@ std::vector< std::shared_ptr<Condition> > GroupingCondition::parse_conditions(js
 	else
 	{
 		std::vector< std::shared_ptr<Condition> > subconditions;
-		for (auto const &subcondition_j: conditions_j.array_value())
+		for (auto const &subcondition_j: conditions_j.array_range())
 		{
 			std::shared_ptr<Condition> subcondition =
 				parse_condition(subcondition_j);
@@ -931,7 +931,7 @@ void SingleSubconditionCondition::to_json(jsoncons::json &j) const
 
 std::shared_ptr<Condition> SingleSubconditionCondition::parse_single_subcondition(jsoncons::json const &in_json)
 {
-	auto condition_j = in_json.get_with_default<jsoncons::json>("condition", jsoncons::null_type());
+	auto condition_j = in_json.get_value_or<jsoncons::json>("condition", jsoncons::null_type());
 
 	if (condition_j.is_null())
 	{

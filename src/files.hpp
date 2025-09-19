@@ -26,7 +26,7 @@ std::string describe_player_location();
 errr file_character(const char *name);
 errr process_pref_file_aux(char *buf);
 errr process_pref_file(std::string const &name);
-void show_string(const char *lines, const char *title, int line = 0);
+void show_string(const std::string &lines, const char *title, int line = 0);
 void show_file(const char *name, const char *what, int line = 0);
 void do_cmd_help();
 void get_name();

@@ -18,6 +18,7 @@
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "hook_chat_in.hpp"

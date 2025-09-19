@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "format_ext.hpp"
 #include "hook_get_in.hpp"
 #include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
@@ -430,34 +431,32 @@ std::string quest_fireproof_describe()
 	num_staff = get_item_points_remaining() / FIREPROOF_STAFF_POINTS;
 	num_scroll = get_item_points_remaining() / FIREPROOF_SCROLL_POINTS;
 
-	fmt::MemoryWriter w;
-
 	if (status == QUEST_STATUS_TAKEN)
 	{
 		/* Quest taken */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("Retrieve the strange {} for the old mage in Lothlorien.", settings->tval_name);
+		return fmt::format("#####yAn Old Mages Quest!\n"
+			"Retrieve the strange {} for the old mage in Lothlorien.", settings->tval_name);
 	}
 	else if (status == QUEST_STATUS_COMPLETED)
 	{
 		/* essence retrieved, not taken to mage */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("You have retrieved the {} for the old mage in Lothlorien.\n", settings->tval_name);
-		w.write("Perhaps you should see about a reward.");
+		return fmt::format("#####yAn Old Mages Quest!\n"
+			"You have retrieved the {} for the old mage in Lothlorien.\n"
+			"Perhaps you should see about a reward.", settings->tval_name);
 	}
 	else if ((status == QUEST_STATUS_FINISHED) &&
 		 (get_item_points_remaining() > 0))
 	{
 		/* essence returned, not all books fireproofed */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("You have retrieved the {} for the old "
-			"mage in Lothlorien. He will still\n", settings->tval_name);
-		w.write("fireproof {} book(s) or {} staff/staves "
+		return fmt::format("#####yAn Old Mages Quest!\n"
+			"You have retrieved the {} for the old "
+			"mage in Lothlorien. He will still\n"
+			"fireproof {} book(s) or {} staff/staves "
 			"or {} scroll(s) for you.",
-			num_books, num_staff, num_scroll);
+			settings->tval_name, num_books, num_staff, num_scroll);
 	}
 
-	return w.str();
+	return "";
 }
 
 static bool fireproof_gen_hook(void *, void *in_, void *)
