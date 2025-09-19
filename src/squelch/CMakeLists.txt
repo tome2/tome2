@@ -7,3 +7,4 @@ ADD_LIBRARY(squelch
   rule.cc
   tree_printer.cc
 )
+TARGET_LINK_LIBRARIES(squelch PUBLIC ${LIBS})
