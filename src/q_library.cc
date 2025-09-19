@@ -477,21 +477,19 @@ void quest_library_building(bool *paid, bool *recreate)
 
 std::string quest_library_describe()
 {
-	fmtMemoryWriter w;
-
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
-		w.write("#####yAn Old Mages Quest! (Danger Level: 35)\n");
-		w.write("Make the library safe for the old mage in Minas Anor.");
+		return "#####yAn Old Mages Quest! (Danger Level: 35)\n"
+			"Make the library safe for the old mage in Minas Anor.";
 	}
 	else if (cquest.status == QUEST_STATUS_COMPLETED)
 	{
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("You have made the library safe for the old mage in Minas Anor.\n");
-		w.write("Perhaps you should see about a reward.");
+		return "#####yAn Old Mages Quest!\n"
+			"You have made the library safe for the old mage in Minas Anor.\n"
+			"Perhaps you should see about a reward.";
 	}
 
-	return w.str();
+	return "";
 }
 
 void quest_library_init_hook()

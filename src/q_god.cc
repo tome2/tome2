@@ -283,18 +283,16 @@ static std::string make_directions(bool feel_it)
 
 std::string quest_god_describe()
 {
-	fmtMemoryWriter w;
-
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
 		auto directions = make_directions(false);
-		w.write("#####yGod quest {}!\n", cquest_quests_given);
-		w.write("Thou art to find the lost temple of thy God and\n");
-		w.write("to retrieve the lost part of the relic for thy God!\n");
-		w.write("{}", directions.c_str());
+		return fmt::format("#####yGod quest {}!\n"
+			"Thou art to find the lost temple of thy God and\n"
+			"to retrieve the lost part of the relic for thy God!\n"
+			"{}", cquest_quests_given, directions);
 	}
 
-	return w.str();
+	return "";
 }
 
 static void quest_god_place_rand_dung()
