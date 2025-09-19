@@ -34,6 +34,7 @@
 #include <deque>
 #include <fmt/format.h>
 #include <list>
+#include <fstream>
 #include <memory>
 #include <string>
 #include <vector>

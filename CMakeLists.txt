@@ -1,5 +1,5 @@
 # Project definition.
-CMAKE_MINIMUM_REQUIRED (VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.5...4.0)
 PROJECT (tome2)
 
 # We want a readable feature summary.
@@ -70,7 +70,7 @@ SET(LIBS ${LIBS} m)
 #
 # BOOST
 #
-FIND_PACKAGE(Boost 1.54.0 COMPONENTS system filesystem REQUIRED)
+FIND_PACKAGE(Boost 1.54.0 COMPONENTS system filesystem REQUIRED CONFIG)
 
 IF(Boost_FOUND)
   ADD_DEFINITIONS(-DBOOST_FILESYSTEM_NO_DEPRECATED)

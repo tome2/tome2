@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8...3.15)
 project(bandit)
 
 option(BANDIT_BUILD_SPECS   "Build the Bandit specs"                ON)
