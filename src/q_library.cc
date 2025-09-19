@@ -2,6 +2,7 @@
 
 #include "cave_type.hpp"
 #include "dungeon_flag.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "hooks.hpp"
 #include "hook_quest_gen_in.hpp"
@@ -476,7 +477,7 @@ void quest_library_building(bool *paid, bool *recreate)
 
 std::string quest_library_describe()
 {
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{

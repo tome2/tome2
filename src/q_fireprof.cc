@@ -4,6 +4,7 @@
 #include "dungeon_flag.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "format_ext.hpp"
 #include "hook_get_in.hpp"
 #include "hook_quest_gen_in.hpp"
 #include "hooks.hpp"
@@ -430,7 +431,7 @@ std::string quest_fireproof_describe()
 	num_staff = get_item_points_remaining() / FIREPROOF_STAFF_POINTS;
 	num_scroll = get_item_points_remaining() / FIREPROOF_SCROLL_POINTS;
 
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	if (status == QUEST_STATUS_TAKEN)
 	{

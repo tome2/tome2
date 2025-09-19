@@ -3453,7 +3453,7 @@ static bool show_file_aux(const char *name, const char *what, int line)
 	return true;
 }
 
-void show_string(const char *lines, const char *title, int line)
+void show_string(const std::string &lines, const char *title, int line)
 {
 	// Temporary file
 	auto const file_name = fs::unique_path().string();

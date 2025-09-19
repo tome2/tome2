@@ -5,6 +5,7 @@
 #include "dungeon_info_type.hpp"
 #include "feature_flag.hpp"
 #include "feature_type.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "hook_chardump_in.hpp"
 #include "hook_get_in.hpp"
@@ -282,7 +283,7 @@ static std::string make_directions(bool feel_it)
 
 std::string quest_god_describe()
 {
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{

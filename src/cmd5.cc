@@ -13,6 +13,7 @@
 #include "cave_type.hpp"
 #include "corrupt.hpp"
 #include "dungeon_flag.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "lua_bind.hpp"
 #include "monster2.hpp"

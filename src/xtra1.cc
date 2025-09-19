@@ -16,6 +16,7 @@
 #include "dungeon_flag.hpp"
 #include "dungeon_info_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "gods.hpp"
 #include "hook_calculate_hp_in.hpp"
@@ -4410,7 +4411,7 @@ std::string fate_desc(int fate)
 {
 	auto const &a_info = game->edit_data.a_info;
 
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	if (fates[fate].serious)
 	{
@@ -4517,7 +4518,7 @@ std::string dump_fates()
 {
 	bool pending = false;
 
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	for (int i = 0; i < MAX_FATES; i++)
 	{

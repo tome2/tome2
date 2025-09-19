@@ -1,5 +1,6 @@
 #include "corrupt.hpp"
 
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "init1.hpp"
 #include "object_flag.hpp"
@@ -925,7 +926,7 @@ void lose_corruption()
  */
 std::string dump_corruptions(bool color, bool header)
 {
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	for (int i = 0; i < CORRUPTIONS_MAX; i++)
 	{

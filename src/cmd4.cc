@@ -14,6 +14,7 @@
 #include "dungeon_info_type.hpp"
 #include "feature_type.hpp"
 #include "files.hpp"
+#include "format_ext.hpp"
 #include "game.hpp"
 #include "hooks.hpp"
 #include "init1.hpp"
@@ -3068,7 +3069,7 @@ void do_cmd_knowledge_artifacts()
 	}
 
 	/* Output buffer */
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	/* Scan the artifacts */
 	for (std::size_t k = 0; k < a_info.size(); k++)
@@ -3201,7 +3202,7 @@ static void do_cmd_knowledge_uniques()
 		  });
 
 	// Scan the monster races
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 	for (std::size_t r_idx : unique_r_idxs)
 	{
 		auto r_ptr = &r_info[r_idx];
@@ -3332,7 +3333,7 @@ static void do_cmd_knowledge_pets()
 	int t_levels = 0;
 
 	// Buffer
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	/* Process the monsters (backwards) */
 	for (int i = m_max - 1; i >= 1; i--)
@@ -3394,7 +3395,7 @@ static void do_cmd_knowledge_kill_count()
 	s32b Total = 0;
 
 	// Buffer
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	// Summary of monsters slain
 	{
@@ -3493,7 +3494,7 @@ static void do_cmd_knowledge_dungeons()
 {
 	auto const &d_info = game->edit_data.d_info;
 
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	/* Scan all dungeons */
 	for (std::size_t y = 1; y < d_info.size(); y++)
@@ -3521,7 +3522,7 @@ void do_cmd_knowledge_towns()
 {
 	auto const &d_info = game->edit_data.d_info;
 
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 
 	/* Scan all dungeons */
 	for (auto const &d_ref: d_info)
@@ -3573,7 +3574,7 @@ static void do_cmd_knowledge_quests()
 	});
 
 	/* Write */
-	fmt::MemoryWriter w;
+	fmtMemoryWriter w;
 	for (int z = 0; z < MAX_Q_IDX; z++)
 	{
 		int const i = order[z];
