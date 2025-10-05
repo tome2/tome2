@@ -5,25 +5,11 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      matrix:
-        config:
-        - os: ubuntu-22.04
-          vcpkg_triplet: x64-linux-release
+    runs-on: ubuntu-22.04
 
     steps:
       - name: checkout
         uses: actions/checkout@v4
-
-      - name: vcpkg setup
-        uses: johnwason/vcpkg-action@v7
-        id: vcpkg
-        with:
-          manifest-dir: ${{ github.workspace }}
-          triplet: ${{ matrix.config.vcpkg_triplet }}
-          cache-key: ${{ matrix.config.os }}
-          token: ${{ github.token }}
 
       - run: sudo apt-get update && sudo apt-get install libboost-all-dev
 
@@ -31,7 +17,7 @@ jobs:
 
       - name: cmake
         working-directory: build/
-        run: cmake .. ${{ steps.vcpkg.outputs.vcpkg-cmake-config }}
+        run: cmake ..
 
       - name: build
         working-directory: build/
