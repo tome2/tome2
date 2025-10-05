@@ -8,6 +8,8 @@ INCLUDE(FeatureSummary)
 # pkg-config support
 INCLUDE(FindPkgConfig)
 
+include(CheckIncludeFileCXX)
+
 # Automatically install and find dependencies
 INCLUDE(cmake/CPM.cmake)
 
@@ -55,12 +57,12 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Nothing for now
 ENDIF()
 
-CPMAddPackage(NAME fmt
+CPMFindPackage(NAME fmt
 	URL https://github.com/fmtlib/fmt/releases/download/12.0.0/fmt-12.0.0.zip
 	URL_HASH SHA256=1c32293203449792bf8e94c7f6699c643887e826f2d66a80869b4f279fb07d25)
 SET(LIBS ${LIBS} fmt::fmt)
 
-CPMAddPackage(NAME jsoncons
+CPMFindPackage(NAME jsoncons
 	URL https://github.com/danielaparker/jsoncons/archive/refs/tags/v1.4.2.tar.gz
 	URL_HASH SHA256=e4c012358fdde73036b5f42869db17b373a4f0a95eb99cdd5ba82b37cc71a59b
 	OPTIONS "JSONCONS_BUILD_TESTS OFF")
@@ -75,11 +77,12 @@ ENDIF()
 # Add standard math library
 SET(LIBS ${LIBS} m)
 
+check_include_file_cxx(pcg_random.hpp PCG_FOUND)
 # PCG
-CPMAddPackage(NAME pcg
-	URL https://github.com/imneme/pcg-cpp/archive/428802d1a5634f96bcd0705fab379ff0113bcf13.tar.gz
-	URL_HASH SHA256=79f23706ed0cbc1bb57ea35d50d0abed66898b8f7b0bcf2aaecdfd234863b060)
-if (pcg_ADDED)
+if (NOT PCG_FOUND)
+	CPMAddPackage(NAME pcg
+		URL https://github.com/imneme/pcg-cpp/archive/428802d1a5634f96bcd0705fab379ff0113bcf13.tar.gz
+		URL_HASH SHA256=79f23706ed0cbc1bb57ea35d50d0abed66898b8f7b0bcf2aaecdfd234863b060)
 	INCLUDE_DIRECTORIES(${pcg_SOURCE_DIR}/include)
 endif()
 
