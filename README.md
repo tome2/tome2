@@ -59,8 +59,10 @@ To compile on an Ubuntu install, you'll need at least the
 - `cmake`
 - `build-essential`
 - `libboost-all-dev`
+
+If the following are not installed, they'll be downloaded automatically:
 - `libpcg-cpp-dev`
-- `libjsoncons-dev` (on older Ubuntus you need to install it via vcpkg or in some other way)
+- `libjsoncons-dev`
 - `libfmt-dev`
 
 packages.
