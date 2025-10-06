@@ -4411,15 +4411,16 @@ std::string fate_desc(int fate)
 {
 	auto const &a_info = game->edit_data.a_info;
 
-	fmtMemoryWriter w;
+	fmt::memory_buffer wbuf;
+	fmt::writer w(wbuf);
 
 	if (fates[fate].serious)
 	{
-		w.write("You are fated to ");
+		w.print("You are fated to ");
 	}
 	else
 	{
-		w.write("You may ");
+		w.print("You may ");
 	}
 
 	switch (fates[fate].fate)
@@ -4433,7 +4434,7 @@ std::string fate_desc(int fate)
 			object_prep(o_ptr, fates[fate].o_idx);
 			object_desc_store(o_name, o_ptr, 1, 0);
 
-			w.write("find {} on level {}.", o_name, fates[fate].level);
+			w.print("find {} on level {}.", o_name, fates[fate].level);
 			break;
 		}
 	case FATE_FIND_A:
@@ -4488,7 +4489,7 @@ std::string fate_desc(int fate)
 				object_desc_store(o_name, q_ptr, 1, 0);
 			}
 
-			w.write("find {} on level {}.", o_name, fates[fate].level);
+			w.print("find {} on level {}.", o_name, fates[fate].level);
 			break;
 		}
 	case FATE_FIND_R:
@@ -4496,35 +4497,36 @@ std::string fate_desc(int fate)
 			char m_name[80];
 			monster_race_desc(m_name, fates[fate].r_idx, 0);
 
-			w.write("meet {} on level {}.", m_name, fates[fate].level);
+			w.print("meet {} on level {}.", m_name, fates[fate].level);
 			break;
 		}
 	case FATE_DIE:
 		{
-			w.write("die on level {}.", fates[fate].level);
+			w.print("die on level {}.", fates[fate].level);
 			break;
 		}
 	case FATE_NO_DIE_MORTAL:
 		{
-			w.write("never to die by the hand of a mortal being.");
+			w.print("never to die by the hand of a mortal being.");
 			break;
 		}
 	}
 
-	return w.str();
+	return fmt::to_string(std::move(wbuf));
 }
 
 std::string dump_fates()
 {
 	bool pending = false;
 
-	fmtMemoryWriter w;
+	fmt::memory_buffer wbuf;
+	fmt::writer w(wbuf);
 
 	for (int i = 0; i < MAX_FATES; i++)
 	{
 		if ((fates[i].fate) && (fates[i].know))
 		{
-			w.write("{}\n", fate_desc(i));
+			w.print("{}\n", fate_desc(i));
 		}
 
 		// Pending gets set if there's at least one fate we don't know
@@ -4533,10 +4535,10 @@ std::string dump_fates()
 
 	if (pending)
 	{
-		w.write("You do not know all of your fate.\n");
+		w.print("You do not know all of your fate.\n");
 	}
 
-	return w.str();
+	return fmt::to_string(std::move(wbuf));
 }
 
 /*

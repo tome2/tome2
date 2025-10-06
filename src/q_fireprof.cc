@@ -431,34 +431,35 @@ std::string quest_fireproof_describe()
 	num_staff = get_item_points_remaining() / FIREPROOF_STAFF_POINTS;
 	num_scroll = get_item_points_remaining() / FIREPROOF_SCROLL_POINTS;
 
-	fmtMemoryWriter w;
+	fmt::memory_buffer wbuf;
+	fmt::writer w(wbuf);
 
 	if (status == QUEST_STATUS_TAKEN)
 	{
 		/* Quest taken */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("Retrieve the strange {} for the old mage in Lothlorien.", settings->tval_name);
+		w.print("#####yAn Old Mages Quest!\n");
+		w.print("Retrieve the strange {} for the old mage in Lothlorien.", settings->tval_name);
 	}
 	else if (status == QUEST_STATUS_COMPLETED)
 	{
 		/* essence retrieved, not taken to mage */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("You have retrieved the {} for the old mage in Lothlorien.\n", settings->tval_name);
-		w.write("Perhaps you should see about a reward.");
+		w.print("#####yAn Old Mages Quest!\n");
+		w.print("You have retrieved the {} for the old mage in Lothlorien.\n", settings->tval_name);
+		w.print("Perhaps you should see about a reward.");
 	}
 	else if ((status == QUEST_STATUS_FINISHED) &&
 		 (get_item_points_remaining() > 0))
 	{
 		/* essence returned, not all books fireproofed */
-		w.write("#####yAn Old Mages Quest!\n");
-		w.write("You have retrieved the {} for the old "
+		w.print("#####yAn Old Mages Quest!\n");
+		w.print("You have retrieved the {} for the old "
 			"mage in Lothlorien. He will still\n", settings->tval_name);
-		w.write("fireproof {} book(s) or {} staff/staves "
+		w.print("fireproof {} book(s) or {} staff/staves "
 			"or {} scroll(s) for you.",
 			num_books, num_staff, num_scroll);
 	}
 
-	return w.str();
+	return fmt::to_string(std::move(wbuf));
 }
 
 static bool fireproof_gen_hook(void *, void *in_, void *)

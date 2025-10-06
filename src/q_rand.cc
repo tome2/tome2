@@ -656,26 +656,27 @@ std::string quest_random_describe()
 		return "";
 	}
 
-	fmtMemoryWriter w;
+	fmt::memory_buffer wbuf;
+	fmt::writer w(wbuf);
 
 	if (!is_randhero(dun_level))
 	{
-		w.write("#####yCaptured princess!\n");
-		w.write("A princess is being held prisoner and tortured here!\n");
-		w.write("Save her from the horrible {}.\n", r_info[random_quests[dun_level].r_idx].name);
+		w.print("#####yCaptured princess!\n");
+		w.print("A princess is being held prisoner and tortured here!\n");
+		w.print("Save her from the horrible {}.\n", r_info[random_quests[dun_level].r_idx].name);
 	}
 	else
 	{
-		w.write("#####yLost sword!\n");
-		w.write("An adventurer lost his sword to a bunch of {}!\n", r_info[random_quests[dun_level].r_idx].name);
-		w.write("Kill them all to get it back.\n");
+		w.print("#####yLost sword!\n");
+		w.print("An adventurer lost his sword to a bunch of {}!\n", r_info[random_quests[dun_level].r_idx].name);
+		w.print("Kill them all to get it back.\n");
 	}
 
-	w.write("Number: {}, Killed: {}.",
+	w.print("Number: {}, Killed: {}.",
 		random_quests[dun_level].type,
 		quest[QUEST_RANDOM].data[0]);
 
-	return w.str();
+	return fmt::to_string(std::move(wbuf));
 }
 
 void quest_random_init_hook()

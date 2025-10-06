@@ -160,15 +160,16 @@ void quest_bounty_get_item()
 std::string quest_bounty_describe()
 {
 	char mdesc[512];
-	fmtMemoryWriter w;
+	fmt::memory_buffer wbuf;
+	fmt::writer w(wbuf);
 
 	if (cquest.status == QUEST_STATUS_TAKEN)
 	{
 		monster_race_desc(mdesc, bounty_quest_monster, 0);
 
-		w.write("#####yBounty quest!\n");
-		w.write("You must bring back {} corpse to the beastmaster.", mdesc);
+		w.print("#####yBounty quest!\n");
+		w.print("You must bring back {} corpse to the beastmaster.", mdesc);
 	}
 
-	return w.str();
+	return fmt::to_string(std::move(wbuf));
 }
