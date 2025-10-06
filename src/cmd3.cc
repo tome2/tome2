@@ -1745,19 +1745,19 @@ void do_cmd_cli()
  */
 void do_cmd_cli_help()
 {
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 	for (int i = 0, j = -1; i < cli_total; i++)
 	{
 		if (j < i - 1)
 		{
-			w.push_back('/');
+			w.write("/");
 		}
 
-		fmt::format_to(std::back_inserter(w), "[[[[[G{}]", cli_info[i].comm);
+		w.write("[[[[[G{}]", cli_info[i].comm);
 
 		if (cli_info[i].descrip != cli_info[i + 1].descrip)
 		{
-			fmt::format_to(std::back_inserter(w), "   {}\n", cli_info[i].descrip);
+			w.write("   {}\n", cli_info[i].descrip);
 			j = i;
 		}
 	}
@@ -1766,7 +1766,7 @@ void do_cmd_cli_help()
 	screen_save_no_flush();
 
 	/* Display the file contents */
-	show_string(fmt::to_string(w), "Command line help");
+	show_string(w.c_str(), "Command line help");
 
 	/* Restore the screen */
 	screen_load_no_flush();

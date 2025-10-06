@@ -926,7 +926,7 @@ void lose_corruption()
  */
 std::string dump_corruptions(bool color, bool header)
 {
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	for (int i = 0; i < CORRUPTIONS_MAX; i++)
 	{
@@ -934,7 +934,7 @@ std::string dump_corruptions(bool color, bool header)
 
 		if (header)
 		{
-			w.append(std::string_view("\nCorruption list:\n\n"));
+			w.write("\nCorruption list:\n\n");
 			header = false;
 		}
 
@@ -944,18 +944,18 @@ std::string dump_corruptions(bool color, bool header)
 
 			if (color)
 			{
-				fmt::format_to(std::back_inserter(w), "#####{}{}:\n", static_cast<char>(conv_color[c]), c_ptr->name);
+				w.write("#####{}{}:\n", static_cast<char>(conv_color[c]), c_ptr->name);
 			}
 			else
 			{
-				fmt::format_to(std::back_inserter(w), "{}:\n", c_ptr->name);
+				w.write("{}:\n", c_ptr->name);
 			}
 
-			fmt::format_to(std::back_inserter(w), "{}\n\n", c_ptr->desc);
+			w.write("{}\n\n", c_ptr->desc);
 		}
 	}
 
-	return fmt::to_string(w);
+	return w.str();
 }
 
 /*

@@ -3069,7 +3069,7 @@ void do_cmd_knowledge_artifacts()
 	}
 
 	/* Output buffer */
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	/* Scan the artifacts */
 	for (std::size_t k = 0; k < a_info.size(); k++)
@@ -3112,7 +3112,7 @@ void do_cmd_knowledge_artifacts()
 		}
 
 		/* Hack -- Build the artifact name */
-		fmt::format_to(std::back_inserter(w), "     The {}\n", base_name);
+		w.write("     The {}\n", base_name);
 	}
 
 	for (auto const &k: k_info_keys)
@@ -3139,11 +3139,11 @@ void do_cmd_knowledge_artifacts()
 		object_desc_store(base_name, q_ptr, false, 0);
 
 		/* Hack -- Build the artifact name */
-		fmt::format_to(std::back_inserter(w), "     The {}\n", base_name);
+		w.write("     The {}\n", base_name);
 	}
 
 	/* Display */
-	show_string(fmt::to_string(w), "Artifacts Seen");
+	show_string(w.c_str(), "Artifacts Seen");
 }
 
 
@@ -3202,7 +3202,7 @@ static void do_cmd_knowledge_uniques()
 		  });
 
 	// Scan the monster races
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 	for (std::size_t r_idx : unique_r_idxs)
 	{
 		auto r_ptr = &r_info[r_idx];
@@ -3215,14 +3215,14 @@ static void do_cmd_knowledge_uniques()
 			/* Print a message */
 			if (dead)
 			{
-				fmt::format_to(std::back_inserter(w), "[[[[[{}{}] [[[[[R{:<68} is dead]\n",
+				w.write("[[[[[{}{}] [[[[[R{:<68} is dead]\n",
 					static_cast<char>(conv_color[r_ptr->d_attr]),
 					static_cast<char>(r_ptr->d_char),
 					r_ptr->name);
 			}
 			else
 			{
-				fmt::format_to(std::back_inserter(w), "[[[[[{}{}] [[[[[w{:<68} is alive]\n",
+				w.write("[[[[[{}{}] [[[[[w{:<68} is alive]\n",
 					static_cast<char>(conv_color[r_ptr->d_attr]),
 					static_cast<char>(r_ptr->d_char),
 					r_ptr->name);
@@ -3231,7 +3231,7 @@ static void do_cmd_knowledge_uniques()
 	}
 
 	// Display
-	show_string(fmt::to_string(w), "Known Uniques");
+	show_string(w.c_str(), "Known Uniques");
 }
 
 
@@ -3333,7 +3333,7 @@ static void do_cmd_knowledge_pets()
 	int t_levels = 0;
 
 	// Buffer
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	/* Process the monsters (backwards) */
 	for (int i = m_max - 1; i >= 1; i--)
@@ -3355,7 +3355,7 @@ static void do_cmd_knowledge_pets()
 			char pet_name[80];
 			monster_desc(pet_name, m_ptr, 0x88);
 
-			fmt::format_to(std::back_inserter(w), "{}{} ({})\n",
+			w.write("{}{} ({})\n",
 				(r_ptr->flags & RF_UNIQUE) ? "#####G" : "",
 				pet_name,
 				(m_ptr->status < MSTATUS_COMPANION) ? "pet" : "companion");
@@ -3375,12 +3375,12 @@ static void do_cmd_knowledge_pets()
 	}
 
 	// Summary
-	w.append(std::string_view("----------------------------------------------\n"));
-	fmt::format_to(std::back_inserter(w), "   Total: {} pet{}.\n", t_friends, (t_friends == 1 ? "" : "s"));
-	fmt::format_to(std::back_inserter(w), "   Upkeep: {}% mana.\n", show_upkeep);
+	w.write("----------------------------------------------\n");
+	w.write("   Total: {} pet{}.\n", t_friends, (t_friends == 1 ? "" : "s"));
+	w.write("   Upkeep: {}% mana.\n", show_upkeep);
 
 	// Display
-	show_string(fmt::to_string(w), "Current Pets");
+	show_string(w.c_str(), "Current Pets");
 }
 
 
@@ -3395,7 +3395,7 @@ static void do_cmd_knowledge_kill_count()
 	s32b Total = 0;
 
 	// Buffer
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	// Summary of monsters slain
 	{
@@ -3419,15 +3419,15 @@ static void do_cmd_knowledge_kill_count()
 
 		if (Total < 1)
 		{
-			w.append(std::string_view("You have defeated no enemies yet.\n\n"));
+			w.write("You have defeated no enemies yet.\n\n");
 		}
 		else if (Total == 1)
 		{
-			w.append(std::string_view("You have defeated one enemy.\n\n"));
+			w.write("You have defeated one enemy.\n\n");
 		}
 		else
 		{
-			fmt::format_to(std::back_inserter(w), "You have defeated {} enemies.\n\n", Total);
+			w.write("You have defeated {} enemies.\n\n", Total);
 		}
 	}
 
@@ -3445,7 +3445,7 @@ static void do_cmd_knowledge_kill_count()
 			if (dead)
 			{
 				/* Print a message */
-				fmt::format_to(std::back_inserter(w), "     {}\n", r_ptr->name);
+				w.write("     {}\n", r_ptr->name);
 				Total++;
 			}
 		}
@@ -3459,11 +3459,11 @@ static void do_cmd_knowledge_kill_count()
 				{
 					if (strstr(r_ptr->name, "coins"))
 					{
-						fmt::format_to(std::back_inserter(w), "     1 pile of {}\n", r_ptr->name);
+						w.write("     1 pile of {}\n", r_ptr->name);
 					}
 					else
 					{
-						fmt::format_to(std::back_inserter(w), "     1 {}\n", r_ptr->name);
+						w.write("     1 {}\n", r_ptr->name);
 					}
 				}
 				else
@@ -3471,7 +3471,7 @@ static void do_cmd_knowledge_kill_count()
 					char to_plural[80];
 					strcpy(to_plural, r_ptr->name);
 					plural_aux(to_plural);
-					fmt::format_to(std::back_inserter(w), "     {} {}\n", This, to_plural);
+					w.write("     {} {}\n", This, to_plural);
 				}
 
 				Total += This;
@@ -3479,11 +3479,11 @@ static void do_cmd_knowledge_kill_count()
 		}
 	}
 
-	w.append(std::string_view("----------------------------------------------\n"));
-	fmt::format_to(std::back_inserter(w), "   Total: {} creature{} killed.\n", Total, (Total == 1 ? "" : "s"));
+	w.write("----------------------------------------------\n");
+	w.write("   Total: {} creature{} killed.\n", Total, (Total == 1 ? "" : "s"));
 
 	/* Display the file contents */
-	show_string(fmt::to_string(w), "Kill Count");
+	show_string(w.c_str(), "Kill Count");
 }
 
 
@@ -3494,7 +3494,7 @@ static void do_cmd_knowledge_dungeons()
 {
 	auto const &d_info = game->edit_data.d_info;
 
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	/* Scan all dungeons */
 	for (std::size_t y = 1; y < d_info.size(); y++)
@@ -3503,7 +3503,7 @@ static void do_cmd_knowledge_dungeons()
 		if (max_dlv[y])
 		{
 			/* Describe the recall depth */
-			fmt::format_to(std::back_inserter(w), "       {}{}: Level {}\n",
+			w.write("       {}{}: Level {}\n",
 				(p_ptr->recall_dungeon == y) ? '*' : ' ',
 				d_info[y].name,
 				max_dlv[y]);
@@ -3511,7 +3511,7 @@ static void do_cmd_knowledge_dungeons()
 	}
 
 	// Display
-	show_string(fmt::to_string(w), "Recall Depths");
+	show_string(w.c_str(), "Recall Depths");
 }
 
 
@@ -3522,7 +3522,7 @@ void do_cmd_knowledge_towns()
 {
 	auto const &d_info = game->edit_data.d_info;
 
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 
 	/* Scan all dungeons */
 	for (auto const &d_ref: d_info)
@@ -3541,14 +3541,14 @@ void do_cmd_knowledge_towns()
 			if (!(town_info[town_idx].flags & (TOWN_KNOWN))) continue;
 
 			/* Describe the dungeon town */
-			fmt::format_to(std::back_inserter(w), "        {}: Level {}\n",
+			w.write("        {}: Level {}\n",
 				d_ptr->name,
 				d_ptr->t_level[j]);
 		}
 	}
 
 	/* Display the file contents */
-	show_string(fmt::to_string(w), "Dungeon Towns");
+	show_string(w.c_str(), "Dungeon Towns");
 }
 
 
@@ -3574,7 +3574,7 @@ static void do_cmd_knowledge_quests()
 	});
 
 	/* Write */
-	fmt::memory_buffer w;
+	fmtMemoryWriter w;
 	for (int z = 0; z < MAX_Q_IDX; z++)
 	{
 		int const i = order[z];
@@ -3585,7 +3585,7 @@ static void do_cmd_knowledge_quests()
 			auto s = quest[i].gen_desc();
 			if (!s.empty())
 			{
-				fmt::format_to(std::back_inserter(w), "{}\n\n", s);
+				w.write("{}\n\n", s);
 			}
 		}
 
@@ -3595,25 +3595,26 @@ static void do_cmd_knowledge_quests()
 			if (quest[i].status == QUEST_STATUS_TAKEN)
 			{
 				/* Print the quest info */
-				fmt::format_to(std::back_inserter(w), "#####y{} (Danger level: {})\n",
+				w.write("#####y{} (Danger level: {})\n",
 				        quest[i].name, quest[i].level);
 
 				int j = 0;
 				while ((j < 10) && (quest[i].desc[j][0] != '\0'))
 				{
-					fmt::format_to(std::back_inserter(w), "{}\n", quest[i].desc[j++]);
+					w.write("{}\n", quest[i].desc[j++]);
 				}
-				w.push_back('\n');
+				w.write("\n");
 			}
 			else if (quest[i].status == QUEST_STATUS_COMPLETED)
 			{
-				fmt::format_to(std::back_inserter(w), "#####G{} Completed - Unrewarded\n\n", quest[i].name);
+				w.write("#####G{} Completed - Unrewarded\n", quest[i].name);
+				w.write("\n");
 			}
 		}
 	}
 
 	/* Display */
-	show_string(fmt::to_string(w), "Quest status");
+	show_string(w.c_str(), "Quest status");
 }
 
 
