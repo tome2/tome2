@@ -67,6 +67,9 @@ If the following are not installed, they'll be downloaded automatically:
 
 packages.
 
+Note for package maintainers: `-DCPM_LOCAL_PACKAGES_ONLY=yes` will avoid downloading deps automatically.
+See [CPM.cmake](https://github.com/cpm-cmake/CPM.cmake) for more details.
+
 Each frontend requires the additional packages listed below:
 
 - X11: `libx11-dev`
