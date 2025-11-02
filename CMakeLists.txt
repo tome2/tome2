@@ -77,9 +77,14 @@ ENDIF()
 # Add standard math library
 SET(LIBS ${LIBS} m)
 
-check_include_file_cxx(pcg_random.hpp PCG_FOUND)
 # PCG
-if (NOT PCG_FOUND)
+option(USE_SYSTEM_PCG_RANDOM "Use existing pcg_random.hpp found in system")
+if(USE_SYSTEM_PCG_RANDOM)
+	check_include_file_cxx(pcg_random.hpp PCG_FOUND)
+	if (NOT PCG_FOUND)
+		MESSAGE(FATAL_ERROR "pcg_random.hpp not found")
+	endif()
+else()
 	CPMAddPackage(NAME pcg
 		URL https://github.com/imneme/pcg-cpp/archive/428802d1a5634f96bcd0705fab379ff0113bcf13.tar.gz
 		URL_HASH SHA256=79f23706ed0cbc1bb57ea35d50d0abed66898b8f7b0bcf2aaecdfd234863b060)
