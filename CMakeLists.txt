@@ -57,12 +57,12 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   # Nothing for now
 ENDIF()
 
-CPMFindPackage(NAME fmt
+CPMAddPackage(NAME fmt
 	URL https://github.com/fmtlib/fmt/releases/download/12.0.0/fmt-12.0.0.zip
 	URL_HASH SHA256=1c32293203449792bf8e94c7f6699c643887e826f2d66a80869b4f279fb07d25)
 SET(LIBS ${LIBS} fmt::fmt)
 
-CPMFindPackage(NAME jsoncons
+CPMAddPackage(NAME jsoncons
 	URL https://github.com/danielaparker/jsoncons/archive/refs/tags/v1.4.2.tar.gz
 	URL_HASH SHA256=e4c012358fdde73036b5f42869db17b373a4f0a95eb99cdd5ba82b37cc71a59b
 	OPTIONS "JSONCONS_BUILD_TESTS OFF")
