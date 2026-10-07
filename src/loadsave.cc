@@ -1620,7 +1620,7 @@ void save_dungeon()
 	if (auto ext = get_dungeon_save_extension())
 	{
 		/* Open the file */
-		fff = my_fopen(name_file_dungeon_save(*ext).c_str(), "wb");
+		fff = my_fopen(name_file_dungeon_save(*ext).string().c_str(), "wb");
 
 		/* Save the dungeon */
 		do_dungeon(ls_flag_t::SAVE, true);
@@ -1994,7 +1994,7 @@ bool load_dungeon(std::string const &ext)
 	s16b old_dun = dun_level;
 
 	/* Open the file */
-	fff = my_fopen(name_file_dungeon_save(ext).c_str(), "rb");
+	fff = my_fopen(name_file_dungeon_save(ext).string().c_str(), "rb");
 
 	if (fff == nullptr)
 	{

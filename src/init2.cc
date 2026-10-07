@@ -461,7 +461,7 @@ template<typename T> static errr init_x_info() {
 	path /= T::name;
 
 	/* Open the file */
-	FILE *fp = my_fopen(path.c_str(), "r");
+	FILE *fp = my_fopen(path.string().c_str(), "r");
 
 	/* Parse it */
 	if (!fp)
@@ -1052,7 +1052,7 @@ void init_angband(program_args const &args)
 		char why[1024];
 
 		/* Message */
-		sprintf(why, "Cannot access the '%s' file!", buf);
+		snprintf(why, sizeof(why), "Cannot access the '%s' file!", buf);
 
 		/* Crash and burn */
 		init_angband_aux(why);
@@ -1113,7 +1113,7 @@ void init_angband(program_args const &args)
 			char why[1024];
 
 			/* Message */
-			sprintf(why, "Cannot create the '%s' file!", buf);
+			snprintf(why, sizeof(why), "Cannot create the '%s' file!", buf);
 
 			/* Crash and burn */
 			init_angband_aux(why);

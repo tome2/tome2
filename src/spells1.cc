@@ -4050,6 +4050,24 @@ bool hurt_monster(monster_type *m_ptr)
 }
 
 /*
+ * Helper function to compute a monster's saving throw. Returns true if 
+ * they successfully avoid the attack.
+ */
+bool m_saving_throw(monster_type *m_ptr, s32b spell_power) {
+    s32b mroll;
+    if (m_ptr->race()->flags & RF_UNIQUE) 
+    {
+        mroll = 2 * m_ptr->level;
+    } 
+    else 
+    {
+        mroll = randint(monster_level) + monster_level;
+    }
+    s32b sroll = 10 + randint(spell_power) + randint(spell_power);
+    return sroll <= mroll;
+}
+
+/*
  * Helper function for "project()" below.
  *
  * Handle a beam/bolt/ball causing damage to a monster.
@@ -4887,7 +4905,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			else
 			{
 				/* Powerful monsters can resist */
-				if (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10)
+				if (m_saving_throw(m_ptr, dam))
 				{
 					obvious = false;
 				}
@@ -4949,8 +4967,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			{
 				/* 1. slowness */
 				/* Powerful monsters can resist */
-				if ((r_ptr->flags & RF_UNIQUE) ||
-				                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+				if (m_saving_throw(m_ptr, dam))
 				{
 					obvious = false;
 				}
@@ -4965,8 +4982,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 				do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 				/* Attempt a saving throw */
-				if ((r_ptr->flags & RF_UNIQUE) ||
-				                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+				if (m_saving_throw(m_ptr, dam))
 				{
 					/* Resist */
 					do_stun = 0;
@@ -5174,8 +5190,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->level > 5 + randint(dam)))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_stun = 0;
@@ -5200,7 +5215,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Attempt a saving throw */
 			if ((r_ptr->flags & RF_UNIQUE) ||
 			                (r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			                m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_conf = 0;
@@ -5359,7 +5374,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Powerful monsters can resist */
 			if ((r_ptr->flags & RF_UNIQUE) ||
 			                (m_ptr->mflag & MFLAG_QUEST) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			                m_saving_throw(m_ptr, dam))
 			{
 				note = " is unaffected!";
 				do_poly = false;
@@ -5448,8 +5463,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Powerful monsters can resist */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				note = " is unaffected!";
 				obvious = false;
@@ -5474,8 +5488,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_NO_SLEEP) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* No obvious effect */
 				note = " is unaffected!";
@@ -5500,8 +5513,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				note = " is unaffected!";
 				obvious = false;
@@ -5528,7 +5540,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Attempt a saving throw */
 			if ((m_ptr->mflag & MFLAG_QUEST) ||
 			                (r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 5))
+			                (m_saving_throw(m_ptr, dam)))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5565,7 +5577,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			/* Attempt a saving throw */
 			if ((m_ptr->mflag & MFLAG_QUEST) ||
 			                (r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 5))
+			                m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5601,9 +5613,9 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 
 			/* Attempt a saving throw */
 			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->mflag & MFLAG_QUEST) ||
-			                (!(r_ptr->flags & RF_UNDEAD)) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+                (m_ptr->mflag & MFLAG_QUEST) ||
+			    (!(r_ptr->flags & RF_UNDEAD)) ||
+			    (m_saving_throw(m_ptr, dam)))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5631,10 +5643,9 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->mflag & MFLAG_QUEST) ||
-			                (!(r_ptr->flags & RF_NEVER_MOVE)) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ( (m_ptr->mflag & MFLAG_QUEST) ||
+			     (!(r_ptr->flags & RF_NEVER_MOVE)) ||
+                 (m_saving_throw(m_ptr, dam)))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5662,11 +5673,10 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->mflag & MFLAG_QUEST) ||
-			                (!(r_ptr->flags & RF_ANIMAL)) ||
-			                (r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ( (m_ptr->mflag & MFLAG_QUEST) ||
+			     (!(r_ptr->flags & RF_ANIMAL)) ||
+			     (r_ptr->flags & RF_NO_CONF) ||
+                 m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5695,10 +5705,9 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			if (seen) obvious = true;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->mflag & MFLAG_QUEST) ||
-			                (!(r_ptr->flags & RF_DEMON)) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ((m_ptr->mflag & MFLAG_QUEST) ||
+			    (!(r_ptr->flags & RF_DEMON)) ||
+			    m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				/* No obvious effect */
@@ -5729,8 +5738,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_conf = damroll(3, (dam / 2)) + 1;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ((r_ptr->flags & RF_NO_CONF) || m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_conf = 0;
@@ -5752,7 +5760,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 			/* Attempt a saving throw */
-			if ((m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_stun = 0;
@@ -5777,7 +5785,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 
 			/* Attempt a saving throw */
 			if ((r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			                m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_conf = 0;
@@ -5796,7 +5804,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 			/* Attempt a saving throw */
-			if ((m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_stun = 0;
@@ -5816,8 +5824,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_stun = 0;
@@ -5850,8 +5857,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_conf = damroll(3, (dam / 2)) + 1;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_NO_CONF) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ((r_ptr->flags & RF_NO_CONF) || m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_conf = 0;
@@ -5864,7 +5870,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_stun = damroll((p_ptr->lev / 10) + 3 , (dam)) + 1;
 
 			/* Attempt a saving throw */
-			if ((m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if (m_saving_throw(m_ptr, dam))
 			{
 				/* Resist */
 				do_stun = 0;
@@ -6101,7 +6107,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 				do_fear = damroll(3, (dam / 2)) + 1;
 
 				/* Attempt a saving throw */
-				if (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10)
+				if (m_saving_throw(m_ptr, dam))
 				{
 					/* No obvious effect */
 					note = " is unaffected!";
@@ -6136,7 +6142,7 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 				do_fear = damroll(3, (dam / 2)) + 1;
 
 				/* Attempt a saving throw */
-				if (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10)
+				if (m_saving_throw(m_ptr, dam))
 				{
 					/* No obvious effect */
 					note = " is unaffected!";
@@ -6168,9 +6174,8 @@ bool project_m(int who, int r, int y, int x, int dam, int typ)
 			do_fear = damroll(3, (dam / 2)) + 1;
 
 			/* Attempt a saving throw */
-			if ((r_ptr->flags & RF_UNIQUE) ||
-			                (r_ptr->flags & RF_NO_FEAR) ||
-			                (m_ptr->level > randint((dam - 10) < 1 ? 1 : (dam - 10)) + 10))
+			if ((r_ptr->flags & RF_NO_FEAR) ||
+                m_saving_throw(m_ptr, dam))
 			{
 				/* No obvious effect */
 				note = " is unaffected!";

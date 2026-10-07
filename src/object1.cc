@@ -3871,7 +3871,7 @@ void show_equip_aux(bool mirror, object_filter_t const &filter)
 
 			if (flags & TR_MUST2H)
 			{
-				sprintf(o_name, "(two handed) %s", q_name);
+				snprintf(o_name, sizeof(o_name), "(two handed) %s", q_name);
 
 				/* Truncate the description */
 				o_name[lim] = 0;
@@ -4677,7 +4677,7 @@ static bool get_item_floor(int *cp, const char *pmt, const char *str, int mode, 
 		strcat(out_val, " ESC");
 
 		/* Build the prompt */
-		sprintf(tmp_val, "(%s) %s", out_val, pmt);
+		snprintf(tmp_val, sizeof(tmp_val), "(%s) %s", out_val, pmt);
 
 		/* Show the prompt */
 		prt(tmp_val, 0, 0);

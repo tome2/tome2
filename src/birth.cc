@@ -978,6 +978,57 @@ static void player_outfit()
 }
 
 
+/*
+ * Display stat bonuses for the currently highlighted race / race-modifier /
+ * class choice, using the same layout as the stat-roll screen (see
+ * 'player_birth_aux_auto' and 'birth_put_stats').
+ */
+static void dump_stat_bonuses(s16b const adj[6])
+{
+	static const char *labels[6] = { "STR:", "INT:", "WIS:", "DEX:", "CON:", "CHR:" };
+
+	for (int i = 0; i < 6; i++)
+	{
+		put_str(labels[i], 2 + i, 61);
+
+		byte attr = (adj[i] > 0) ? TERM_L_GREEN : (adj[i] < 0) ? TERM_RED : TERM_SLATE;
+		c_put_str(attr, format("%+3d", adj[i]), 2 + i, 66);
+	}
+}
+
+/*
+ * Append a description of any experience penalty/bonus and any unique
+ * powers granted by a race / race-modifier / class choice to its
+ * description text.
+ *
+ * 'exp_baseline' is the "no penalty" value of 'ps.exp' -- 100 for a race
+ * (whose 'exp' field carries the full percentage including race choice),
+ * 0 for a race-modifier or class (whose 'exp' field is a pure delta).
+ */
+static void describe_option_extras(std::string &desc, player_shared const &ps, int exp_baseline)
+{
+	int exp_delta = ps.exp - exp_baseline;
+
+	if (exp_delta > 0)
+	{
+		desc += format("\nExperience penalty: +%d%%", exp_delta);
+	}
+	else if (exp_delta < 0)
+	{
+		desc += format("\nExperience bonus: %d%%", -exp_delta);
+	}
+
+	for (s16b power_idx : ps.powers)
+	{
+		auto it = game->powers.find(power_idx);
+		if (it != game->powers.end())
+		{
+			desc += "\nGrants power: ";
+			desc += it->second->name;
+		}
+	}
+}
+
 static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restrictions)
 {
 	auto const &class_info = game->edit_data.class_info;
@@ -1014,12 +1065,22 @@ static void dump_classes(std::vector<u16b> const &classes, int sel, u32b *restri
 			std::string desc;
 
 			desc += cp_ptr->desc;
+			describe_option_extras(desc, cp_ptr->ps, 0);
 			if (cp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
+
+			{
+				s16b adj[6];
+				for (int i = 0; i < 6; i++)
+				{
+					adj[i] = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i] + cp_ptr->ps.adj[i];
+				}
+				dump_stat_bonuses(adj);
+			}
 
 			if (!(restrictions[classes[n] / 32] & BIT(classes[n])) ||
 			                (cp_ptr->flags & PR_EXPERIMENTAL))
@@ -1139,12 +1200,15 @@ static int dump_races(int sel)
 			std::string desc;
 
 			desc += rp_ptr->desc;
+			describe_option_extras(desc, rp_ptr->ps, 100);
 			if (rp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
+
+			dump_stat_bonuses(rp_ptr->ps.adj.data());
 
 			if (rp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));
@@ -1202,12 +1266,22 @@ static int dump_rmods(int sel, int *racem, int max)
 			std::string desc;
 
 			desc += rmp_ptr->description;
+			describe_option_extras(desc, rmp_ptr->ps, 0);
 			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 			{
 				desc += "\nEXPERIMENTAL";
 			}
 
 			print_desc(desc.c_str());
+
+			{
+				s16b adj[6];
+				for (int i = 0; i < 6; i++)
+				{
+					adj[i] = rp_ptr->ps.adj[i] + rmp_ptr->ps.adj[i];
+				}
+				dump_stat_bonuses(adj);
+			}
 
 			if (rmp_ptr->flags & PR_EXPERIMENTAL)
 				c_put_str(TERM_BLUE, buf, 18 + (n / 5), 1 + 15 * (n % 5));

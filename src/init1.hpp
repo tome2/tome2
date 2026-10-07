@@ -2,6 +2,7 @@
 
 #include "h-basic.hpp"
 #include "dungeon_flag_set.hpp"
+#include <cstdio>
 
 #include <cstdio>
 
