@@ -347,7 +347,7 @@ static errr push_result_to_errr(key_queue::push_result_t r)
 	{
 	case pr::OK:
 		return 0;
-	case pr::OVERFLOW:
+	case pr::OVERFLOWED:
 		return 1;
 	}
 

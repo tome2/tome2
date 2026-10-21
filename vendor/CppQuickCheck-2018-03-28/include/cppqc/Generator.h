@@ -128,7 +128,7 @@ class StatelessGenerator
 
         StatelessGenerator &operator=(const StatelessGenerator &g)
         {
-            detail::StatelessGenConcept<T> *tmp = g.m_gen.clone();
+            detail::StatelessGenConcept<T> *tmp = g.m_gen->clone();
             delete m_gen;
             m_gen = tmp;
             return *this;
